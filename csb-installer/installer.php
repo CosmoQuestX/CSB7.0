@@ -21,7 +21,7 @@ echo "You are running the Citizen Science Builder installer <br>";
         die("Connection to Database Unsuccessful. Did you create the database" . $db_name . "?");
     }
     else {
-        echo "Connected to database: " . $db_name . "<br\>";
+        echo "Connected to database: " . $db_name . "<br/>";
     }
 
 /* ----------------------------------------------------------------------
@@ -31,7 +31,7 @@ echo "You are running the Citizen Science Builder installer <br>";
     // Users Table first
     $table = "users";
     if (table_exists($conn, $table)) {
-        die("Table " . $table . " already exists. Cancelling install.");
+        die("Table " . $table . " already exists. Cancelling install.<br/>");
     }
     else {
         $structure = "CREATE TABLE `users` (
