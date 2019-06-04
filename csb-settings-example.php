@@ -19,10 +19,23 @@
  * ---------------------------------------------------------------------- **/
 
 /* ----------------------------------------------------------------------
+   Admin User, "CodeHerder" details
+   ---------------------------------------------------------------------- */
+
+    $rescue_email = "Email@rescue.me";   // The email address for the site admin
+
+/* ----------------------------------------------------------------------
    Database Settings
    ---------------------------------------------------------------------- */
 
-$db_servername = "localhost";
-$db_username = "root";
-$db_password = "password";
-$db_name = "myDB";
+    $db_servername = "localhost";
+    $db_username = "root";
+    $db_password = "password";
+    $db_name = "myDB";
+
+/* ----------------------------------------------------------------------
+   Directories
+   ---------------------------------------------------------------------- */
+
+    $BASE_DIR = "/path/to/CSB/";   // Full path to CSBs home directory, example "/var/www/CSB/"
+    $BASE_URL = "http://localhost/CSB7.0/";  // Full path to CSB's Webhome
