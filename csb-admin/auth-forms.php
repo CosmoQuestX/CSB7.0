@@ -30,7 +30,7 @@
 
         // Does the user exist? Retrieve them from the db
         $query  = "SELECT * FROM users WHERE name = ? ";
-        if ($user = $db->runQuery($query, "s", array("Codeherder"))) {
+        if ($user = $db->runQueryWhere($query, "s", array("Codeherder"))) {
 
             // Verify the password
             if(password_verify($_POST['password'], $user['password'])) {
@@ -49,16 +49,21 @@
                     $token_hash = password_hash($token, PASSWORD_DEFAULT);
                     $query = "UPDATE users SET remember_token = '".$token_hash."' WHERE id = ?";
                     $params = array ($user['id']);
-                    $db->runQuery($query, "s", $params);
+                    $db->runQueryWhere($query, "s", $params);
 
                 }
                 else {
                     $timeout = time() + 60*24; // 24 minutes
                 }
 
+                // Get user role and set
+                //$query = "SELECT * FROM roles_user";
+
                 // Set sessions and cookie
                 $_SESSION['user_id'] = $user['id'];
                 setcookie('name', $_POST['name'], $timeout, "/");
+
+
             }
             else {
                 die("wrong password");

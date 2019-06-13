@@ -24,6 +24,31 @@
     // Default theme (if nothing set in database)
     $THEME_DIR = $BASE_DIR . "/csb-themes/default";
 
+/* ----------------------------------------------------------------------
+   Define other useful directories
+   ---------------------------------------------------------------------- */
+
+    $ADMIN_DIR = $BASE_DIR . "/csb-admin";
+    $DB_class  = $ADMIN_DIR. "/db_class.php";
+
+
+/* ----------------------------------------------------------------------
+   Setup User Roles - needed because of potential customizations
+   ---------------------------------------------------------------------- */
+
+    include($DB_class);
+    $db = new DB($db_servername, $db_username, $db_password, $db_name);
+    $query = "SELECT * FROM roles";
+    $result = $db->runQuery($query);
+
+    foreach ($result as $row ) {
+        $roles[$row['name']] = $row['id'];
+    }
+    $db->closeDB();
+
+
+
+
 
 
 

@@ -44,6 +44,10 @@ class DB
         return $conn;
     }
 
+    function closeDB() {
+        mysqli_close($this->conn);
+    }
+
     function runBaseQuery($query) {
         $result = mysqli_query($this->conn,$query);
         while($row=mysqli_fetch_assoc($result)) {
@@ -55,9 +59,25 @@ class DB
         return $resultset;
     }
 
+    function runQuery($query) {
+        $result = mysqli_query($this->conn, $query);
 
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $resultset[] = $row;
+            }
+        }
+        else {
+            return FALSE;
+        }
 
-    function runQuery($query, $param_type, $param_value_array) {
+        if(!empty($resultset)) {
+            return $resultset;
+        }
+
+    }
+
+    function runQueryWhere($query, $param_type, $param_value_array) {
 
         $sql = $this->conn->prepare($query);
         $this->bindQueryParams($sql, $param_type, $param_value_array);
