@@ -168,3 +168,9 @@ echo "You are running the Citizen Science Builder installer <br>";
     echo "Your Admin username is: CodeHerder</br>";
     echo "Your password is: " . $password . "<br/>";
 
+
+/* ----------------------------------------------------------------------
+   End Session
+   ---------------------------------------------------------------------- */
+
+    mysqli_close($conn);

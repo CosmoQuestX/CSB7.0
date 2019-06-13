@@ -1,0 +1,43 @@
+{
+  "app_page": {
+      "title":              "Bennu Mappers",
+      "text-boxes": {
+      "fact-box": {
+        "title": "Quick Facts",
+        "fact1-title": "Data Source:",
+        "fact1-content": "OSIRIS-REx OCAMS Polycam",
+        "fact2-title": "Resolution",
+        "fact2-content": "5cm/pixel, 22.5m per image",
+        "fact3-title": "Number of Views Required",
+        "fact4-content": "15 per image",
+        "fact5-title": "Completed Images:",
+        "fact5-content": "1386",
+        "fact6-title": "Remaining Images:",
+        "fact7-content": "2682",
+        "fact8-title": "Due Date:",
+        "fact8-content": "July 10, 2019",
+        "footer": "Each image has dozens to hundreds of rocks. We can only mark them all with your help!",
+      },
+      "app-box":{
+        "greeting": "Hello,",
+        "profile": "View Profile",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "title": "This login is unique to the Bennu Mappers Project.",
+        "blurb": "Please register with an accurate email address so we can contact you with results! You will receive credit for your efforts using either your user name, or your actual name if you enter it on your profile page. Your email will not be shared outside of our science team and will only be used for science updates and any questions we may have related to giving you credit for your discoveries. For more information, please see our Privacy Policy.",
+        "app-button": "Launch Application",
+        "Links": "Helpful Links",
+        "link1": "FAQ",
+        "link2": "Science Case",
+        "link3": "",
+        "link4": "",
+      },
+        "goal-box": {
+          "title": "Our Goals (& Yours)",
+          "blurb": "NASA is partnering with CosmoQuest Volunteers (that's you!) to map out rocks, boulders, & craters on the asteroid Bennu. These same tasks are being done by mission scientists. Working together, we can develop a hazard map of Bennu and find scientifically interesting places to further explore.",
+          "footer": "Together, we are finding safe regions to potentially grab a rock!",
+        }
+    }
+  }
+}

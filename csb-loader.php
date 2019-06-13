@@ -6,16 +6,24 @@
  * Time: 1:18 PM
  */
 
-require_once("csb-settings.php");
+/* ----------------------------------------------------------------------
+   Load things needed always
+   ---------------------------------------------------------------------- */
 
-// Load Databases
-// Create connection
-$conn = new mysqli($db_servername, $db_username, $db_password, $db_name);
+    require("csb-settings.php");
+    $loader = TRUE;
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection to Database Unsuccessful");
-}
+/* ----------------------------------------------------------------------
+   Define the theme
+
+       1. Check if one is defined in the database  TODO
+       2. Check if it is configured correctly       TODO
+       3. If setup, use that theme, else use default    TODO
+   ---------------------------------------------------------------------- */
+
+    // Default theme (if nothing set in database)
+    $THEME_DIR = $BASE_DIR . "/csb-themes/default";
+
 
 
 
