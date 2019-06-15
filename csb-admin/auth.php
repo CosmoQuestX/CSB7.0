@@ -12,13 +12,40 @@
 
     session_start();
 
-/* ----------------------------------------------------------------------
-   Load all needed includes
-   ---------------------------------------------------------------------- */
 
-    require_once("auth-class.php");
-    require_once("db_class.php");
-    $db = new DB($db_servername, $db_username, $db_password, $db_name);
+
+function chk_UserId($db, $id, $name) {
+
+    $query  = "SELECT id, name FROM users WHERE id = ?";
+    $params = array($id);
+    $result = $db->runQueryWhere($query, "s", $params);
+
+
+    // strip out any white space and make everything lower case because typing
+    $comp = strtolower(trim ( $result['name'], "\t\n\r\0\x0B"));
+    $name = strtolower(trim ( $name, " \t\n\r\0\x0B"));
+
+
+    if (!strcmp($comp, $name))
+        return TRUE;
+    else
+        return FALSE;
+
+}
+
+function chk_Token($db, $token, $name) {
+
+    $query  = "SELECT id, name, remember_token FROM users WHERE name = ?";
+    $params = array($name);
+    $result = $db->runQueryWhere($query, "s", $params);
+
+    if (password_verify($token, $result['remember_token'])) {
+        return TRUE;
+    }
+    else
+        return FALSE;
+
+}
 
 /**
  * Function: isLoggedIn
@@ -27,17 +54,18 @@
  * @return bool
  *
  */
-function isLoggedIn() {
 
-    $flag = FALSE;
+function isLoggedIn($db) {
+
     // look for the session id to be valid
      if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && !empty($_COOKIE["name"]) ) {
-         $flag = TRUE;
+         $flag = chk_UserId($db, $_SESSION['user_id'], $_COOKIE["name"]);
      }
 
      // see if the cookie - WHICH CAN BE TAMPERED WITH - matches the DB
      elseif (!empty($_COOKIE["name"]) && !empty($_COOKIE["token"])) {
-         $flag = TRUE;
+         die("there");
+         $flag = chk_Token($db, $_COOKIE["token"], $_COOKIE["name"]);
      }
 
      if($flag) {

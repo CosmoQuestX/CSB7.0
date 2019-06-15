@@ -40,7 +40,7 @@ if (!isset($loader) || !$loader) {
             - Link to "Forgot Password" TODO
 
    ---------------------------------------------------------------------->
-    <form action="<?php echo($BASE_URL."csb-admin/auth-forms.php"); ?>" method="post" id="form-login">
+    <form action="<?php echo($BASE_URL."csb-admin/auth-login.php"); ?>" method="post" id="form-login">
 
         <input type="hidden" name="referringURL" value="<?php echo $referringURL;?>">
 

@@ -9,6 +9,7 @@
 /* ----------------------------------------------------------------------
    Load things needed always
    ---------------------------------------------------------------------- */
+    global $BASE_DIR, $BASE_URL;
 
     require("csb-settings.php");
     $loader = TRUE;
@@ -27,6 +28,8 @@
 /* ----------------------------------------------------------------------
    Define other useful directories
    ---------------------------------------------------------------------- */
+
+    global $ADMIN_DIR, $DB_class;
 
     $ADMIN_DIR = $BASE_DIR . "/csb-admin";
     $DB_class  = $ADMIN_DIR. "/db_class.php";

@@ -17,10 +17,15 @@ if (!isset($loader) || !$loader) {
  * @param $THEME_DIR
  * @param $user
  */
-function loadHeader($THEME_DIR, $user) {
+function loadHeader($BASE_URL, $THEME_DIR, $user) {
     require ($THEME_DIR . "/header.php");
     ?>
     <h3> Citizen Science Builder Admin Dashboard</h3>
+
+    <!-- logout form -->
+    <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
+        <input type="submit" name="status" value="logout">
+    </form>
     <?php
 }
 

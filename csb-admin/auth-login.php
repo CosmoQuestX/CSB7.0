@@ -15,35 +15,53 @@
 /* ----------------------------------------------------------------------
    Load all needed includes
    ---------------------------------------------------------------------- */
-   require_once ("../csb-loader.php");
+   require_once (__DIR__."/../csb-loader.php");
    require_once ("db_class.php");
-   $db = new DB($db_servername, $db_username, $db_password, $db_name);
+
+/* ----------------------------------------------------------------------
+   Logging out?
+   ---------------------------------------------------------------------- */
+
+    if(isset($_GET['status']) && $_GET['status'] == 'logout') {
+        $timeout = time() - 3600;
+        setcookie("token", "", $timeout, "/");
+        setcookie('name', "", $timeout, "/");
+        $_SESSION = array();
+        session_destroy();
+        session_start();
+        ?>
+        <html>
+        <head>
+            <meta http-equiv="Refresh" content="0; url=<?php echo($BASE_URL);?>" />
+        </head>
+        </html>
+        <?php
+    }
 
 
 /* ----------------------------------------------------------------------
-   Check for get variables - If set, see if person can be logged in
+   Logging in? Check for get variables
    ---------------------------------------------------------------------- */
 
     if (isset($_POST)) {
 
-        //print_r($_POST);
-
         // Does the user exist? Retrieve them from the db
+        $db = new DB($db_servername, $db_username, $db_password, $db_name);
         $query  = "SELECT * FROM users WHERE name = ? ";
-        if ($user = $db->runQueryWhere($query, "s", array("Codeherder"))) {
+        if ($user = $db->runQueryWhere($query, "s", array($_POST['name']))) {
 
-            // Verify the password
+            // Verify the password, set the cookie and session variable
             if(password_verify($_POST['password'], $user['password'])) {
-
-                // Set the cookie and session variable
 
                 // Set timeout variable & token for cookies based on remember checkbox
                 if(isset($_POST['remember']) && !strcmp($_POST['remember'], 'on')) {
-                    $timeout = time() + 60*60*24*30; // 30 days
+
+                    // How long will cookies last: 30 Days
+                    $timeout = time() + 60*60*24*30;
 
                     $chars    = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
                     $token    = substr( str_shuffle( $chars ), 0, 36);
-                    setcookie("token", $token, time() + (24*60*60)*30, "/");
+                    setcookie("token", $token, $timeout, "/");
 
                     // update token in database to compare with later
                     $token_hash = password_hash($token, PASSWORD_DEFAULT);
@@ -53,24 +71,39 @@
 
                 }
                 else {
-                    $timeout = time() + 60*24; // 24 minutes
+                    // How long will cookies last: 24min like sessions (set in php.ini)
+                    $timeout = time() + 60*24;
                 }
 
-                // Get user role and set
-                //$query = "SELECT * FROM roles_user";
+                // Get the person's roles
+                $query = "SELECT role_id, user_id FROM role_users WHERE user_id = ?";
+                $params = array ($user['id']);
+                $result = $db->runQueryWhere($query, "s", $params);
+
+                if (isset($result['role_id'])) {
+                    $roles = $result['role_id'];
+                }
+                else {
+                    $roles = "";
+                    foreach ($result as $role) {
+                        $roles .= $role['role_id'].",";
+                    }
+                }
 
                 // Set sessions and cookie
                 $_SESSION['user_id'] = $user['id'];
                 setcookie('name', $_POST['name'], $timeout, "/");
-
-
+                $_SESSION['roles'] = $roles;
+                session_start();
             }
             else {
-                die("wrong password");
+                $db->closeDB();
+                die("wrong password"); //TODO load login.php with this as the error message
             }
+            $db->closeDB();
         }
         else {
-            die("user not found");
+            die("user not found"); //TODO load login.php with this as the error message
         }
 
         // Send them where they belong TODO find a better way to do this
