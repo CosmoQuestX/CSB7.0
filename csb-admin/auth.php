@@ -64,7 +64,6 @@ function isLoggedIn($db) {
 
      // see if the cookie - WHICH CAN BE TAMPERED WITH - matches the DB
      elseif (!empty($_COOKIE["name"]) && !empty($_COOKIE["token"])) {
-         die("there");
          $flag = chk_Token($db, $_COOKIE["token"], $_COOKIE["name"]);
      }
 

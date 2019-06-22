@@ -43,36 +43,32 @@ if (!isset($loader) || !$loader) {
     <form action="<?php echo($BASE_URL."csb-admin/auth-login.php"); ?>" method="post" id="form-login">
 
         <input type="hidden" name="referringURL" value="<?php echo $referringURL;?>">
-        <input type="hidden" name="go" value="login">
+        <input type="hidden" name="go" value="register">
 
         <div class="error-msg"></div>
 
         <div class="field-textbox">
                 <label for="login">Username</label>
-                <input name="name" type="text"
-                   value="<?php if(isset($_COOKIE["name"])) { echo $_COOKIE["name"]; } ?>"
-                   >
-                <label for="password">Password</label>
-                <input name="password" type="password">
+                <input name="name" type="text"><br/>
+                <label for="email">Email</label>
+                <input name="email" type="text"><br/>
+                <label for="password">Confirm Password</label>
+                <input name="password" type="password"><br/>
+                <label for="confirm">Password</label>
+                <input name="confirm" type="password"><br/>
         </div>
 
         <div class="fields-checkbox">
-            <input type="checkbox" name="remember" id="remember"
-                <?php if(isset($_COOKIE["member_login"])) { ?> checked
-                <?php } ?> />
+            <input type="checkbox" name="remember" id="remember">
             <label for="remember-me">Remember me</label>
         </div>
 
         <div class="field-submit">
-            <input type="submit" name="login" value="Login"
+            <input type="submit" name="register" value="Register"
                    class="form-submit-button">
         </div>
-    </form>
 
-    <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
-        <input type="submit" name="go" value="Register">
-    </form>
-
+</form>
 
 <?php
 
