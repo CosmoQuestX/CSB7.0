@@ -23,7 +23,8 @@
    ---------------------------------------------------------------------- */
 
     // Default theme (if nothing set in database)
-    $THEME_DIR = $BASE_DIR . "/csb-themes/default";
+    $THEME_DIR = $BASE_DIR . "csb-themes/default";
+    $THEME_URL = $BASE_URL . "csb-themes/default";
 
 /* ----------------------------------------------------------------------
    Define other useful directories
@@ -45,7 +46,7 @@
     $result = $db->runQuery($query);
 
     foreach ($result as $row ) {
-        $roles[$row['name']] = $row['id'];
+        $CQ_ROLES[$row['name']] = $row['id'];
     }
     $db->closeDB();
 

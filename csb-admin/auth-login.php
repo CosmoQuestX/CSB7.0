@@ -53,8 +53,58 @@
             Registering TODO add error checking: dup name, dup email
            ---------------------------------------------------------------------- */
         if ($_POST['go'] == 'register') {
-            print_r($_POST);
+
+            // hash password & insert them into the database
             $db = new DB($db_servername, $db_username, $db_password, $db_name);
+            $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+            $query  = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+            $params = array ($_POST['name'], $_POST['email'], $hashed);
+            $id = $db->getInsertId();
+            // TODO make this a function that returns user_id
+
+            // create their role
+
+            $roles = $CQ_ROLES['SITE_NONE'];
+
+            $query = "INSERT INTO role_users (role_id, user_id) values ($roles, $id)"; // TODO requires userid
+            $db->runQuery($query);
+
+            $db->runQueryWhere($query, "sss", $params);
+
+            // create sessions / cookies TODO Make this a function
+
+            // Set timeout variable & token for cookies based on remember checkbox
+            if (isset($_POST['remember']) && !strcmp($_POST['remember'], 'on')) {
+
+                // How long will cookies last: 30 Days
+                $timeout = time() + 60 * 60 * 24 * 30;
+
+                $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
+                $token = substr(str_shuffle($chars), 0, 36);
+                setcookie("token", $token, $timeout, "/");
+
+                // update token in database to compare with later
+                $token_hash = password_hash($token, PASSWORD_DEFAULT);
+                $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
+                $params = array($user['id']);
+                $db->runQueryWhere($query, "s", $params);
+
+            } else {
+                // How long will cookies last: 24min like sessions (set in php.ini)
+                $timeout = time() + 60 * 24;
+            }
+
+            // Get the person's roles
+            $query = "SELECT role_id, user_id FROM role_users WHERE user_id = ?";
+            $params = array($user['id']);
+            $result = $db->runQueryWhere($query, "s", $params);
+
+            // Set sessions and cookie
+            $_SESSION['user_id'] = $user['id'];
+            setcookie('name', $_POST['name'], $timeout, "/");
+            $_SESSION['roles'] = $roles;
+            session_start();
         }
 
         /* ----------------------------------------------------------------------

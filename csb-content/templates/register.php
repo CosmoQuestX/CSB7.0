@@ -30,14 +30,13 @@ if (!isset($loader) || !$loader) {
 ?>
 
 <!-----------------------------------------------------------------------
-   Login form
+   Registration form
         1) Tell them if there is an error (check with JS) TODO
         2) Get their info
         3) Send their info and the return to URL in the form
 
         Also include:
-            - Link to registration TODO
-            - Link to "Forgot Password" TODO
+            - signin instead TODO
 
    ---------------------------------------------------------------------->
     <form action="<?php echo($BASE_URL."csb-admin/auth-login.php"); ?>" method="post" id="form-login">

@@ -54,17 +54,45 @@
 
 
 /* ----------------------------------------------------------------------
-   load things TODO Make logout function
+   load things
    ---------------------------------------------------------------------- */
 
    else {
        require_once ("admin-templates.php");
-       loadHeader($BASE_URL, $THEME_DIR, $auth);
-       echo "I am here<br>";
+       require_once("admin-dashboards.php");
+
+       loadHeader($BASE_URL, $THEME_DIR, $THEME_URL, "CSB Administration Dashboards", $auth);
        ?>
-       <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
-            <input type="submit" name="go" value="logout">
-        </form>
+
+       <div id="main">
+           <div class="container">
+
+               <div id="" class="left-dash left">
+                   <?php listDashboards(); ?>
+               </div>
+
+               <div class="main-dash right">
+
+                   <h3>
+                       Current Status
+                   </h3>
+                   <p>
+                       Stuff will go here
+                   </p>
+
+                   <h3>
+                       Current Stats
+                   </h3>
+                   <p>
+                       Stats will go here
+                   </p>
+               </div>
+               <div class="clear"></div>
+           </div>
+       </div>
+
+
+
         <?php
        loadFooter($THEME_DIR);
    }

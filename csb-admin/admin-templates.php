@@ -17,11 +17,8 @@ if (!isset($loader) || !$loader) {
  * @param $THEME_DIR
  * @param $user
  */
-function loadHeader($BASE_URL, $THEME_DIR, $user) {
+function loadHeader($BASE_URL, $THEME_DIR, $THEME_URL, $page_title, $user) {
     require ($THEME_DIR . "/header.php");
-    ?>
-    <h3> Citizen Science Builder Admin Dashboard</h3>
-    <?php
 }
 
 /**

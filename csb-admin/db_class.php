@@ -79,24 +79,27 @@ class DB
 
     function runQueryWhere($query, $param_type, $param_value_array) {
 
-        $sql = $this->conn->prepare($query);
-        $this->bindQueryParams($sql, $param_type, $param_value_array);
-        $sql->execute();
-        $result = $sql->get_result();
+        if ($sql = $this->conn->prepare($query)) {
+
+            $this->bindQueryParams($sql, $param_type, $param_value_array);
+            $sql->execute();
+            $result = $sql->get_result();
 
 
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $resultset[] = $row;
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $resultset[] = $row;
+                }
+            } else {
+                return FALSE;
+            }
+
+            if (!empty($resultset)) {
+                return $resultset[0];
             }
         }
-        else {
-            return FALSE;
-        }
-
-        if(!empty($resultset)) {
-            return $resultset[0];
-        }
+        else
+            die("SQL error on " . $this->database);
     }
 
     function bindQueryParams($sql, $param_type, $param_value_array) {
@@ -122,5 +125,10 @@ class DB
         $this->bindQueryParams($sql, $param_type, $param_value_array);
         $sql->execute();
     }
+
+    function getInsertId() {
+        return $this->conn->insert_id;
+    }
+
 }
 ?>
