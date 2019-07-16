@@ -1,0 +1,131 @@
+/* Colors
+    Red:      #BC2132
+    Orange:   #F05B36
+    Yellow:   #F3C749
+    Green:
+    Blue:
+    Purple:
+    Pinkle:
+
+    Max-Page: 1170
+    Media:  970 @992, 750@768
+
+*/
+
+  body {
+    background-color: #424FA2;
+    background-image: url("images/background.jpg");
+    color: #FFF8E9;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    }
+
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  .container {
+    width: 1170px;
+    margin: 0 auto;
+  }
+
+  .left {
+    float: left;
+  }
+
+  .right {
+    float: right;
+  }
+
+  .clear {
+    clear: both;
+  }
+
+  p {
+    line-height: 1.2em;
+    margin-bottom: 0.8em;
+  }
+
+  h3 {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+  }
+
+  li {
+    margin-left: 1em;
+  }
+
+/* --------------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------------- */
+
+  #logo {
+    width: 400px;
+  }
+
+  #title H1 {
+    color: #ffffff;
+    margin-top: 35px;
+  }
+
+/* --------------------------------------------------------------------------------
+   Main
+   -------------------------------------------------------------------------------- */
+
+  #main {
+    background: #000000;
+    padding: 2em 0;
+  }
+
+  #main .container {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 2em;
+    border-radius: 10px;
+  }
+
+  .left-dash {
+    background-color: #ffffff;
+    color: #1d1d1d;
+    padding: 15px;
+    margin-right: 20px;
+    border-radius: 10px;
+    width: 230px; /* basesize 1170px */
+  }
+
+  .main-dash {
+    background-color: #ffffff;
+    color: #1d1d1d;
+    padding: 15px;
+    border-radius: 10px;
+    width: 860px; /* basesize 1170px - left-dash 230px - padding 4*15px - margin 20px*/
+  }
+
+
+
+/* --------------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------------- */
+
+  #footer {
+    background: #1d1d1d;
+    text-align: center;
+    font-size: 0.9em;
+    padding: 20px 0;
+  }
+
+
+@media screen and (max-width: 991px) {
+  /* start of large tablet styles */
+
+}
+
+@media screen and (max-width: 767px) {
+  /* start of medium tablet styles */
+
+}
+
+@media screen and (max-width: 479px) {
+  /* start of phone styles */
+
+}
