@@ -9,6 +9,7 @@
 
 <html>
 <head>
+    <?php loadMeta(); ?>
     <link href='http://fonts.googleapis.com/css?family=Roboto:regular,bold,bolditalic,italic' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="<?php echo $THEME_URL;?>/style.css">
 </head>
@@ -38,21 +39,7 @@
       ---------------------------------------------------------------------->
         <div id="user" class="right">
 
-            <?php
-            if ($auth) {
-                ?>
-                <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
-                    <input type="submit" name="go" value="logout">
-                </form>
-                <?php
-            }
-            else {
-                echo "not logged in";
-            }
-
-            ?>
-
-
+            <?php loadUser(); ?>
 
         </div>
 

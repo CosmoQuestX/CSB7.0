@@ -1,0 +1,88 @@
+/*
+   These styles get over-written by theme styles
+ */
+
+
+body {
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    width: 1170px;
+    margin: 0 auto;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+
+@media screen and (max-width: 991px) {
+    /* start of large tablet styles */
+
+}
+
+@media screen and (max-width: 767px) {
+    /* start of medium tablet styles */
+
+}
+
+@media screen and (max-width: 479px) {
+    /* start of phone styles */
+
+}
+
+/* --------------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------------- */
+
+    #logo {
+        width: 400px;
+    }
+
+    #user {
+        margin-top: 5px;
+    }
+
+/* --------------------------------------------------------------------------------
+   Boxes
+   -------------------------------------------------------------------------------- */
+
+    #form-box {
+        width: 50%;
+        margin: 0 auto;
+    }
+
+/* --------------------------------------------------------------------------------
+   App
+   -------------------------------------------------------------------------------- */
+
+.app-left {
+    padding: 15px;
+    margin-right: 20px;
+    border-radius: 10px;
+    width: 230px; /* basesize 1170px */
+}
+
+.app-main {
+    padding: 15px;
+    border-radius: 10px;
+    width: 510px;
+}
+
+.app-right {
+    background: none;
+}
+

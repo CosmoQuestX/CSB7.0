@@ -32,24 +32,19 @@
 
     $db = new DB($db_servername, $db_username, $db_password, $db_name);
 
+    global $user;
     $user = isLoggedIn($db);
-
-    if ( $user === FALSE ) {         // NOT LOGGED IN
-        $auth = 0;
-    }
-    else {
-        $auth = 1;
-    }
 
 
 /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
+    global $page_title;
 
     $page_title = "";
 
-    require_once($THEME_DIR . "/header.php");
-    require_once($THEME_DIR . "/app.php");
+    require_once($BASE_DIR . "/csb-content/template_functions.php");
+    require_once($THEME_DIR . "/app-template.php");
     require_once($THEME_DIR . "/footer.php");
 
 

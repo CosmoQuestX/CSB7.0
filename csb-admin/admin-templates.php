@@ -18,7 +18,8 @@ if (!isset($loader) || !$loader) {
  * @param $user
  */
 function loadHeader($page_title, $auth = 0) {
-    global $BASE_URL, $THEME_DIR, $THEME_URL;
+    global $BASE_URL, $BASE_DIR, $THEME_DIR, $THEME_URL;
+
     require ($THEME_DIR . "/header.php");
 }
 

@@ -42,8 +42,9 @@ function chk_Token($db, $token, $name) {
     if (password_verify($token, $result['remember_token'])) {
         return TRUE;
     }
-    else
+    else {
         return FALSE;
+    }
 
 }
 
@@ -57,6 +58,8 @@ function chk_Token($db, $token, $name) {
 
 function isLoggedIn($db) {
 
+    $flag = FALSE;
+
     // look for the session id to be valid
      if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && !empty($_COOKIE["name"]) ) {
          $flag = chk_UserId($db, $_SESSION['user_id'], $_COOKIE["name"]);
@@ -67,9 +70,9 @@ function isLoggedIn($db) {
          $flag = chk_Token($db, $_COOKIE["token"], $_COOKIE["name"]);
      }
 
-     if($flag) {
-         $user = array( "name" => $_COOKIE["name"], "id" => session_id() );
-         return $user;
+
+     if($flag !== FALSE) {
+         return array( "name" => $_COOKIE["name"], "id" => session_id() );
      }
      else
          return FALSE;

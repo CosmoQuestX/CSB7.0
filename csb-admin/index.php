@@ -12,6 +12,7 @@
    require_once ("../csb-loader.php");
    require_once ($DB_class);
    require_once ($BASE_DIR."csb-admin/auth.php");
+   $adminFlag = 1;
 
 /* ----------------------------------------------------------------------
    Check for post variables
@@ -30,7 +31,12 @@
 
    $db = new DB($db_servername, $db_username, $db_password, $db_name);
 
-   if ($login || isLoggedIn($db) === FALSE ) {         // NOT LOGGED IN
+    global $user;
+    $user = isLoggedIn($db);
+
+
+   if ($login || $user === FALSE ) { // NOT LOGGED IN
+    //if ($login) {
        require_once ($BASE_DIR."csb-content/templates/login.php");
    }
 
@@ -58,12 +64,14 @@
    ---------------------------------------------------------------------- */
 
    else {
+       global $page_title;
 
-       require_once ("admin-templates.php");
+       $page_title = "CSB Administration Dashboards";
+
+       require_once($BASE_DIR . "/csb-content/template_functions.php");
        require_once("admin-dashboards.php");
 
-       loadHeader("CSB Administration Dashboards", 1);
-
+       loadHeader();
        ?>
 
        <div id="main">
@@ -96,7 +104,7 @@
 
 
         <?php
-       loadFooter();
+        loadFooter();
    }
 
    $db->closeDB();

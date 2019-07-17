@@ -16,16 +16,17 @@ if (!isset($loader) || !$loader) {
    Where should they go to?
    ---------------------------------------------------------------------- */
 
-    // Are they on this site?
+// Are they on this site?
 
-    $referringURL = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$referringURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 
 /* ----------------------------------------------------------------------
    Where did they come from
    ---------------------------------------------------------------------- */
 
-    require_once ($THEME_DIR."/header.php");
+require_once($BASE_DIR . "/csb-content/template_functions.php");
+loadHeader();
 
 ?>
 
@@ -40,42 +41,47 @@ if (!isset($loader) || !$loader) {
             - Link to "Forgot Password" TODO
 
    ---------------------------------------------------------------------->
-    <form action="<?php echo($BASE_URL."csb-admin/auth-login.php"); ?>" method="post" id="form-login">
 
-        <input type="hidden" name="referringURL" value="<?php echo $referringURL;?>">
-        <input type="hidden" name="go" value="login">
+<div class="container">
+    <div id="form-box">
+        <form action="<?php echo($BASE_URL . "csb-admin/auth-login.php"); ?>" method="post" id="form-login">
 
-        <div class="error-msg"></div>
+            <input type="hidden" name="referringURL" value="<?php echo $referringURL; ?>">
+            <input type="hidden" name="go" value="login">
 
-        <div class="field-textbox">
+            <div class="error-msg"></div>
+
+            <div class="field-textbox">
                 <label for="login">Username</label>
                 <input name="name" type="text"
-                   value="<?php if(isset($_COOKIE["name"])) { echo $_COOKIE["name"]; } ?>"
-                   >
+                       value="<?php if (isset($_COOKIE["name"])) {
+                           echo $_COOKIE["name"];
+                       } ?>"
+                >
                 <label for="password">Password</label>
                 <input name="password" type="password">
-        </div>
+            </div>
 
-        <div class="fields-checkbox">
-            <input type="checkbox" name="remember" id="remember"
-                <?php if(isset($_COOKIE["member_login"])) { ?> checked
-                <?php } ?> />
-            <label for="remember-me">Remember me</label>
-        </div>
+            <div class="fields-checkbox">
+                <input type="checkbox" name="remember" id="remember"
+                    <?php if (isset($_COOKIE["member_login"])) { ?> checked
+                    <?php } ?> />
+                <label for="remember-me">Remember me</label>
+            </div>
 
-        <div class="field-submit">
-            <input type="submit" name="login" value="Login"
-                   class="form-submit-button">
-        </div>
-    </form>
+            <div class="field-submit">
+                <input type="submit" name="login" value="Login"
+                       class="form-submit-button">
+            </div>
+        </form>
 
-    <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
-        <input type="submit" name="go" value="Register">
-    </form>
-
-
+        <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
+            <input type="submit" name="go" value="register">
+        </form>
+    </div>
+</div>
 <?php
 
-require_once ($THEME_DIR."/footer.php");
+require_once($THEME_DIR . "/footer.php");
 
 ?>

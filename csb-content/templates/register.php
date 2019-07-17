@@ -25,7 +25,8 @@ if (!isset($loader) || !$loader) {
    Where did they come from
    ---------------------------------------------------------------------- */
 
-    require_once ($THEME_DIR."/header.php");
+    require_once($BASE_DIR . "/csb-content/template_functions.php");
+    loadHeader();
 
 ?>
 
@@ -42,7 +43,7 @@ if (!isset($loader) || !$loader) {
     <form action="<?php echo($BASE_URL."csb-admin/auth-login.php"); ?>" method="post" id="form-login">
 
         <input type="hidden" name="referringURL" value="<?php echo $referringURL;?>">
-        <input type="hidden" name="go" value="register">
+        <input type="hidden" name="go" value="regForm">
 
         <div class="error-msg"></div>
 

@@ -9,7 +9,7 @@
 /* ----------------------------------------------------------------------
    Load things needed always
    ---------------------------------------------------------------------- */
-    global $BASE_DIR, $BASE_URL;
+    global $BASE_DIR, $BASE_URL, $adminFlag;
 
     require("csb-settings.php");
     $loader = TRUE;
@@ -25,8 +25,8 @@
     // Default theme (if nothing set in database)
     global $THEME_URL, $THEME_DIR;
 
-    $THEME_DIR = $BASE_DIR . "csb-themes/default";
-    $THEME_URL = $BASE_URL . "csb-themes/default";
+    $THEME_DIR = $BASE_DIR . "csb-themes/default/";
+    $THEME_URL = $BASE_URL . "csb-themes/default/";
 
 /* ----------------------------------------------------------------------
    Define other useful directories
@@ -50,6 +50,8 @@
         $CQ_ROLES[$row['name']] = $row['id'];
     }
     $db->closeDB();
+
+    $adminFlag = FALSE;
 
 
 

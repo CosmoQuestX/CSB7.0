@@ -20,28 +20,6 @@
     font-size: 14px;
     }
 
-  * {
-    padding: 0;
-    margin: 0;
-  }
-
-  .container {
-    width: 1170px;
-    margin: 0 auto;
-  }
-
-  .left {
-    float: left;
-  }
-
-  .right {
-    float: right;
-  }
-
-  .clear {
-    clear: both;
-  }
-
   p {
     line-height: 1.2em;
     margin-bottom: 0.8em;
@@ -60,14 +38,23 @@
    Header
    -------------------------------------------------------------------------------- */
 
-  #logo {
-    width: 400px;
-  }
-
   #title H1 {
     color: #ffffff;
-    margin-top: 35px;
+    margin-top: 37px;
   }
+
+
+/* --------------------------------------------------------------------------------
+   Boxes
+   -------------------------------------------------------------------------------- */
+
+   #form-box {
+     background: #ffffff;
+     color: #1d1d1d;
+     padding: 15px;
+     margin: 20px auto;
+     border-radius: 10px;
+   }
 
 /* --------------------------------------------------------------------------------
    Main
@@ -108,23 +95,15 @@
 .app-left {
   background-color: #000000;
   color: #ffffff;
-  padding: 15px;
-  margin-right: 20px;
-  border-radius: 10px;
-  width: 230px; /* basesize 1170px */
 }
 
 .app-main {
   background-color: #ffffff;
   color: #1d1d1d;
-  padding: 15px;
-  border-radius: 10px;
-  width: 510px;
 }
 
 .app-right {
   background: none;
-  width: 330px; /* basesize 1170px - left-dash 230px - padding 4*15px - margins 2* 20p - app 510 x*/
 }
 
 
