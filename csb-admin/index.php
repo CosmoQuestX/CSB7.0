@@ -30,7 +30,7 @@
 
    $db = new DB($db_servername, $db_username, $db_password, $db_name);
 
-   if ($login || isLoggedIn($db) === FALSE) {         // NOT LOGGED IN
+   if ($login || isLoggedIn($db) === FALSE ) {         // NOT LOGGED IN
        require_once ($BASE_DIR."csb-content/templates/login.php");
    }
 
@@ -58,10 +58,12 @@
    ---------------------------------------------------------------------- */
 
    else {
+
        require_once ("admin-templates.php");
        require_once("admin-dashboards.php");
 
-       loadHeader($BASE_URL, $THEME_DIR, $THEME_URL, "CSB Administration Dashboards", $auth);
+       loadHeader("CSB Administration Dashboards", 1);
+
        ?>
 
        <div id="main">
@@ -94,7 +96,7 @@
 
 
         <?php
-       loadFooter($THEME_DIR);
+       loadFooter();
    }
 
    $db->closeDB();

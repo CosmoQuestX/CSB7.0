@@ -26,29 +26,30 @@
     require_once ($DB_class);
     require_once ($BASE_DIR."csb-admin/auth.php");
 
+/* ----------------------------------------------------------------------
+   Is the person logged in?
+   ---------------------------------------------------------------------- */
+
+    $db = new DB($db_servername, $db_username, $db_password, $db_name);
+
+    $user = isLoggedIn($db);
+
+    if ( $user === FALSE ) {         // NOT LOGGED IN
+        $auth = 0;
+    }
+    else {
+        $auth = 1;
+    }
+
 
 /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
 
-    echo "Made it this far.<br>";
+    $page_title = "";
 
-    echo "let's do the thing.";
-
-/* ----------------------------------------------------------------------
-    Is the person logged in?
-   ---------------------------------------------------------------------- */
-
-    $db = new DB($db_servername, $db_username, $db_password, $db_name);
-
-    if ($login || isLoggedIn($db) === FALSE) {         // NOT LOGGED IN
-        require_once ($BASE_DIR."csb-content/templates/login.php");
-    }
+    require_once($THEME_DIR . "/header.php");
+    require_once($THEME_DIR . "/app.php");
+    require_once($THEME_DIR . "/footer.php");
 
 
-    ?>
-
-
-<form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
-    <input type="submit" name="go" value="logout">
-</form>

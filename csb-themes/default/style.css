@@ -101,6 +101,31 @@
     width: 860px; /* basesize 1170px - left-dash 230px - padding 4*15px - margin 20px*/
   }
 
+/* --------------------------------------------------------------------------------
+   App
+   -------------------------------------------------------------------------------- */
+
+.app-left {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 15px;
+  margin-right: 20px;
+  border-radius: 10px;
+  width: 230px; /* basesize 1170px */
+}
+
+.app-main {
+  background-color: #ffffff;
+  color: #1d1d1d;
+  padding: 15px;
+  border-radius: 10px;
+  width: 510px;
+}
+
+.app-right {
+  background: none;
+  width: 330px; /* basesize 1170px - left-dash 230px - padding 4*15px - margins 2* 20p - app 510 x*/
+}
 
 
 /* --------------------------------------------------------------------------------

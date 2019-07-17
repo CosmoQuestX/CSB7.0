@@ -23,6 +23,8 @@
    ---------------------------------------------------------------------- */
 
     // Default theme (if nothing set in database)
+    global $THEME_URL, $THEME_DIR;
+
     $THEME_DIR = $BASE_DIR . "csb-themes/default";
     $THEME_URL = $BASE_URL . "csb-themes/default";
 
@@ -34,7 +36,6 @@
 
     $ADMIN_DIR = $BASE_DIR . "/csb-admin";
     $DB_class  = $ADMIN_DIR. "/db_class.php";
-
 
 /* ----------------------------------------------------------------------
    Setup User Roles - needed because of potential customizations

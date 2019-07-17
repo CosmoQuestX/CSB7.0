@@ -37,9 +37,23 @@
         Load User Area TODO ADD LOGIC TO LOGIN OR LOGOUT AS MAKES SENSE
       ---------------------------------------------------------------------->
         <div id="user" class="right">
-            <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
-                <input type="submit" name="go" value="logout">
-            </form>
+
+            <?php
+            if ($auth) {
+                ?>
+                <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
+                    <input type="submit" name="go" value="logout">
+                </form>
+                <?php
+            }
+            else {
+                echo "not logged in";
+            }
+
+            ?>
+
+
+
         </div>
 
 </div>

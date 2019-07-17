@@ -17,13 +17,16 @@ if (!isset($loader) || !$loader) {
  * @param $THEME_DIR
  * @param $user
  */
-function loadHeader($BASE_URL, $THEME_DIR, $THEME_URL, $page_title, $user) {
+function loadHeader($page_title, $auth = 0) {
+    global $BASE_URL, $THEME_DIR, $THEME_URL;
     require ($THEME_DIR . "/header.php");
 }
 
 /**
  * @param $THEME_DIR
  */
-function loadFooter($THEME_DIR) {
+function loadFooter() {
+    global $THEME_DIR;
+    
     require ($THEME_DIR . "/footer.php");
 }
