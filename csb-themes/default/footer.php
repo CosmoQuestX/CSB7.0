@@ -9,7 +9,7 @@
 
 <div id="footer">
     <div class="container">
-        Thanks for using Citizen Science Builder by CosmoQuest.
+        Powered by CosmoQuest's Citizen Science Builder.
         This is a product of the Planetary Science Institute.
     </div>
 </div>

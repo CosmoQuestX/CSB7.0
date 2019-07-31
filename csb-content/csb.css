@@ -89,9 +89,9 @@ body {
 }
 
 #app-canvas {
-    width:450px;
+    width: 450px;
     height: 450px;
-    background: #cccccc;
+    background: #cccccc url('images/buttons/Loading.gif') center center;
     border-radius: 5px;
 }
 
