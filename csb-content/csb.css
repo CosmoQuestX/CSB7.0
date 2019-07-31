@@ -77,9 +77,27 @@ body {
 }
 
 .app-main {
-    padding: 15px;
+    padding: 10px;
     border-radius: 10px;
-    width: 510px;
+    width: 520px;
+    height: 450px;
+}
+
+#app-button-container {
+    margin-right: 10px;
+    height: 450px;
+}
+
+#app-canvas {
+    width:450px;
+    height: 450px;
+    background: #cccccc;
+    border-radius: 5px;
+}
+
+.app-button {
+    width: 60px;
+    height: 60px;
 }
 
 .app-right {
