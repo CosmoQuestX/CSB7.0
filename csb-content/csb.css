@@ -28,6 +28,14 @@ body {
     clear: both;
 }
 
+.hide {
+    display: none;
+}
+
+.notSelected {
+    opacity: 0.5;
+}
+
 
 @media screen and (max-width: 991px) {
     /* start of large tablet styles */
@@ -69,14 +77,34 @@ body {
    App
    -------------------------------------------------------------------------------- */
 
-.app-left {
-    padding: 15px;
+#app-left {
+    padding: 10px;
     margin-right: 20px;
     border-radius: 10px;
     width: 230px; /* basesize 1170px */
+    height: 450px;
+    position: relative;
 }
 
-.app-main {
+#app-examples {
+    position: absolute;
+    top: 365px;
+    height: 100px;
+}
+
+#app-examples h4 {
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+.example-image {
+    width: 72px;
+    height: 72px;
+    margin-right: 7px;
+    border-radius: 5px;
+}
+
+#app-main {
     padding: 10px;
     border-radius: 10px;
     width: 520px;
@@ -91,7 +119,7 @@ body {
 #app-canvas {
     width: 450px;
     height: 450px;
-    background: #cccccc url('images/buttons/Loading.gif') center center;
+    background: #cccccc url('images/buttons/Loading.gif') center center no-repeat;
     border-radius: 5px;
 }
 
@@ -100,7 +128,9 @@ body {
     height: 60px;
 }
 
-.app-right {
+#app-right {
     background: none;
+    width: 340px;
+    margin-left: 10px;
 }
 

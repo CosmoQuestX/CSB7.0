@@ -15,14 +15,18 @@
   body {
     background-color: #424FA2;
     background-image: url("images/background.jpg");
-    color: #FFF8E9;
+    color: #FFFFFF;
     font-family: "Roboto", sans-serif;
     font-size: 14px;
     }
 
   p {
-    line-height: 1.2em;
+    line-height: 1.4em;
     margin-bottom: 0.8em;
+  }
+
+  h2 {
+    margin-bottom: 0.5em;
   }
 
   h3 {
@@ -92,17 +96,17 @@
    App
    -------------------------------------------------------------------------------- */
 
-.app-left {
+#app-left {
   background-color: #000000;
   color: #ffffff;
 }
 
-.app-main {
+#app-main {
   background-color: #ffffff;
   color: #1d1d1d;
 }
 
-.app-right {
+#app-right {
   background: none;
 }
 
