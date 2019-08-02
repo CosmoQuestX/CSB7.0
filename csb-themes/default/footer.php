@@ -15,4 +15,9 @@
 </div>
 
 </body>
+
+
+<script src="<?php echo $BASE_URL;?>/csb-content/js/csb.js"></script>
+
+
 </html>

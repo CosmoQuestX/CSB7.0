@@ -31,7 +31,7 @@ function loadUser() {
 
     if ( $user === FALSE) {         // NOT LOGGED IN
         if ($adminFlag === FALSE) {
-            echo "put login here";  // TODO ADD LOGIN BOX THAT WILL OPEN OVER SCREEN
+           ?> <button id="alert-botton">Login</button> <?php  // TODO ADD LOGIN BOX THAT WILL OPEN OVER SCREEN
         }
         else {
             echo "not logged in";

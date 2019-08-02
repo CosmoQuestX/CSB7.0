@@ -127,7 +127,7 @@ function login($db, $user) {
     ?>
     <html>
     <head>
-        <meta http-equiv="Refresh" content="0; url=<?php echo("http://" . $user['referringURL']); ?>"/>
+        <meta http-equiv="refresh" content="0;URL='http://localhost/CSB7.0/'" />
     </head>
     </html>
     <?php
