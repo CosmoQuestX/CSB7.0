@@ -44,6 +44,7 @@ if (isset($_GET['go'])) {
     } /* Logging in? Check for post variables --------------------------------------- */
     elseif ($_POST['go'] == 'login') {
 
+        //print_r($_POST); die();
         login($db, $_POST);
 
     } else { // Javascript checks should prevent this from happening
@@ -127,7 +128,7 @@ function login($db, $user) {
     ?>
     <html>
     <head>
-        <meta http-equiv="refresh" content="0;URL='http://localhost/CSB7.0/'" />
+        <meta http-equiv="refresh" content="0;URL=<?php echo $user['referringURL']?>" />
     </head>
     </html>
     <?php

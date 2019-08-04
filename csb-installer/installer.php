@@ -9,7 +9,7 @@
 require_once("../csb-settings.php");
 require_once("installer-functions.php");
 
-echo "You are running the Citizen Science Builder installer <br>";
+echo "You are running the Citizen science Builder installer <br>";
 
 
 /* ----------------------------------------------------------------------
