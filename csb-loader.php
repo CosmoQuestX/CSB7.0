@@ -10,7 +10,6 @@
    Load things needed always
    ---------------------------------------------------------------------- */
     global $BASE_DIR, $BASE_URL, $adminFlag;
-
     require("csb-settings.php");
     $loader = TRUE;
 

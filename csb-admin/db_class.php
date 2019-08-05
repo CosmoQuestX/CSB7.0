@@ -68,13 +68,28 @@ class DB
             while($row = $result->fetch_assoc()) {
                 $resultset[] = $row;
             }
+	    return $resultset;
         }
         else {
             return FALSE;
         }
 
-        if(!empty($resultset)) {
-            return $resultset;
+    }
+
+    function runQueryTest($query) {
+	    echo $query;
+
+	    $result = mysqli_query($this->conn, $query);
+        echo mysqli_error($this->conn);
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $resultset[] = $row;
+            }
+	    return $resultset;
+        }
+        else {
+            echo FALSE;
         }
 
     }
