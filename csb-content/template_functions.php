@@ -50,6 +50,7 @@ function loadUser() {
 }
 
 function loadLoginBox() {
+    global $BASE_URL;
     ?>
 
     <div id="alert-box" class="alert">

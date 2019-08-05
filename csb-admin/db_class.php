@@ -60,7 +60,9 @@ class DB
     }
 
     function runQuery($query) {
+
         $result = mysqli_query($this->conn, $query);
+        echo mysqli_error($this->conn);
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
