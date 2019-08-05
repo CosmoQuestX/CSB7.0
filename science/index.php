@@ -55,11 +55,12 @@ loadHeader();
                        foreach ($listings as $item) { ?>
                            <form id='<?php echo $item;?>' action='<?php echo $_SERVER['PHP_SELF'] ?>' method='GET'>
                            <input type='hidden' name='task' value='<?php echo $item;?>'>
-                               <li>
-                                    <a href='#' onclick='document.getElementById("<?php echo $item;?>").submit();'>
-                                        <?php echo $item; ?>
-                                    </a>
-                               </li>
+                           <li>
+                                <a href='#' onclick='document.getElementById("<?php echo $item;?>").submit();'>
+                                    <?php echo $item; ?>
+                                </a>
+                           </li>
+                           </form>
                                <?php
                        }
 
