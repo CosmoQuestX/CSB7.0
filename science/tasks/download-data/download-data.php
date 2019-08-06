@@ -22,10 +22,12 @@
     else {
         echo "<select name=\"app_id\">";
         foreach ($results as $result) {
-            if($result['id'] == 21) ?>
-                echo "<option value='".$result["id"]."' SELECTED>".$result['title']."</option>";
+            $id = $result['id'];
+            $title = $result['title'];
+            if($id == 21) ?>
+                echo "<option value='$id' SELECTED>$title</option>";
             else
-                echo "<option value='".$result["id"]."'>".$result['title'];?></option> <?php
+                echo "<option value='$id'>$title</option> <?php
             ?>
             <?php echo "</select></p>";
         }
