@@ -5,7 +5,8 @@
 ?>
 
 
-    <form id="GetImageId" action="<?php echo $BASE_URL;?>/science/get-image-details/get-image-details.php">
+    <form id="GetImageId" action="<?php echo $BASE_URL;?>/science/">
+        <input type="hidden" name="task" value="get-image-details">
         Enter Master Image Name: <input type="text" name="image_set_name" size="32"><input type="submit">
     </form>
 

@@ -79,6 +79,7 @@ class DB
     function runQueryTest($query) {
 	    echo $query;
 
+	    echo mysqli_ping($this->conn);
 	    $result = mysqli_query($this->conn, $query);
         echo mysqli_error($this->conn);
 

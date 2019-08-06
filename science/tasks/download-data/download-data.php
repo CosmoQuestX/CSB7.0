@@ -7,7 +7,8 @@
 ?>
 
 
-<form id="DataFormat" action="<?php echo $BASE_URL;?>/science/download-data/download-data.php">
+<form id="DataFormat" action="<?php echo $BASE_URL;?>/science/index.php?task=download-data">
+    <input type="hidden" name="task" value="download-data">
 
     <h3>Select Data Download Options</h3>
 
@@ -19,12 +20,14 @@
 
     if ($results === FALSE ) echo "No applications found";
     else {
+        echo "<select name=\"app_id\">";
         foreach ($results as $result) {
+            if($result['id'] == 21) ?>
+                echo "<option value='".$result['id']."' SELECTED>".$result['title']."</option>";
+            else
+                echo "<option value='".$result['id']."'>".$result['title'];?></option> <?php
             ?>
-            <select name="app_id">
-                <option value="<?php echo $result['id'];?>"><?php echo $result['title'];?></option>
-            </select></p>
-            <?php
+            <?php echo "</select></p>";
         }
     }
     ?>
@@ -37,8 +40,12 @@
     </p>
 
     <input type="submit" value="go">
-
-
-
-
 </form>
+
+<?php
+if (isset($_GET) && isset($_GET['go'])) {
+    print_r($_GET);
+}
+
+
+?>
