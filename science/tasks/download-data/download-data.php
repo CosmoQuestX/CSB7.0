@@ -24,12 +24,11 @@
         foreach ($results as $result) {
             $id = $result['id'];
             $title = $result['title'];
-            if($id == 21) ?>
+            if($id == 21) 
                 echo "<option value='$id' SELECTED>$title</option>";
             else
-                echo "<option value='$id'>$title</option> <?php
-            ?>
-            <?php echo "</select></p>";
+                echo "<option value='$id'>$title</option>";
+            echo "</select></p>";
         }
     }
     ?>
@@ -45,7 +44,7 @@
 </form>
 
 <?php
-if (isset($_GET) && isset($_GET['go'])) {
+if (isset($_GET) && isset($_GET['app_id'])) {
     print_r($_GET);
 }
 
