@@ -23,9 +23,9 @@
         echo "<select name=\"app_id\">";
         foreach ($results as $result) {
             if($result['id'] == 21) ?>
-                echo "<option value='".$result['id']."' SELECTED>".$result['title']."</option>";
+                echo "<option value='".$result["id"]."' SELECTED>".$result['title']."</option>";
             else
-                echo "<option value='".$result['id']."'>".$result['title'];?></option> <?php
+                echo "<option value='".$result["id"]."'>".$result['title'];?></option> <?php
             ?>
             <?php echo "</select></p>";
         }

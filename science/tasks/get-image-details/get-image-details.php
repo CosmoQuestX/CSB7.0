@@ -31,7 +31,7 @@
 
 	$image_set_id = $resultset[0]['id'];
 	
-        echo "<p><strong>Image id:</strong> ", $image_set_id."<br/>";
+        echo "<p><strong>Image Set id:</strong> ", $image_set_id."<br/>";
 
 
 	// Get images in that set
