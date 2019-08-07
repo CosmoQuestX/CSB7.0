@@ -65,7 +65,7 @@ if (isset($_GET) && isset($_GET['app_id'])) {
 
 <script>
     function dataFunction(app_id, combined) {
-        var myWindow = window.open("http://localhost/CSB7.0/science/tasks/download-data/output.php?app_id=" + app_id + "&combined=" + combined, "", "width=800,height=100");
+        var myWindow = window.open("/science/tasks/download-data/output.php?app_id=" + app_id + "&combined=" + combined, "", "width=800,height=100");
         return
     }
 </script>
