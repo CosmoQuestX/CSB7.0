@@ -1,40 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<?php ?>
+<HTML>
+<HEAD>
+    <TITLE>
+        Add three numbers
+    </TITLE>
+    <SCRIPT>
+        function addThreeNums (inOne, inTwo, inThree) {
 
-
-</head>
-<body>
-    <form id="LoginForm" onsubmit="return false">
-        <h1>Login Form</h1>
-        <div class="FormRow">
-            <label for="Username">Username:</label>
-            <input type="text" size="15" id="Username" name="Username">
-        </div>
-        <div class="FormRow">
-            <label for="Password">Password:</label>
-            <input type="password" size="15" id="Password" name="Password">
-        </div>
-        <div class="FormRow" id="LoginButtonDiv">
-            <input type="submit" value="Login">
-        </div>
-        <div id="BadLogin" style="display: none;">
-            <p>The login information you entered does not match
-                an account in our records. Please try again.</p>
-        </div>
-    </form>
-</body>
-
-<script>
-
-    document.getElementById("LoginButtonDiv").addEventListener("click", function() {
-            document.getElementByID("BadLogin").style.display = "inline";
-        });
-    }
-
-</script>
-
-</html>
+            return Number(inOne) + Number(inTwo) + inThree;
+        }
+    </SCRIPT>
+</HEAD>
+<BODY>
+<FORM Name="theForm">
+    <INPUT Type=Text Name="num1">
+    <INPUT Type=Text Name="num2">
+    <INPUT Type=Text Name="num3">
+    <INPUT Type=Button Value="Add Them"
+           onClick='document.write("sum:" +addThreeNums(theForm.num1.value,theForm.num2.value,theForm.num3.value));'>
+</FORM>
+</BODY>
+</HTML>
 

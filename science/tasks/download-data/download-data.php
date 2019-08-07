@@ -7,9 +7,10 @@
 ?>
 
 
-<form id="DataFormat" action="<?php echo $BASE_URL;?>/science/index.php?task=download-data">
+<!-- <form id="DataFormat" action="<?php echo $BASE_URL;?>/science/index.php?task=download-data"> -->
+<form id="DataFormat" action="">
     <input type="hidden" name="task" value="download-data">
-
+    <input type="hidden" name="app_id" value="21">
     <h3>Select Data Download Options</h3>
 
     <!-- Select Project -->
@@ -36,17 +37,35 @@
 
     <!-- Individual / Combined -->
     <p><strong>Kind of Marks</strong><br/>
-    <input type="radio" name="combined" value="TRUE" checked>   Combined Marks &nbsp; &nbsp;
-    <input type="radio" name="combined" value="FALSE">          Individual Marks
+    <input type="radio" name="combined" value="TRUE">   Combined Marks &nbsp; &nbsp;
+    <input type="radio" name="combined" value="FALSE"  checked>          Individual Marks
     </p>
 
-    <input type="submit" value="go">
+    <input type="button" value="download" onClick='dataFunction(DataFormat.app_id.value,DataFormat.combined.value);'>
 </form>
+
+<div id='results'></div>
+
+<?php
+
+?>
+
 
 <?php
 if (isset($_GET) && isset($_GET['app_id'])) {
-    print_r($_GET);
+    if ($_GET['combined'] === TRUE) {
+        echo "<p>Combined data is not currently available.</p>";
+    } else {
+        echo "Your data should be downloading.";
+    }
 }
 
 
 ?>
+
+<script>
+    function dataFunction(app_id, combined) {
+        var myWindow = window.open("http://localhost/CSB7.0/science/tasks/download-data/output.php?app_id=" + app_id + "&combined=" + combined, "", "width=800,height=100");
+        return
+    }
+</script>
