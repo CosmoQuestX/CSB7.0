@@ -101,9 +101,6 @@ $data =  "mark_id\timage_name\tx\ty\tdiameter\ttype\tdetails\tdate\tuser\n";
 //$query = "SELECT id, image_id, x, y, diameter, type, details, user_id FROM marks LIMIT 21";
 
 
-foreach ($results as $result) {
-    $data
-}
 ?>
 
 */
