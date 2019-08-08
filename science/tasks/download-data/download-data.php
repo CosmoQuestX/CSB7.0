@@ -10,7 +10,7 @@
     <input type="hidden" name="task" value="download-data">
     <input type="hidden" name="app_id" value="21">
     <input type="hidden" name="page" value="0">
-    <input type="hidden" name="url" value="<?php echo $BASE_URL; ?>science/task/data_download/output.php">
+    <input type="hidden" name="url" value="<?php echo $BASE_URL; ?>science/tasks/download-data/output.php">
     <h3>Select Data Download Options</h3>
 
     <!-- Select Project -->
