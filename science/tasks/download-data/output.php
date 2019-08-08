@@ -104,8 +104,6 @@ $data =  "mark_id\timage_name\tx\ty\tdiameter\ttype\tdetails\tdate\tuser\n";
 foreach ($results as $result) {
     $data
 }
-fwrite($output, $data);
-fclose($output);
 ?>
 
 */
