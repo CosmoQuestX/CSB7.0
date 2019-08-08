@@ -9,8 +9,11 @@
 
 <!-- <form id="DataFormat" action="<?php echo $BASE_URL;?>/science/index.php?task=download-data"> -->
 <form id="DataFormat" action="">
+
     <input type="hidden" name="task" value="download-data">
     <input type="hidden" name="app_id" value="21">
+    <input type="hidden" name="page" value="0">
+    <input type="hidden" name="url" value="<?php echo $BASE_URL; ?>science/task/data_download/output.php">
     <h3>Select Data Download Options</h3>
 
     <!-- Select Project -->
@@ -41,7 +44,7 @@
     <input type="radio" name="combined" value="FALSE"  checked>          Individual Marks
     </p>
 
-    <input type="button" value="download" onClick='dataFunction(DataFormat.app_id.value,DataFormat.combined.value);'>
+    <input type="button" value="download" onClick='dataFunction(DataFormat.app_id.value,DataFormat.combined.value,DataFormat.url.value,DataFormat.page.value);'>
 </form>
 
 <div id='results'></div>
@@ -64,8 +67,8 @@ if (isset($_GET) && isset($_GET['app_id'])) {
 ?>
 
 <script>
-    function dataFunction(app_id, combined) {
-        var myWindow = window.open("http://localhost/CSB7.0/science/tasks/download-data/output.php?app_id=" + app_id + "&combined=" + combined, "", "width=800,height=100");
+    function dataFunction(app_id, combined, url, page) {
+        var myWindow = window.open(url+"?app_id=" + app_id + "&combined=" + combined + "&page=" + page, "800,800", "width=800,height=100");
         return
     }
 </script>
