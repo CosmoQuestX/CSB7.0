@@ -8,7 +8,6 @@
 <form id="DataFormat" action="">
 
     <input type="hidden" name="task" value="download-data">
-    <input type="hidden" name="app_id" value="21">
     <input type="hidden" name="page" value="0">
     <input type="hidden" name="url" value="<?php echo $BASE_URL; ?>science/tasks/download-data/output.php">
     <h3>Select Data Download Options</h3>
@@ -61,7 +60,7 @@ if (isset($_GET) && isset($_GET['app_id'])) {
 
 <script>
     function dataFunction(app_id, combined, url, page) {
-        window.open(url+"?app_id=" + app_id + "&combined=" + combined + "&page=" + page, "800,800", "width=800,height=100");
+        window.open(url+"?app_id=" + app_id + "&combined=" + combined + "&page=" + page, "", "width=300,height=300");
         return
     }
 </script>
