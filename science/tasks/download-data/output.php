@@ -26,11 +26,6 @@ ignore_user_abort(1);
     $db = new DB($db_servername, $db_username, $db_password, $db_name);
     $output = "";
 
-    /* ?>
-    <img src="<?php echo $BASE_URL;?>csb-content/images/buttons/Loading.gif">
-    <?php */
-
-
 /* ----------------------------------------------------------------------
    Open the file
    ---------------------------------------------------------------------- */
@@ -48,6 +43,17 @@ ignore_user_abort(1);
             $filepath = $_GET['file'];
         }
 
+        // Does it have the dates set up? Only check on page 0
+        if (isset($_GET['data'])) {
+            $dateStart = $_GET['data'];
+            $dateEnd = date("Y-m-d", strtotime("$dateStart +7 day"));
+        } else {
+            die("You need to specify a starting date - DON'T URL HACK");
+        }
+
+
+        // echo "checking $dateStart to $dateEnd";
+
         // Open the file
         if ($file = fopen($filepath, a)) {
             if ($page == 0) $output .= "mark_id\timage_name\tx\ty\tdiameter\ttype\tdetails\tdate\tuser\n";
@@ -58,7 +64,44 @@ ignore_user_abort(1);
             die("couldn't open temporary file on server");
         }
 
+        // If it's the first page, get the number of lines
 
+        if ($page == 0) {
+            $where = "WHERE created_at >= '$dateStart'
+                      AND created_at < '$dateEnd'";
+            $numRows = $db->getNumRows('marks', $where);
+            $lastPage = intval($numRows/10000.0);
+
+            if ( ($numRows % 10000) != 0) $lastPage++; // round up to get the last page
+        }
+        // otherwise get the lastPage from the GET
+        else {
+            if (isset($_GET['lastPage'])) {
+                $lastPage = $_GET['lastPage'];
+            } else {
+                $db->closeDB();
+                die("mal-formed request: lastPage missing. Don't HACK URLs.");
+            }
+
+       }
+
+        // If it's not last page, output please wait
+        if ($page != $lastPage) {
+            ?>
+            <html>
+            <body style="background = #FFFFFF url('<?php echo $BASE_URL;?>csb-content/images/buttons/Loading.gif') center center no-repeat;">
+            <H2>PLEASE WAIT</H2>
+            <p>
+                Currently outputting <?php echo $page; ?> / <?php echo $lastPage; ?>
+            </p>
+            </body>
+            </html>
+            <?php
+        }
+
+    } else {
+        $db->closeDB();
+        die("Incorrectly submitted request. Don't Hack URLs People!");
     }
 
 /* ----------------------------------------------------------------------
@@ -74,12 +117,17 @@ ignore_user_abort(1);
                      images.details as origin, 
                      users.name, marks.created_at 
               FROM marks, images, image_sets, users
-              WHERE marks.type = 'boulder' AND 
+              WHERE marks.created_at >= '$dateStart' AND 
+                    marks.created_at < '$dateEnd' AND 
                     marks.image_id = images.id AND 
                     images.image_set_id = image_sets.id AND 
                     marks.user_id = users.id
               LIMIT ".$start.",10000";
-$results = $db->runQuery($query);
+
+    //echo $query;
+
+    $results = $db->runQuery($query);
+    print_r($results);
 
 /* ----------------------------------------------------------------------
     read through each row, 1 at a time
@@ -96,7 +144,7 @@ $results = $db->runQuery($query);
         $x = $result['x'] + $origin['x'];
         $y = $result['y'] + $origin['y'];
 
-        if ($details != "null") {
+        if (!isset($details) && $result['details'] != 'null') {
             $details = json_decode($result['details'], TRUE);   // Details about marks (not always present)
 
             // only update things if there is an offset
@@ -131,10 +179,11 @@ $results = $db->runQuery($query);
 fwrite($file, $output);
 fclose($file);
 
-if ($page < 3) {
+
+if ($page < $lastPage) {
 
     $page++;
-    $url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?app_id=21&combined=FALSE&page=".$page."&file=".$filepath;
+    $url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?app_id=21&combined=FALSE&page=".$page."&lastPage=".$lastPage."&data=".$dateEnd."&file=".$filepath;
 
     ?>
     <html>

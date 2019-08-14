@@ -148,5 +148,14 @@ class DB
         return $this->conn->insert_id;
     }
 
+    function getNumRows($param, $where) {
+        $sql = "SELECT count(id) as N FROM ".$param." ".$where;
+
+        $result = mysqli_query($this->conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        return $row['N'];
+    }
+
 }
 ?>
