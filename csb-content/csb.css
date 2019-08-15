@@ -11,6 +11,10 @@ body {
     margin: 0;
 }
 
+.instructions {
+    font-size: 0.8em;
+}
+
 .container {
     width: 1170px;
     margin: 0 auto;
