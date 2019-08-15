@@ -1,0 +1,153 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: starstryder
+ * Date: 6/9/19
+ * Time: 1:49 PM
+ */
+
+// This file should be run from the commandline
+// Objectives:
+// - Download requested data into a file
+// - Email user a download link when the file is ready
+// TODO write a cron job to clear these out after 24 hours
+
+/* ----------------------------------------------------------------------
+   check command line inputs: app_id, startDate, email
+   ---------------------------------------------------------------------- */
+
+    if ($argc < 4) {
+        error_log("incorrect number of arguments given");
+        die("missing inputs");
+    }
+
+    $app_id     = $argv['1'];
+
+    // Does it have the dates set up?
+    $dateStart  = $argv['2'];
+    $dateEnd = date("Y-m-d", strtotime("$dateStart +7 day"));
+
+    $email_to   = $argv['3'];
+
+    // TODO check other inputs
+
+/* ----------------------------------------------------------------------
+   Get the settings
+   ---------------------------------------------------------------------- */
+
+    //cut off "science/tasks/download-data/output_individual.php";
+    $dir = substr(getcwd(), 0, -7);
+    require_once($dir."csb-loader.php");
+    require_once($DB_class);
+    require_once ($email_class);
+    // TODO figure out how to make this file secure
+
+/* ----------------------------------------------------------------------
+   Open the database because you're gonna need it
+   ---------------------------------------------------------------------- */
+
+    $db = new DB($db_servername, $db_username, $db_password, $db_name);
+
+/* ----------------------------------------------------------------------
+   Open the file
+   ---------------------------------------------------------------------- */
+
+    // Setup the Filename
+    $filepath = $BASE_DIR."temp/data_".date("Y-m-d.His").".csv";
+
+    // Open the file
+    if ($file = fopen($filepath, 'a')) {
+        $output = "mark_id\timage_name\tx\ty\tdiameter\ttype\tdetails\tdate\tuser\n";
+    }
+    // throw an error if just won't open
+    else {
+        $db->closeDB();
+        error_log("couldn't open temporary file on server");
+    }
+
+    // Get the number of lines
+    $where = "WHERE created_at >= '$dateStart'
+              AND created_at < '$dateEnd'";
+    $numRows = $db->getNumRows('marks', $where);
+    $lastPage = intval($numRows/10000.0);
+    if ( ($numRows % 10000) != 0) $lastPage++; // round up to get the last page
+
+/* ----------------------------------------------------------------------
+    Setup your query, go thru 10 000 marks at a time & write to file
+   ---------------------------------------------------------------------- */
+    $page = 0;
+
+    while($page < $lastPage) {
+
+        $start = $page * 10000;
+
+        $query = "SELECT marks.id, 
+                     image_sets.name as image_name, 
+                     marks.x, marks.y, marks.diameter, marks.type, marks.details, 
+                     images.details as origin, 
+                     users.name, marks.created_at 
+              FROM marks, images, image_sets, users
+              WHERE marks.created_at >= '$dateStart' AND 
+                    marks.created_at < '$dateEnd' AND
+                    marks.image_id = images.id AND 
+                    images.image_set_id = image_sets.id AND 
+                    marks.user_id = users.id
+              LIMIT " . $start . ",10000";
+
+        $results = $db->runQuery($query);
+
+        /* ----------------------------------------------------------------------
+            read through each row, 1 at a time
+           ---------------------------------------------------------------------- */
+
+        foreach ($results as $result) {
+
+            // Fix the X, Y to be in the coordinates of the master image
+
+            // 1) Get the offset from the Master Image
+            $origin = json_decode($result['origin'], TRUE);
+
+            // 2) Correct the x, y position info
+            $x = $result['x'] + $origin['x'];
+            $y = $result['y'] + $origin['y'];
+
+            if (!isset($details) && $result['details'] != 'null') {
+                $details = json_decode($result['details'], TRUE);   // Details about marks (not always present)
+
+                // only update things if there is an offset
+                if ($origin['x'] != 0 || $origin['y'] != 0) {
+                    $details['points'][0]['x'] += $origin['x'];
+                    $details['points'][0]['y'] += $origin['y'];
+                    $details['points'][1]['x'] += $origin['x'];
+                    $details['points'][1]['y'] += $origin['y'];
+                }
+
+                $details_json = json_encode($details);
+            } else {
+                $details_json = "null";
+            }
+
+
+            $output .= $result['id'] . "\t" .
+                $result['image_name'] . "\t" .
+                $x . "\t" .
+                $y . "\t" .
+                $result['diameter'] . "\t" .
+                $result['type'] . "\t" .
+                $details_json . "\t" .
+                $result['created_at'] . "\t" .
+                $result['name'] . "\n";
+        }
+
+        fwrite($file, $output);
+        $output = "";
+        $page++;
+    }
+
+    fclose($file);
+    $db->closeDB();
+
+$mailAlert = new email($emailSettings);
+    $msg['subj'] = "[CosmoQuestX] Output Ready";
+    $msg['content'] = "Your download is ready. Please return to ".$BASE_URL."/science/task=download-data to get your file.";
+    $mailAlert->sendMail($email_to, $msg);

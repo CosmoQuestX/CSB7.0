@@ -36,6 +36,10 @@ Instructions on compiling SASS in ubuntu are here: https://webdesign.tutsplus.co
 You should always use a certificate. If you don't have one, try using the free 
 [Let's Encrypt: CertBot](https://letsencrypt.org/getting-started/).
 
+#### 1.4 Going to email folks? Add PEAR
+macOS Mojave use https://tobschall.de/2018/08/07/pear-on-mojave/
+
+
 ####Step 2: Copy csb-settings-example.php csb-settings.php and edit 
 This file needs editted to match your system's settings. _If you are using https
 make sure that https is used in this file._  

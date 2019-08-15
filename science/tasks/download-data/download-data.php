@@ -1,15 +1,35 @@
 <?php
 // Start with the form
-// Lot for $_POST variables and output file if variables exist
+
+if (isset($_GET['request']) && $_GET['request'] == 'start') {
+    $flag = TRUE;
+} else {
+    //TODO Add database check to look for existing files
+    $flag = FALSE;
+}
+
 ?>
 
+<h3> Available Downloads</h3>
+<p>
+    <?php
+        if ($flag) {
+            echo "download starting...";
+            if ($_GET['combined'] == "TRUE") {
+                echo "Combined data not currently available. Download stopped.";
+            } else {
+                $command = "php ".$BASE_DIR. 'science/tasks/download-data/output_individual.php ' . $_GET['app_id'] . ' ' . $_GET['dataRange'] . ' ' .$_GET['email'];
+                exec($command . " > ".$BASE_DIR."temp/output-errors.log>&1 & echo $1");
+            }
+        } else { // TODO add an elseif to get existing downloads for this user
+            echo "none";
+        }
+    ?>
+</p>
 
-<!-- <form id="DataFormat" action="<?php echo $BASE_URL;?>/science/index.php?task=download-data"> -->
-<form id="DataFormat" action="">
-
+<form id="DataFormat" method="GET" action="<?php echo $BASE_URL;?>/science/index.php?task=download-data">
     <input type="hidden" name="task" value="download-data">
-    <input type="hidden" name="page" value="0">
-    <input type="hidden" name="url" value="<?php echo $BASE_URL; ?>science/tasks/download-data/output.php">
+    <input type="hidden" name="request" value="start">
     <h3>Select Data Download Options</h3>
 
     <!-- Select Project -->
@@ -72,7 +92,7 @@
     <input type="text" name="email" value="you@email.com">
     </p>
 
-    <input type="button" value="submit request" onClick='dataFunction(DataFormat.url.value,DataFormat.app_id.value,DataFormat.combined.value,DataFormat.dataRange.value,DataFormat.email.value,);'>
+    <input type="submit" value="submit request" onClick='dataFunction(DataFormat.url.value,DataFormat.app_id.value,DataFormat.combined.value,DataFormat.dataRange.value,DataFormat.email.value,);'>
 </form>
 
 <div id='results'></div>
@@ -82,8 +102,8 @@
 
 <script>
     function dataFunction(url, app_id, combined, page, data, email) {
-        window.open(url+"?app_id=" + app_id + "&combined=" + combined + "&data=" + data + "&email=" + email, "", "width=300,height=300");
-        return
+        //window.open(url+"?app_id=" + app_id + "&combined=" + combined + "&data=" + data + "&email=" + email, "", "width=600,height=600");
+        document.getElementById('results').innerHTML = "<p>Thank you! We'll email you as soon as your download is ready</p>"
     }
 </script>
 

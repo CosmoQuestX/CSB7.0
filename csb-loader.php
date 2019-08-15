@@ -31,10 +31,11 @@
    Define other useful directories
    ---------------------------------------------------------------------- */
 
-    global $ADMIN_DIR, $DB_class;
+    global $ADMIN_DIR, $DB_class, $email_class;
 
-    $ADMIN_DIR = $BASE_DIR . "/csb-admin";
-    $DB_class  = $ADMIN_DIR. "/db_class.php";
+    $ADMIN_DIR = $BASE_DIR . "csb-admin/";
+    $DB_class  = $ADMIN_DIR. "db_class.php";
+    $email_class = $ADMIN_DIR."email_class.php";
 
 /* ----------------------------------------------------------------------
    Setup User Roles - needed because of potential customizations

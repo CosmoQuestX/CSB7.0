@@ -59,7 +59,7 @@
 	$resultset = $db->runQuery($query);
 	echo "<table style='color: black; font-size: 0.9em; width:100%;'>";
 	foreach($resultset as $result) {
-		echo "<tr><td>".$result['name']."</td><td>".$result['email']."</td></tr>";
+		echo "<tr><td>".$result['name']."</td><td>".$result['emailClass']."</td></tr>";
 	}
 	echo "</table>";
 

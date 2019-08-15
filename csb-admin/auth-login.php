@@ -166,7 +166,7 @@ function regUser($db, $user)
 {
 
     $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-    $params = array($user['name'], $user['email'], $hashed);
+    $params = array($user['name'], $user['emailClass'], $hashed);
     $id = $db->getInsertId();
     // TODO make this a function that returns user_id
 

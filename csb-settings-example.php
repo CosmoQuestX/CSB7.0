@@ -34,8 +34,25 @@
     $db_name = "myDB";
 
 /* ----------------------------------------------------------------------
+   Email Settings
+   ---------------------------------------------------------------------- */
+
+    $emailSettings['host']         = "smtp.yourprovider.net";
+    $emailSettings['username']     = "username";
+    $emailSettings['password']     = "password";
+    $emailSettings['port']         = "587";  // ssl uses 465
+    $emailSettings['from']         = "no-reply@yoursite.org";
+
+/* ----------------------------------------------------------------------
    Directories
    ---------------------------------------------------------------------- */
 
     $BASE_DIR = "/path/to/CSB/";   // Full path to CSBs home directory, example "/var/www/CSB/"
     $BASE_URL = "http://localhost/CSB7.0/";  // Full path to CSB's Webhome
+
+/* ----------------------------------------------------------------------
+   Server Settings
+   ---------------------------------------------------------------------- */
+
+    ini_set("log_errors", 1);
+    ini_set("error_log", $BASE_DIR"logs/error.log");

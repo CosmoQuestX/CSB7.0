@@ -156,6 +156,5 @@ class DB
 
         return $row['N'];
     }
-
 }
 ?>
