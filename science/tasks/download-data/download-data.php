@@ -13,17 +13,31 @@ if (isset($_GET['request']) && $_GET['request'] == 'start') {
 <h3> Available Downloads</h3>
 <p>
     <?php
-        if ($flag) {
-            echo "download starting...";
-            if ($_GET['combined'] == "TRUE") {
-                echo "Combined data not currently available. Download stopped.";
-            } else {
-                $command = "php ".$BASE_DIR. 'science/tasks/download-data/output_individual.php ' . $_GET['app_id'] . ' ' . $_GET['dataRange'] . ' ' .$_GET['email'];
-                exec($command . " > ".$BASE_DIR."temp/output-errors.log>&1 & echo $1");
+        // See if there are existing downloads
+        $downloads = $db->getDownloads($_SESSION['user_id']);
+        if ($downloads != FALSE) {
+
+            foreach($downloads as $download) {
+                echo "<a href='".$download['link']."'>".$download['name']."</a><br/>";
             }
-        } else { // TODO add an elseif to get existing downloads for this user
-            echo "none";
+        } else {
+            echo "Nothing available.<br/>";
         }
+
+    // Check if there is a request, process it
+    if (isset($_GET['request']) && $_GET['request'] == 'start') {
+        echo "New download starting...";
+        if ($_GET['combined'] == "TRUE") {  // throw an error if combined
+            echo "ERROR: Combined data not currently available. Download stopped.";
+        } else { // otherwise start the download
+            // Note download in DB and get row id
+            $download_id = $db->submitDownload($_SESSION['user_id']);
+            // Execute the download
+            $command = "php ".$BASE_DIR. 'science/tasks/download-data/output_individual.php ' . $_GET['app_id'] . ' ' . $_GET['dataRange'] . ' ' .$_GET['email'] .' '. $download_id;
+            exec($command . " > ".$BASE_DIR."temp/output-errors.log>&1 & echo $1");
+        }
+    }
+
     ?>
 </p>
 

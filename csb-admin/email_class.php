@@ -40,7 +40,7 @@ class email
         $this->password = $params['password'];
         $this->port     = $params['port'];
         $this->from     = $params['from'];
-
+var_dump($params);
     }
 
 
@@ -49,6 +49,8 @@ class email
      * @param $msg = array(subject, body, onSuccess)
      */
     function sendMail($to, $msg) {
+        require_once "Mail.php";
+
         $headers = array(
             'From'      => $this->from,
             'To'        => $to,

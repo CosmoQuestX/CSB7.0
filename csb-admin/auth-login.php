@@ -36,15 +36,12 @@ if (isset($_GET['go'])) {
 
     /* Registering TODO add error checking: dup name, dup email ------------------ */
     if ($_POST['go'] == 'regForm') {
-
         // hash password & insert them into the database
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
         regUser($db, $_POST);
 
     } /* Logging in? Check for post variables --------------------------------------- */
     elseif ($_POST['go'] == 'login') {
-
-        //print_r($_POST); die();
         login($db, $_POST);
 
     } else { // Javascript checks should prevent this from happening
@@ -119,7 +116,6 @@ function login($db, $user) {
 
     } else {
 
-        die("there");
         $db->closeDB();
         die("user not found"); //TODO load login.php with this as the error message
     }

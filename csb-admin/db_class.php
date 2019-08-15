@@ -51,46 +51,28 @@ class DB
     function runBaseQuery($query) {
         $result = mysqli_query($this->conn,$query);
         while($row=mysqli_fetch_assoc($result)) {
-            $resultset[] = $row;
+            $resultSet[] = $row;
         }
-        if(empty($resultset))
+        if(empty($resultSet))
             die("database error on: $query");
 
-        return $resultset;
+        return $resultSet;
     }
 
     function runQuery($query) {
 
         $result = mysqli_query($this->conn, $query);
         echo mysqli_error($this->conn);
+        error_log(mysqli_error($this->conn));
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $resultset[] = $row;
+                $resultSet[] = $row;
             }
-	    return $resultset;
+	    return $resultSet;
         }
         else {
             return FALSE;
-        }
-
-    }
-
-    function runQueryTest($query) {
-	    echo $query;
-
-	    echo mysqli_ping($this->conn);
-	    $result = mysqli_query($this->conn, $query);
-        echo mysqli_error($this->conn);
-
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $resultset[] = $row;
-            }
-	    return $resultset;
-        }
-        else {
-            echo FALSE;
         }
 
     }
@@ -106,14 +88,14 @@ class DB
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    $resultset[] = $row;
+                    $resultSet[] = $row;
                 }
             } else {
                 return FALSE;
             }
 
-            if (!empty($resultset)) {
-                return $resultset[0];
+            if (!empty($resultSet)) {
+                return $resultSet[0];
             }
         }
         else
@@ -155,6 +137,31 @@ class DB
         $row = mysqli_fetch_assoc($result);
 
         return $row['N'];
+    }
+
+    function submitDownload($user_id) {
+        $sql = "INSERT INTO data_downloads
+                (created_at, updated_at, provider, user_id) 
+                VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'web', $user_id)";
+        mysqli_query($this->conn, $sql);
+        return $this->conn->insert_id;
+    }
+
+    function getDownloads($user_id) {
+        $sql = "SELECT link, name FROM data_downloads WHERE user_id = $user_id";
+        $result = mysqli_query($this->conn, $sql);
+        echo mysqli_error($this->conn);
+        error_log(mysqli_error($this->conn));
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $resultSet[] = $row;
+            }
+            return $resultSet;
+        }
+        else {
+            return FALSE;
+        }
     }
 }
 ?>

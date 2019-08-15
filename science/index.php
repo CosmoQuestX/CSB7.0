@@ -21,8 +21,32 @@ require_once ($BASE_DIR."csb-admin/auth.php");
 $db = new DB($db_servername, $db_username, $db_password, $db_name);
 
 global $user;
-
 $user = isLoggedIn($db);
+
+
+if ($login || $user === FALSE ) { // NOT LOGGED IN
+    require_once ($BASE_DIR."csb-content/templates/login.php");
+}
+
+/* ----------------------------------------------------------------------
+    Are they trying to register?
+   ---------------------------------------------------------------------- */
+
+elseif ($reg) {
+    require_once ($BASE_DIR."csb-content/templates/login.php");
+}
+
+
+/* ----------------------------------------------------------------------
+   Do they have the correct role?
+   ---------------------------------------------------------------------- */
+
+elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENCE'] &&
+        $_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN']) {
+    die("ERROR: You don't have permission to be here");
+}
+
+
 
 
 /* ----------------------------------------------------------------------

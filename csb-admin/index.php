@@ -24,7 +24,6 @@
         elseif ($_POST['go'] == 'reg') $reg = TRUE;
     }
 
-
 /* ----------------------------------------------------------------------
    Is the person logged in?
    ---------------------------------------------------------------------- */
@@ -36,7 +35,6 @@
 
 
    if ($login || $user === FALSE ) { // NOT LOGGED IN
-    //if ($login) {
        require_once ($BASE_DIR."csb-content/templates/login.php");
    }
 
@@ -53,8 +51,7 @@
    Do they have the correct role?
    ---------------------------------------------------------------------- */
 
-   elseif ($_SESSION['roles'] !== 1) {
-
+   elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN']) {
         die("ERROR: You don't have permission to be here");
    }
 

@@ -10,24 +10,28 @@
 // Objectives:
 // - Download requested data into a file
 // - Email user a download link when the file is ready
-// TODO write a cron job to clear these out after 24 hours
+// TODO write a cron job to clear these out periodically
 
 /* ----------------------------------------------------------------------
    check command line inputs: app_id, startDate, email
    ---------------------------------------------------------------------- */
 
-    if ($argc < 4) {
-        error_log("incorrect number of arguments given");
+    if ($argc != 5) {
+        error_log("incorrect number of arguments given. Expected 5, received". $argc);
+
         die("missing inputs");
     }
 
-    $app_id     = $argv['1'];
+    $app_id      = $argv['1'];
 
     // Does it have the dates set up?
-    $dateStart  = $argv['2'];
-    $dateEnd = date("Y-m-d", strtotime("$dateStart +7 day"));
+    $dateStart   = $argv['2'];
+    $dateEnd     = date("Y-m-d", strtotime("$dateStart +7 day"));
 
-    $email_to   = $argv['3'];
+    $email_to    = $argv['3'];
+
+    $download_id = $argv['4'];
+    echo $download_id;
 
     // TODO check other inputs
 
@@ -40,7 +44,6 @@
     require_once($dir."csb-loader.php");
     require_once($DB_class);
     require_once ($email_class);
-    // TODO figure out how to make this file secure
 
 /* ----------------------------------------------------------------------
    Open the database because you're gonna need it
@@ -52,12 +55,18 @@
    Open the file
    ---------------------------------------------------------------------- */
 
-    // Setup the Filename
-    $filepath = $BASE_DIR."temp/data_".date("Y-m-d.His").".csv";
+    // Setup the Filename TODO make this file name less stupid
+    $filename = "DataFor_app".$app_id.'_week'.$dateStart.'.'.date("YmdHis").".csv";
+    $filepath = $BASE_DIR."temp/".$filename;
+    $fileURL  = $BASE_URL."temp/".$filename;
 
-    // Open the file
+    // Open the file & save name to db for downloads
     if ($file = fopen($filepath, 'a')) {
         $output = "mark_id\timage_name\tx\ty\tdiameter\ttype\tdetails\tdate\tuser\n";
+        $query = "UPDATE data_downloads 
+                  SET link = '$fileURL', name = '$filename' 
+                  WHERE id = $download_id";
+        $db->runQuery($query);
     }
     // throw an error if just won't open
     else {
@@ -142,12 +151,20 @@
         fwrite($file, $output);
         $output = "";
         $page++;
+
+
     }
 
+    // Update data_download table to show success
+    $query = "UPDATE data_downloads SET success = 1 WHERE id = $download_id";
+    $db->runQuery($query);
+
+    // Close things
     fclose($file);
     $db->closeDB();
 
-$mailAlert = new email($emailSettings);
-    $msg['subj'] = "[CosmoQuestX] Output Ready";
-    $msg['content'] = "Your download is ready. Please return to ".$BASE_URL."/science/task=download-data to get your file.";
+    // email the user
+    $mailAlert = new email($emailSettings);
+    $msg['subject'] = "[CosmoQuestX] Output Ready";
+    $msg['body'] = "Your download is ready. Please return to ".$BASE_URL."/science/task=download-data to get your file.";
     $mailAlert->sendMail($email_to, $msg);
