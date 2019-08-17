@@ -55,4 +55,4 @@
    ---------------------------------------------------------------------- */
 
     ini_set("log_errors", 1);
-    ini_set("error_log", $BASE_DIR"logs/error.log");
+    ini_set("error_log", $BASE_DIR."logs/error.log");
