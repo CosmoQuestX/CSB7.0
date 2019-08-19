@@ -11,25 +11,7 @@ if (!isset($loader) || !$loader) {
     header($_SERVER['HTTP_HOST']);
     exit();
 }
-
-/* ----------------------------------------------------------------------
-   Where should they go to?
-   ---------------------------------------------------------------------- */
-
-// Are they on this site?
-
-$referringURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-
-/* ----------------------------------------------------------------------
-   Where did they come from
-   ---------------------------------------------------------------------- */
-
-require_once($BASE_DIR . "/csb-content/template_functions.php");
-loadHeader();
-
 ?>
-
 <!-----------------------------------------------------------------------
    Login form
         1) Tell them if there is an error (check with JS) TODO
@@ -46,7 +28,7 @@ loadHeader();
     <div id="form-box">
         <form action="<?php echo($BASE_URL . "csb-admin/auth-login.php"); ?>" method="post" id="form-login">
 
-            <input type="hidden" name="referringURL" value="http://<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="referringURL" value="<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']; ?>">
             <input type="hidden" name="go" value="login">
 
             <div class="error-msg"></div>

@@ -6,8 +6,6 @@
  * Time: 1:18 PM
  */
 
-loadHeader();
-
 /** Get the setup files for the app dynamically TODO make this a function */
 require_once ($BASE_DIR . "/csb-apps/Bennu/bennu-template.php");
 $lang = $BASE_DIR . "csb-apps/Bennu/lang/bennu.en.json";

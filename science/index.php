@@ -23,19 +23,12 @@ $db = new DB($db_servername, $db_username, $db_password, $db_name);
 global $user;
 $user = isLoggedIn($db);
 
+require_once($BASE_DIR . "/csb-content/template_functions.php");
+loadHeader();
 
 if ($login || $user === FALSE ) { // NOT LOGGED IN
     require_once ($BASE_DIR."csb-content/templates/login.php");
 }
-
-/* ----------------------------------------------------------------------
-    Are they trying to register?
-   ---------------------------------------------------------------------- */
-
-elseif ($reg) {
-    require_once ($BASE_DIR."csb-content/templates/login.php");
-}
-
 
 /* ----------------------------------------------------------------------
    Do they have the correct role?
@@ -46,62 +39,59 @@ elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENCE'] &&
     die("ERROR: You don't have permission to be here");
 }
 
-
-
-
 /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
-global $page_title;
 
-$page_title = "";
+else { // they clearly have permissions
+    global $page_title;
 
-require_once($BASE_DIR . "/csb-content/template_functions.php");
-loadHeader();
+    $page_title = "";
 
-?>
-<div id="main">
-           <div class="container">
+    ?>
+    <div id="main">
+        <div class="container">
 
-               <div id="" class="left-dash left">
-                   <?php
+            <div id="" class="left-dash left">
+                <?php
 
-                   $dir = $BASE_DIR . "/science/tasks";
-                   $listings = array_diff(scandir($dir), array('..', '.'));
-                   ?>
+                $dir = $BASE_DIR . "/science/tasks";
+                $listings = array_diff(scandir($dir), array('..', '.'));
+                ?>
 
-                   <h3>Options</h3>
-                   <ul>
+                <h3>Options</h3>
+                <ul>
 
-                       <?php
-                       foreach ($listings as $item) { ?>
-                           <form id='<?php echo $item;?>' action='<?php echo $_SERVER['PHP_SELF'] ?>' method='GET'>
-                           <input type='hidden' name='task' value='<?php echo $item;?>'>
-                           <li>
-                                <a href='#' onclick='document.getElementById("<?php echo $item;?>").submit();'>
+                    <?php
+                    foreach ($listings as $item) { ?>
+                        <form id='<?php echo $item; ?>' action='<?php echo $_SERVER['PHP_SELF'] ?>' method='GET'>
+                            <input type='hidden' name='task' value='<?php echo $item; ?>'>
+                            <li>
+                                <a href='#' onclick='document.getElementById("<?php echo $item; ?>").submit();'>
                                     <?php echo $item; ?>
                                 </a>
-                           </li>
-                           </form>
-                               <?php
-                       }
-
-                   ?>
-               </div>
-
-               <div class="main-dash right">
-                    <?php
-                    // Is a value set?  Do something! Else, instructions
-                    if (isset($_GET['task'])) { // TODO ADD ERROR CHECKING
-                        echo "<h2>Task: ".$_GET['task']."</h2>";
-                        require_once("./tasks/".$_GET['task']."/".$_GET['task'].".php");
-                    } else {
-                        echo "Select a task to do from the lefthand menu";
+                            </li>
+                        </form>
+                        <?php
                     }
+
                     ?>
-               </div>
-               <div class="clear"></div>
-           </div>
-       </div>
-<?php
+            </div>
+
+            <div class="main-dash right">
+                <?php
+                // Is a value set?  Do something! Else, instructions
+                if (isset($_GET['task'])) { // TODO ADD ERROR CHECKING
+                    echo "<h2>Task: " . $_GET['task'] . "</h2>";
+                    require_once("./tasks/" . $_GET['task'] . "/" . $_GET['task'] . ".php");
+                } else {
+                    echo "Select a task to do from the lefthand menu";
+                }
+                ?>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <?php
+}
 loadFooter();

@@ -121,11 +121,13 @@ function login($db, $user) {
     }
 
     // Send them where they belong TODO find a better way to do this
+
     ?>
     <html>
     <head>
         <meta http-equiv="refresh" content="0;URL=<?php echo $user['referringURL']?>" />
     </head>
+    <body> I'm going to go to <?php echo $user['referringURL']?></body>
     </html>
     <?php
 }

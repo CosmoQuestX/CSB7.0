@@ -44,6 +44,7 @@
     $page_title = "";
 
     require_once($BASE_DIR . "/csb-content/template_functions.php");
+    loadHeader();
     require_once($THEME_DIR . "/app-template.php");
     require_once($THEME_DIR . "/footer.php");
 
