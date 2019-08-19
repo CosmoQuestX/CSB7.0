@@ -24,14 +24,20 @@
 
     $app_id      = $argv['1'];
 
-    // Does it have the dates set up?
-    $dateStart   = $argv['2'];
-    $dateEnd     = date("Y-m-d", strtotime("$dateStart +7 day"));
+    // Does it have the data set up?
+    // Check if it's heroes or dates
+    $data        = $argv['2'];
+    if ($data == "heroes") {
+        $hero = TRUE;
+    } else {
+        $hero = FALSE;
+        $dateStart = $data;
+        $dateEnd = date("Y-m-d", strtotime("$dateStart +7 day"));
+    }
 
     $email_to    = $argv['3'];
 
     $download_id = $argv['4'];
-    echo $download_id;
 
     // TODO check other inputs
 
@@ -56,7 +62,11 @@
    ---------------------------------------------------------------------- */
 
     // Setup the Filename TODO make this file name less stupid
-    $filename = "DataFor_app".$app_id.'_week'.$dateStart.'.'.date("YmdHis").".csv";
+    if ($hero) {
+        $filename = "DataFor_app" . $app_id . '_heroes.' . date("YmdHis") . ".csv";
+    } else {
+        $filename = "DataFor_app" . $app_id . '_week' . $dateStart . '.' . date("YmdHis") . ".csv";
+    }
     $filepath = $BASE_DIR."temp/".$filename;
     $fileURL  = $BASE_URL."temp/".$filename;
 
@@ -75,11 +85,26 @@
     }
 
     // Get the number of lines
-    $where = "WHERE created_at >= '$dateStart'
+    if ($hero) {
+        // get user_ids for users with more than 500 images marked
+        // get marks from those folks that have 500 images
+
+        $where = "WHERE user_id in 
+                  (SELECT user_id 
+                  FROM image_users WHERE image_id > 41228380 
+                  GROUP BY user_id having count(distinct image_id) >= 500)";
+
+    } else {
+        $where = "WHERE created_at >= '$dateStart'
               AND created_at < '$dateEnd'";
+    }
     $numRows = $db->getNumRows('marks', $where);
-    $lastPage = intval($numRows/10000.0);
+    $lastPage = intval($numRows / 10000.0);
     if ( ($numRows % 10000) != 0) $lastPage++; // round up to get the last page
+
+
+
+
 
 /* ----------------------------------------------------------------------
     Setup your query, go thru 10 000 marks at a time & write to file
@@ -90,7 +115,23 @@
 
         $start = $page * 10000;
 
-        $query = "SELECT marks.id, 
+        if ($hero) {
+            $query = "SELECT marks.id, 
+                     image_sets.name as image_name, 
+                     marks.x, marks.y, marks.diameter, marks.type, marks.details, 
+                     images.details as origin, 
+                     users.name, marks.created_at 
+              FROM marks, images, image_sets, users, image_users
+              WHERE image_users.user_id in 
+                  (SELECT image_users.user_id 
+                  FROM image_users WHERE image_users.image_id > 41228380 
+                  GROUP BY image_users.user_id having count(distinct image_users.image_id) >= 500) AND 
+                    marks.image_id = images.id AND 
+                    images.image_set_id = image_sets.id AND 
+                    marks.user_id = users.id
+              LIMIT " . $start . ",10000";
+        } else {
+            $query = "SELECT marks.id, 
                      image_sets.name as image_name, 
                      marks.x, marks.y, marks.diameter, marks.type, marks.details, 
                      images.details as origin, 
@@ -102,6 +143,7 @@
                     images.image_set_id = image_sets.id AND 
                     marks.user_id = users.id
               LIMIT " . $start . ",10000";
+        }
 
         $results = $db->runQuery($query);
 

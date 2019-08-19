@@ -72,6 +72,7 @@ if (isset($_GET['request']) && $_GET['request'] == 'start') {
             ?>
             <p><strong>Data Range
                 <select name='dataRange'>
+                    <option value="heroes">Hero User Data</option>
                     <?php
                     $i = 1;
                     $date_value = date("Y-m-d", strtotime("May 22, 2019"));
