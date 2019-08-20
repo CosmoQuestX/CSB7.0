@@ -1,5 +1,23 @@
 <?php
 
+/* ----------------------------------------------------------
+   Goal: Name Images, with the user entering the name of
+   an image that is in the database
+    SETUP:
+        add application Bennu_Naming
+
+    FUNCTION:
+    1) Click on spot to mark
+    2) Place a cosmoquest X at the spot
+    3) Confirm location or adjust - ask boulder / crater (get from mission)
+    4) Get form with Name (text field name 255, textarea why limit to 1000char)
+    5) confirm & submit
+    6) submit to db
+            image_users db with image_id, user_id, application_id
+            marks x, y, column 'type' = 'name' (instead of rock or crater) as JSON in details (x, y, type, name, why)
+
+
+
 // Check if an image was submitted. If not, get an image name
 if (!isset($_GET['image_set_name'])) {
     ?>
