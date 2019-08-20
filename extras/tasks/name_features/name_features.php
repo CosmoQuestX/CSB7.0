@@ -1,4 +1,7 @@
 <?php
+// naming_function
+global $BASE_DIR, $BASE_URL, $adminFlag;
+
 
 /* ----------------------------------------------------------
    Goal: Name Images, with the user entering the name of
@@ -16,9 +19,20 @@
             image_users db with image_id, user_id, application_id
             marks x, y, column 'type' = 'name' (instead of rock or crater) as JSON in details (x, y, type, name, why)
 
-
-
+*/
 // Check if an image was submitted. If not, get an image name
+
+
+if(isset($_GET['markX'])){
+    echo "<h3>Debug Submission Data</h3>";
+    echo "<table id='submission-data' style='border-collapse: collapse;'>";
+    echo "<tr><th>Name</th><th>Value</th></tr>";
+    foreach($_GET as $varname => $varval) {
+        echo "<tr><td>$varname</td><td>$varval</td></tr>";
+    }
+    echo "</table><style>#submission-data td,th {color:black; border: 1px black solid;}</style>";
+}
+
 if (!isset($_GET['image_set_name'])) {
     ?>
     <form id="GetImageToName" action="<?php echo $BASE_URL; ?>/extras/">
@@ -27,6 +41,8 @@ if (!isset($_GET['image_set_name'])) {
     </form>
     <?php
 }
+
+
 
 // Check if an image was already submitted
 if (isset($_GET['image_set_name'])) {
@@ -40,12 +56,78 @@ if (isset($_GET['image_set_name'])) {
     </div>
 
     <script>
-        window.onload = function () {
-            var c = document.getElementById("canvas");
-            var ctx = c.getContext("2d");
-            var img = document.getElementById("useImg");
-            ctx.drawImage(img, 0, 0);
+
+        var canvas;
+        var ctx;
+        var rect;
+        var mY;
+        var mX;
+        var locationMarker;
+        var drawLocationMarker;
+        var markLocation;
+        var locationMarked = false;
+
+        window.onload = function(){
+            canvas = document.getElementById("canvas");
+            ctx = canvas.getContext("2d");
+            ctx.drawImage(document.getElementById("useImg"), 0,0);
+            animate();
+
+            rect = canvas.getBoundingClientRect();
+
+
+            canvas.addEventListener("mouseenter", function(e){
+               drawLocationMarker = true;
+            });
+            canvas.addEventListener("mouseleave", function(e){
+               drawLocationMarker = false;
+            });
+
+            canvas.addEventListener("mousemove", function(e){
+                mX = e.clientX - rect.left;
+                mY = e.clientY - rect.top;
+            });
+
+            canvas.addEventListener("mousedown", function(e){
+                if(locationMarked){
+                    locationMarked = false;
+                    document.getElementById("submit-button").disabled = true;
+                }
+            });
+
+            canvas.addEventListener("mouseup", function(e){
+                markLocation = {X: mX, Y: mY};
+                locationMarked = true;
+
+                document.getElementById("markX").value = mX;
+                document.getElementById("markY").value = mY;
+                document.getElementById("submit-button").disabled = false;
+            });
+
+            locationMarker = new Image();
+            locationMarker.src = "../csb-content/images/buttons/Loading.gif";
         }
+
+
+        function animate(){
+            window.requestAnimationFrame(animate);
+
+            ctx.drawImage(document.getElementById("useImg"), 0,0);
+
+            // when mouse is on canvas, draw X centered on mouse position
+            // ../csb-content/images/buttons/Mapping_tools-04.png
+            if(locationMarked){
+                ctx.drawImage(locationMarker, markLocation.X - locationMarker.width/2, markLocation.Y - locationMarker.height/2);
+            }
+
+            if(!locationMarked && drawLocationMarker) {
+                ctx.drawImage(locationMarker, mX - locationMarker.width/2, mY - locationMarker.height/2);
+            }
+            // when mouse is clicked on canvas, alert with {X:, Y:}
+
+        }
+        
+
 
     </script>
 
@@ -87,7 +169,7 @@ if (isset($_GET['image_set_name'])) {
         // Setup form to propose name
         ?>
         <h2>Propose Feature Names</h2>
-        <p class="instructions">Click and drag a circle around the feature you want to propose a name for, and then
+        <p class="instructions">Place the X on the feature you want to propose a name for, and then
             enter the name you want to propose. Please do not use adult language of any kind. Proposed names will be
             reviewed by the mission team and put forward for discussion in the community.</p>
         <form id="SubmitNames" action="<?php echo $BASE_URL;?>/extras/">
@@ -95,6 +177,12 @@ if (isset($_GET['image_set_name'])) {
             <div id="proposed_names">
                 <p>Names will appear here</p>
             </div>
+            <input type="hidden" name="image_set_name" id="image_set_name" value="<?=$name ?>">
+            <input type="hidden" name="markX" id="markX" value="">
+            <input type="hidden" name="markY" id="markY" value="">
+            <label>Name: <input type="text" name="name"></label><br/>
+            <label>Reason: <input type="textarea" name="reason"></label><br/>
+            <button type="submit" id="submit-button">Submit Name</button>
         </form>
         <?php
         ?>
