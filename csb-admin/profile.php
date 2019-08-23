@@ -114,8 +114,7 @@ else {
             </div>
 
             <div class="main-dash right">
-
-                <img class="right" src="<?php echo $IMAGES_URL;?>profile/Default_Avatar.png">
+                <img class="right" src="<?php echo $IMAGES_URL;?>Profile/Default_Avatar.png">
                 <h3>
                     Welcome, <?php echo $user['name']; ?>
                 </h3>
