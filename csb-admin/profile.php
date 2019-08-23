@@ -64,7 +64,7 @@ else {
     are they trying to save something they input?
    ---------------------------------------------------------------------- */
 
-    if(isset($_GET)) {
+    if(isset($_GET) && !empty($_GET)) {
 
         if (isset($_GET['email'])) {
             $query = "update users set email = ?";
