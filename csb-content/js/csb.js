@@ -4,11 +4,18 @@ var alert = document.getElementById("alert-box");
 // Get the button that opens the alert
 var btn = document.getElementById("alert-botton");
 
+// Get the button that opens the alert
+var btnHome = document.getElementById("alert-botton-home");
+
 // Get the <span> element that closes the alert
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal
 btn.onclick = function() {
+    alert.style.display = "block";
+}
+
+btnHome.onclick = function() {
     alert.style.display = "block";
 }
 

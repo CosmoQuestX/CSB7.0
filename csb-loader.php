@@ -33,9 +33,11 @@
 
     global $ADMIN_DIR, $DB_class, $email_class;
 
+    $ADMIN_URL = $BASE_URL . "csb-admin/";
     $ADMIN_DIR = $BASE_DIR . "csb-admin/";
     $DB_class  = $ADMIN_DIR. "db_class.php";
     $email_class = $ADMIN_DIR."email_class.php";
+    $IMAGES_URL = $BASE_URL . "csb-content/images/";
 
 /* ----------------------------------------------------------------------
    Setup User Roles - needed because of potential customizations

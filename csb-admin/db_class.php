@@ -121,6 +121,7 @@ class DB
     }
 
     function update($query, $param_type, $param_value_array) {
+
         $sql = $this->conn->prepare($query);
         $this->bindQueryParams($sql, $param_type, $param_value_array);
         $sql->execute();
@@ -158,6 +159,23 @@ class DB
                 $resultSet[] = $row;
             }
             return $resultSet;
+        }
+        else {
+            return FALSE;
+        }
+    }
+
+    function getUser($id) {
+        $sql = "SELECT * from users WHERE id = $id";
+        $result = mysqli_query($this->conn, $sql);
+        echo mysqli_error($this->conn);
+        error_log(mysqli_error($this->conn));
+
+        if ($result->num_rows == 1) {
+            while($row = $result->fetch_assoc()) {
+                $resultSet[] = $row;
+            }
+            return $resultSet[0];
         }
         else {
             return FALSE;

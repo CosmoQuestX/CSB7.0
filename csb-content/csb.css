@@ -13,6 +13,7 @@ body {
 
 .instructions {
     font-size: 0.8em;
+    line-height: 1.3em;
 }
 
 .container {
@@ -28,12 +29,22 @@ body {
     float: right;
 }
 
+.center {
+    text-align: center;
+    margin: 0 auto;
+}
+
 .clear {
     clear: both;
 }
 
 .hide {
     display: none;
+}
+
+.small {
+    font-size: .8em;
+    font-weight: normal;
 }
 
 .notSelected {
