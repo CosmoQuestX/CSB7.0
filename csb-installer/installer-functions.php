@@ -33,3 +33,11 @@
             return 0;
         }
     }
+    
+    /* ----------------------------------------------------------------------
+     Check if a variable is set
+     ---------------------------------------------------------------------- */
+    
+    function checksetvar($input) {
+        if(!isset($_POST["{$input}"])) { die("This should not happen, but {$input} is not set"); }
+    }
