@@ -106,39 +106,81 @@ else {
     $thisUser = $db->getUser($_SESSION['user_id']);
     ?>
 
-    <div id="main">
-        <div class="container">
 
-            <div id="" class="left-dash left">
-                Things to do will go here
+
+    <div id="main" class="container">
+        <div class="row">
+
+            <div class="col-md-3 left-dash">
+
+                <!-- LEFT DASH -->
+
+                <div class="d-flex justify-content-center mb-3">
+                    <img src="<?php echo $IMAGES_URL;?>Profile/Default_Avatar.png">
+                </div>
+                
+                
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Account Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Change Your Password</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+                </ul>
+
             </div>
 
-            <div class="main-dash right">
-                <img class="right" src="<?php echo $IMAGES_URL;?>Profile/Default_Avatar.png">
-                <h3>
-                    Welcome, <?php echo $user['name']; ?>
-                </h3>
-                <p>
-                    <strong> Account Settings </strong><br/>
-                <span class="instructions">Your privacy matters! Our team programmers do have access to this
-                    information, but the only thing that can be publicly seen is your username. We will,
-                    with permission only, use your first and last name to give you credit for things
-                    you accomplish.</span></p>
-                <form action="profile.php" method="get">
-                <ul>
-                    <li>Username: <?php echo $thisUser['name']; ?> </li>
-                    <li>email: <input type="text" name="email" value="<?php echo $thisUser['email']; ?>"></li>
-                    <li>change your password</li>
-                    <li>First Name: <input type="text" name="first_name" value="<?php echo $thisUser['first_name']; ?>"></li>
-                    <li>Last Name: <input type="text" name="last_name" value="<?php echo $thisUser['last_name']; ?>"></li>
+            <div class="col-md-9 main-dash">
+            
+                <!-- MAIN DASH -->
 
-                </ul>
+                <h2 class="float-left"><?php echo $thisUser['name']; ?>'s Account Settings</h2>
+                
+                
+                <br><br>
+                
+                
+                <form action="profile.php" method="get">
+
+                    
+                    
+                    <div class="form-group float-left w-50 pr-2">
+                        <label>First Name:</label>
+                        <input type="text" name="first_name" class="form-control" value="<?php echo $thisUser['first_name']; ?>">
+                    </div>
+
+                    <div class="form-group float-left w-50 pl-2">
+                        <label>Last Name:</label>
+                        <input type="text" name="last_name" class="form-control" value="<?php echo $thisUser['last_name']; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="text" name="email" class="form-control" value="<?php echo $thisUser['email']; ?>">
+                    </div>
+                    
+                    
+
                     <input type="checkbox" name="public_name"<?php if ($thisUser['public_name'] == 1) echo "checked"?>>
                     Do we have permission to publish your name with science results?
-                    <input type="submit" value="Save Settings" class="btn-default right">
+
+                    <input type="submit" value="Save Settings" class="btn btn-secondary btn-block mt-4 mb-2">
+
                 </form>
+
+
+                <p class="instructions">Your privacy matters! Our team programmers do have access to this
+                    information, but the only thing that can be publicly seen is your username. We will,
+                    with permission only, use your first and last name to give you credit for things
+                    you accomplish.</p>
+            
+
             </div>
-            <div class="clear"></div>
+
         </div>
     </div>
 

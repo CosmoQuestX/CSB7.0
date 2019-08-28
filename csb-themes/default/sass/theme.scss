@@ -1,0 +1,115 @@
+/* Colors
+    Red:      #BC2132
+    Orange:   #F05B36
+    Yellow:   #F3C749
+    Green:
+    Blue:
+    Purple:
+    Pinkle:
+
+    Max-Page: 1170
+    Media:  970 @992, 750@768
+
+*/
+
+  body {
+    background-color: #424FA2;
+    background-image: url("images/background.jpg");
+    color: #FFFFFF;
+    }
+
+  li {
+    margin-left: 1em;
+  }
+
+.btn-cq {
+  background: #9f2321 !important;
+  color: #ffffff;
+}
+
+
+
+  /* --------------------------------------------------------------------------------
+     Header
+     -------------------------------------------------------------------------------- */
+
+  #title h1 {
+    color: #ffffff;
+  }
+
+
+/* --------------------------------------------------------------------------------
+   Boxes
+   -------------------------------------------------------------------------------- */
+
+   #form-box {
+     background: #ffffff;
+     color: #1d1d1d;
+     border-radius: 10px;
+   }
+
+/* --------------------------------------------------------------------------------
+   Main
+   -------------------------------------------------------------------------------- */
+
+   #main {
+    margin-top: 3em;
+   }
+
+
+  .left-dash {
+
+    padding-top: 1em;
+    background-color: #9f2321;
+    color: #ffffff;
+
+
+    a {
+      color: #ffffff;
+    }
+  }
+
+
+  .main-dash {
+    background-color: #ffffff;
+    color: #1d1d1d;
+    padding: 1em 2em;
+  }
+
+
+/* --------------------------------------------------------------------------------
+   App
+   -------------------------------------------------------------------------------- */
+
+#app-left {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+#app-main {
+  background-color: #ffffff;
+  color: #1d1d1d;
+  padding: 1em 2em;
+}
+
+#app-right {
+  background: none;
+}
+
+.app-spacecraft {
+  float: right;
+  margin-top: -40px;
+}
+
+
+/* --------------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------------- */
+
+  #footer {
+    background: #1d1d1d;
+    text-align: center;
+    font-size: 0.9em;
+    padding: 20px 0;
+  }
+
