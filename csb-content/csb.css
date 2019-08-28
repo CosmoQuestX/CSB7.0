@@ -1,92 +1,11 @@
 /*
    These styles get over-written by theme styles
+*/
  
 
 
-body {
-}
-
-* {
-    padding: 0;
-    margin: 0;
-}
-
-.instructions {
-    font-size: 0.8em;
-    line-height: 1.3em;
-}
-
-.container {
-    width: 1170px;
-    margin: 0 auto;
-}
-
-.left {
-    float: left;
-}
-
-.right {
-    float: right;
-}
-
-.center {
-    text-align: center;
-    margin: 0 auto;
-}
-
-.clear {
-    clear: both;
-}
-
-.hide {
-    display: none;
-}
-
-.small {
-    font-size: .8em;
-    font-weight: normal;
-}
-
-.notSelected {
-    opacity: 0.5;
-}
 
 
-@media screen and (max-width: 991px) {
-    /* start of large tablet styles */
-
-}
-
-@media screen and (max-width: 767px) {
-    /* start of medium tablet styles */
-
-}
-
-@media screen and (max-width: 479px) {
-    /* start of phone styles */
-
-}
-
-/* --------------------------------------------------------------------------------
-   Header
-   -------------------------------------------------------------------------------- *
-
-    #logo {
-        width: 400px;
-    }
-
-    #user {
-        margin-top: 5px;
-    }
-
-/* --------------------------------------------------------------------------------
-   Boxes
-   -------------------------------------------------------------------------------- *
-
-    #form-box {
-        width: 50%;
-        margin: 0 auto;
-    }
 
 /* --------------------------------------------------------------------------------
    Alerts
@@ -132,65 +51,3 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
-
-/* --------------------------------------------------------------------------------
-   App
-   -------------------------------------------------------------------------------- *
-
-#app-left {
-    padding: 10px;
-    margin-right: 20px;
-    border-radius: 10px;
-    width: 230px; /* basesize 1170px *
-    height: 450px;
-    position: relative;
-}
-
-#app-examples {
-    position: absolute;
-    top: 365px;
-    height: 100px;
-}
-
-#app-examples h4 {
-    font-weight: normal;
-    margin-bottom: 5px;
-}
-
-.example-image {
-    width: 72px;
-    height: 72px;
-    margin-right: 7px;
-    border-radius: 5px;
-}
-
-#app-main {
-    padding: 10px;
-    border-radius: 10px;
-    width: 520px;
-    height: 450px;
-}
-
-#app-button-container {
-    margin-right: 10px;
-    height: 450px;
-}
-
-#app-canvas {
-    width: 450px;
-    height: 450px;
-    background: #cccccc url('images/buttons/Loading.gif') center center no-repeat;
-    border-radius: 5px;
-}
-
-.app-button {
-    width: 60px;
-    height: 60px;
-}
-
-#app-right {
-    background: none;
-    width: 340px;
-    margin-left: 10px;
-}
-

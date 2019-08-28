@@ -8289,7 +8289,7 @@ li {
    Main
    -------------------------------------------------------------------------------- */
 #main {
-  margin-top: 3em;
+  margin-top: 2em;
 }
 
 .left-dash {
@@ -8311,7 +8311,8 @@ li {
    App
    -------------------------------------------------------------------------------- */
 #app-left {
-  background-color: #000000;
+  padding-top: 1em;
+  background-color: #9f2321;
   color: #ffffff;
 }
 
@@ -8322,7 +8323,8 @@ li {
 }
 
 #app-right {
-  background: none;
+  background: black;
+  padding: 1em 2em;
 }
 
 .app-spacecraft {

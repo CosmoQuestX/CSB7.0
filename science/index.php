@@ -51,45 +51,49 @@ else { // they clearly have permissions
     ?>
     <div id="main">
         <div class="container">
+            <div class="row">
 
-            <div id="" class="left-dash left">
-                <?php
-
-                $dir = $BASE_DIR . "/science/tasks";
-                $listings = array_diff(scandir($dir), array('..', '.'));
-                ?>
-
-                <h3>Options</h3>
-                <ul>
-
+                <div class="col-md-3 left-dash">
                     <?php
-                    foreach ($listings as $item) { ?>
-                        <form id='<?php echo $item; ?>' action='<?php echo $_SERVER['PHP_SELF'] ?>' method='GET'>
-                            <input type='hidden' name='task' value='<?php echo $item; ?>'>
-                            <li>
-                                <a href='#' onclick='document.getElementById("<?php echo $item; ?>").submit();'>
-                                    <?php echo $item; ?>
-                                </a>
-                            </li>
-                        </form>
-                        <?php
-                    }
 
+                    $dir = $BASE_DIR . "/science/tasks";
+                    $listings = array_diff(scandir($dir), array('..', '.'));
                     ?>
-            </div>
 
-            <div class="main-dash right">
-                <?php
-                // Is a value set?  Do something! Else, instructions
-                if (isset($_GET['task'])) { // TODO ADD ERROR CHECKING
-                    echo "<h2>Task: " . $_GET['task'] . "</h2>";
-                    require_once("./tasks/" . $_GET['task'] . "/" . $_GET['task'] . ".php");
-                } else {
-                    echo "Select a task to do from the lefthand menu";
-                }
-                ?>
+                    <h3>Options</h3>
+                    <ul>
+
+                        <?php
+                        foreach ($listings as $item) { ?>
+                            <form id='<?php echo $item; ?>' action='<?php echo $_SERVER['PHP_SELF'] ?>' method='GET'>
+                                <input type='hidden' name='task' value='<?php echo $item; ?>'>
+                                <li>
+                                    <a href='#' onclick='document.getElementById("<?php echo $item; ?>").submit();'>
+                                        <?php echo $item; ?>
+                                    </a>
+                                </li>
+                            </form>
+                            <?php
+                        }
+                        ?>
+                    </ul>
+
+                </div>
+
+                <div class="col-md-9 main-dash">
+                    <?php
+                    // Is a value set?  Do something! Else, instructions
+                    if (isset($_GET['task'])) { // TODO ADD ERROR CHECKING
+                        echo "<h2>Task: " . $_GET['task'] . "</h2>";
+                        require_once("./tasks/" . $_GET['task'] . "/" . $_GET['task'] . ".php");
+                    } else {
+                        echo "Select a task to do from the lefthand menu";
+                    }
+                    ?>
+                </div>
+                
+            
             </div>
-            <div class="clear"></div>
         </div>
     </div>
     <?php
