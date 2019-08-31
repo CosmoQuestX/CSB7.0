@@ -47,6 +47,28 @@ body {
     font-weight: normal;
 }
 
+#form-input-box {
+	display: table;
+}
+
+#form-input-row {
+	display: table-row;
+}
+
+#form-input-left {
+	width: 175px;
+	display: table-cell;
+	float: left;
+}
+#form-input-right {
+	display: table-cell;
+	float: right;
+}
+#form-input-right input{
+	width: 400px;
+}
+
+
 .notSelected {
     opacity: 0.5;
 }
