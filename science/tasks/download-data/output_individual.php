@@ -12,6 +12,7 @@
 // - Email user a download link when the file is ready
 // TODO write a cron job to clear these out periodically
 
+
 /* ----------------------------------------------------------------------
    check command line inputs: app_id, startDate, email
    ---------------------------------------------------------------------- */
@@ -46,7 +47,7 @@
    ---------------------------------------------------------------------- */
 
     //cut off "science/tasks/download-data/output_individual.php";
-    $dir = substr(getcwd(), 0, -7);
+    $dir = substr(getcwd(), 0, -27);
     require_once($dir."csb-loader.php");
     require_once($DB_class);
     require_once ($email_class);
@@ -102,50 +103,131 @@
     $lastPage = intval($numRows / 10000.0);
     if ( ($numRows % 10000) != 0) $lastPage++; // round up to get the last page
 
+/* ----------------------------------------------------------------------
+    HERO DATA
+
+    Get things one hero at a time.
+   ---------------------------------------------------------------------- */
+
+    if ($hero) {
+
+        // Get the Heros
+        $query = "SELECT image_users.user_id 
+                  FROM image_users WHERE image_users.image_id > 41228380 
+                  GROUP BY image_users.user_id having count(distinct image_users.image_id) >= 500";
+
+        $heroes = $db->runQuery($query);
+
+        $start = 0;
+
+        foreach($heroes as $hero) {
+            $query = "SELECT marks.id, 
+                 image_sets.name as image_name, 
+                 marks.x, marks.y, marks.diameter, marks.type, marks.details, 
+                 images.details as origin, 
+                 users.name, marks.created_at 
+                FROM marks, images, image_sets, users
+                WHERE marks.user_id = ".$hero['user_id'] . " AND 
+                 marks.image_id = images.id AND 
+                 images.image_set_id = image_sets.id AND 
+                 marks.user_id = users.id 
+                LIMIT $start, 10000";
+            $results = $db->runQuery($query);
+
+            while ($results != FALSE ) {
+
+                /* ----------------------------------------------------------------------
+                    read through each row, 1 at a time
+                   ---------------------------------------------------------------------- */
+
+                foreach ($results as $result) {
+
+                    // Fix the X, Y to be in the coordinates of the master image
+
+                    // 1) Get the offset from the Master Image
+                    $origin = json_decode($result['origin'], TRUE);
+
+                    // 2) Correct the x, y position info
+                    $x = $result['x'] + $origin['x'];
+                    $y = $result['y'] + $origin['y'];
+
+                    if ($result['details'] != 'null') {
+                        $details = json_decode($result['details'], TRUE);   // Details about marks (not always present)
+
+                        // only update things if there is an offset
+                        if ($origin['x'] != 0 || $origin['y'] != 0) {
+                            $details['points'][0]['x'] += $origin['x'];
+                            $details['points'][0]['y'] += $origin['y'];
+                            $details['points'][1]['x'] += $origin['x'];
+                            $details['points'][1]['y'] += $origin['y'];
+                        }
+
+                        $details_json = json_encode($details);
+                    } else {
+                        $details_json = "null";
+                    }
 
 
+                    $output .= $result['id'] . "\t" .
+                        $result['image_name'] . "\t" .
+                        $x . "\t" .
+                        $y . "\t" .
+                        $result['diameter'] . "\t" .
+                        $result['type'] . "\t" .
+                        $details_json . "\t" .
+                        $result['created_at'] . "\t" .
+                        $result['name'] . "\n";
+                }
 
+                fwrite($file, $output);
+                $output = "";
+
+            $start += 10000;
+            $query = "SELECT marks.id, 
+                 image_sets.name as image_name, 
+                 marks.x, marks.y, marks.diameter, marks.type, marks.details, 
+                 images.details as origin, 
+                 users.name, marks.created_at 
+                FROM marks, images, image_sets, users
+                WHERE marks.user_id = ".$hero['user_id'] . " AND 
+                 marks.image_id = images.id AND 
+                 images.image_set_id = image_sets.id AND 
+                 marks.user_id = users.id 
+                LIMIT $start, 10000";
+            $results = $db->runQuery($query);
+            }
+        }
+
+    }
 
 /* ----------------------------------------------------------------------
+    NOT HERO DATA
+
     Setup your query, go thru 10 000 marks at a time & write to file
    ---------------------------------------------------------------------- */
-    $page = 0;
 
-    while($page < $lastPage) {
+    else {
+        $page = 0;
 
-        $start = $page * 10000;
+        while ($page < $lastPage) {
 
-        if ($hero) {
+            $start = $page * 10000;
             $query = "SELECT marks.id, 
-                     image_sets.name as image_name, 
-                     marks.x, marks.y, marks.diameter, marks.type, marks.details, 
-                     images.details as origin, 
-                     users.name, marks.created_at 
-              FROM marks, images, image_sets, users, image_users
-              WHERE image_users.user_id in 
-                  (SELECT image_users.user_id 
-                  FROM image_users WHERE image_users.image_id > 41228380 
-                  GROUP BY image_users.user_id having count(distinct image_users.image_id) >= 500) AND 
-                    marks.image_id = images.id AND 
-                    images.image_set_id = image_sets.id AND 
-                    marks.user_id = users.id
-              LIMIT " . $start . ",10000";
-        } else {
-            $query = "SELECT marks.id, 
-                     image_sets.name as image_name, 
-                     marks.x, marks.y, marks.diameter, marks.type, marks.details, 
-                     images.details as origin, 
-                     users.name, marks.created_at 
-              FROM marks, images, image_sets, users
-              WHERE marks.created_at >= '$dateStart' AND 
-                    marks.created_at < '$dateEnd' AND
-                    marks.image_id = images.id AND 
-                    images.image_set_id = image_sets.id AND 
-                    marks.user_id = users.id
-              LIMIT " . $start . ",10000";
+                 image_sets.name as image_name, 
+                 marks.x, marks.y, marks.diameter, marks.type, marks.details, 
+                 images.details as origin, 
+                 users.name, marks.created_at 
+          FROM marks, images, image_sets, users
+          WHERE marks.created_at >= '$dateStart' AND 
+                marks.created_at < '$dateEnd' AND
+                marks.image_id = images.id AND 
+                images.image_set_id = image_sets.id AND 
+                marks.user_id = users.id
+          LIMIT " . $start . ",10000";
         }
 
         $results = $db->runQuery($query);
+
 
         /* ----------------------------------------------------------------------
             read through each row, 1 at a time
@@ -162,7 +244,7 @@
             $x = $result['x'] + $origin['x'];
             $y = $result['y'] + $origin['y'];
 
-            if (!isset($details) && $result['details'] != 'null') {
+            if ($result['details'] != 'null') {
                 $details = json_decode($result['details'], TRUE);   // Details about marks (not always present)
 
                 // only update things if there is an offset

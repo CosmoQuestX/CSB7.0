@@ -40,7 +40,7 @@ class email
         $this->password = $params['password'];
         $this->port     = $params['port'];
         $this->from     = $params['from'];
-var_dump($params);
+
     }
 
 
