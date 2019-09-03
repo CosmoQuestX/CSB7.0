@@ -70,15 +70,6 @@ else { // they clearly have permissions
                     <?php
                     foreach ($listings as $item) { ?>
                     		<a href="<?php echo $_SERVER['SCRIPT_NAME']?>?task=<?php echo $item; ?>"><?php echo $item; ?></a><br />
-<!--                          <form id='<?php echo $item; ?>' action='<?php echo $_SERVER['PHP_SELF'] ?>' method='GET'>
-                            <input type='hidden' name='task' value='<?php echo $item; ?>'>
-                            <li>
-                                <a href='#' onclick='document.getElementById("<?php echo $item; ?>").submit();'>
-                                    <?php echo $item; ?>
-                                </a>
-                            </li>
-                        </form>
--->            
                         <?php
                     }
 
