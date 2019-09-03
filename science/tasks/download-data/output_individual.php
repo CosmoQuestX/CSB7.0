@@ -47,7 +47,7 @@
    ---------------------------------------------------------------------- */
 
     //cut off "science/tasks/download-data/output_individual.php";
-    $dir = substr(getcwd(), 0, -27);
+    $dir = substr(getcwd(), 0, -7);
     require_once($dir."csb-loader.php");
     require_once($DB_class);
     require_once ($email_class);
