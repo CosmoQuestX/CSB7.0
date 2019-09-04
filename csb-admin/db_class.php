@@ -60,31 +60,28 @@ class DB
     }
 
     function runQuery($query) {
+        if ($result = mysqli_query($this->conn, $query)) {
+            error_log(mysqli_error($this->conn));
 
-        $result = mysqli_query($this->conn, $query);
-        echo mysqli_error($this->conn);
-        error_log(mysqli_error($this->conn));
-
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $resultSet[] = $row;
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $resultSet[] = $row;
+                }
+                return $resultSet;
+            } else {
+                return FALSE;
             }
-	    return $resultSet;
-        }
-        else {
+        } else {
             return FALSE;
         }
-
     }
 
     function runQueryWhere($query, $param_type, $param_value_array) {
 
         if ($sql = $this->conn->prepare($query)) {
-
             $this->bindQueryParams($sql, $param_type, $param_value_array);
             $sql->execute();
             $result = $sql->get_result();
-
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
@@ -151,7 +148,6 @@ class DB
     function getDownloads($user_id) {
         $sql = "SELECT link, name FROM data_downloads WHERE user_id = $user_id";
         $result = mysqli_query($this->conn, $sql);
-        echo mysqli_error($this->conn);
         error_log(mysqli_error($this->conn));
 
         if ($result->num_rows > 0) {
@@ -168,7 +164,6 @@ class DB
     function getUser($id) {
         $sql = "SELECT * from users WHERE id = $id";
         $result = mysqli_query($this->conn, $sql);
-        echo mysqli_error($this->conn);
         error_log(mysqli_error($this->conn));
 
         if ($result->num_rows == 1) {
