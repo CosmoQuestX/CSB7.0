@@ -65,7 +65,7 @@ else { // they clearly have permissions
                 ?>
 
                 <h3>Options</h3>
-                <ul>
+                
 
                     <?php
                     foreach ($listings as $item) { ?>
@@ -79,7 +79,7 @@ else { // they clearly have permissions
             <div class="main-dash right">
                 <?php
                 // Is a value set?  Check if task exists. If yes, execute. Else, instructions!
-                $task=filter_input(INPUT_GET,'task',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0);
+                $task=basename(filter_input(INPUT_GET,'task',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0));
                 if ($task !== NULL && file_exists($BASE_DIR."science/tasks/".$task."/".$task .".php")) { 
                     echo "<h2>Task: " . $task . "</h2>";
                     require_once($BASE_DIR."science/tasks/".$task."/".$task .".php");
