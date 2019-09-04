@@ -39,7 +39,7 @@ if (filter_var($login,FILTER_VALIDATE_BOOLEAN) || $user === FALSE ) { // NOT LOG
    Do they have the correct role?
    ---------------------------------------------------------------------- */
 
-elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENCE'] &&
+elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENTIST'] &&
         $_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN']) {
     die("ERROR: You don't have permission to be here");
 }
