@@ -18,7 +18,7 @@ $lang = json_decode($lang, true);
 <div id="main">
     <div class="container">
 
-        <!-- Left block -----------------------------------------------------------------!>
+        <!-- Left block ----------------------------------------------------------------->
         <div id="app-left" class="left">
             <?php $txt = $lang['app_page']['text-boxes']['app-left']; ?>
             <h2><?php echo $txt['title']; ?></h2>
@@ -55,7 +55,7 @@ $lang = json_decode($lang, true);
             </div>
         </div>
 
-        <!-- main block -----------------------------------------------------------------!>
+        <!-- main block ----------------------------------------------------------------->
         <div id="app-main" class="left">
 
             <div id="app-button-container" class="left">
@@ -76,7 +76,7 @@ $lang = json_decode($lang, true);
             <div class="clear"></div>
         </div>
 
-        <!-- Right block ----------------------------------------------------------------!>
+        <!-- Right block ---------------------------------------------------------------->
         <?php $txt = $lang['app_page']['text-boxes']['app-right']; ?>
         <div id="app-right" class="right">
         <h1><?php echo $txt['title'];?></h1>
