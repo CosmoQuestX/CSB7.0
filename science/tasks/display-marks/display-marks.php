@@ -16,7 +16,7 @@
 if (isset($_GET['image_set_name'])) {
     $name = $_GET['image_set_name'];
     ?>
-    <div style="margin-top:30px; width: 50%; float:left;">
+
         <?php
         echo "<p> The following details are found for <strong>".$_GET['image_set_name']."</strong></p>";
 
@@ -33,30 +33,47 @@ if (isset($_GET['image_set_name'])) {
         $list = "";
         foreach($resultSet as $result) {
             $list .= $result['id'].", ";
-            $images[] = array('id' => $result['id'], 'url' => $result['file_location'], 'name' => $result['name']);
+            $images[] = array(
+                    'id' => $result['id'],
+                    'url' => $result['file_location'],
+                    'name' => $result['name'],
+                    'details' => $result['details']);
         }
         $list = substr($list, 0, -2);
         echo "$list</p>";
 
         ?>
-    </div>
-    <div style="float:right; width:48%;">
-        <img src="https://s3.amazonaws.com/cosmoquest/data/mappers/osiris/ImageDelivery_20190520/RAWIMAGES/<?php echo $name;?>" style="width:100%">
-    </div>
-    <div style="clear:both;"></div>
 
+        <img id = "science0" src="https://s3.amazonaws.com/cosmoquest/data/mappers/osiris/ImageDelivery_20190520/RAWIMAGES/<?php echo $name;?>" style="display: none;">
+        <h3>Mosaic</h3>
+        <canvas id="canvasTest" width='1024' height='1024'></canvas>
+        <h3>Marked Original</h3>
+        <canvas id="canvas0" width='1024' height='1024'></canvas>
     <!-- Display individual images -->
     <?php
     $i = 1;
     $html = "";
     $script  = "";
     $scriptMarks = "";
-    $script .= "<script>";
-    $script .= "window.onload=function() {";
+    $script .= '<script>';
+    $script .= "window.onload=function() {
+                    var c = document.getElementById(\"canvas0\");
+                    var ctx = c.getContext(\"2d\");
+                    var img0 = document.getElementById(\"science0\");
+                    ctx.drawImage(img0, 0, 0);
+                    
+                    var cTest = document.getElementById(\"canvasTest\");
+                    var ctxTest = cTest.getContext(\"2d\");
+                    var imgTest = document.getElementById(\"science0\");
+                    ctxTest.drawImage(imgTest, 0, 0);";
 
     foreach ($images as $image) {
        $canvas = "canvas".$i;
        $science = "science".$i;
+
+        $origin = json_decode($image['details'], TRUE);
+
+       echo "<br/><br/>";
 
        $html .= "<h5>". $image['name']." ".$canvas."</h5>";
        $html .= "<img id='". $science ."' src='".$image['url']."'' style='display: none;'>";
@@ -67,6 +84,13 @@ if (isset($_GET['image_set_name'])) {
         $script .= ' var img'.$i.' = document.getElementById("'.$science.'");';
         $script .= ' ctx'.$i.'.drawImage(img'.$i.', 0, 0);';
 
+        $script .= ' var cTest'.$i.' = document.getElementById("canvasTest");';
+        $script .= ' var ctxTest'.$i.' = cTest'.$i.'.getContext("2d");';
+        $script .= ' var imgTest'.$i.' = document.getElementById("'.$science.'");';
+        $script .= ' ctxTest'.$i.'.drawImage(imgTest'.$i.', '.$origin['x'].', '.$origin['y'].');';
+
+
+
         $query = "SELECT id, details FROM marks WHERE type = 'boulder' AND image_id = ".$image['id'];
         $results = $db->runQuery($query);
         foreach ($results as $result) {
@@ -76,6 +100,12 @@ if (isset($_GET['image_set_name'])) {
             $x2 = $details['points'][1]['x'];
             $y2 = $details['points'][1]['y'];
             $scriptMarks .= 'drawBoulder('.$x1.', '.$y1.', '.$x2.', '.$y2.', "'.$canvas.'"); ';
+
+            $x1 += $origin['x'];
+            $x2 += $origin['x'];
+            $y1 += $origin['y'];
+            $y2 += $origin['y'];
+            $scriptMarks .= 'drawBoulder('.$x1.', '.$y1.', '.$x2.', '.$y2.', "canvas0"); ';
         }
 
        $i++;
