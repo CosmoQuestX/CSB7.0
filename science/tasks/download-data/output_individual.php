@@ -116,9 +116,9 @@ if ($hero) {
                   GROUP BY image_users.user_id having count(distinct image_users.image_id) >= 1000";
     $heroes = $db->runQuery($query);
 
-    $start = 0;
     foreach ($heroes as $hero) {
         echo $hero['name'];
+        $start = 0;
         $query = "SELECT marks.id, 
                  image_sets.name as image_name, 
                  marks.x, marks.y, marks.diameter, marks.type, marks.details, 
