@@ -77,4 +77,3 @@ $lang = json_decode($lang, true);
         </div>
         <div class="clear"></div>
     </div>
-</div>

@@ -45,31 +45,27 @@ loadHeader();
                 ?>
 
                 <h3>Options</h3>
-                <ul>
+
 
                     <?php
                     foreach ($listings as $item) { ?>
-                        <form id='<?php echo $item;?>' action='<?php echo $_SERVER['PHP_SELF'] ?>' method='GET'>
-                            <input type='hidden' name='task' value='<?php echo $item;?>'>
-                            <li>
-                                <a href='#' onclick='document.getElementById("<?php echo $item;?>").submit();'>
-                                    <?php echo $item; ?>
-                                </a>
-                            </li>
-                        </form>
+                    		<a href="<?php echo $_SERVER['SCRIPT_NAME']?>?task=<?php echo $item; ?>"><?php echo $item; ?></a><br />
                         <?php
                     }
 
                     ?>
+
             </div>
 
             <div class="main-dash right">
                 <?php
-                // Is a value set?  Do something! Else, instructions
-                if (isset($_GET['task'])) { // TODO ADD ERROR CHECKING
-                    echo "<h2>Task: ".$_GET['task']."</h2>";
-                    require_once("./tasks/".$_GET['task']."/".$_GET['task'].".php");
+                // Is a value set?  Check if task exists. If yes, execute. Else, instructions!
+                $task=basename(filter_input(INPUT_GET,'task',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0));
+                if ($task !== NULL && file_exists($BASE_DIR."extras/tasks/".$task."/".$task .".php")) { 
+                    echo "<h2>Task: " . $task . "</h2>";
+                    require_once($BASE_DIR."extras/tasks/".$task."/".$task .".php");
                 } else {
+                    error_log("Somebody tried to call the extras task {$task}");
                     echo "Select a task to do from the lefthand menu";
                 }
                 ?>
