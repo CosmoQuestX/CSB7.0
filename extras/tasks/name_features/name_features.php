@@ -181,7 +181,7 @@ if (isset($_GET['image_set_name'])) {
             <input type="hidden" name="markX" id="markX" value="">
             <input type="hidden" name="markY" id="markY" value="">
             <label>Name: <input type="text" name="name"></label><br/>
-            <label>Reason: <input type="textarea" name="reason"></label><br/>
+            <label>Reason: <textarea name="reason"></textarea></textarea></label><br/>
             <button type="submit" id="submit-button">Submit Name</button>
         </form>
         <?php
