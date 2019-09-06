@@ -68,6 +68,9 @@ body {
 	width: 400px;
 }
 
+iframe {
+	border: none;
+}
 
 .notSelected {
     opacity: 0.5;
