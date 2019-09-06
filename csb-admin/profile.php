@@ -97,7 +97,12 @@ else {
         } else {
             echo "email address required";
         }
-        echo $db->update($query, $params_type, $params);
+        if($db->update($query, $params_type, $params)) {
+            $saved = TRUE;
+        }
+        else {
+            $saved = FALSE;
+        }
     }
 
 
@@ -125,18 +130,30 @@ else {
                     with permission only, use your first and last name to give you credit for things
                     you accomplish.</span></p>
                 <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
-                <ul>
-                    <li>Username: <?php echo $thisUser['name']; ?> </li>
-                    <li>email: <input type="text" name="email" value="<?php echo $thisUser['email']; ?>"></li>
-                    <li>change your password</li>
-                    <li>First Name: <input type="text" name="first_name" value="<?php echo $thisUser['first_name']; ?>"></li>
-                    <li>Last Name: <input type="text" name="last_name" value="<?php echo $thisUser['last_name']; ?>"></li>
+				<div id="form-input-box">
+        			<div id="form-input-row">
+        				<div id="form-input-left">First Name</div>
+        				<div id="form-input-right"><input type="text" name="first_name" value="<?php echo $thisUser['first_name']; ?>"></div>
+        			</div>
+        			<div id="form-input-row">
+        				<div id="form-input-left">Last Name</div>
+        				<div id="form-input-right"><input type="text" name="last_name" value="<?php echo $thisUser['last_name']; ?>"></div>
+        			</div>                
+        			<div id="form-input-row">
+        				<div id="form-input-left">Email</div>
+        				<div id="form-input-right"><input type="text" name="email" value="<?php echo $thisUser['email']; ?>"></div>
+        			</div>
+        			<div id="form-input-row">
+        				<div id="form-input-left">Change your password?</div>
+        				<div id="form-input-right"></div>
+        			</div>
+        				
+					<input type="checkbox" name="public_name"<?php if ($thisUser['public_name'] == 1) echo " checked"?>> Do we have permission to publish your name with science results? 
+	       			</div>                
 
-                </ul>
-                    <input type="checkbox" name="public_name"<?php if ($thisUser['public_name'] == 1) echo " checked"?>>
-                    Do we have permission to publish your name with science results?
                     <input type="submit" value="Save Settings" class="btn-default right">
                 </form>
+                <?php if (isset($saved) && $saved) { echo "<span class='red'>Settings saved!</span>"; unset($saved); } ?>
             </div>
             <div class="clear"></div>
         </div>
