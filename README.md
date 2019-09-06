@@ -38,7 +38,8 @@ You should always use a certificate. If you don't have one, try using the free
 
 #### 1.4 Going to email folks? Add PEAR
 macOS Mojave use https://tobschall.de/2018/08/07/pear-on-mojave/
+General installation use https://pear.php.net/manual/en/installation.getting.php
 
 ### Step 2: Launch the installer
-Go to http://yourdir/csb-installer/ in your browser. 
+Go to http://yourhost/csb-installer/ in your browser. 
   This will let you configure your installation and then install databases and setup an admin user using the settings in csb-settings.php
