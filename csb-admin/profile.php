@@ -153,7 +153,14 @@ else {
 
                     <input type="submit" value="Save Settings" class="btn-default right">
                 </form>
-                <?php if (isset($saved) && $saved) { echo "<span class='red'>Settings saved!</span>"; unset($saved); } ?>
+                <?php 
+                    if (isset($saved) && $saved) { 
+                        echo "<span class='red'>Settings saved!</span>"; unset($saved); 
+                    }
+                    elseif (isset($saved) && !$saved) {
+                        echo "<span class='red'>Error saving settings!</span>"; unset($saved);
+                    }
+                ?>
             </div>
             <div class="clear"></div>
         </div>
