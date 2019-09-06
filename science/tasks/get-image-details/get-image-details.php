@@ -16,10 +16,7 @@
     if (isset($_GET['image_set_name'])) {
         $name = $_GET['image_set_name'];
         ?>
-	    <div style="float:right; width:48%;">
-	        <img src="https://s3.amazonaws.com/cosmoquest/data/mappers/osiris/ImageDelivery_20190520/RAWIMAGES/<?php echo $name;?>" style="width:100%">
-	    </div>
-        <div style="margin-top:30px; width: 50%;">
+        <div style="margin-top:30px; width: 50%; float:left;">
             <?php
             echo "<p> The following details are found for <strong>".$_GET['image_set_name']."</strong></p>";
 
@@ -58,6 +55,9 @@
             }
             echo "</table>";
         ?>
+        </div>
+        <div style="float:right; width:48%;">
+            <img src="https://s3.amazonaws.com/cosmoquest/data/mappers/osiris/ImageDelivery_20190520/RAWIMAGES/<?php echo $name;?>" style="width:100%">
         </div>
         <?php
     }
