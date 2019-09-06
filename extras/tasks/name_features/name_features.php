@@ -33,7 +33,7 @@ if(isset($_GET['markX'])){
     echo "</table><style>#submission-data td,th {color:black; border: 1px black solid;}</style>";
 }
 
-if (!isset($_GET['image_set_name'])) {
+if (!isset($_GET['image_set_name']) || $_GET['image_set_name'] == "") {
     ?>
     <form id="GetImageToName" action="<?php echo $BASE_URL; ?>/extras/">
         <input type="hidden" name="task" value="name_features">
@@ -45,8 +45,8 @@ if (!isset($_GET['image_set_name'])) {
 
 
 // Check if an image was already submitted
-if (isset($_GET['image_set_name'])) {
-    $name = $_GET['image_set_name'];
+if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
+    $name = basename(preg_replace("/[.,;\\(]/", "", filter_input(INPUT_GET,'image_set_name',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0)));
 
     ?>
     <div style="float:right; width:450px;">
