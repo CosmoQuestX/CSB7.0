@@ -133,10 +133,10 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
 
     <div style="margin-top:30px; width: 390px; /* 860-470 */">
         <?php
-        echo "<H3>Image:<br>".$_GET['image_set_name']."</H3>";
+        echo "<H3>Image:<br>".$name."</H3>";
 
         // Get image set id
-        $query  = "SELECT * FROM image_sets WHERE name like '".$_GET['image_set_name']."'";
+        $query  = "SELECT * FROM image_sets WHERE name like '".$name."'";
         $resultset = $db->runQuery($query);
         $image_set_id = $resultset[0]['id'];
 
@@ -177,7 +177,7 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
             <div id="proposed_names">
                 <p>Names will appear here</p>
             </div>
-            <input type="hidden" name="image_set_name" id="image_set_name" value="<?=$name ?>">
+            <input type="hidden" name="image_set_name" id="image_set_name" value="<?php echo $name ?>">
             <input type="hidden" name="markX" id="markX" value="">
             <input type="hidden" name="markY" id="markY" value="">
             <label>Name: <input type="text" name="name"></label><br/>
