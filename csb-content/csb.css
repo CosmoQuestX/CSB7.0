@@ -65,7 +65,7 @@ body {
 	float: right;
 }
 input[type=text],input[type=password] {
-	width: 300px;
+	width: 200px;
 }
 
 span .left {
