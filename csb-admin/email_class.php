@@ -8,8 +8,6 @@
  */
 
 
-// TODO: ADD ERROR CHECKING SO NO LITTLE JOHNNY TABLES FAIL
-
 // Standard "How the hell did you get here?" Redirect to root directory
 if (!isset($loader) || !$loader) {
     header($_SERVER['HTTP_HOST']);
@@ -35,11 +33,11 @@ class email
     private $from;
 
     function __construct($params) {
-        $this->host     = $params['host'];
+        $this->host     = filter_var($params['host'],FILTER_SANITIZE_URL);
         $this->username = $params['username'];
         $this->password = $params['password'];
-        $this->port     = $params['port'];
-        $this->from     = $params['from'];
+        $this->port     = filter_var($params['port'],FILTER_SANITIZE_NUMBER_INT);
+        $this->from     = filter_var($params['from'],FILTER_SANITIZE_EMAIL);
 
     }
 
@@ -53,7 +51,7 @@ class email
 
         $headers = array(
             'From'      => $this->from,
-            'To'        => $to,
+            'To'        => filter_var($to,FILTER_SANITIZE_EMAIL),
             'Subject'   => $msg['subject'],
             'Reply-To'  => $this->from
         );
