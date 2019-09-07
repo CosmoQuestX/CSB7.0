@@ -64,10 +64,21 @@ body {
 	display: table-cell;
 	float: right;
 }
-#form-input-right input{
-	width: 400px;
+input[type=text],input[type=password] {
+	width: 200px;
 }
 
+span .left {
+	text-align: left;	
+}
+
+.red {
+	color: red;
+}
+
+iframe {
+	border: none;
+}
 
 .notSelected {
     opacity: 0.5;

@@ -104,7 +104,6 @@ if (isset($_SERVER) && isset($_SERVER['SCRIPT_FILENAME']) )
     echo '<div id="main">';
     echo '<div id="" class="container">';
     echo '<div id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;">';
-    //id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;"
     echo "<p><h4>You are running the Citizen Science Builder installer</h4> <br />\n";
     echo "I'm guessing the installation path on the Server is " . $BASE_DIR ."<br />\n";
     echo "I'm guessing the base URL is " . $BASE_URL ."<br />\n";

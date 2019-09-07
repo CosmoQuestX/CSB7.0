@@ -6,7 +6,13 @@
  * Time: 1:49 PM
  */
 
-// This file should be run from the commandline
+// This file should be run from the commandline, so make sure it is 
+
+if (PHP_SAPI != "cli") {
+    exit("Please run this from the command line");
+}
+
+
 // Objectives:
 // - Download requested data into a file
 // - Email user a download link when the file is ready

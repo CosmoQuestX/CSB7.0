@@ -114,14 +114,14 @@ class DB
     function insert($query, $param_type, $param_value_array) {
         $sql = $this->conn->prepare($query);
         $this->bindQueryParams($sql, $param_type, $param_value_array);
-        $sql->execute();
+        return $sql->execute();
     }
 
     function update($query, $param_type, $param_value_array) {
 
         $sql = $this->conn->prepare($query);
         $this->bindQueryParams($sql, $param_type, $param_value_array);
-        $sql->execute();
+        return $sql->execute();
     }
 
     function getInsertId() {
@@ -175,6 +175,37 @@ class DB
         else {
             return FALSE;
         }
+    }
+
+    function getUserIdByName($name) {
+        $sql = "SELECT id from users WHERE name = \"$name\"";
+        $result = mysqli_query($this->conn, $sql);
+        echo mysqli_error($this->conn);
+        error_log(mysqli_error($this->conn));
+        
+        if ($result->num_rows == 1) {
+            while($row = $result->fetch_assoc()) {
+                $resultSet[] = $row;
+            }
+            return $resultSet[0]["id"];
+        }
+        else {
+            return FALSE;
+        }
+    }
+    
+    function checkDuplicateUser($field, $input) {
+        $sql = "SELECT $field FROM users WHERE $field = \"$input\"";
+        $result = mysqli_query($this->conn, $sql);
+        error_log(mysqli_error($this->conn));
+        
+        if ($result->num_rows > 0) {
+            $rt = TRUE;
+        }
+        else {
+            $rt = FALSE;
+        }
+        return $rt;
     }
 }
 ?>

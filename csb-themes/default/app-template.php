@@ -83,7 +83,7 @@ $lang = json_decode($lang, true);
             <p><?php echo $txt['blurb'];?></p>
             <p><?php echo $txt['footer'];?></p>
             <input type="button" value="Discord"><input type="button" value="Twitch"><br/>
-            <iframe src="https://titanembeds.com/embed/443490369443856384" height="245" width="350" frameborder="0"></iframe>
+            <iframe src="https://titanembeds.com/embed/443490369443856384" height="245" width="350"></iframe>
         </div>
         <div class="clear"></div>
     </div>

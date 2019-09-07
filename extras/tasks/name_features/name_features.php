@@ -33,7 +33,7 @@ if(isset($_GET['markX'])){
     echo "</table><style>#submission-data td,th {color:black; border: 1px black solid;}</style>";
 }
 
-if (!isset($_GET['image_set_name'])) {
+if (!isset($_GET['image_set_name']) || $_GET['image_set_name'] == "") {
     ?>
     <form id="GetImageToName" action="<?php echo $BASE_URL; ?>/extras/">
         <input type="hidden" name="task" value="name_features">
@@ -45,8 +45,8 @@ if (!isset($_GET['image_set_name'])) {
 
 
 // Check if an image was already submitted
-if (isset($_GET['image_set_name'])) {
-    $name = $_GET['image_set_name'];
+if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
+    $name = basename(preg_replace("/[(..),;\\\/]/", "", filter_input(INPUT_GET,'image_set_name',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0)));
 
     ?>
     <div style="float:right; width:450px;">
@@ -133,10 +133,10 @@ if (isset($_GET['image_set_name'])) {
 
     <div style="margin-top:30px; width: 390px; /* 860-470 */">
         <?php
-        echo "<H3>Image:<br>".$_GET['image_set_name']."</H3>";
+        echo "<H3>Image:<br>".$name."</H3>";
 
         // Get image set id
-        $query  = "SELECT * FROM image_sets WHERE name like '".$_GET['image_set_name']."'";
+        $query  = "SELECT * FROM image_sets WHERE name like '".$name."'";
         $resultset = $db->runQuery($query);
         $image_set_id = $resultset[0]['id'];
 
@@ -177,11 +177,11 @@ if (isset($_GET['image_set_name'])) {
             <div id="proposed_names">
                 <p>Names will appear here</p>
             </div>
-            <input type="hidden" name="image_set_name" id="image_set_name" value="<?=$name ?>">
+            <input type="hidden" name="image_set_name" id="image_set_name" value="<?php echo $name ?>">
             <input type="hidden" name="markX" id="markX" value="">
             <input type="hidden" name="markY" id="markY" value="">
             <label>Name: <input type="text" name="name"></label><br/>
-            <label>Reason: <input type="textarea" name="reason"></label><br/>
+            <label>Reason: <textarea name="reason"></textarea></label><br/>
             <button type="submit" id="submit-button">Submit Name</button>
         </form>
         <?php
