@@ -65,12 +65,14 @@ else {
    ---------------------------------------------------------------------- */
 
     if(isset($_POST) && !empty($_POST)) {
-
+        // Fetch old data to compare. 
+        $curprofile = $db->getUser($_SESSION['user_id']);
+        
+        // Save email only when not empty, otherwise use the current one
         if (isset($_POST['email'])) {
             $query = "update users set email = ?";
-            $params[] = filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL);
+            $params[] = $_POST['email'] != "" ? filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL) : $curprofile['email'];
             $params_type = "s";
-
 
             if (isset($_POST['first_name'])) {
                 $query .= ", first_name = ?";
@@ -89,13 +91,23 @@ else {
             } else {
                 $query .= ", public_name = 0";
             }
-
+            // Give the user the possibility to change the password, but don't overwrite with an empty password
+            // Also, Javascript should prevent it, but make sure the password confirmation matches.
+            if (isset($_POST['password']) && $_POST['password'] != "" && isset($_POST['confirm_password']) && $_POST['password'] == $_POST['confirm_password']) {
+                $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $query .= ", password = ?";
+                $params[] = $hashed;
+                $params_type .="s";
+            }
+            
             $query       .= " where id = ?";
             $params[]     = filter_var($_SESSION['user_id'],FILTER_SANITIZE_NUMBER_INT);
             $params_type .= "s";
 
         } else {
-            echo "email address required";
+            echo "Email address required";
+            // Make sure this doesn't get saved, if somehow Email isn't set
+            $query="";
         }
         if($db->update($query, $params_type, $params)) {
             $saved = TRUE;
@@ -129,7 +141,7 @@ else {
                     information, but the only thing that can be publicly seen is your username. We will,
                     with permission only, use your first and last name to give you credit for things
                     you accomplish.</span></p>
-                <form action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
+                <form id="profile-form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" onSubmit="return checkPasswd(this);">
 				<div id="form-input-box">
         			<div id="form-input-row">
         				<div id="form-input-left">First Name</div>
@@ -145,28 +157,40 @@ else {
         			</div>
         			<div id="form-input-row">
         				<div id="form-input-left">Change your password?</div>
-        				<div id="form-input-right"></div>
+        				<div id="form-input-right"><input type="checkbox" name="pck" onClick="fnShowHide();"></div>
+        			</div>
+        			<div id="newpass" class="newpass">
+        				<div id="form-input-left">New password</div>
+        				<div id="form-input-right"><input type="password" name="password"></div>
+        			</div>
+        			<div id="newpass" class="newpass">
+        				<div id="form-input-left">Repeat password</div>
+        				<div id="form-input-right"><input type="password" name="confirm_password"></div>
         			</div>
         				
+        			<div id="form-input-row">
 					<input type="checkbox" name="public_name"<?php if ($thisUser['public_name'] == 1) echo " checked"?>> Do we have permission to publish your name with science results? 
 	       			</div>                
 
                     <input type="submit" value="Save Settings" class="btn-default right">
+            	</div>	
                 </form>
+				<span class="red" id="message">
                 <?php 
                     if (isset($saved) && $saved) { 
-                        echo "<span class='red'>Settings saved!</span>"; unset($saved); 
+                        echo "Settings saved!"; unset($saved); 
                     }
                     elseif (isset($saved) && !$saved) {
-                        echo "<span class='red'>Error saving settings!</span>"; unset($saved);
+                        echo "Error saving settings!"; unset($saved);
                     }
                 ?>
+				</span>
             </div>
             <div class="clear"></div>
         </div>
     </div>
 
-
+<script src='<?php echo $BASE_URL . "csb-content/js/profile.js" ?>'></script>
 
     <?php
     loadFooter();

@@ -8,9 +8,15 @@
 
 // Standard "How the hell did you get here?" Redirect to root directory
 if (!isset($loader) || !$loader) {
-    header($_SERVER['HTTP_HOST']);
+    header("Location: http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST']);
     exit();
 }
+
+/* This function duplicates including csb-content/themes/login.php
+ * Keep in mind that if you chance something here you need to change
+ * it there as well without breaking anything.
+ */
+
 ?>
 <!-----------------------------------------------------------------------
    Login form
@@ -24,30 +30,31 @@ if (!isset($loader) || !$loader) {
 
    ---------------------------------------------------------------------->
 
+
+
 <div class="container">
     <div id="form-box">
+    <div id="form-input-box">
         <form action="<?php echo($BASE_URL . "csb-admin/auth-login.php"); ?>" method="post" id="form-login">
 
-            <input type="hidden" name="referringURL" value="<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']; ?>">
+            <input type="hidden" name="referringURL" value="<?php echo "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>">
             <input type="hidden" name="go" value="login">
 
-            <div class="error-msg"></div>
-
-            <div class="field-textbox">
-                <label for="login">Username</label>
-                <input name="name" type="text"
-                       value="<?php if (isset($_COOKIE["name"])) {
-                           echo $_COOKIE["name"];
-                       } ?>"
-                >
-                <label for="password">Password</label>
-                <input name="password" type="password">
+			<div id="form-input-row">
+            	<div id="error-msg"><?php if(isset($_SESSION['errmsg'])) { echo "<span style=\"color: red;\">" . $_SESSION['errmsg'] ."</span>"; unset($_SESSION['errmsg']); } ?></div>
+			</div>
+			
+            <div id="form-input-row">
+                <div id="form-input-left"><label for="login">Username</label></div>
+                <div id="form-input-right"><input name="name" type="text" value="<?php if (isset($_COOKIE["name"])) { echo $_COOKIE["name"]; } ?>"></div>
+            </div>
+            <div id="form-input-row">
+                <div id="form-input-left"><label for="password">Password</label></div>
+                <div id="form-input-right"><input name="password" type="password"></div>
             </div>
 
-            <div class="fields-checkbox">
-                <input type="checkbox" name="remember" id="remember"
-                    <?php if (isset($_COOKIE["member_login"])) { ?> checked
-                    <?php } ?> />
+            <div id="form-input-row">
+                <input type="checkbox" name="remember" id="remember"<?php if (isset($_COOKIE["member_login"])) { echo " checked"; } ?>/>
                 <label for="remember-me">Remember me</label>
             </div>
 
@@ -60,6 +67,7 @@ if (!isset($loader) || !$loader) {
         <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
             <input type="submit" name="go" value="register">
         </form>
+    </div>
     </div>
 </div>
 <?php
