@@ -41,7 +41,8 @@ if (filter_var($login,FILTER_VALIDATE_BOOLEAN) || $user === FALSE ) { // NOT LOG
 
 elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENTIST'] &&
         $_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN']) {
-    die("ERROR: You don't have permission to be here");
+        // TODO be a bit politer when rejecting nosy users
+        die("ERROR: You don't have permission to be here");
 }
 
 /* ----------------------------------------------------------------------

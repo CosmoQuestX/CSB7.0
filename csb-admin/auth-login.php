@@ -69,8 +69,12 @@ $db->closeDB();
    ---------------------------------------------------------------------- */
 
 /**
- * @param $db
- * @param $user
+ * Function for logging in a user. 
+ * 
+ * @param object $db - the current database instance 
+ * @param array $user - the user configuration
+ * 
+ * @return void
  */
 function login($db, $user) {
 
@@ -145,7 +149,9 @@ function login($db, $user) {
 }
 
 /**
- *
+ * Function for logging out a user
+ * 
+ * @return void
  */
 function logout()
 {
@@ -169,8 +175,11 @@ function logout()
 }
 
 /**
- * @param $db
- * @param $user
+ * Register a new user
+ * 
+ * @param resource $db - the current database connection
+ * @param array $user - the user configuration for the registration attempt
+ * @param string $pwhash - a hash of the password the new user entered
  */
 function regUser($db, $user,$pwhash)
 {
