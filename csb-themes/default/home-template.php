@@ -20,7 +20,7 @@ $lang = json_decode($lang, true);
 <div id="main" class="container-fluid">
     <div class="row">
 
-        <div id="app-left" class="col-md-2">
+        <div id="app-left" class="col-md-2 d-none d-sm-block">
             <!-- LEFT -->
 
             <?php $txt = $lang['app_page']['text-boxes']['app-left']; ?>
@@ -44,7 +44,7 @@ $lang = json_decode($lang, true);
 
 
 
-        <div id="app-main" class="col-md-8 main-dash">
+        <div id="app-main" class="col-md-8 main-dash d-none d-sm-block">
             <!-- MIDDLE -->
 
 
@@ -87,7 +87,7 @@ $lang = json_decode($lang, true);
 
 
         
-        <div id="app-right" class="col-md-2">
+        <div id="app-right" class="col-md-2 d-none d-sm-block">
             <!-- RIGHT -->
 
             <?php $txt = $lang['app_page']['text-boxes']['app-right']; ?>
@@ -109,6 +109,17 @@ $lang = json_decode($lang, true);
 
 
     
+    </div>
+</div>
+
+<div class="container d-block d-sm-none bg-dark p-4">
+    <div class="row">
+        <div class="col-12">
+        
+            <h2>Hello!</h2>
+            <p>Thank you for visiting Cosmoquest on mobile. If you would like to use the mapping web app please come back on a larger device.</p>
+        
+        </div>
     </div>
 </div>
 

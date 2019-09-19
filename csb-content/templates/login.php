@@ -24,8 +24,14 @@ if (!isset($loader) || !$loader) {
 
    ---------------------------------------------------------------------->
 
+
+
 <div class="container">
-    <div id="form-box">
+    <div class="row d-flex justify-content-center">
+        <div class="col-4 bg-white p-3" style="color:black;">
+        
+            
+
         <form action="<?php echo($BASE_URL . "csb-admin/auth-login.php"); ?>" method="post" id="form-login">
 
             <input type="hidden" name="referringURL" value="<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']; ?>">
@@ -35,13 +41,13 @@ if (!isset($loader) || !$loader) {
 
             <div class="field-textbox">
                 <label for="login">Username</label>
-                <input name="name" type="text"
-                       value="<?php if (isset($_COOKIE["name"])) {
-                           echo $_COOKIE["name"];
-                       } ?>"
+                <input name="name" class="form-control" type="text"
+                    value="<?php if (isset($_COOKIE["name"])) {
+                        echo $_COOKIE["name"];
+                    } ?>"
                 >
                 <label for="password">Password</label>
-                <input name="password" type="password">
+                <input name="password" class="form-control" type="password">
             </div>
 
             <div class="fields-checkbox">
@@ -52,16 +58,23 @@ if (!isset($loader) || !$loader) {
             </div>
 
             <div class="field-submit">
-                <input type="submit" name="login" value="Login"
-                       class="form-submit-button">
+                <input type="submit" class="btn btn-cq btn-block" name="login" value="Login"
+                    class="form-submit-button">
             </div>
         </form>
 
         <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
-            <input type="submit" name="go" value="register">
+            <input type="submit" class="btn btn-secondary btn-block" name="go" value="Register">
         </form>
+
+
+        
+        </div>
     </div>
 </div>
+
+
+
 <?php
 
 require_once($THEME_DIR . "/footer.php");
