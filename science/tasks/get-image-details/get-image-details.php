@@ -13,15 +13,15 @@
 <?php
 
 // Check if an image was already submitted
-    if (isset($_GET['image_set_name'])) {
-        $name = $_GET['image_set_name'];
+if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
+        $name = basename(preg_replace("/[(..),;\\\/]/", "", filter_input(INPUT_GET,'image_set_name',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0)));
         ?>
         <div style="margin-top:30px; width: 50%; float:left;">
             <?php
-            echo "<p> The following details are found for <strong>".$_GET['image_set_name']."</strong></p>";
+            echo "<p> The following details are found for <strong>".$name."</strong></p>";
 
             // Get image set id
-            $query  = "SELECT * FROM image_sets WHERE name like '".$_GET['image_set_name']."'";
+            $query  = "SELECT * FROM image_sets WHERE name like '".$name."'";
             $resultset = $db->runQuery($query);
             $image_set_id = $resultset[0]['id'];
             echo "<p><strong>Image Set id:</strong> ", $image_set_id."<br/>";
