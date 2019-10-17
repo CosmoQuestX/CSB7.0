@@ -40,7 +40,6 @@ $email_to = $argv['3'];
 
 $download_id = $argv['4'];
 
-
 /* ----------------------------------------------------------------------
    Get the settings
    ---------------------------------------------------------------------- */
@@ -97,7 +96,11 @@ if ($hero) {
     $where = "WHERE created_at >= '$dateStart'
               AND created_at < '$dateEnd'";
 }
+
 $numRows = $db->getNumRows('marks', $where);
+
+echo "numRows: ".$numRows;
+
 $lastPage = intval($numRows / 10000.0);
 if (($numRows % 10000) != 0) $lastPage++; // round up to get the last page
 
@@ -195,9 +198,13 @@ if ($hero) {
    ---------------------------------------------------------------------- */
 
 else {
+
+    echo "getting data \n";
+
     $page = 0;
 
     while ($page < $lastPage) {
+        echo ".";
 
         $start = $page * 10000;
         $query = "SELECT marks.id, 
@@ -212,59 +219,57 @@ else {
                 images.image_set_id = image_sets.id AND 
                 marks.user_id = users.id
           LIMIT " . $start . ",10000";
-    }
 
-    $results = $db->runQuery($query);
+        $results = $db->runQuery($query);
 
 
-    /* ----------------------------------------------------------------------
-        read through each row, 1 at a time
-       ---------------------------------------------------------------------- */
+        /* ----------------------------------------------------------------------
+            read through each row, 1 at a time
+           ---------------------------------------------------------------------- */
 
-    foreach ($results as $result) {
+        foreach ($results as $result) {
 
-        // Fix the X, Y to be in the coordinates of the master image
+            // Fix the X, Y to be in the coordinates of the master image
 
-        // 1) Get the offset from the Master Image
-        $origin = json_decode($result['origin'], TRUE);
+            // 1) Get the offset from the Master Image
+            $origin = json_decode($result['origin'], TRUE);
 
-        // 2) Correct the x, y position info
-        $x = $result['x'] + $origin['x'];
-        $y = $result['y'] + $origin['y'];
+            // 2) Correct the x, y position info
+            $x = $result['x'] + $origin['x'];
+            $y = $result['y'] + $origin['y'];
 
-        if ($result['details'] != 'null') {
-            $details = json_decode($result['details'], TRUE);   // Details about marks (not always present)
+            if ($result['details'] != 'null') {
+                $details = json_decode($result['details'], TRUE);   // Details about marks (not always present)
 
-            // only update things if there is an offset
-            if ($origin['x'] != 0 || $origin['y'] != 0) {
-                $details['points'][0]['x'] += $origin['x'];
-                $details['points'][0]['y'] += $origin['y'];
-                $details['points'][1]['x'] += $origin['x'];
-                $details['points'][1]['y'] += $origin['y'];
+                // only update things if there is an offset
+                if ($origin['x'] != 0 || $origin['y'] != 0) {
+                    $details['points'][0]['x'] += $origin['x'];
+                    $details['points'][0]['y'] += $origin['y'];
+                    $details['points'][1]['x'] += $origin['x'];
+                    $details['points'][1]['y'] += $origin['y'];
+                }
+
+                $details_json = json_encode($details);
+            } else {
+                $details_json = "null";
             }
 
-            $details_json = json_encode($details);
-        } else {
-            $details_json = "null";
+
+            $output .= $result['id'] . "\t" .
+                $result['image_name'] . "\t" .
+                $x . "\t" .
+                $y . "\t" .
+                $result['diameter'] . "\t" .
+                $result['type'] . "\t" .
+                $details_json . "\t" .
+                $result['created_at'] . "\t" .
+                $result['name'] . "\n";
         }
 
-
-        $output .= $result['id'] . "\t" .
-            $result['image_name'] . "\t" .
-            $x . "\t" .
-            $y . "\t" .
-            $result['diameter'] . "\t" .
-            $result['type'] . "\t" .
-            $details_json . "\t" .
-            $result['created_at'] . "\t" .
-            $result['name'] . "\n";
+        fwrite($file, $output);
+        $output = "";
+        $page++;
     }
-
-    fwrite($file, $output);
-    $output = "";
-    $page++;
-
-
 }
 
 // Update data_download table to show success
