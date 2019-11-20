@@ -33,8 +33,10 @@
 
     global $ADMIN_DIR, $DB_class, $email_class;
 
-    $ADMIN_URL = $BASE_URL . "csb-admin/";
-    $ADMIN_DIR = $BASE_DIR . "csb-admin/";
+    $ACC_URL = $BASE_URL . "csb-accounts/";
+    $ACC_DIR = $BASE_DIR . "csb-accounts/";
+    $ADMIN_URL = $BASE_URL . "csb-accounts/";
+    $ADMIN_DIR = $BASE_DIR . "csb-accounts/";
     $DB_class  = $ADMIN_DIR. "db_class.php";
     $email_class = $ADMIN_DIR."email_class.php";
     $IMAGES_URL = $BASE_URL . "csb-content/images/";

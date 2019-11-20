@@ -16,7 +16,7 @@
 function listDashboards() {
     global $BASE_DIR;
 
-    $dir = $BASE_DIR . "/csb-admin/dashboards";
+    $dir = $BASE_DIR . "/csb-accounts/dashboards";
     $listings = array_diff(scandir($dir), array('..', '.'));
     ?>
 

@@ -19,6 +19,15 @@ function loadHeader() {
     require_once($THEME_DIR . "header.php");
 }
 
+function openMain()
+{
+    echo "<div id='content'>";
+}
+
+function closeMain()
+{
+    echo "</div>";
+}
 /**
  * Outputs the base footer for completing the website output depending on the
  * selected theme
@@ -51,11 +60,13 @@ function loadMeta() {
  * @return void
  */
 function loadUser() {
-    global $BASE_URL, $user, $adminFlag;
+    global $BASE_URL, $ACC_URL, $user, $adminFlag;
 
     if ( $user === FALSE) {         // NOT LOGGED IN
         if ($adminFlag === FALSE) {
-           ?> <button id="alert-botton">Login</button> <?php
+           ?> <button id="alert-login">Login</button>
+              <button id="alert-botton"
+                      onclick="location.href='<?PHP echo $ACC_URL;?>register.php';">Register</button> <?php
         }
         else {
             echo "not logged in";
@@ -65,7 +76,7 @@ function loadUser() {
         echo "Hello, " . $user['name'];
         ?>
         
-        <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
+        <form action="<?php echo($BASE_URL); ?>csb-accounts/auth-login.php" method="get" id="form-logout">
             <input type="submit" name="go" class="btn btn-cq float-right" value="logout">
         </form>
         <?php
@@ -79,16 +90,10 @@ function loadUser() {
  * @return void
  */
 function loadLoginBox() {
-    /* This function currently duplicates including 
-     * csb-content/themes/login.php 
-     * Keep in mind that if you chance something here you need to change
-     * it there as well without breaking anything.
-     */
-    global $BASE_URL;
+    global $BASE_URL, $ACC_URL;
     ?>
 
     <div id="alert-box" class="alert">
-
         <!-- Modal content -->
         <div class="alert-content">
             <span class="close">&times;</span>
@@ -96,7 +101,7 @@ function loadLoginBox() {
 		    <div id="form-box">
 		    	<div id="form-input-box">
 	      			<H3>Please Login</H3>
-       				<form action="<?php echo($BASE_URL . "csb-admin/auth-login.php"); ?>" method="post" id="form-login">
+       				<form action="<?php echo($BASE_URL . "csb-accounts/auth-login.php"); ?>" method="post" id="form-login">
    			        <input type="hidden" name="referringURL" value="<?php echo "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>">
 		            <input type="hidden" name="go" value="login">
 
@@ -115,9 +120,10 @@ function loadLoginBox() {
 			            <div class="field-submit"><input type="submit" name="login" value="Login" class="form-submit-button"></div>
 
        		    	</form>
-	        		<form action="<?php echo($BASE_URL . "csb-admin/auth-login.php"); ?>" method="get" id="form-logout">
-   		    	    <input type="submit" name="go" value="register">
-			        </form>
+
+                    <button id="alert-botton"
+                            onclick="location.href='<?PHP echo $ACC_URL;?>register.php';">Register</button>
+
 				</div>
     		</div>
 		</div>

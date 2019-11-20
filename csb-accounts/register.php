@@ -22,30 +22,33 @@
    Get the settings and check if the person is logged in
    ---------------------------------------------------------------------- */
 
-    require_once("./csb-loader.php");
-    require_once ($DB_class);
-    require_once ($BASE_DIR."csb-accounts/auth.php");
+require_once("../csb-loader.php");
+require_once ($DB_class);
+require_once ($BASE_DIR."csb-accounts/auth.php");
 
 /* ----------------------------------------------------------------------
    Is the person logged in?
    ---------------------------------------------------------------------- */
 
-    $db = new DB($db_servername, $db_username, $db_password, $db_name);
+$db = new DB($db_servername, $db_username, $db_password, $db_name);
 
-    global $user;
-    $user = isLoggedIn($db);
+global $user;
+$user = isLoggedIn($db);
 
 
 /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
-    global $page_title;
+global $page_title;
 
-    $page_title = "";
+$page_title = "";
 
-    require_once($BASE_DIR . "/csb-content/template_functions.php");
-    loadHeader();
-    require_once($THEME_DIR . "/home-template.php");
-    require_once($THEME_DIR . "/footer.php");
+require_once($BASE_DIR . "/csb-content/template_functions.php");
+loadHeader();
+openMain();
+echo "REGISTRATION STUFF";
+// TODO Add Registraion Form. Sends data to auth.php
+closeMain();
+require_once($THEME_DIR . "/footer.php");
 
 

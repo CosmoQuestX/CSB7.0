@@ -54,7 +54,7 @@ if (!isset($loader) || !$loader) {
 <div class="container">
     <div id="form-box">
     <div id="form-input-box">
-    <form action="<?php echo($BASE_URL."csb-admin/auth-login.php"); ?>" method="post" id="form-login">
+    <form action="<?php echo($BASE_URL."csb-accounts/auth-login.php"); ?>" method="post" id="form-login">
 
         <input type="hidden" name="referringURL" value="<?php echo $referringURL;?>">
         <input type="hidden" name="go" value="regForm">

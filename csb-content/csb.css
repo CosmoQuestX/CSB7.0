@@ -223,6 +223,13 @@ iframe {
     border-radius: 5px;
 }
 
+#content {
+    width: 100%;
+    height: 450px;
+    background: #ffffff;
+    color: #000000;
+}
+
 .app-button {
     width: 60px;
     height: 60px;
@@ -230,7 +237,8 @@ iframe {
 
 #app-right {
     background: none;
-    width: 340px;
+    width: 320px;
     margin-left: 10px;
+    border-radius: 10px;
 }
 

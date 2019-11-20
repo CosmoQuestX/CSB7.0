@@ -11,7 +11,7 @@
    ---------------------------------------------------------------------- */
 require_once ("../csb-loader.php");
 require_once ($DB_class);
-require_once ($BASE_DIR."csb-admin/auth.php");
+require_once ($BASE_DIR."csb-account/auth.php");
 $adminFlag = 1;
 
 /* ----------------------------------------------------------------------

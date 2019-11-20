@@ -7,7 +7,7 @@
  */
 ?>
 
-<div id="footer" class="mt-5">
+<div id="footer">
     <div class="container">
         Powered by CosmoQuest's Citizen Science Builder.
         This is a product of the Planetary Science Institute.
