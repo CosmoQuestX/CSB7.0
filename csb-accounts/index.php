@@ -35,17 +35,8 @@
 
 
    if ($login || $user === FALSE ) { // NOT LOGGED IN
-       require_once ($BASE_DIR."csb-content/templates/login.php");
+       echo "Login Required"; // TODO open login alert
    }
-
-/* ----------------------------------------------------------------------
-    Are they trying to register?
-   ---------------------------------------------------------------------- */
-
-    elseif ($reg) {
-        require_once ($BASE_DIR."csb-content/templates/login.php");
-    }
-
 
 /* ----------------------------------------------------------------------
    Do they have the correct role?

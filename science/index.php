@@ -32,7 +32,7 @@ require_once($BASE_DIR . "/csb-content/template_functions.php");
 loadHeader();
 
 if (filter_var($login,FILTER_VALIDATE_BOOLEAN) || $user === FALSE ) { // NOT LOGGED IN
-    require_once ($BASE_DIR."csb-content/templates/login.php");
+    echo "Login Required"; // TODO open login alert
 }
 
 /* ----------------------------------------------------------------------
