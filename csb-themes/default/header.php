@@ -23,7 +23,7 @@
     loadLoginBox();
 ?>
 
-<div id="header" class="container">
+<div id="header" class="container d-flex justify-content-between align-items-center">
 
     <!-----------------------------------------------------------------------
         Load Logo TODO Make logo uploadable
@@ -37,14 +37,14 @@
     <!-----------------------------------------------------------------------
         Load Title
        ---------------------------------------------------------------------->
-        <div id="title" class="left">
+        <div id="title">
             <h1> <?php echo $page_title;?></h1>
         </div>
 
     <!-----------------------------------------------------------------------
         Load User Area TODO ADD LOGIC TO LOGIN OR LOGOUT AS MAKES SENSE
       ---------------------------------------------------------------------->
-        <div id="user" class="right">
+        <div id="user">
 
             <?php loadUser(); ?>
 

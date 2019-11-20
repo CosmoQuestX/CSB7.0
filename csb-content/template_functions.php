@@ -64,8 +64,9 @@ function loadUser() {
     else {                           // LOGGED IN
         echo "Hello, " . $user['name'];
         ?>
+        
         <form action="<?php echo($BASE_URL); ?>csb-admin/auth-login.php" method="get" id="form-logout">
-            <input type="submit" name="go" value="logout">
+            <input type="submit" name="go" class="btn btn-cq float-right" value="logout">
         </form>
         <?php
     }

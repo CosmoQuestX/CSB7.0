@@ -7,7 +7,7 @@
  */
 ?>
 
-<div id="footer">
+<div id="footer" class="mt-5">
     <div class="container">
         Powered by CosmoQuest's Citizen Science Builder.
         This is a product of the Planetary Science Institute.
@@ -32,5 +32,6 @@ if (isset($_SESSION['showmodal']) && $_SESSION['showmodal']== TRUE) {
         
     }
 ?>
+
 
 </html>
