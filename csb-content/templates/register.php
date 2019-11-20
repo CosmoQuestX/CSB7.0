@@ -28,6 +28,14 @@ if (!isset($loader) || !$loader) {
     require_once($BASE_DIR . "/csb-content/template_functions.php");
     loadHeader();
 
+    /* ---------------------------------------------------------------------
+     The default header shows the login div id user on the top right.
+     So since we definitely don't have a user yet, hide the div.
+     --------------------------------------------------------------------- */
+    
+    echo "<script type=\"text/javascript\" language=\"JavaScript\">";
+    echo "document.getElementById(\"user\").style.display = \"none\";";
+    echo "</script>\n";
 ?>
 
 <!-----------------------------------------------------------------------
@@ -40,36 +48,53 @@ if (!isset($loader) || !$loader) {
             - signin instead TODO
 
    ---------------------------------------------------------------------->
+
+   
+   
+<div class="container">
+    <div id="form-box">
+    <div id="form-input-box">
     <form action="<?php echo($BASE_URL."csb-admin/auth-login.php"); ?>" method="post" id="form-login">
 
         <input type="hidden" name="referringURL" value="<?php echo $referringURL;?>">
         <input type="hidden" name="go" value="regForm">
 
-        <div class="error-msg"></div>
+	<div id="form-input-row">
+	        <div class="error-msg"><?php if(isset($_SESSION['regmsg'])) { echo "<span style=\"color: red;\">" . $_SESSION['regmsg'] ."</span>"; unset($_SESSION['regmsg']); } ?></div>
+	</div>
+	
+    <div id="form-input-row">
+		<div id="form-input-left"><label for="name">Username</label></div>
+		<div id="form-input-right"><input name="name" type="text"></div>
+	</div>                
+    <div id="form-input-row">
+		<div id="form-input-left"><label for="email">Email</label></div>
+		<div id="form-input-right"><input name="email" type="text"></div>
+	</div>                
+    <div id="form-input-row">
+		<div id="form-input-left"><label for="password">Enter Password</label></div>
+		<div id="form-input-right"><input name="password" type="password"></div>
+	</div>		
+    <div id="form-input-row">
+		<div id="form-input-left"><label for="confirm">Confirm Password</label></div>
+		<div id="form-input-right"><input name="confirm" type="password"></div>
+	</div>                
 
-        <div class="field-textbox">
-                <label for="login">Username</label>
-                <input name="name" type="text"><br/>
-                <label for="email">Email</label>
-                <input name="email" type="text"><br/>
-                <label for="password">Confirm Password</label>
-                <input name="password" type="password"><br/>
-                <label for="confirm">Password</label>
-                <input name="confirm" type="password"><br/>
-        </div>
-
+    <div id="form-input-row">
         <div class="fields-checkbox">
             <input type="checkbox" name="remember" id="remember">
             <label for="remember-me">Remember me</label>
         </div>
-
+	</div>
         <div class="field-submit">
             <input type="submit" name="register" value="Register"
                    class="form-submit-button">
         </div>
 
-</form>
-
+	</form>
+	</div>
+	</div>
+</div>
 <?php
 
 require_once ($THEME_DIR."/footer.php");

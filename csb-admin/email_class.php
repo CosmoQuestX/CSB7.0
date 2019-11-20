@@ -25,6 +25,9 @@ if (!isset($loader) || !$loader) {
 
 
 class email
+/**
+ * Class for email handling
+ */
 {
     private $host;
     private $username;
@@ -32,19 +35,24 @@ class email
     private $port;
     private $from;
 
+    /**
+     * Initialization with the parameters from the settings 
+     * 
+     * @param array $params The email parameters from the settings
+     */
     function __construct($params) {
         $this->host     = filter_var($params['host'],FILTER_SANITIZE_URL);
         $this->username = $params['username'];
         $this->password = $params['password'];
         $this->port     = filter_var($params['port'],FILTER_SANITIZE_NUMBER_INT);
         $this->from     = filter_var($params['from'],FILTER_SANITIZE_EMAIL);
-
     }
 
-
     /**
-     * @param $to
-     * @param $msg = array(subject, body, onSuccess)
+     * Send an email to a given email address
+     * 
+     * @param string $to
+     * @param array $msg an associative array with subject, body and onSuccess
      */
     function sendMail($to, $msg) {
         require_once "Mail.php";
