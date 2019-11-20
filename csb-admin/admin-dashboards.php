@@ -6,6 +6,13 @@
  * Time: 4:21 PM
  */
 
+
+/**
+ * List the available dashboards from the filesystem and produce links from them
+ * 
+ * @return void
+ * 
+ */
 function listDashboards() {
     global $BASE_DIR;
 
@@ -18,9 +25,8 @@ function listDashboards() {
 
     <?php
     foreach ($listings as $item) {
-        echo "<li>" . ucfirst($item) . "</li>";
+        echo "<a href=\"" . $_SERVER['SCRIPT_NAME'] ."?task={$item}\">". ucFirst($item) ."</a><br />";
     }
-
     ?>
     </ul>
     <?php

@@ -17,11 +17,11 @@ $adminFlag = 1;
 /* ----------------------------------------------------------------------
    Check for post variables
    ---------------------------------------------------------------------- */
+$login = FALSE;
+$reg = FALSE;
 if(isset($_POST) && !empty($_POST)) {
-    $login = FALSE;
-    $reg = FALSE;
-    if ($_POST['go'] == 'login') $login = TRUE;
-    elseif ($_POST['go'] == 'reg') $reg = TRUE;
+    if (isset($_POST['go']) && $_POST['go'] == 'login') $login = TRUE;
+    elseif (isset($_POST['go']) && $_POST['go'] == 'reg') $reg = TRUE;
 }
 
 /* ----------------------------------------------------------------------
@@ -64,127 +64,133 @@ else {
     are they trying to save something they input?
    ---------------------------------------------------------------------- */
 
-    if(isset($_GET) && !empty($_GET)) {
-
-        if (isset($_GET['email'])) {
+    if(isset($_POST) && !empty($_POST)) {
+        // Fetch old data to compare. 
+        $curprofile = $db->getUser($_SESSION['user_id']);
+        
+        // Save email only when not empty, otherwise use the current one
+        if (isset($_POST['email'])) {
             $query = "update users set email = ?";
-            $params = array($_GET['email']);
+            $params[] = $_POST['email'] != "" ? filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL) : $curprofile['email'];
             $params_type = "s";
 
-
-            if (isset($_GET['first_name'])) {
+            if (isset($_POST['first_name'])) {
                 $query .= ", first_name = ?";
-                $params [] = $_GET['first_name'];
+                $params[] = preg_replace("/;/","",filter_input(INPUT_POST,'first_name',FILTER_SANITIZE_FULL_SPECIAL_CHARS));
                 $params_type .="s";
             }
 
-            if (isset($_GET['last_name'])) {
+            if (isset($_POST['last_name'])) {
                 $query .= ", last_name = ?";
-                $params [] = $_GET['last_name'];
+                $params[] = preg_replace("/;/","",filter_input(INPUT_POST,'last_name',FILTER_SANITIZE_FULL_SPECIAL_CHARS));
                 $params_type .="s";
             }
 
-            if (isset($_GET['public_name'])) {
+            if (isset($_POST['public_name'])) {
                 $query .= ", public_name = 1";
             } else {
                 $query .= ", public_name = 0";
             }
-
+            // Give the user the possibility to change the password, but don't overwrite with an empty password
+            // Also, Javascript should prevent it, but make sure the password confirmation matches.
+            if (isset($_POST['password']) && $_POST['password'] != "" && isset($_POST['confirm_password']) && $_POST['password'] == $_POST['confirm_password']) {
+                $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $query .= ", password = ?";
+                $params[] = $hashed;
+                $params_type .="s";
+            }
+            
             $query       .= " where id = ?";
-            $params[]     = $_SESSION['user_id'];
+            $params[]     = filter_var($_SESSION['user_id'],FILTER_SANITIZE_NUMBER_INT);
             $params_type .= "s";
 
         } else {
-            echo "email address required";
+            echo "Email address required";
+            // Make sure this doesn't get saved, if somehow Email isn't set
+            $query="";
         }
-        echo $db->update($query, $params_type, $params);
+        if($db->update($query, $params_type, $params)) {
+            $saved = TRUE;
+        }
+        else {
+            $saved = FALSE;
+        }
     }
 
 
 // Go back to loading the page
 
-    $thisUser = $db->getUser($_SESSION['user_id']);
+    $thisUser = $db->getUser(filter_var($_SESSION['user_id'],FILTER_SANITIZE_NUMBER_INT));
     ?>
 
+    <div id="main">
+        <div class="container">
 
-
-    <div id="main" class="container">
-        <div class="row">
-
-            <div class="col-md-3 left-dash">
-
-                <!-- LEFT DASH -->
-
-                <div class="d-flex justify-content-center mb-3">
-                    <img src="<?php echo $IMAGES_URL;?>Profile/Default_Avatar.png">
-                </div>
-                
-                
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Account Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Change Your Password</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
-                    </li>
-                </ul>
-
+            <div id="" class="left-dash left">
+                Things to do will go here
             </div>
 
-            <div class="col-md-9 main-dash">
-            
-                <!-- MAIN DASH -->
-
-                <h2 class="float-left"><?php echo $thisUser['name']; ?>'s Account Settings</h2>
-                
-                
-                <br><br>
-                
-                
-                <form action="profile.php" method="get">
-
-                    
-                    
-                    <div class="form-group float-left w-50 pr-2">
-                        <label>First Name:</label>
-                        <input type="text" name="first_name" class="form-control" value="<?php echo $thisUser['first_name']; ?>">
-                    </div>
-
-                    <div class="form-group float-left w-50 pl-2">
-                        <label>Last Name:</label>
-                        <input type="text" name="last_name" class="form-control" value="<?php echo $thisUser['last_name']; ?>">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Email:</label>
-                        <input type="text" name="email" class="form-control" value="<?php echo $thisUser['email']; ?>">
-                    </div>
-                    
-                    
-
-                    <input type="checkbox" name="public_name"<?php if ($thisUser['public_name'] == 1) echo "checked"?>>
-                    Do we have permission to publish your name with science results?
-
-                    <input type="submit" value="Save Settings" class="btn btn-secondary btn-block mt-4 mb-2">
-
-                </form>
-
-
-                <p class="instructions">Your privacy matters! Our team programmers do have access to this
+            <div class="main-dash right">
+                <img class="right" src="<?php echo $IMAGES_URL;?>Profile/Default_Avatar.png">
+                <h3>
+                    Welcome, <?php echo $user['name']; ?>
+                </h3>
+                <p>
+                    <strong> Account Settings </strong><br/>
+                <span class="instructions">Your privacy matters! Our team programmers do have access to this
                     information, but the only thing that can be publicly seen is your username. We will,
                     with permission only, use your first and last name to give you credit for things
-                    you accomplish.</p>
-            
+                    you accomplish.</span></p>
+                <form id="profile-form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST" onSubmit="return checkPasswd(this);">
+				<div id="form-input-box">
+        			<div id="form-input-row">
+        				<div id="form-input-left">First Name</div>
+        				<div id="form-input-right"><input type="text" name="first_name" value="<?php echo $thisUser['first_name']; ?>"></div>
+        			</div>
+        			<div id="form-input-row">
+        				<div id="form-input-left">Last Name</div>
+        				<div id="form-input-right"><input type="text" name="last_name" value="<?php echo $thisUser['last_name']; ?>"></div>
+        			</div>                
+        			<div id="form-input-row">
+        				<div id="form-input-left">Email</div>
+        				<div id="form-input-right"><input type="text" name="email" value="<?php echo $thisUser['email']; ?>"></div>
+        			</div>
+        			<div id="form-input-row">
+        				<div id="form-input-left">Change your password?</div>
+        				<div id="form-input-right"><input type="checkbox" name="pck" onClick="fnShowHide();"></div>
+        			</div>
+        			<div id="newpass" class="newpass">
+        				<div id="form-input-left">New password</div>
+        				<div id="form-input-right"><input type="password" name="password"></div>
+        			</div>
+        			<div id="newpass" class="newpass">
+        				<div id="form-input-left">Repeat password</div>
+        				<div id="form-input-right"><input type="password" name="confirm_password"></div>
+        			</div>
+        				
+        			<div id="form-input-row">
+					<input type="checkbox" name="public_name"<?php if ($thisUser['public_name'] == 1) echo " checked"?>> Do we have permission to publish your name with science results? 
+	       			</div>                
 
+                    <input type="submit" value="Save Settings" class="btn-default right">
+            	</div>	
+                </form>
+				<span class="red" id="message">
+                <?php 
+                    if (isset($saved) && $saved) { 
+                        echo "Settings saved!"; unset($saved); 
+                    }
+                    elseif (isset($saved) && !$saved) {
+                        echo "Error saving settings!"; unset($saved);
+                    }
+                ?>
+				</span>
             </div>
-
+            <div class="clear"></div>
         </div>
     </div>
 
-
+<script src='<?php echo $BASE_URL . "csb-content/js/profile.js" ?>'></script>
 
     <?php
     loadFooter();

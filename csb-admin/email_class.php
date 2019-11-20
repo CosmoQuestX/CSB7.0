@@ -8,8 +8,6 @@
  */
 
 
-// TODO: ADD ERROR CHECKING SO NO LITTLE JOHNNY TABLES FAIL
-
 // Standard "How the hell did you get here?" Redirect to root directory
 if (!isset($loader) || !$loader) {
     header($_SERVER['HTTP_HOST']);
@@ -27,6 +25,9 @@ if (!isset($loader) || !$loader) {
 
 
 class email
+/**
+ * Class for email handling
+ */
 {
     private $host;
     private $username;
@@ -34,26 +35,31 @@ class email
     private $port;
     private $from;
 
+    /**
+     * Initialization with the parameters from the settings 
+     * 
+     * @param array $params The email parameters from the settings
+     */
     function __construct($params) {
-        $this->host     = $params['host'];
+        $this->host     = filter_var($params['host'],FILTER_SANITIZE_URL);
         $this->username = $params['username'];
         $this->password = $params['password'];
-        $this->port     = $params['port'];
-        $this->from     = $params['from'];
-var_dump($params);
+        $this->port     = filter_var($params['port'],FILTER_SANITIZE_NUMBER_INT);
+        $this->from     = filter_var($params['from'],FILTER_SANITIZE_EMAIL);
     }
 
-
     /**
-     * @param $to
-     * @param $msg = array(subject, body, onSuccess)
+     * Send an email to a given email address
+     * 
+     * @param string $to
+     * @param array $msg an associative array with subject, body and onSuccess
      */
     function sendMail($to, $msg) {
         require_once "Mail.php";
 
         $headers = array(
             'From'      => $this->from,
-            'To'        => $to,
+            'To'        => filter_var($to,FILTER_SANITIZE_EMAIL),
             'Subject'   => $msg['subject'],
             'Reply-To'  => $this->from
         );

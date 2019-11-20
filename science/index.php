@@ -23,10 +23,15 @@ $db = new DB($db_servername, $db_username, $db_password, $db_name);
 global $user;
 $user = isLoggedIn($db);
 
+// if $login isn't set, set it to avoid a PHP notice.
+if (!isset($login)) {
+    $login = FALSE;
+}
+
 require_once($BASE_DIR . "/csb-content/template_functions.php");
 loadHeader();
 
-if ($login || $user === FALSE ) { // NOT LOGGED IN
+if (filter_var($login,FILTER_VALIDATE_BOOLEAN) || $user === FALSE ) { // NOT LOGGED IN
     require_once ($BASE_DIR."csb-content/templates/login.php");
 }
 
@@ -34,9 +39,10 @@ if ($login || $user === FALSE ) { // NOT LOGGED IN
    Do they have the correct role?
    ---------------------------------------------------------------------- */
 
-elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENCE'] &&
+elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENTIST'] &&
         $_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN']) {
-    die("ERROR: You don't have permission to be here");
+        // TODO be a bit politer when rejecting nosy users
+        die("ERROR: You don't have permission to be here");
 }
 
 /* ----------------------------------------------------------------------
@@ -51,49 +57,40 @@ else { // they clearly have permissions
     ?>
     <div id="main">
         <div class="container">
-            <div class="row">
 
-                <div class="col-md-3 left-dash">
-                    <?php
+            <div id="" class="left-dash left">
+                <?php
 
-                    $dir = $BASE_DIR . "/science/tasks";
-                    $listings = array_diff(scandir($dir), array('..', '.'));
-                    ?>
+                $dir = $BASE_DIR . "/science/tasks";
+                $listings = array_diff(scandir($dir), array('..', '.'));
+                ?>
 
-                    <h3>Options</h3>
-                    <ul>
-
-                        <?php
-                        foreach ($listings as $item) { ?>
-                            <form id='<?php echo $item; ?>' action='<?php echo $_SERVER['PHP_SELF'] ?>' method='GET'>
-                                <input type='hidden' name='task' value='<?php echo $item; ?>'>
-                                <li>
-                                    <a href='#' onclick='document.getElementById("<?php echo $item; ?>").submit();'>
-                                        <?php echo $item; ?>
-                                    </a>
-                                </li>
-                            </form>
-                            <?php
-                        }
-                        ?>
-                    </ul>
-
-                </div>
-
-                <div class="col-md-9 main-dash">
-                    <?php
-                    // Is a value set?  Do something! Else, instructions
-                    if (isset($_GET['task'])) { // TODO ADD ERROR CHECKING
-                        echo "<h2>Task: " . $_GET['task'] . "</h2>";
-                        require_once("./tasks/" . $_GET['task'] . "/" . $_GET['task'] . ".php");
-                    } else {
-                        echo "Select a task to do from the lefthand menu";
-                    }
-                    ?>
-                </div>
+                <h3>Options</h3>
                 
-            
+
+                    <?php
+                    foreach ($listings as $item) { ?>
+                    		<a href="<?php echo $_SERVER['SCRIPT_NAME']?>?task=<?php echo $item; ?>"><?php echo $item; ?></a><br />
+                        <?php
+                    }
+
+                    ?>
             </div>
+
+            <div class="main-dash right">
+                <?php
+                // Is a value set?  Check if task exists. If yes, execute. Else, instructions!
+                $task=basename(filter_input(INPUT_GET,'task',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0));
+                if ($task !== NULL && file_exists($BASE_DIR."science/tasks/".$task."/".$task .".php")) { 
+                    echo "<h2>Task: " . $task . "</h2>";
+                    require_once($BASE_DIR."science/tasks/".$task."/".$task .".php");
+                } else {
+                    error_log("Somebody tried to call the science task {$task}");
+                    echo "Select a task to do from the lefthand menu";
+                }
+                ?>
+            </div>
+            <div class="clear"></div>
         </div>
     </div>
     <?php

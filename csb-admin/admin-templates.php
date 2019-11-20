@@ -14,8 +14,16 @@ if (!isset($loader) || !$loader) {
 
 
 /**
- * @param $THEME_DIR
- * @param $user
+ * Print HTML header for selected theme
+ * 
+ * Loads the header file from the theme directory and prints a basic HTML 
+ * header for administrative pages
+ *
+ * @param string page_title - the Title of the page 
+ * @param boolean auth 
+ * 
+ * @return void
+ * 
  */
 function loadHeader($page_title, $auth = 0) {
     global $BASE_URL, $BASE_DIR, $THEME_DIR, $THEME_URL;
@@ -24,7 +32,13 @@ function loadHeader($page_title, $auth = 0) {
 }
 
 /**
- * @param $THEME_DIR
+ * Print HTML footer for selected theme
+ * 
+ * Loads the footer file from the theme directory and prints a basic HTML
+ * footer for administrative pages
+ * 
+ * @return void
+ * 
  */
 function loadFooter() {
     global $THEME_DIR;

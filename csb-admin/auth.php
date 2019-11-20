@@ -13,7 +13,14 @@
     session_start();
 
 
-
+/**
+ * Compare the user name against the database for a given id
+ * 
+ * @param resource $db
+ * @param int $id
+ * @param string $name
+ * @return boolean
+ */
 function chk_UserId($db, $id, $name) {
 
     $query  = "SELECT id, name FROM users WHERE id = ?";
@@ -33,6 +40,14 @@ function chk_UserId($db, $id, $name) {
 
 }
 
+/**
+ * Compare the "remember me" cookie against the database for a given token
+ * 
+ * @param resource $db
+ * @param string $token
+ * @param string $name
+ * @return boolean
+ */
 function chk_Token($db, $token, $name) {
 
     $query  = "SELECT id, name, remember_token FROM users WHERE name = ?";
@@ -52,7 +67,9 @@ function chk_Token($db, $token, $name) {
  * Function: isLoggedIn
  * Purpose: Check session/cookies to see if logged in or remembered
  *
- * @return bool
+ * @param resource $db - the current database connection
+ * @return mixed an array with user name and session id when logged int
+ *    or false if the user isn't currently logged in
  *
  */
 

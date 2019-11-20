@@ -32,6 +32,7 @@ $structure = "CREATE TABLE `users` (
               `scistarter_profile_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
               `facebook_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
               `twitter_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+              `public_name` tinyint(1) NOT NULL DEFAULT '0',
           PRIMARY KEY (`id`),
           UNIQUE KEY `users_name_unique` (`name`),
               KEY `emails_on_users` (`email`),

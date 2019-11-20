@@ -15,7 +15,8 @@ session_start();
 /* ----------------------------------------------------------------------
    Load all needed includes
    ---------------------------------------------------------------------- */
-require_once(__DIR__ . "/../csb-loader.php");
+
+require_once("../csb-loader.php");
 require_once("db_class.php");
 
 /* ----------------------------------------------------------------------
@@ -34,11 +35,24 @@ if (isset($_GET['go'])) {
     }
 } elseif (isset($_POST['go'])) {
 
-    /* Registering TODO add error checking: dup name, dup email ------------------ */
+    /* Registering new user */
+
     if ($_POST['go'] == 'regForm') {
         // hash password & insert them into the database
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        regUser($db, $_POST);
+        if ($db->checkDuplicateUser('name',filter_input(INPUT_POST, 'name',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0))) {
+            $_SESSION['regmsg'] = "Cannot register, user name ". filter_input(INPUT_POST, 'name',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0) ." already exists!";
+            header("Location:" . $_SERVER['SCRIPT_NAME']."?go=register");
+        }
+        elseif ($db->checkDuplicateUser('email',filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL))) {
+            $_SESSION['regmsg'] = "Cannot register, email ". filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL) ." already in use!";
+            header("Location:" . $_SERVER['SCRIPT_NAME']."?go=register");
+        }
+        else {
+            regUser($db, $_POST, $hashed);
+            // Send the newly registered user off to the main page instead of presenting a blank page.
+            header("Location: " . $BASE_URL);
+        }
 
     } /* Logging in? Check for post variables --------------------------------------- */
     elseif ($_POST['go'] == 'login') {
@@ -55,11 +69,16 @@ $db->closeDB();
    ---------------------------------------------------------------------- */
 
 /**
- * @param $db
- * @param $user
+ * Function for logging in a user. 
+ * 
+ * @param object $db - the current database instance 
+ * @param array $user - the user configuration
+ * 
+ * @return void
  */
 function login($db, $user) {
 
+    global $BASE_URL;
     $query = "SELECT * FROM users WHERE name = ? ";
 
     if ($chkuser = $db->runQueryWhere($query, "s", array($user['name']))) {
@@ -111,29 +130,28 @@ function login($db, $user) {
         } else {
 
             $db->closeDB();
-            die("wrong password"); //TODO load login.php with this as the error message
+            $_SESSION['errmsg']="Login failed: Wrong password";
+            // In case of error, exit not quite as gracefully.
+            if (!isset($BASE_URL)) { die("wrong password"); }
         }
 
     } else {
 
         $db->closeDB();
-        die("user not found"); //TODO load login.php with this as the error message
+        $_SESSION['errmsg']="Login failed: User " . $user['name'] . " not found";
+        // In case of error, exit not quite as gracefully.
+        if (!isset($BASE_URL)) { die("user not found"); } 
     }
 
-    // Send them where they belong TODO find a better way to do this
+    // Send them where they belong 
+    header ("Location: " . $user['referringURL']);
 
-    ?>
-    <html>
-    <head>
-        <meta http-equiv="refresh" content="0;URL=<?php echo $user['referringURL']?>" />
-    </head>
-    <body> I'm going to go to <?php echo $user['referringURL']?></body>
-    </html>
-    <?php
 }
 
 /**
- *
+ * Function for logging out a user
+ * 
+ * @return void
  */
 function logout()
 {
@@ -157,25 +175,36 @@ function logout()
 }
 
 /**
- * @param $db
- * @param $user
+ * Register a new user
+ * 
+ * @param resource $db - the current database connection
+ * @param array $user - the user configuration for the registration attempt
+ * @param string $pwhash - a hash of the password the new user entered
  */
-function regUser($db, $user)
+function regUser($db, $user,$pwhash)
 {
-
+    global $CQ_ROLES;
+    
     $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-    $params = array($user['name'], $user['emailClass'], $hashed);
-    $id = $db->getInsertId();
-    // TODO make this a function that returns user_id
+    $params = array(filter_var($user['name'],FILTER_SANITIZE_FULL_SPECIAL_CHARS,0), filter_var($user['email'],FILTER_SANITIZE_EMAIL), $pwhash);
+    $db->insert($query,"sss",$params);
 
-    // create their role
-
+    $id = $db->getUserIdByName($user['name']);
+    if ($id === FALSE) {
+        // This should not happen, since we just inserted a user 
+        error_log("Could not find the freshly created user on registration.");
+        die("Fatal error on registration. Please try again later.");
+    }
+    else {
+        $user['id']=$id;
+    }
+    // create their default role
     $roles = $CQ_ROLES['SITE_NONE'];
 
-    $query = "INSERT INTO role_users (role_id, user_id) values ($roles, $id)"; // TODO requires userid
-    $db->runQuery($query);
+    $query = "INSERT INTO role_users (role_id, user_id) values (?, ?)";
+    $params = array($roles, $id);
+    $db->insert($query,"ii",$params);
 
-    $db->runQueryWhere($query, "sss", $params);
 
     // create sessions / cookies TODO Make this a function
 
@@ -209,7 +238,7 @@ function regUser($db, $user)
     $_SESSION['user_id'] = $user['id'];
     setcookie('name', $user['name'], $timeout, "/");
     $_SESSION['roles'] = $roles;
-    session_start();
+
 
 }
 

@@ -8,6 +8,9 @@ if (isset($_GET['request']) && $_GET['request'] == 'start') {
     $flag = FALSE;
 }
 
+// We should get the user info to retreive the email address
+$user = $db->getUser($_SESSION['user_id']);
+
 ?>
 
 <h3> Available Downloads</h3>
@@ -85,7 +88,6 @@ if (isset($_GET['request']) && $_GET['request'] == 'start') {
                         $date_name = $date_name  = "Week $i, ". date("M j", strtotime($date_value));
                     }
 
-
                     ?>
                 </select>
             </strong></p>
@@ -104,7 +106,7 @@ if (isset($_GET['request']) && $_GET['request'] == 'start') {
        <!-- Get their email-->
     <p><strong>Email</strong><br/>
         These files are large. We will email you when it is done being generated.<br/>
-    <input type="text" name="email" value="you@email.com">
+    <input type="text" name="email" value="<?php echo $user['email']; ?>">
     </p>
 
     <input type="submit" value="submit request" onClick='dataFunction(DataFormat.url.value,DataFormat.app_id.value,DataFormat.combined.value,DataFormat.dataRange.value,DataFormat.email.value,);'>
