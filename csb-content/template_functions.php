@@ -135,42 +135,25 @@ function loadLoginBox() {
     </div>
     </div>
 
-    <!--
+    <script>
+        
+        // Autofocus on the login input
+        $('#loginModal').on('shown.bs.modal', function ()
+        {
+            $('#username').trigger('focus');
+        })
 
-    <div id="alert-box" class="alert">
-        <div class="alert-content">
-            <span class="close">&times;</span>
+        // Re-open login modal if login fails
+        if ('<?php echo $_SESSION['errmsg']; ?>' !== '')
+        {
+            $('#loginModal').removeClass('fade');
+            $('#loginModal').modal('show');
+        }
+        
 
-		    <div id="form-box">
-		    	<div id="form-input-box">
-	      			<H3>Please Login</H3>
-       				<form action="<?php echo($BASE_URL . "csb-accounts/auth-login.php"); ?>" method="post" id="form-login">
-   			        <input type="hidden" name="referringURL" value="<?php echo "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>">
-		            <input type="hidden" name="go" value="login">
+    </script>
 
-						<div id="form-input-row">
-   		    		    	<div class="error-msg"><?php if(isset($_SESSION['errmsg'])) { $_SESSION['showmodal']=TRUE; echo "<span style=\"color: red;\">" . $_SESSION['errmsg'] ."</span>"; } ?></div>
-						</div>
-			   	        <div id="form-input-row">
-   	        			    <div id="form-input-left"><label for="login">Username</label></div><div id="form-input-right"><input name="name" type="text" value="<?php if (isset($_COOKIE["name"])) { echo $_COOKIE["name"]; } ?>"></div>
-    		    	    </div>
-	    		        <div id="form-input-row">
-   	    			        <div id="form-input-left"><label for="password">Password</label></div><div id="form-input-right"><input name="password" type="password"></div>
-			            </div>
-		        	    <div id="form-input-row">
-	    	    		       <input type="checkbox" name="remember" id="remember"<?php if (isset($_COOKIE["member_login"])) { echo " checked"; } ?>/><label for="remember-me">Remember me</label>
-   			    	    </div>
-			            <div class="field-submit"><input type="submit" name="login" value="Login" class="form-submit-button"></div>
 
-       		    	</form>
-
-                    <button id="alert-botton"
-                            onclick="location.href='<?PHP echo $ACC_URL;?>register.php';">Register</button>
-
-				</div>
-    		</div>
-		</div>
-    </div>-->
 
     <?php
 

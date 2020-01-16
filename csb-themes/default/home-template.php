@@ -16,11 +16,11 @@ $lang = json_decode($lang, true);
 ?>
 
 
-<div class="container-fluid mt-3">
+<div class="container mt-3">
     <div class="row">
 
         <!-- Left block --------------------------------------------------------------- -->
-        <div id="app-left" class="col-md-2 p-4">
+        <div id="app-left" class="col-md-3 p-4">
             <?php $txt = $lang['app_page']['text-boxes']['app-left']; ?>
             <h3 class="font-weight-bold"><?php echo $txt['title']; ?></h3>
             <p> <?php echo $txt['fact1-title']; ?><br/>
@@ -39,7 +39,7 @@ $lang = json_decode($lang, true);
         </div>
 
         <!-- main block --------------------------------------------------------------- -->
-        <div id="app-main" class="col-md-8 p-4">
+        <div id="app-main" class="col-md-6 p-4">
             <?php
                 if ( $user === FALSE) {         // NOT LOGGED IN
             ?>
@@ -50,7 +50,7 @@ $lang = json_decode($lang, true);
             <?php
                 }
                 else {                           // LOGGED IN
-                ?><h3>Hello, <?php echo $user['name'];?> !</h3>
+                ?><h3 class="font-weight-bold">Hello, <?php echo $user['name'];?> !</h3>
                     <div class="center">
                         <a class="btn-default" href="<?php echo $ADMIN_URL;?>profile.php">Profile</a>
                     </div>
@@ -70,7 +70,7 @@ $lang = json_decode($lang, true);
         <!-- Right block -------------------------------------------------------------- -->
         <?php $txt = $lang['app_page']['text-boxes']['app-right']; ?>
 
-        <div id="app-right" class="col-md-2 p-4">
+        <div id="app-right" class="col-md-3 p-4">
             <h3 class="font-weight-bold"><?php echo $txt['title'];?></h3>
             <p><?php echo $txt['blurb'];?></p>
             <p><?php echo $txt['footer'];?></p>
