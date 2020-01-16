@@ -150,6 +150,15 @@ function loadLoginBox() {
             $('#loginModal').modal('show');
         }
         
+        // Add fade class back to modal if class was removed
+        $('#loginModal').on('hide.bs.modal', function (e)
+        {
+            if ( !$('#loginModal').hasClass('fade') )
+            {
+                $('#loginModal').addClass('fade');
+            }
+        })
+        
 
     </script>
 
