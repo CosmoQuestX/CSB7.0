@@ -14,7 +14,6 @@
  */
 function loadHeader() {
     global $THEME_URL, $THEME_DIR, $BASE_URL, $csb_headers, $page_title;
-    $csb_headers  = "<link rel='stylesheet' type='text/css' href='". $BASE_URL ."csb-content/csb.css'>";
 
     require_once($THEME_DIR . "header.php");
 }
@@ -48,7 +47,8 @@ function loadFooter() {
  * @return void
  */
 function loadMeta() {
-    global $csb_headers;
+
+    $csb_headers  = "<link rel='stylesheet' type='text/css' href='". $BASE_URL ."csb-content/csb.css'>";
 
     echo $csb_headers;
 }
