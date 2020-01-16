@@ -64,9 +64,10 @@ function loadUser() {
 
     if ( $user === FALSE) {         // NOT LOGGED IN
         if ($adminFlag === FALSE) {
-           ?> <button id="alert-login">Login</button>
-              <button id="alert-botton"
-                      onclick="location.href='<?PHP echo $ACC_URL;?>register.php';">Register</button> <?php
+            ?>
+            <button class="btn btn-cq" data-toggle="modal" data-target="#loginModal">Login</button>
+            <button class="btn btn-secondary" onclick="location.href='<?PHP echo $ACC_URL;?>register.php';">Register</button>
+            <?php
         }
         else {
             echo "not logged in";
@@ -93,8 +94,50 @@ function loadLoginBox() {
     global $BASE_URL, $ACC_URL;
     ?>
 
+
+    <div id="loginModal" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            
+            <form action="<?php echo($BASE_URL . "csb-accounts/auth-login.php"); ?>" method="post" id="form-login">
+
+                <input type="hidden" name="referringURL" value="<?php echo "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>">
+		        <input type="hidden" name="go" value="login">
+
+                <div class="error-msg"><?php if(isset($_SESSION['errmsg'])) { $_SESSION['showmodal']=TRUE; echo "<span style=\"color: red;\">" . $_SESSION['errmsg'] ."</span>"; } ?></div>
+            
+                <label for="username">Username</label>
+                <input id="username" name="name" type="text" class="form-control" value="<?php if (isset($_COOKIE["name"])) { echo $_COOKIE["name"]; } ?>">
+
+                <label for="password">Password</label>
+                <input id="password" name="password" class="form-control" type="password">
+
+                <input type="checkbox" name="remember" id="remember-me" class="mt-3" <?php if (isset($_COOKIE["member_login"])) { echo " checked"; } ?>/>
+                <label for="remember-me" class="ml-1">Remember me</label>
+
+                <div class="text-center">
+                    <input type="submit" name="login" class="btn btn-block btn-cq mt-3" value="Login">
+                    <a href="<?PHP echo $ACC_URL;?>register.php">Dont have an account?</a>
+                </div>
+            
+            </form>
+
+        </div>
+            
+        </div>
+    </div>
+    </div>
+
+    <!--
+
     <div id="alert-box" class="alert">
-        <!-- Modal content -->
         <div class="alert-content">
             <span class="close">&times;</span>
 
@@ -127,7 +170,7 @@ function loadLoginBox() {
 				</div>
     		</div>
 		</div>
-    </div>
+    </div>-->
 
     <?php
 

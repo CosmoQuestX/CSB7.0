@@ -12,15 +12,16 @@
 
 */
 
-  body {
-    background-color: #424FA2;
-    background-image: url("images/background.jpg");
-    color: #FFFFFF;
-    }
 
-  li {
-    margin-left: 1em;
-  }
+body {
+  background-color: #424FA2;
+  background-image: url("images/background.jpg");
+  color: #FFFFFF;
+}
+
+li {
+  margin-left: 1em;
+}
 
 .btn-cq {
   background: #9f2321 !important;
@@ -28,81 +29,9 @@
 }
 
 
-
-  /* --------------------------------------------------------------------------------
-     Header
-     -------------------------------------------------------------------------------- */
-
-  #title h1 {
-    color: #ffffff;
-  }
-
-
-/* --------------------------------------------------------------------------------
-   Boxes
-   -------------------------------------------------------------------------------- */
-
-   #form-box {
-     background: #ffffff;
-     color: #1d1d1d;
-     border-radius: 10px;
-   }
-
-/* --------------------------------------------------------------------------------
-   Main
-   -------------------------------------------------------------------------------- */
-
-   #main {
-    margin-top: 2em;
-   }
-
-
-  .left-dash {
-
-    padding-top: 1em;
-    background-color: #9f2321;
-    color: #ffffff;
-
-
-    a {
-      color: #ffffff;
-    }
-  }
-
-
-  .main-dash {
-    background-color: #ffffff;
-    color: #1d1d1d;
-    padding: 1em 2em;
-  }
-
-
-/* --------------------------------------------------------------------------------
-   App
-   -------------------------------------------------------------------------------- */
-
-#app-left {
-  padding-top: 1em;
-  background-color: #9f2321;
-  color: #ffffff;
+#loginModal {
+  color: black;
 }
-
-#app-main {
-  background-color: #ffffff;
-  color: #1d1d1d;
-  padding: 1em 2em;
-}
-
-#app-right {
-  background: black;
-  padding: 1em 2em;
-}
-
-.app-spacecraft {
-  float: right;
-  margin-top: -40px;
-}
-
 
 /* --------------------------------------------------------------------------------
    Footer

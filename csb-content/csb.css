@@ -16,11 +16,6 @@ body {
     line-height: 1.3em;
 }
 
-.container {
-    width: 1170px;
-    margin: 0 auto;
-}
-
 .left {
     float: left;
 }
@@ -70,16 +65,8 @@ body {
 	display: none;
 }
 
-input[type=text],input[type=password] {
-	width: 200px;
-}
-
 span .left {
 	text-align: left;	
-}
-
-.red {
-	color: red;
 }
 
 iframe {
@@ -91,20 +78,6 @@ iframe {
 }
 
 
-@media screen and (max-width: 991px) {
-    /* start of large tablet styles */
-
-}
-
-@media screen and (max-width: 767px) {
-    /* start of medium tablet styles */
-
-}
-
-@media screen and (max-width: 479px) {
-    /* start of phone styles */
-
-}
 
 /* --------------------------------------------------------------------------------
    Header
@@ -178,12 +151,8 @@ iframe {
    -------------------------------------------------------------------------------- */
 
 #app-left {
-    padding: 10px;
-    margin-right: 20px;
-    border-radius: 10px;
-    width: 230px; /* basesize 1170px */
-    height: 450px;
-    position: relative;
+    background-color: #9f2321;
+    color: #ffffff;
 }
 
 #app-examples {
@@ -205,10 +174,8 @@ iframe {
 }
 
 #app-main {
-    padding: 10px;
-    border-radius: 10px;
-    width: 520px;
-    height: 450px;
+    background-color: #ffffff;
+    color: #1d1d1d;
 }
 
 #app-button-container {
@@ -236,9 +203,7 @@ iframe {
 }
 
 #app-right {
-    background: none;
-    width: 320px;
-    margin-left: 10px;
-    border-radius: 10px;
+    background: black;
+    color: white;
 }
 

@@ -15,13 +15,14 @@ $lang = json_decode($lang, true);
 
 ?>
 
-<div id="main">
-    <div class="container">
+
+<div class="container-fluid mt-3">
+    <div class="row">
 
         <!-- Left block --------------------------------------------------------------- -->
-        <div id="app-left" class="left">
+        <div id="app-left" class="col-md-2 p-4">
             <?php $txt = $lang['app_page']['text-boxes']['app-left']; ?>
-            <h2><?php echo $txt['title']; ?></h2>
+            <h3 class="font-weight-bold"><?php echo $txt['title']; ?></h3>
             <p> <?php echo $txt['fact1-title']; ?><br/>
                 <?php echo $txt['fact1-content']; ?></p>
             <p> <?php echo $txt['fact2-title']; ?><br/>
@@ -29,33 +30,33 @@ $lang = json_decode($lang, true);
             <p> <?php echo $txt['fact3-title']; ?><br/>
                 <?php echo $txt['fact3-content']; ?></p>
             <p> <?php echo $txt['completed']; ?><br/>
-                 #####</p>
+                    #####</p>
             <p><?php echo $txt['remaining']; ?><br/>
-                 #####</p>
+                    #####</p>
             <p><?php echo $txt['dueDate']; ?><br/>
-               <?php echo $txt['dueDateValue'];?></p>
+                <?php echo $txt['dueDateValue'];?></p>
             <img class="app-spacecraft" src="<?php echo $BASE_URL.'csb-apps/Bennu/images/ORex-Transparent.png';?>">
         </div>
 
         <!-- main block --------------------------------------------------------------- -->
-        <div id="app-main" class="left">
-                <?php
-
+        <div id="app-main" class="col-md-8 p-4">
+            <?php
                 if ( $user === FALSE) {         // NOT LOGGED IN
-                    ?><H3>Welcome!</H3>
-                        <div class="center">
-                            <a id="alert-botton-home" class="btn-default" href="#">Login</a>
-                        </div>
-                    <?php
+            ?>
+            <h3 class="font-weight-bold">Welcome!</h3>
+                <div class="center">
+                    <a id="alert-botton-home" data-toggle="modal" data-target="#loginModal" class="btn-default" href="#">Login</a>
+                </div>
+            <?php
                 }
                 else {                           // LOGGED IN
-                ?><H3>Hello, <?php echo $user['name'];?> !</H3>
-                        <div class="center">
-                            <a class="btn-default" href="<?php echo $ADMIN_URL;?>profile.php">Profile</a>
-                        </div>
-        <?php
+                ?><h3>Hello, <?php echo $user['name'];?> !</h3>
+                    <div class="center">
+                        <a class="btn-default" href="<?php echo $ADMIN_URL;?>profile.php">Profile</a>
+                    </div>
+            <?php
                 }
-                ?>
+            ?>
 
 
             <p> Bennu Mappers Phase 1 is over, but we're not done!</p>
@@ -68,12 +69,15 @@ $lang = json_decode($lang, true);
 
         <!-- Right block -------------------------------------------------------------- -->
         <?php $txt = $lang['app_page']['text-boxes']['app-right']; ?>
-        <div id="app-right" class="right">
-        <h1><?php echo $txt['title'];?></h1>
+
+        <div id="app-right" class="col-md-2 p-4">
+            <h3 class="font-weight-bold"><?php echo $txt['title'];?></h3>
             <p><?php echo $txt['blurb'];?></p>
             <p><?php echo $txt['footer'];?></p>
             <input type="button" value="Discord"><input type="button" value="Twitch"><br/>
-           <!-- <iframe src="https://titanembeds.com/embed/443490369443856384" height="245" width="350" frameborder="0"></iframe> -->
+            <!-- <iframe src="https://titanembeds.com/embed/443490369443856384" height="245" width="350" frameborder="0"></iframe> -->
         </div>
-        <div class="clear"></div>
+
+
     </div>
+</div>
