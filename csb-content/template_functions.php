@@ -14,7 +14,6 @@
  */
 function loadHeader() {
     global $THEME_URL, $THEME_DIR, $BASE_URL, $csb_headers, $page_title;
-    $csb_headers  = "<link rel='stylesheet' type='text/css' href='". $BASE_URL ."csb-content/csb.css'>";
 
     require_once($THEME_DIR . "header.php");
 }
@@ -48,7 +47,8 @@ function loadFooter() {
  * @return void
  */
 function loadMeta() {
-    global $csb_headers;
+
+    $csb_headers  = "<link rel='stylesheet' type='text/css' href='". $BASE_URL ."csb-content/csb.css'>";
 
     echo $csb_headers;
 }
@@ -65,7 +65,7 @@ function loadUser() {
     if ( $user === FALSE) {         // NOT LOGGED IN
         if ($adminFlag === FALSE) {
            ?> <button id="alert-login">Login</button>
-              <button id="alert-botton"
+     e         <button id="alert-botton"
                       onclick="location.href='<?PHP echo $ACC_URL;?>register.php';">Register</button> <?php
         }
         else {
