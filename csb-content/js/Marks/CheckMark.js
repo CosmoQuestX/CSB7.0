@@ -5,7 +5,7 @@ function CheckMark(x, y, size, appInterface) {
     Mark.call(this, 'checkmark', x, y);
     this.diameter = size;
 
-    this.draw = function(context) {
+    this.draw = function (context) {
         context.globalAlpha = this.alpha;
         context.strokeStyle = "#000000";
         context.lineWidth = this.diameter / 10;

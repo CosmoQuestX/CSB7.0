@@ -11,8 +11,8 @@
    ---------------------------------------------------------------------- */
 
 require_once("../csb-loader.php");
-require_once ($DB_class);
-require_once ($BASE_DIR."csb-account/auth.php");
+require_once($DB_class);
+require_once($BASE_DIR . "csb-account/auth.php");
 
 /* ----------------------------------------------------------------------
    Is the person logged in?
@@ -47,23 +47,24 @@ loadHeader();
                 <h3>Options</h3>
 
 
+                <?php
+                foreach ($listings as $item) { ?>
+                    <a href="<?php echo $_SERVER['SCRIPT_NAME'] ?>?task=<?php echo $item; ?>"><?php echo $item; ?></a>
+                    <br/>
                     <?php
-                    foreach ($listings as $item) { ?>
-                    		<a href="<?php echo $_SERVER['SCRIPT_NAME']?>?task=<?php echo $item; ?>"><?php echo $item; ?></a><br />
-                        <?php
-                    }
+                }
 
-                    ?>
+                ?>
 
             </div>
 
             <div class="main-dash right">
                 <?php
                 // Is a value set?  Check if task exists. If yes, execute. Else, instructions!
-                $task=basename(filter_input(INPUT_GET,'task',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0));
-                if ($task !== NULL && file_exists($BASE_DIR."extras/tasks/".$task."/".$task .".php")) { 
+                $task = basename(filter_input(INPUT_GET, 'task', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0));
+                if ($task !== NULL && file_exists($BASE_DIR . "extras/tasks/" . $task . "/" . $task . ".php")) {
                     echo "<h2>Task: " . $task . "</h2>";
-                    require_once($BASE_DIR."extras/tasks/".$task."/".$task .".php");
+                    require_once($BASE_DIR . "extras/tasks/" . $task . "/" . $task . ".php");
                 } else {
                     error_log("Somebody tried to call the extras task {$task}");
                     echo "Select a task to do from the lefthand menu";

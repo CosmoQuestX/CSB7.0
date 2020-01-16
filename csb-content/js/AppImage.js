@@ -20,8 +20,7 @@ function AppImage(data, applicationName, csbApp) {
         newCrater.alpha = .3;
         this.marks.push(newCrater);
         this.csbApp.appInterface.setCamera(newCrater.x, newCrater.y, 450 / newCrater.diameter / 4);
-    }
-    else {
+    } else {
         if (isSet(data['machine_name']))
             this.machineName = data['machine_name'];
 
@@ -29,7 +28,7 @@ function AppImage(data, applicationName, csbApp) {
 
         if (isSet(data.marks)) {
             data.marks = JSON.parse(data.marks);
-            for(var i = 0; i < data.marks.length;i++) {
+            for (var i = 0; i < data.marks.length; i++) {
                 var markData = data.marks[i];
                 var newMark = Mark.createMark(markData['type'], markData.x, markData.y, markData.diameter, csbApp.appInterface);
                 if (isSet(markData['id']))
@@ -45,43 +44,41 @@ function AppImage(data, applicationName, csbApp) {
         }
     }
 
-    this.adjustContrast = function(contrast) {
+    this.adjustContrast = function (contrast) {
         if (contrast > 255)
             contrast = 255;
 
         var factor = (256 * (contrast + 255)) / (255 * (256 - contrast));
 
-        for(var i = 0; i < data.length; i+=4)
-        {
+        for (var i = 0; i < data.length; i += 4) {
             this.visibleImage.data[i] = factor * (this.image.data[i] - 128) + 128;
-            this.visibleImage.data[i+1] = factor * (this.image.data[i+1] - 128) + 128;
-            this.visibleImage.data[i+2] = factor * (this.image.data[i+2] - 128) + 128;
+            this.visibleImage.data[i + 1] = factor * (this.image.data[i + 1] - 128) + 128;
+            this.visibleImage.data[i + 2] = factor * (this.image.data[i + 2] - 128) + 128;
         }
     };
 
-    this.adjustColor = function(color, amount) {
-        for(var i = 0; i < data.length; i+=4)
-        {
+    this.adjustColor = function (color, amount) {
+        for (var i = 0; i < data.length; i += 4) {
             var r = this.image.data[i];
-            var g = this.image.data[i+1];
-            var b = this.image.data[i+2];
+            var g = this.image.data[i + 1];
+            var b = this.image.data[i + 2];
             var naturalPercent = (Math.sin(r / 256.0 * Math.PI - Math.PI / 4) + 1) / 2;
             var totalPercent = amount * naturalPercent;
             this.visibleImage.data[i] = 0;
-            this.visibleImage.data[i+1] = g * (1 - totalPercent) + color.g * totalPercent;
-            this.visibleImage.data[i+2] = b * (1 - totalPercent) + color.b * totalPercent;
+            this.visibleImage.data[i + 1] = g * (1 - totalPercent) + color.g * totalPercent;
+            this.visibleImage.data[i + 2] = b * (1 - totalPercent) + color.b * totalPercent;
         }
     };
 
-    this.getClosestCraterTo = function(mousePosition) {
+    this.getClosestCraterTo = function (mousePosition) {
         return this.getClosestMarkTo(mousePosition, "crater", true);
     };
 
-    this.getClosestFeatureTo = function(mousePosition) {
+    this.getClosestFeatureTo = function (mousePosition) {
         return this.getClosestMarkTo(mousePosition, "crater", false);
     };
 
-    this.getClosestMarkTo = function(mousePosition, type, wantType) {
+    this.getClosestMarkTo = function (mousePosition, type, wantType) {
         var closestMark = null;
         var closestMarkDistance = 9999999;
         var distance, i, j;
@@ -90,8 +87,7 @@ function AppImage(data, applicationName, csbApp) {
             if (mark.isStatic == false) {
                 if (mark.type == "paint_mark") {
                     // Do nothing if mark is a paint mark
-                }
-                else if (mark.type == "linear_feature" || mark.type == "blanket") {
+                } else if (mark.type == "linear_feature" || mark.type == "blanket") {
                     for (j = 0; j < mark.points.length; j++) {
                         var subMark = mark.points[j];
                         distance = distanceBetween(mousePosition, subMark);
@@ -101,15 +97,13 @@ function AppImage(data, applicationName, csbApp) {
                                     closestMarkDistance = distance;
                                     closestMark = mark;
                                 }
-                            }
-                            else {
+                            } else {
                                 closestMarkDistance = distance;
                                 closestMark = mark;
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     distance = distanceBetween(mousePosition, mark);
                     if (distance < closestMarkDistance && mark.owner == "user") {
                         if (isSet(type) && isSet(wantType)) {
@@ -117,8 +111,7 @@ function AppImage(data, applicationName, csbApp) {
                                 closestMarkDistance = distance;
                                 closestMark = mark;
                             }
-                        }
-                        else {
+                        } else {
                             closestMarkDistance = distance;
                             closestMark = mark;
                         }
@@ -129,11 +122,11 @@ function AppImage(data, applicationName, csbApp) {
         return closestMark;
     };
 
-    this.deleteMark = function(mark) {
+    this.deleteMark = function (mark) {
         this.marks.splice(this.marks.indexOf(mark), 1);
     };
 
-    this.drawSun = function(canvas, context) {
+    this.drawSun = function (canvas, context) {
         this.sunAngle = 0;
         if (!isSet(canvas) || !isSet(context) || !isSet(this.sunAngle))
             return;
@@ -144,23 +137,20 @@ function AppImage(data, applicationName, csbApp) {
 
         var sunPosition = {x: 0, y: 0};
 
-        if (angle <= Math.PI/4 || angle >= 7*Math.PI/4) {
+        if (angle <= Math.PI / 4 || angle >= 7 * Math.PI / 4) {
             // right side
             sunPosition.x = canvas.width;
-            sunPosition.y = -(canvas.height/2)*Math.tan(angle) + (canvas.height/2);
-        }
-        else if (angle <= 5*Math.PI/4 && angle >= 3*Math.PI/4) {
+            sunPosition.y = -(canvas.height / 2) * Math.tan(angle) + (canvas.height / 2);
+        } else if (angle <= 5 * Math.PI / 4 && angle >= 3 * Math.PI / 4) {
             // left side
             sunPosition.x = 0;
-            sunPosition.y = (canvas.height/2)*Math.tan(angle) + (canvas.height/2);
-        }
-        else if (angle <= 3*Math.PI/4 && angle >= Math.PI/4) {
+            sunPosition.y = (canvas.height / 2) * Math.tan(angle) + (canvas.height / 2);
+        } else if (angle <= 3 * Math.PI / 4 && angle >= Math.PI / 4) {
             // top side
-            sunPosition.x = (canvas.width/2)/Math.tan(angle) + (canvas.width/2);
+            sunPosition.x = (canvas.width / 2) / Math.tan(angle) + (canvas.width / 2);
             sunPosition.y = 0;
-        }
-        else {
-            sunPosition.x = -(canvas.width/2)/Math.tan(angle) + (canvas.width/2);
+        } else {
+            sunPosition.x = -(canvas.width / 2) / Math.tan(angle) + (canvas.width / 2);
             sunPosition.y = canvas.height;
         }
 

@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import moment from 'moment-timezone';
 
-window.$(document).ready(() => {
-  var count = window.$("#item0").length;
-  console.log(moment.tz.guess());
-  window.$('#addButton').click(() => {
+window.$(document).ready(() = > {
+    var count = window.$("#item0").length;
+console.log(moment.tz.guess());
+window.$('#addButton').click(() = > {
     var timezone = moment.tz.guess();
-    let codeEntry = `<input type="hidden" name="codeBox[]" value="${count}">
+let codeEntry = `<input type="hidden" name="codeBox[]" value="${count}">
         <label for="codeInput" class="textLabel">Code</label>
         <div class="input-group">
           <input type="text" class="form-control" id="codeInput${count}" name="code[]" placeholder="Code..." required>
@@ -34,31 +34,37 @@ window.$(document).ready(() => {
           id="dellbutton${count}">Delete Join Code</button>
         </div>`;
 
-    window.$("#codeList").append(`<li id="item${count}"><div class="well well-sm" name="code${count}">${codeEntry}</div></li>`);
+window.$("#codeList").append(`<li id="item${count}"><div class="well well-sm" name="code${count}">${codeEntry}</div></li>`);
 
-    window.$(`#dellbutton${count}`).click(function() {
-      window.$(this).parent().parent().parent().remove();
-    });
-
-    window.$(`#randomBox${count}`).change(function() {
-      window.$(this).parent().siblings().first().prop('disabled', function(i, v) { return !v;});
-      window.$(this).parent().siblings().first().prop('required', function(i, v) { return !v;});
-    });
-    new Vue({
-      el: `#datetimepicker${count}`,
-      components: {
-        datetime: require('./components/DateTimePicker.vue')
-      }
-    });
-    count++;
-  });
-
-  if(window.$('#addButton').length == 0) {
-    new Vue({
-      el: `#datetimepicker`,
-      components: {
-        datetime: require('./components/DateTimePicker.vue')
-      }
-    });
-  }
+window.$(`#dellbutton${count}`).click(function () {
+    window.$(this).parent().parent().parent().remove();
 });
+
+window.$(`#randomBox${count}`).change(function () {
+    window.$(this).parent().siblings().first().prop('disabled', function (i, v) {
+        return !v;
+    });
+    window.$(this).parent().siblings().first().prop('required', function (i, v) {
+        return !v;
+    });
+});
+new Vue({
+    el: `#datetimepicker${count}`,
+    components: {
+        datetime: require('./components/DateTimePicker.vue')
+    }
+});
+count++;
+})
+;
+
+if (window.$('#addButton').length == 0) {
+    new Vue({
+        el: `#datetimepicker`,
+        components: {
+            datetime: require('./components/DateTimePicker.vue')
+        }
+    });
+}
+})
+;

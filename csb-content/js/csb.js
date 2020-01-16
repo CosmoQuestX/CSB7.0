@@ -1,7 +1,7 @@
 // Get the button that opens the alert. When it is clicked
 // change the display: none; to display: blocl for related alert
 var logonBtn = document.getElementById("alert-login");
-logonBtn.onclick = function() {
+logonBtn.onclick = function () {
     alert.style.display = "block";
 }
 
@@ -18,21 +18,21 @@ var span = document.getElementsByClassName("close")[0];
 // When the user clicks the button, open the modal
 
 
-btnHome.onclick = function() {
+btnHome.onclick = function () {
     alert.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-   alert.style.display = "none";
+span.onclick = function () {
+    alert.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-        if (event.target == alert) {
-            alert.style.display = "none";
-        }
+window.onclick = function (event) {
+    if (event.target == alert) {
+        alert.style.display = "none";
     }
+}
 
 function login(form) {
     var un = form.Username.value;
@@ -46,9 +46,9 @@ function login(form) {
     }
 }
 
-window.addEventListener(window,"load", function() {
+window.addEventListener(window, "load", function () {
     var loginForm = document.getElementById("LoginForm");
-    window.addEventListener(loginForm, "submit", function() {
+    window.addEventListener(loginForm, "submit", function () {
         login(loginForm);
     });
 });
@@ -65,7 +65,7 @@ function loginResults() {
         badLogin.style.display = "block";
         form.Username.select();
         form.Username.className = "Highlighted";
-        setTimeout(function() {
+        setTimeout(function () {
             badLogin.style.display = 'none';
         }, 3000);
     }

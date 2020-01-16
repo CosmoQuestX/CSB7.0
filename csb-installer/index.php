@@ -1,6 +1,6 @@
 <?php
 /**
- * Simple installer to set up the settings file. 
+ * Simple installer to set up the settings file.
  * User: dpi209
  * Date: 8/31/19
  * Time: 2:34 PM
@@ -17,116 +17,117 @@ if ((@include "../csb-settings.php") == TRUE) {
 /* ----------------------------------------------------------------------
    First, we should guesstimate our BASE_DIR and BASE_URL
    ---------------------------------------------------------------------- */
-if (isset($_SERVER) && isset($_SERVER['SCRIPT_FILENAME']) )
-    $BASE_DIR=stristr($_SERVER['SCRIPT_FILENAME'],"csb-installer",TRUE);
-    $BASE_URL="http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . stristr($_SERVER['REQUEST_URI'],"csb-installer",TRUE);
-    require_once ("installer-functions.php");
-    
-    /* ----------------------------------------------------------------------
-       If we called ourselves, we should try to write the config
-       ---------------------------------------------------------------------- */
-    if (isset($_POST) && isset ($_POST['write_config'])) {
-        if ($_POST['write_config']=="true") {
-            //Let's prepare the config we want to write
-            
-            $config_head = "<?php \n";
-            $config_body = "";
-            $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";
-            
-            $avar = array('BASE_DIR','BASE_URL','db_servername','db_username','db_password','email_host','email_username','email_password','email_port','email_from');
-            foreach ($avar as $varname) {
-                if(!isset($varname)) {
-                    // TODO We should probably exit more gracefully. 
-                    die("This should not happen, but {$varname} is not set");
-                }
-            }
-            // TODO Suggestion: rework the database layer to support table prefixes. Useful if CSB needs to be run on one shared database.
-            
-            foreach ($_POST as $key => $value) {
-                print "Key: $key - Value: $value <br />\n";
-                if ($key != "write_config" && $key != "submit") {
-                    if(strpos($key, "email_") !== false ) {
-                        $index=str_replace("email_","",$key);
-                        $config_body .= "\$emailSettings['{$index}']=\"$value\";\n";
-                    } else {
-                        $config_body .= "\${$key}=\"{$value}\";\n";
-                    }
-                }
-            }
-            
-            // Time to actually write the config!
-            $csbconfig=fopen($BASE_DIR."csb-settings.php",'c');
-            fwrite($csbconfig,$config_head);
-            fwrite($csbconfig,$config_body);
-            fwrite($csbconfig,$config_foot);
-            fclose($csbconfig);
-            
-            
-            // If we produced a readable configuration, we can carry on to step 2.
-            if (is_readable($BASE_DIR."/csb-settings.php")) {
-                header("Location: installer.php");
-            } else {
-                // Else, better not continue.
-                die ("Failed reading the configuration, please check your configuration manually.");
+if (isset($_SERVER) && isset($_SERVER['SCRIPT_FILENAME']))
+    $BASE_DIR = stristr($_SERVER['SCRIPT_FILENAME'], "csb-installer", TRUE);
+$BASE_URL = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . stristr($_SERVER['REQUEST_URI'], "csb-installer", TRUE);
+require_once("installer-functions.php");
+
+/* ----------------------------------------------------------------------
+   If we called ourselves, we should try to write the config
+   ---------------------------------------------------------------------- */
+if (isset($_POST) && isset ($_POST['write_config'])) {
+    if ($_POST['write_config'] == "true") {
+        //Let's prepare the config we want to write
+
+        $config_head = "<?php \n";
+        $config_body = "";
+        $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";
+
+        $avar = array('BASE_DIR', 'BASE_URL', 'db_servername', 'db_username', 'db_password', 'email_host', 'email_username', 'email_password', 'email_port', 'email_from');
+        foreach ($avar as $varname) {
+            if (!isset($varname)) {
+                // TODO We should probably exit more gracefully.
+                die("This should not happen, but {$varname} is not set");
             }
         }
+        // TODO Suggestion: rework the database layer to support table prefixes. Useful if CSB needs to be run on one shared database.
+
+        foreach ($_POST as $key => $value) {
+            print "Key: $key - Value: $value <br />\n";
+            if ($key != "write_config" && $key != "submit") {
+                if (strpos($key, "email_") !== false) {
+                    $index = str_replace("email_", "", $key);
+                    $config_body .= "\$emailSettings['{$index}']=\"$value\";\n";
+                } else {
+                    $config_body .= "\${$key}=\"{$value}\";\n";
+                }
+            }
+        }
+
+        // Time to actually write the config!
+        $csbconfig = fopen($BASE_DIR . "csb-settings.php", 'c');
+        fwrite($csbconfig, $config_head);
+        fwrite($csbconfig, $config_body);
+        fwrite($csbconfig, $config_foot);
+        fclose($csbconfig);
+
+
+        // If we produced a readable configuration, we can carry on to step 2.
+        if (is_readable($BASE_DIR . "/csb-settings.php")) {
+            header("Location: installer.php");
+        } else {
+            // Else, better not continue.
+            die ("Failed reading the configuration, please check your configuration manually.");
+        }
     }
-    
-    
-    /* ----------------------------------------------------------------------
-       Let's set a default theme so the installer doesn't look too boring.
-      ---------------------------------------------------------------------- */
-    
-    $page_title = "CSB Installer";
- 
-    $THEME_DIR = $BASE_DIR . "csb-themes/default/";
-    $THEME_URL = $BASE_URL . "csb-themes/default/";
-    
-    global $THEME_URL, $THEME_DIR; $page_title;
-    
-    
-    require_once($BASE_DIR . "/csb-content/template_functions.php");
-    loadHeader();
-    
-    /* ---------------------------------------------------------------------
-       The default header shows the login div id user on the top right.
-       So since we definitely don't have a user yet, hide the div.
-       --------------------------------------------------------------------- */
-    
-    echo "<script type=\"text/javascript\" language=\"JavaScript\">";
-    echo "document.getElementById(\"user\").style.display = \"none\";";
-    echo "</script>\n";
-    
-    /* ---------------------------------------------------------------------
-       Time to get things set up!
-       --------------------------------------------------------------------- */
-    
-    echo '<div id="main">';
-    echo '<div id="" class="container">';
-    echo '<div id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;">';
-    echo "<p><h4>You are running the Citizen Science Builder installer</h4> <br />\n";
-    echo "I'm guessing the installation path on the Server is " . $BASE_DIR ."<br />\n";
-    echo "I'm guessing the base URL is " . $BASE_URL ."<br />\n";
-    echo "Checking whether the installation path is writeable: ";
-    if (is_writable ($BASE_DIR)) { echo "<span style=\"font-weight:bold; color:green\">TRUE</span><br /></p>\n";
-    }
-    else {
-        echo "<span style=\"font-weight:bold; color:red;\">FALSE</span><br />\n";
-        echo "<h2>Make sure the directory ${BASE_DIR} is writeable for the webserver user</h2></p>";
-        // We cant' write our configuration so abort.
-        require_once($THEME_DIR . "/footer.php");
-        die ("Aborting the installer");
-    }
-    
-    
-    /* ----------------------------------------------------------------------
-       Before we do the actual installation stuff, let the user give us our
-       default stuff.
-       ---------------------------------------------------------------------- */
-    
-    echo "<p>Let's set up the basics: </p>";
-    
-    echo <<<EOT
+}
+
+
+/* ----------------------------------------------------------------------
+   Let's set a default theme so the installer doesn't look too boring.
+  ---------------------------------------------------------------------- */
+
+$page_title = "CSB Installer";
+
+$THEME_DIR = $BASE_DIR . "csb-themes/default/";
+$THEME_URL = $BASE_URL . "csb-themes/default/";
+
+global $THEME_URL, $THEME_DIR;
+$page_title;
+
+
+require_once($BASE_DIR . "/csb-content/template_functions.php");
+loadHeader();
+
+/* ---------------------------------------------------------------------
+   The default header shows the login div id user on the top right.
+   So since we definitely don't have a user yet, hide the div.
+   --------------------------------------------------------------------- */
+
+echo "<script type=\"text/javascript\" language=\"JavaScript\">";
+echo "document.getElementById(\"user\").style.display = \"none\";";
+echo "</script>\n";
+
+/* ---------------------------------------------------------------------
+   Time to get things set up!
+   --------------------------------------------------------------------- */
+
+echo '<div id="main">';
+echo '<div id="" class="container">';
+echo '<div id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;">';
+echo "<p><h4>You are running the Citizen Science Builder installer</h4> <br />\n";
+echo "I'm guessing the installation path on the Server is " . $BASE_DIR . "<br />\n";
+echo "I'm guessing the base URL is " . $BASE_URL . "<br />\n";
+echo "Checking whether the installation path is writeable: ";
+if (is_writable($BASE_DIR)) {
+    echo "<span style=\"font-weight:bold; color:green\">TRUE</span><br /></p>\n";
+} else {
+    echo "<span style=\"font-weight:bold; color:red;\">FALSE</span><br />\n";
+    echo "<h2>Make sure the directory ${BASE_DIR} is writeable for the webserver user</h2></p>";
+    // We cant' write our configuration so abort.
+    require_once($THEME_DIR . "/footer.php");
+    die ("Aborting the installer");
+}
+
+
+/* ----------------------------------------------------------------------
+   Before we do the actual installation stuff, let the user give us our
+   default stuff.
+   ---------------------------------------------------------------------- */
+
+echo "<p>Let's set up the basics: </p>";
+
+echo <<<EOT
 <form name="installation" action="${_SERVER['SCRIPT_NAME']}" method="post">
 <div id="form-input-box">
 <div id="form-input-row"><div id="form-input-left">Base Dir</div><div id="form-input-right"><input type="text" name="BASE_DIR" value="${BASE_DIR}"></div></div>
@@ -153,7 +154,7 @@ if (isset($_SERVER) && isset($_SERVER['SCRIPT_FILENAME']) )
 
 
 EOT;
-    
-    echo "</div></div></div>";
-    require_once($THEME_DIR . "/footer.php");
+
+echo "</div></div></div>";
+require_once($THEME_DIR . "/footer.php");
 ?>

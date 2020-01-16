@@ -5,7 +5,7 @@ function XMark(x, y, size, appInterface) {
     Mark.call(this, 'X', x, y);
     this.diameter = size;
 
-    this.draw = function(context) {
+    this.draw = function (context) {
         context.globalAlpha = this.alpha;
         context.strokeStyle = "#920000";
         context.lineWidth = this.diameter / 10;

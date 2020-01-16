@@ -45,6 +45,7 @@ html {
 article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
+
 // stylelint-enable selector-list-comma-newline-after
 
 // Body
@@ -100,6 +101,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: $headings-margin-bottom;
 }
+
 // stylelint-enable selector-list-comma-newline-after
 
 // Reset margins on paragraphs
@@ -168,6 +170,7 @@ b,
 strong {
   font-weight: bolder; // Add the correct font weight in Chrome, Edge, and Safari
 }
+
 // stylelint-enable font-weight-notation
 
 small {
@@ -187,8 +190,13 @@ sup {
   vertical-align: baseline;
 }
 
-sub { bottom: -.25em; }
-sup { top: -.5em; }
+sub {
+  bottom: -.25em;
+}
+
+sup {
+  top: -.5em;
+}
 
 
 //
@@ -240,6 +248,7 @@ samp {
   font-family: monospace, monospace; // Correct the inheritance and scaling of font size in all browsers.
   font-size: 1em; // Correct the odd `em` font sizing in all browsers.
 }
+
 // stylelint-enable font-family-no-duplicate-names
 
 pre {

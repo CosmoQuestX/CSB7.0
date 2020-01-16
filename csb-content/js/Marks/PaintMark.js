@@ -12,7 +12,7 @@ function PaintMark(width, height, appInterface) {
     this.imageData = context.createImageData(this.width, this.height);
 
     this.draw = function (context) {
-        
+
         context.putImageData(this.imageData, 0, 0);
     };
 
@@ -29,8 +29,7 @@ function PaintMark(width, height, appInterface) {
                         currentRow.push(x);
                         startedBlob = true;
                     }
-                }
-                else {
+                } else {
                     if (startedBlob) {
                         currentRow.push(x);
                         startedBlob = false;
@@ -41,7 +40,7 @@ function PaintMark(width, height, appInterface) {
         }
         return rows;
     };
-    this.drawGeneratedData = function(data) {
+    this.drawGeneratedData = function (data) {
         for (var y = 0; y < this.height; y++) {
             var row = data[y];
             for (var blobIndex = 0; blobIndex < row.length; blobIndex += 2) {
@@ -52,7 +51,7 @@ function PaintMark(width, height, appInterface) {
         }
     };
 
-    this.setPixel = function(x, y, color) {
+    this.setPixel = function (x, y, color) {
         var index = (parseInt(x) + parseInt(y) * this.width) * 4;
         this.imageData.data[index] = color.r;
         this.imageData.data[index + 1] = color.g;
@@ -60,7 +59,7 @@ function PaintMark(width, height, appInterface) {
         this.imageData.data[index + 3] = color.a;
     };
 
-    this.drawCircle = function(x, y, radius, color) {
+    this.drawCircle = function (x, y, radius, color) {
         for (var i = -radius; i <= radius; i++) {
             for (var j = -radius; j <= radius; j++) {
                 if (Math.sqrt(i * i + j * j) <= radius
@@ -73,7 +72,14 @@ function PaintMark(width, height, appInterface) {
         }
     };
 
-    this.getSubmitData = function() {
-        return {x: this.x, y: this.y, diameter: this.diameter, owner: this.owner, type: this.type, details: {painting: this.generateData()}};
+    this.getSubmitData = function () {
+        return {
+            x: this.x,
+            y: this.y,
+            diameter: this.diameter,
+            owner: this.owner,
+            type: this.type,
+            details: {painting: this.generateData()}
+        };
     };
 }

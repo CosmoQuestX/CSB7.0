@@ -5,10 +5,10 @@
 function Crater(x, y, diameter, appInterface, isEjecta) {
     Mark.call(this, 'crater', x, y, appInterface);
     this.diameter = diameter;
-    this.isEjecta = typeof(isEjecta) == "undefined" ? false : isEjecta;
+    this.isEjecta = typeof (isEjecta) == "undefined" ? false : isEjecta;
     this.alpha = .6;
 
-    this.draw = function(context, appInterface, scale) {
+    this.draw = function (context, appInterface, scale) {
         this.chooseColor(context);
         context.lineWidth = scale * 1.5;
         if (this.isEjecta) {
@@ -16,26 +16,23 @@ function Crater(x, y, diameter, appInterface, isEjecta) {
                 context.strokeStyle = "#FFFFFF";
             }
             if (this.isSelected && !this.isBeingMade || this == appInterface.markUnderMouse) {
-            }
-            else
-                context.globalAlpha = 2/3 * this.alpha;
+            } else
+                context.globalAlpha = 2 / 3 * this.alpha;
 
             context.beginPath();
-            context.arc(this.x * scale, this.y * scale, this.diameter / 2 * scale, 0, Math.PI*2, true);
+            context.arc(this.x * scale, this.y * scale, this.diameter / 2 * scale, 0, Math.PI * 2, true);
             context.closePath();
             context.globalAlpha = this.alpha;
             context.stroke();
             context.fill();
 
-        }
-        else {
+        } else {
             if (this.isSelected) {
                 context.strokeStyle = "#FFFFFF";
             }
             if (this.isSelected && !this.isBeingMade || this == appInterface.markUnderMouse) {
                 context.globalAlpha = this.alpha;
-            }
-            else
+            } else
                 context.globalAlpha = 0.666 * this.alpha;
 
             context.beginPath();
@@ -50,23 +47,21 @@ function Crater(x, y, diameter, appInterface, isEjecta) {
             context.stroke();
         }
 
-        if(this.isSelected && !this.isBeingMade)
+        if (this.isSelected && !this.isBeingMade)
             this.drawCircleResizeArrow(context, appInterface.getSavedMousePosition());
     };
 
-    this.chooseColor = function(context) {
+    this.chooseColor = function (context) {
         if (this.diameter < 18) {
             // Too small => red mark
             context.fillStyle = "#BB0000";
             context.strokeStyle = "#BB0000";
-        }
-        else {
+        } else {
             if (this.isEjecta) {
                 // Good => blue mark
                 context.fillStyle = "#6699FF";
                 context.strokeStyle = "#FFFFFF";
-            }
-            else {
+            } else {
                 // Good => green mark
                 context.fillStyle = "#39b54a";
                 context.strokeStyle = "#FFFFFF";
@@ -75,14 +70,14 @@ function Crater(x, y, diameter, appInterface, isEjecta) {
     }
 
 
-    this.getResizeArrowSize = function() {
+    this.getResizeArrowSize = function () {
         if (this.diameter < 200)
             return ((.3 - (this.diameter / 200 * .15)) * this.diameter);
         else
             return (.15 * this.diameter);
     };
 
-    this.drawCircleResizeArrow = function(context, mousePosition) {
+    this.drawCircleResizeArrow = function (context, mousePosition) {
         var angle = Math.atan2(mousePosition.y - this.y, mousePosition.x - this.x);
         var arrowSize = this.getResizeArrowSize();
         var mouseDistanceFromEdge = Math.abs(distanceBetween(this, mousePosition) - this.diameter / 2);
@@ -92,7 +87,7 @@ function Crater(x, y, diameter, appInterface, isEjecta) {
             alpha = 1;
 
         context.strokeStyle = "#FFFFFF";
-        var radRatio = Math.max(1-(this.diameter / 2 -30)/340,.5);
+        var radRatio = Math.max(1 - (this.diameter / 2 - 30) / 340, .5);
         //radRatio = Math.min(radRatio,.75);
         var arrowTip = {x: arrowSize, y: 0};
         var arrowSideTip = {x: arrowSize / 2, y: arrowSize / 2};

@@ -5,20 +5,20 @@
 /* setup buttons */
 $buttons = array(
     0 => array(
-        'img'   => 'Button-erase.png',
-        'name'  => 'Erase'
+        'img' => 'Button-erase.png',
+        'name' => 'Erase'
     ),
     1 => array(
-        'img'   => 'Button-rocks.png',
-        'name'  => 'Rocks'
+        'img' => 'Button-rocks.png',
+        'name' => 'Rocks'
     ),
     2 => array(
-        'img'   => 'Button-boulder.png',
-        'name'  => 'Boulder'
+        'img' => 'Button-boulder.png',
+        'name' => 'Boulder'
     ),
     3 => array(
-        'img'   => 'Button-crater.png',
-        'name'  => 'Crater'
+        'img' => 'Button-crater.png',
+        'name' => 'Crater'
     )
 );
 
@@ -33,7 +33,7 @@ $exampleSets = array(
             $BASE_URL . 'csb-apps/Bennu/images/examples/Rocks1.png'
         )
     ),
-    array (
+    array(
         'name' => 'Boulder',
         'examples' => array(
             $BASE_URL . 'csb-apps/Bennu/images/examples/Boulder1.png',

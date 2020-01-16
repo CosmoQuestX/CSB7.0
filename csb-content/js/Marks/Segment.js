@@ -5,7 +5,7 @@ function Segment(startingX, startingY, type, appInterface) {
     Mark.call(this, type, startingX, startingY, appInterface);
     this.points = [{x: startingX, y: startingY}, {x: startingX, y: startingY}];
 
-    this.draw = function(context) {
+    this.draw = function (context) {
         var mousePosition = this.appInterface.getSavedMousePosition();
         context.globalAlpha = this.alpha;
         context.lineWidth = 5;
@@ -24,12 +24,10 @@ function Segment(startingX, startingY, type, appInterface) {
         if (this.status == "not_great") {
             context.fillStyle = "#C09030";
             context.strokeStyle = "#C09030";
-        }
-        else if (this.status == "way_too_far") {
+        } else if (this.status == "way_too_far") {
             context.strokeStyle = "#920000";
             context.fillStyle = "#920000";
-        }
-        else {
+        } else {
             context.strokeStyle = "#70b570";
             context.fillStyle = "#70b570";
         }
@@ -41,7 +39,7 @@ function Segment(startingX, startingY, type, appInterface) {
         context.stroke();
     };
 
-    this.length = function() {
+    this.length = function () {
         if (this.points.length < 2)
             return 0;
         else {
@@ -51,9 +49,16 @@ function Segment(startingX, startingY, type, appInterface) {
         }
     };
 
-    this.getSubmitData = function() {
+    this.getSubmitData = function () {
         let x = (this.points[0].x + this.points[1].x) / 2;
         let y = (this.points[0].y + this.points[1].y) / 2;
-        return {x: x, y: y, diameter: this.length(), owner: this.owner, type: this.type, details: {points: this.points}};
+        return {
+            x: x,
+            y: y,
+            diameter: this.length(),
+            owner: this.owner,
+            type: this.type,
+            details: {points: this.points}
+        };
     };
 }

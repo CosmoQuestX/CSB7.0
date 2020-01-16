@@ -10,11 +10,10 @@ function ZoomWindowTool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onToggle = function(appInterface) {
+    this.onToggle = function (appInterface) {
         if (this.isToggledOn) {
             $("#zoom-canvas").show();
-        }
-        else
+        } else
             $("#zoom-canvas").hide();
         csbApp.needToRedrawCanvas = true;
     }

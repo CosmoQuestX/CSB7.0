@@ -1,5 +1,3 @@
-
-
 function MarsMappers(csbApp) {
     Application.call(this,
         "Mars Mappers",
@@ -154,12 +152,12 @@ function MarsMappers(csbApp) {
                 "type": "set-image",
                 "image-location": "/images/applications/tutorials/mars/mars-tutorial-3.png",
                 "correct-marks": [
-                    new Crater(216,44,107,csbApp.appInterface),
-                    new Crater(338,12,21,csbApp.appInterface),
-                    new Crater(376,140,23,csbApp.appInterface),
-                    new Crater(192,192,60,csbApp.appInterface),
-                    new Crater(63,280,35,csbApp.appInterface),
-                    new Crater(299,256,94,csbApp.appInterface, true)
+                    new Crater(216, 44, 107, csbApp.appInterface),
+                    new Crater(338, 12, 21, csbApp.appInterface),
+                    new Crater(376, 140, 23, csbApp.appInterface),
+                    new Crater(192, 192, 60, csbApp.appInterface),
+                    new Crater(63, 280, 35, csbApp.appInterface),
+                    new Crater(299, 256, 94, csbApp.appInterface, true)
                 ],
                 "required-score": 4,
                 "active-tools": ["circle-button", "eraser-button", "ejecta-button"],

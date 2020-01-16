@@ -15,33 +15,35 @@ if (!isset($loader) || !$loader) {
 
 /**
  * Print HTML header for selected theme
- * 
- * Loads the header file from the theme directory and prints a basic HTML 
+ *
+ * Loads the header file from the theme directory and prints a basic HTML
  * header for administrative pages
  *
- * @param string page_title - the Title of the page 
- * @param boolean auth 
- * 
+ * @param string page_title - the Title of the page
+ * @param boolean auth
+ *
  * @return void
- * 
+ *
  */
-function loadHeader($page_title, $auth = 0) {
+function loadHeader($page_title, $auth = 0)
+{
     global $BASE_URL, $BASE_DIR, $THEME_DIR, $THEME_URL;
 
-    require ($THEME_DIR . "/header.php");
+    require($THEME_DIR . "/header.php");
 }
 
 /**
  * Print HTML footer for selected theme
- * 
+ *
  * Loads the footer file from the theme directory and prints a basic HTML
  * footer for administrative pages
- * 
+ *
  * @return void
- * 
+ *
  */
-function loadFooter() {
+function loadFooter()
+{
     global $THEME_DIR;
-    
-    require ($THEME_DIR . "/footer.php");
+
+    require($THEME_DIR . "/footer.php");
 }

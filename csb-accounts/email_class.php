@@ -23,11 +23,10 @@ if (!isset($loader) || !$loader) {
 // REMEMBER: Config for SMTP
 
 
-
 class email
-/**
- * Class for email handling
- */
+    /**
+     * Class for email handling
+     */
 {
     private $host;
     private $username;
@@ -36,34 +35,36 @@ class email
     private $from;
 
     /**
-     * Initialization with the parameters from the settings 
-     * 
+     * Initialization with the parameters from the settings
+     *
      * @param array $params The email parameters from the settings
      */
-    function __construct($params) {
-        $this->host     = filter_var($params['host'],FILTER_SANITIZE_URL);
+    function __construct($params)
+    {
+        $this->host = filter_var($params['host'], FILTER_SANITIZE_URL);
         $this->username = $params['username'];
         $this->password = $params['password'];
-        $this->port     = filter_var($params['port'],FILTER_SANITIZE_NUMBER_INT);
-        $this->from     = filter_var($params['from'],FILTER_SANITIZE_EMAIL);
+        $this->port = filter_var($params['port'], FILTER_SANITIZE_NUMBER_INT);
+        $this->from = filter_var($params['from'], FILTER_SANITIZE_EMAIL);
     }
 
     /**
      * Send an email to a given email address
-     * 
+     *
      * @param string $to
      * @param array $msg an associative array with subject, body and onSuccess
      */
-    function sendMail($to, $msg) {
+    function sendMail($to, $msg)
+    {
         require_once "Mail.php";
 
         $headers = array(
-            'From'      => $this->from,
-            'To'        => filter_var($to,FILTER_SANITIZE_EMAIL),
-            'Subject'   => $msg['subject'],
-            'Reply-To'  => $this->from
+            'From' => $this->from,
+            'To' => filter_var($to, FILTER_SANITIZE_EMAIL),
+            'Subject' => $msg['subject'],
+            'Reply-To' => $this->from
         );
-        $smtp = Mail::factory('smtp', array (
+        $smtp = Mail::factory('smtp', array(
             'host' => $this->host,
             'port' => $this->port,
             'auth' => true,

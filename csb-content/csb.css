@@ -43,34 +43,34 @@ body {
 }
 
 #form-input-box {
-	display: table;
+    display: table;
 }
 
 #form-input-row {
-	display: table-row;
+    display: table-row;
 }
 
 #form-input-left {
-	width: 175px;
-	display: table-cell;
-	float: left;
+    width: 175px;
+    display: table-cell;
+    float: left;
 }
 
 #form-input-right {
-	display: table-cell;
-	float: right;
+    display: table-cell;
+    float: right;
 }
 
 .newpass {
-	display: none;
+    display: none;
 }
 
 span .left {
-	text-align: left;	
+    text-align: left;
 }
 
 iframe {
-	border: none;
+    border: none;
 }
 
 .notSelected {
@@ -78,27 +78,26 @@ iframe {
 }
 
 
-
 /* --------------------------------------------------------------------------------
    Header
    -------------------------------------------------------------------------------- */
 
-    #logo {
-        width: 400px;
-    }
+#logo {
+    width: 400px;
+}
 
-    #user {
-        margin-top: 5px;
-    }
+#user {
+    margin-top: 5px;
+}
 
 /* --------------------------------------------------------------------------------
    Boxes
    -------------------------------------------------------------------------------- */
 
-    #form-box {
-        width: 50%;
-        margin: 0 auto;
-    }
+#form-box {
+    width: 50%;
+    margin: 0 auto;
+}
 
 /* --------------------------------------------------------------------------------
    Alerts
@@ -115,8 +114,8 @@ iframe {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */

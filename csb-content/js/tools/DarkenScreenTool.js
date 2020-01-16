@@ -7,7 +7,7 @@ function DarkenScreenTool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onToggle = function(appInterface) {
+    this.onToggle = function (appInterface) {
         if (this.isToggledOn)
             $('body').css('background-color', 'black').css('transition', 'all 2s ease');
         else

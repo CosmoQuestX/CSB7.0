@@ -1,7 +1,7 @@
 function CircleTool(options) {
     // Inherit from Tool
     Tool.call(this, options);
-    
+
     this.mouseDownTime = 0;
     this.isEjecta = options.isEjecta;
 
@@ -10,7 +10,7 @@ function CircleTool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onMouseDown = function(event, appInterface) {
+    this.onMouseDown = function (event, appInterface) {
         var mousePosition = appInterface.getMouseOrTouchPosition(event);
         var closestCrater = null;
         closestCrater = appInterface.csbApp.currentImage.getClosestCraterTo(mousePosition);
@@ -24,12 +24,10 @@ function CircleTool(options) {
             if (distance > mark.diameter / 2 - mark.getResizeArrowSize() && distance < mark.diameter / 2 + mark.getResizeArrowSize()) {
                 // The mouse is near the edge of the crater. Resize it
                 resizeCrater();
-            }
-            else if (distance <= mark.diameter / 2 - mark.getResizeArrowSize()) {
+            } else if (distance <= mark.diameter / 2 - mark.getResizeArrowSize()) {
                 // The mouse is close to the center. Move it
                 moveCrater();
-            }
-            else {
+            } else {
                 // The mouse isn't close to the selected crater so deselect it
                 appInterface.selectMark(null);
                 createNewCrater.call(this);
@@ -71,52 +69,51 @@ function CircleTool(options) {
         }
     };
 
-    this.onMouseUp = function(event, appInterface) {
+    this.onMouseUp = function (event, appInterface) {
         if (appInterface.selectedMark == null)
             return;
 
         if (appInterface.selectedMark.diameter < 7) {
             appInterface.csbApp.currentImage.deleteMark(appInterface.selectedMark);
             appInterface.selectMark(null);
-        }
-        else if (appInterface.selectedMark.diameter < 18) {
+        } else if (appInterface.selectedMark.diameter < 18) {
             if (appInterface.csbApp.tutorial != null)
-                appInterface.displayTextBubbleOnMark(appInterface.selectedMark, {text: "This crater is too small. We're only looking for larger craters.", delay: 0, isTemporary: true, showArrow: true});
+                appInterface.displayTextBubbleOnMark(appInterface.selectedMark, {
+                    text: "This crater is too small. We're only looking for larger craters.",
+                    delay: 0,
+                    isTemporary: true,
+                    showArrow: true
+                });
             appInterface.csbApp.currentImage.deleteMark(appInterface.selectedMark);
             appInterface.selectMark(null);
-        }
-        else if (appInterface.selectedMark.isBeingMade) {
+        } else if (appInterface.selectedMark.isBeingMade) {
             appInterface.selectedMark.isBeingMade = false;
-        }
-        else {
+        } else {
             appInterface.selectedMark.isBeingMoved = false;
             appInterface.selectedMark.isBeingResized = false;
         }
     };
 
-    this.onMouseMove = function(event, appInterface) {
+    this.onMouseMove = function (event, appInterface) {
         var mousePosition = appInterface.getMouseOrTouchPosition(event);
         var selectedMark = appInterface.selectedMark;
-        
+
         if (appInterface.isMouseButtonDown) {
             if (selectedMark != null) {
                 if (selectedMark.isBeingMade) {
                     appInterface.switchCursorTo('pointer');
                     if (appInterface.isCreatingCirclesFromCenter) {
                         selectedMark.diameter = appInterface.distanceBetween(selectedMark.creationStartPosition, mousePosition) * 2;
-                    }
-                    else {
+                    } else {
                         selectedMark.diameter = appInterface.distanceBetween(selectedMark.creationStartPosition, mousePosition);
                         selectedMark.x = (selectedMark.creationStartPosition.x + mousePosition.x) / 2;
                         selectedMark.y = (selectedMark.creationStartPosition.y + mousePosition.y) / 2;
                     }
-                }
-                else if (selectedMark.isBeingMoved) {
+                } else if (selectedMark.isBeingMoved) {
                     appInterface.switchCursorTo('pointer');
                     selectedMark.x = mousePosition.x + selectedMark.relativeMousePosition.x;
                     selectedMark.y = mousePosition.y + selectedMark.relativeMousePosition.y;
-                }
-                else if (selectedMark.isBeingResized) {
+                } else if (selectedMark.isBeingResized) {
                     appInterface.switchCursorTo('pointer');
                     var mouseDistance = appInterface.distanceBetween(mousePosition, selectedMark);
                     selectedMark.diameter = Math.max(0, (mouseDistance + selectedMark.relativeMouseDistance) * 2);
@@ -125,6 +122,6 @@ function CircleTool(options) {
         }
     };
 
-    this.onChange = function() {
+    this.onChange = function () {
     }
 }

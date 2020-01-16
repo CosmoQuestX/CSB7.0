@@ -13,23 +13,21 @@ function Tool(options) {
     this.exampleText = "Examples";
 
 
-
     /**
      * The action taken when clicking on a button (toggling it or setting it as the active tool)
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onButtonClick = function(event, appInterface) {
+    this.onButtonClick = function (event, appInterface) {
         if (this.isToggleable) {
             this.onToggle();
-        }
-        else {
+        } else {
             if (appInterface.selectedTool != this)
                 appInterface.selectTool(this);
         }
     };
 
-    this.onToggle = function() {
+    this.onToggle = function () {
         alert("Toggle effect not implemented");
     };
 
@@ -38,7 +36,7 @@ function Tool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onMouseDown = function(event, appInterface) {
+    this.onMouseDown = function (event, appInterface) {
 
     };
 
@@ -47,7 +45,7 @@ function Tool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onMouseUp = function(event, appInterface) {
+    this.onMouseUp = function (event, appInterface) {
 
     };
 
@@ -57,7 +55,7 @@ function Tool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onDoubleClick = function(event, appInterface) {
+    this.onDoubleClick = function (event, appInterface) {
         if (appInterface.csbApp.isMobile)
             event.preventDefault();
         var mousePosition = appInterface.getMousePosition(event);
@@ -79,7 +77,7 @@ function Tool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onMouseMove = function(event, appInterface) {
+    this.onMouseMove = function (event, appInterface) {
         var mousePosition = appInterface.getGlobalMousePosition(event);
         if (appInterface.selectedMark != null && appInterface.selectedMark.isBeingMoved) {
             appInterface.switchCursorTo('pointer');
@@ -96,7 +94,7 @@ function Tool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onTouchMove = function(event, appInterface) {
+    this.onTouchMove = function (event, appInterface) {
         event.preventDefault();
         this.onMouseMove(event, appInterface);
     };
@@ -106,7 +104,7 @@ function Tool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onMouseEnter = function(event, appInterface) {
+    this.onMouseEnter = function (event, appInterface) {
 
     };
 
@@ -115,19 +113,19 @@ function Tool(options) {
      * @param {Event} event
      * @param {AppInterface} appInterface
      */
-    this.onMouseLeave = function(event, appInterface) {
+    this.onMouseLeave = function (event, appInterface) {
 
     };
 
-    this.onToggle = function(appInterface) {
+    this.onToggle = function (appInterface) {
 
     };
 
-    this.onImageLoad = function(appInterface) {
+    this.onImageLoad = function (appInterface) {
 
     };
 
-    this.createButton = function() {
+    this.createButton = function () {
         var html =
             '<div class="app-button" id="' + this.htmlId + '">' +
             '<img class="selected" src="' + this.htmlSelectedImage + '" />' +
@@ -141,13 +139,12 @@ function Tool(options) {
         $("#" + id).removeClass("app-tool-button");
     }
 
-    this.mute = function() {
+    this.mute = function () {
         this.isActive = false;
         if (this.isToggleable) {
             muteItem(this.toggleOnHtmlId);
             muteItem(this.toggleOffHtmlId);
-        }
-        else {
+        } else {
             muteItem(this.htmlId);
         }
     };
@@ -157,13 +154,12 @@ function Tool(options) {
         $("#" + id).addClass("app-tool-button");
     }
 
-    this.unmute = function() {
+    this.unmute = function () {
         this.isActive = true;
         if (this.isToggleable) {
             unmuteItem(this.toggleOnHtmlId);
             unmuteItem(this.toggleOffHtmlId);
-        }
-        else {
+        } else {
             unmuteItem(this.htmlId);
         }
     }

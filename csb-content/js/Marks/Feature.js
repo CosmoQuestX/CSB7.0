@@ -3,7 +3,7 @@
  */
 function Feature(x, y, appInterface) {
     Mark.call(this, 'feature', x, y, appInterface);
-    this.draw = function(context, appInterface) {
+    this.draw = function (context, appInterface) {
         var featureImage = appInterface.icons['featureImage'];
         var featureSelectedImage = appInterface.icons['featureSelectedImage'];
         var scale = 1;

@@ -10,26 +10,26 @@
    Check if Table Exists
    ---------------------------------------------------------------------- */
 
-    function table_exists( $conn, $table) {
-        $val = mysqli_query($conn, "select 1 from '". $table . "'");
+function table_exists($conn, $table)
+{
+    $val = mysqli_query($conn, "select 1 from '" . $table . "'");
 
-        if($val !== FALSE) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
+    if ($val !== FALSE) {
+        return 1;
+    } else {
+        return 0;
     }
+}
 
 /* ----------------------------------------------------------------------
    Create Table from Structure
    ---------------------------------------------------------------------- */
 
-    function create_table( $conn, $structure) {
-        if (mysqli_query($conn, $structure) !== FALSE) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
+function create_table($conn, $structure)
+{
+    if (mysqli_query($conn, $structure) !== FALSE) {
+        return 1;
+    } else {
+        return 0;
     }
+}

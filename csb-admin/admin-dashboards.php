@@ -9,11 +9,12 @@
 
 /**
  * List the available dashboards from the filesystem and produce links from them
- * 
+ *
  * @return void
- * 
+ *
  */
-function listDashboards() {
+function listDashboards()
+{
     global $BASE_DIR;
 
     $dir = $BASE_DIR . "/csb-accounts/dashboards";
@@ -23,11 +24,11 @@ function listDashboards() {
     <h3>Options</h3>
     <ul>
 
-    <?php
-    foreach ($listings as $item) {
-        echo "<a href=\"" . $_SERVER['SCRIPT_NAME'] ."?task={$item}\">". ucFirst($item) ."</a><br />";
-    }
-    ?>
+        <?php
+        foreach ($listings as $item) {
+            echo "<a href=\"" . $_SERVER['SCRIPT_NAME'] . "?task={$item}\">" . ucFirst($item) . "</a><br />";
+        }
+        ?>
     </ul>
     <?php
 

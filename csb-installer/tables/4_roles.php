@@ -17,6 +17,6 @@ $structure = "CREATE TABLE `roles` (
         ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 
 $inserts = array("INSERT INTO roles (id, name) VALUES (1, 'SITE_ADMIN')",
-             "INSERT INTO roles (id, name) VALUES (2, 'SITE_NONE')",
-             "INSERT INTO roles (id, name) VALUES (3, 'SITE_SCIENTIST')",
-             "INSERT INTO roles (id, name) VALUES (4, 'SITE_MOD')");
+    "INSERT INTO roles (id, name) VALUES (2, 'SITE_NONE')",
+    "INSERT INTO roles (id, name) VALUES (3, 'SITE_SCIENTIST')",
+    "INSERT INTO roles (id, name) VALUES (4, 'SITE_MOD')");

@@ -12,8 +12,10 @@ if (!isset($loader) || !$loader) {
     exit();
 }
 
-class Auth {
-    function getUserByName($name) {
+class Auth
+{
+    function getUserByName($name)
+    {
         $db_handle = new DBController();
         $query = "Select * from users where name = ?";
         $result = $db_handle->runQuery($query, 's', array($username));

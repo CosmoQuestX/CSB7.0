@@ -5,7 +5,7 @@ function LinearFeature(startingX, startingY, appInterface) {
     Mark.call(this, 'linear_feature', startingX, startingY, appInterface);
     this.points = [];
 
-    this.draw = function(context) {
+    this.draw = function (context) {
         context.globalAlpha = this.alpha;
         context.lineWidth = 5;
         context.beginPath();

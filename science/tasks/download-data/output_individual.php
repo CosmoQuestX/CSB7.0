@@ -105,7 +105,7 @@ if ($hero) {
 
 $numRows = $db->getNumRows('marks', $where);
 
-echo "numRows: ".$numRows;
+echo "numRows: " . $numRows;
 
 $lastPage = intval($numRows / 10000.0);
 if (($numRows % 10000) != 0) $lastPage++; // round up to get the last page

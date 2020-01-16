@@ -25,7 +25,7 @@ function AppInterface(csbApp) {
     this.textBubbleQueue = [];
     this.currentStartingExampleImageIndex = 0;
 
-    this.initializeInterface = function() {
+    this.initializeInterface = function () {
 
         if (this.csbApp.isMobile) {
             $("#app-tutorial-title").html("You need to use a computer for Mappers projects");
@@ -33,7 +33,7 @@ function AppInterface(csbApp) {
             $("#app-tutorial-okay-button").html("Close Window");
             this.showExample($("#app-tutorial-overlay"));
             $("#app-header").css("font-size", "1.7em");
-            $("#app-tutorial-okay-button").click(function() {
+            $("#app-tutorial-okay-button").click(function () {
                 $("#app-holder").hide();
             });
             return;
@@ -50,24 +50,23 @@ function AppInterface(csbApp) {
 
         var self = this;
 
-        $("#submit-button").click(function() {
+        $("#submit-button").click(function () {
             if ($("#submit-button").attr("class") == "submit-button submit-unpressed") {
                 if (self.canSubmit) {
                     if (csbApp.tutorial) {
                         csbApp.tutorial.submit();
-                    }
-                    else {
+                    } else {
                         csbApp.submitImage();
                     }
                 }
             }
         });
 
-        $("#continue-without-login").click(function() {
+        $("#continue-without-login").click(function () {
             self.csbApp.displayApp();
         });
 
-        $(".mark-choice").click(function() {
+        $(".mark-choice").click(function () {
             self.selectedMark.subType = $(this).html();
             self.selectedMark.isBeingMade = false;
             $("#mark-choices").hide();
@@ -76,7 +75,7 @@ function AppInterface(csbApp) {
             self.csbApp.isAppOn = true;
         });
 
-        $(".mask").click(function() {
+        $(".mask").click(function () {
             $("#mark-choices").hide();
             $("#mask").hide();
             self.currentImage.deleteMark(selectedMark);
@@ -90,7 +89,7 @@ function AppInterface(csbApp) {
         if ($("#shared-marks").is(':checked'))
             self.craterTypesToDraw.push('shared');
 
-        $(".mark-owner-display-button").click(function() {
+        $(".mark-owner-display-button").click(function () {
             self.needToRedrawCanvas = true;
             self.craterTypesToDraw = [];
             if ($("#my-marks").is(':checked'))
@@ -101,30 +100,30 @@ function AppInterface(csbApp) {
                 self.craterTypesToDraw.push('shared');
         });
 
-        $("#undo-button").click(function() {
+        $("#undo-button").click(function () {
             csbApp.returnToPreviousImage();
             $("#crater").click();
         });
 
 
-        $('#chat-button').click(function() {
+        $('#chat-button').click(function () {
             $('#chat-button-holder').hide();
             $('#tlkio').show();
         });
 
-        $('#navigation').children('li').on("touchend", function() {
+        $('#navigation').children('li').on("touchend", function () {
             $(this).css("visibility", "visible");
             $(this).css("max-height", "500px");
         });
 
         if (this.csbApp.applicationName == "simply_craters_verification") {
-            $(document).keyup(function(evt) {
+            $(document).keyup(function (evt) {
                 if (evt.keyCode == 17) {
                     $("#show-hide").find('.show').hide();
                     $("#show-hide").find('.hide').show();
                     self.needToRedrawCanvas = true;
                 }
-            }.call(self)).keydown(function(evt) {
+            }.call(self)).keydown(function (evt) {
                 if (evt.ctrlKey) {
                     $("#show-hide").find('.hide').hide();
                     $("#show-hide").find('.show').show();
@@ -133,98 +132,96 @@ function AppInterface(csbApp) {
             }.call(self));
         }
 
-        $("#app-tutorial-okay-button").click(function() {
+        $("#app-tutorial-okay-button").click(function () {
             self.hideExample();
             self.csbApp.tutorial.moveToNextTutorialStep();
         });
 
-        $("#x-button").click(function() {
+        $("#x-button").click(function () {
             $("#cq-mapping-tool").hide();
             location.reload();
         });
 
-        $("#app-dont-want-to-login-button").click(function() {
+        $("#app-dont-want-to-login-button").click(function () {
             self.hideExample();
         });
 
         $("#score-display").hide();
 
-        $(".okay-button").click(function() {
+        $(".okay-button").click(function () {
             self.hideExample($(".app-example :visible"));
         });
 
-        $("#app-example-up-arrow").click(function() {
+        $("#app-example-up-arrow").click(function () {
 
         });
-        $("#app-example-down-arrow").click(function() {
+        $("#app-example-down-arrow").click(function () {
             // Cycle to next 3 examples for the current tool (default to crater if nothing)
         });
 
-        $("#app-login-button").click(function() {
+        $("#app-login-button").click(function () {
             self.loginButtonPressed();
         });
-        $("#app-login-password").keyup(function(event) {
+        $("#app-login-password").keyup(function (event) {
             if (event.keyCode == 13)
                 $("#app-login-button").click();
         });
 
-        $("#app-register-button").click(function() {
+        $("#app-register-button").click(function () {
             self.registerButtonPressed();
         });
-        $("#app-register-password").blur(function() {
+        $("#app-register-password").blur(function () {
             if ($("#app-register-password").val().length < 6)
                 $("#app-register-error-text").html("Your password must be at least 6 characters.");
         });
-        $("#app-register-password-confirm").keyup(function(event) {
+        $("#app-register-password-confirm").keyup(function (event) {
             if (event.keyCode == 13)
                 $("#app-register-button").click();
         });
 
-        $("#app-tutorial-login-button").click(function() {
+        $("#app-tutorial-login-button").click(function () {
             self.hideExample();
             self.showExample($("#app-login-register-window"));
         });
-        $("#app-tutorial-register-button").click(function() {
+        $("#app-tutorial-register-button").click(function () {
             self.hideExample();
             self.showExample($("#app-login-register-window"));
         });
 
-        $("#app-example-down-arrow").click(function() {
+        $("#app-example-down-arrow").click(function () {
             self.cycleExamples(3);
         });
-        $("#app-example-up-arrow").click(function() {
+        $("#app-example-up-arrow").click(function () {
             self.cycleExamples(-3);
         });
-        $("#app-tutorial-keep-practicing").click(function() {
+        $("#app-tutorial-keep-practicing").click(function () {
             self.hideExample();
             // self.csbApp.tutorial.moveToNextTutorialStep();
             self.csbApp.tutorial.completeTutorial();
         });
 
-        $("#app-login-popup-button").click(function() {
+        $("#app-login-popup-button").click(function () {
             self.showExample($("#app-login-register-window"));
         });
-        $("#app-tutorial-button").click(function() {
+        $("#app-tutorial-button").click(function () {
             if (self.csbApp.tutorial == null) {
                 self.csbApp.tutorial = new Tutorial(self.csbApp);
                 self.csbApp.tutorial.initialize();
                 self.csbApp.attemptNewImageRequest();
                 $("#app-tutorial-button").html("Skip Tutorial");
-            }
-            else {
+            } else {
                 self.csbApp.tutorial.completeTutorial();
                 $("#app-tutorial-button").html("Take Tutorial");
             }
         });
 
-        $("#text-bubble-blob").bind("transitionend", function() {
+        $("#text-bubble-blob").bind("transitionend", function () {
             // Only trigger if the text bubble has completely disappeared
             if ($("#text-bubble-blob").css("opacity") == 0) {
                 if (self.textBubbleQueue.length == 0) {
                     $("#text-bubble-arrow").hide();
                     $("#text-bubble-blob").hide();
-                }
-                else {
+                } else {
                     var nextTextBubble = self.textBubbleQueue.shift();
                     if (nextTextBubble.isTemporary)
                         self.textBubbleQueue.unshift(self.currentTextBubble);
@@ -235,30 +232,49 @@ function AppInterface(csbApp) {
         });
     };
 
-    this.onAppInitialized = function() {
+    this.onAppInitialized = function () {
         this.setupAllButtons();
         this.selectedTool = this.tools[this.selectedButton.attr('id')];
     };
 
-    this.initializeCanvas = function() {
+    this.initializeCanvas = function () {
         var self = this;
         if (this.csbApp.acceptsUserInput) {
-            if(this.csbApp.isMobile) {
-                this.csbApp.canvas.addEventListener('touchmove', function(e) { self.onTouchMove.call(self, e) }, false);
-                this.csbApp.canvas.addEventListener('touchstart', function(e) { self.onMouseDown.call(self, e) }, false);
-                this.csbApp.canvas.addEventListener('touchend', function(e) { self.onMouseUp.call(self, e) }, false);
+            if (this.csbApp.isMobile) {
+                this.csbApp.canvas.addEventListener('touchmove', function (e) {
+                    self.onTouchMove.call(self, e)
+                }, false);
+                this.csbApp.canvas.addEventListener('touchstart', function (e) {
+                    self.onMouseDown.call(self, e)
+                }, false);
+                this.csbApp.canvas.addEventListener('touchend', function (e) {
+                    self.onMouseUp.call(self, e)
+                }, false);
                 //window.addEventListener('orientationchange', doOnOrientationChange);
+            } else {
+                this.csbApp.canvas.addEventListener("mousemove", function (e) {
+                    self.onMouseMove.call(self, e)
+                }, false);
+                this.csbApp.canvas.addEventListener("mousedown", function (e) {
+                    self.onMouseDown.call(self, e)
+                }, false);
+                $("body").mouseup(function (e) {
+                    self.onMouseUp.call(self, e)
+                });
+                this.csbApp.canvas.addEventListener("mouseover", function (e) {
+                    self.onMouseEnterCanvas.call(self, e)
+                }, false);
+                this.csbApp.canvas.addEventListener("mouseout", function (e) {
+                    self.onMouseLeaveCanvas.call(self, e)
+                }, false);
+                $(".app_holder_control").css("height", this.csbApp.canvas.height + "px");
             }
-            else{
-                this.csbApp.canvas.addEventListener("mousemove", function(e) { self.onMouseMove.call(self, e) }, false);
-                this.csbApp.canvas.addEventListener("mousedown", function(e) { self.onMouseDown.call(self, e) }, false);
-                $("body").mouseup(function(e) { self.onMouseUp.call(self, e) });
-                this.csbApp.canvas.addEventListener("mouseover", function(e) { self.onMouseEnterCanvas.call(self, e) }, false);
-                this.csbApp.canvas.addEventListener("mouseout", function(e) { self.onMouseLeaveCanvas.call(self, e) }, false);
-                $(".app_holder_control").css("height" , this.csbApp.canvas.height + "px");
-            }
-            this.csbApp.canvas.addEventListener("dblclick", function(e) { self.onDoubleClick.call(self, e) }, false);
-            this.csbApp.canvas.addEventListener("mousewheel", function(e) { self.onMouseWheel.call(self, e) }, false);
+            this.csbApp.canvas.addEventListener("dblclick", function (e) {
+                self.onDoubleClick.call(self, e)
+            }, false);
+            this.csbApp.canvas.addEventListener("mousewheel", function (e) {
+                self.onMouseWheel.call(self, e)
+            }, false);
         }
 
         $('#submit').attr("class", "submit-unpressed");
@@ -279,7 +295,7 @@ function AppInterface(csbApp) {
     };
 
 
-    this.updateAllButtonAppearances = function() {
+    this.updateAllButtonAppearances = function () {
         for (var key in csbApp.appInterface.tools) {
             if (!csbApp.appInterface.tools.hasOwnProperty(key))
                 break;
@@ -287,8 +303,7 @@ function AppInterface(csbApp) {
 
             if (tool.isToggleable) {
                 updateToggleableToolAppearance(tool);
-            }
-            else if (tool == this.selectedTool)
+            } else if (tool == this.selectedTool)
                 setAppearanceAndExamplesForSelectedTool(tool);
             else
                 updateButtonAppearance($("#" + tool.htmlId), false, tool);
@@ -318,13 +333,11 @@ function AppInterface(csbApp) {
                 if (isSelected) {
                     button.addClass('selected');
                     button.removeClass('not-selected');
-                }
-                else {
+                } else {
                     button.removeClass('selected');
                     button.addClass('not-selected');
                 }
-            }
-            else {
+            } else {
                 tool.mute();
             }
         }
@@ -335,7 +348,7 @@ function AppInterface(csbApp) {
         }
     };
 
-    this.setupAllButtons = function() {
+    this.setupAllButtons = function () {
         var self = this;
         var circleTool = new CircleTool({
             name: "circle-button",
@@ -393,27 +406,24 @@ function AppInterface(csbApp) {
         });
 
         // Set the effects of clicking each button
-        $(".app-tool-button").click(function() {
+        $(".app-tool-button").click(function () {
             if ($(this).attr('id') == "app-tool-help-button") {
                 $(".app-tool-button").css("cursor", "help");
                 self.isHelpButtonEngaged = true;
-            }
-            else {
+            } else {
                 if (self.isHelpButtonEngaged) {
                     $(".app-tool-button").css("cursor", "pointer");
                     // Bring up help window for tool
                     self.showExample($("#app-example-" + $(this).attr('id')));
                     self.isHelpButtonEngaged = false;
-                }
-                else {
+                } else {
                     var tool = findToolFromButtonId($(this).attr('id'));
                     if (tool.isActive) {
                         if (tool.isToggleable) {
                             tool.isToggledOn = !tool.isToggledOn;
                             tool.onToggle(csbApp.appInterface);
                             csbApp.needToRedrawCanvas = true;
-                        }
-                        else {
+                        } else {
                             self.selectedButton = $(this);
                             self.selectedTool = tool;
                             self.selectMark(null);
@@ -425,7 +435,7 @@ function AppInterface(csbApp) {
             }
         });
 
-        Object.keys(this.tools).forEach(function(key) {
+        Object.keys(this.tools).forEach(function (key) {
             if (key in self.csbApp.application.exampleImages)
                 self.tools[key].unmute();
             else
@@ -446,7 +456,7 @@ function AppInterface(csbApp) {
         }
     };
 
-    this.displayExamples = function() {
+    this.displayExamples = function () {
         var imageSet = null;
         if (this.csbApp.application.exampleImages[this.selectedButton.attr("id")].length > 0)
             imageSet = this.csbApp.application.exampleImages[this.selectedButton.attr("id")];
@@ -458,7 +468,7 @@ function AppInterface(csbApp) {
         }
     };
 
-    this.cycleExamples = function(amount) {
+    this.cycleExamples = function (amount) {
         var imageSet = null;
         if (this.csbApp.application.exampleImages[this.selectedButton.attr("id")].length > 0)
             imageSet = this.csbApp.application.exampleImages[this.selectedButton.attr("id")];
@@ -469,89 +479,84 @@ function AppInterface(csbApp) {
         this.displayExamples();
     };
 
-    this.loginButtonPressed = function() {
+    this.loginButtonPressed = function () {
         var data = {"username": $("#app-login-username").val(), "password": $("#app-login-password").val()};
         var self = this;
 
-        $.post("/api/user/login", data, function(response) {
-            if (typeof(response["errors"]) != "undefined") {
+        $.post("/api/user/login", data, function (response) {
+            if (typeof (response["errors"]) != "undefined") {
                 $("#app-login-error-text").show();
                 // A hack to only show the first error
                 var errors = [].concat(response["errors"]);
                 var firstError = [].concat(errors[0])[0];
                 $("#app-login-error-text").html(firstError);
-            }
-            else if (typeof(response["success"] != "undefined")) {
+            } else if (typeof (response["success"] != "undefined")) {
                 self.csbApp.requestImage();
                 self.hideExample($("#app-login-register-window"));
                 self.user = response["user"]["name"];
                 self.setupBeingLoggedIn();
-            }
-            else {
+            } else {
                 console.log(JSON.stringify(response));
             }
-        }).fail(function(response) {
+        }).fail(function (response) {
             console.log(response.responseText);
         });
     };
 
-    this.registerButtonPressed = function() {
+    this.registerButtonPressed = function () {
         var data = {
             "name": $("#app-register-username").val(),
             "email": $("#app-register-email").val(),
             "password": $("#app-register-password").val(),
-            "password_confirmation": $("#app-register-password-confirm").val()};
+            "password_confirmation": $("#app-register-password-confirm").val()
+        };
         var self = this;
 
-        $.post("/api/user/register", data, function(response) {
-            if (typeof(response["errors"]) != "undefined") {
+        $.post("/api/user/register", data, function (response) {
+            if (typeof (response["errors"]) != "undefined") {
                 $("#app-register-error-text").show();
                 // A hack to only show the first error, since different parts of laravel show errors in different ways
                 var error = response["errors"];
-                while (typeof(error) !== "object") {
+                while (typeof (error) !== "object") {
                     error = error[Object.keys(error)[0]];
                 }
-                var error = typeof(response["errors"]) === "object" ? response["errors"][Object.keys(response["errors"])[0]] : response["errors"];
+                var error = typeof (response["errors"]) === "object" ? response["errors"][Object.keys(response["errors"])[0]] : response["errors"];
                 $("#app-register-error-text").html(error);
-            }
-            else if (typeof(response["success"] != "undefined")) {
-                $.post("/api/user/login", data, function(response) {
-                    if (typeof(response["errors"]) != "undefined") {
+            } else if (typeof (response["success"] != "undefined")) {
+                $.post("/api/user/login", data, function (response) {
+                    if (typeof (response["errors"]) != "undefined") {
                         $("#app-register-error-text").show();
                         $("#app-register-error-text").html(response["errors"]);
-                    }
-                    else if (typeof(response["success"] != "undefined")) {
+                    } else if (typeof (response["success"] != "undefined")) {
                         self.csbApp.requestImage();
                         self.hideExample($("#app-login-register-window"));
                         $(".app-login-register-button").hide();
                         self.user = response["user"]["name"];
                         self.setupBeingLoggedIn();
-                    }
-                    else {
+                    } else {
                         console.log(JSON.stringify(response));
                     }
                 });
-            }
-            else {
+            } else {
                 console.log(JSON.stringify(response));
             }
-        }).fail(function(response) {
+        }).fail(function (response) {
             console.log(response);
         });
     };
 
-    this.setupBeingLoggedIn = function() {
+    this.setupBeingLoggedIn = function () {
         $("#app-login-popup-button").hide();
         this.hideExample($("#app-login-register-window"));
         location.reload();
     };
 
-    this.getGlobalMousePosition = function(e) {
+    this.getGlobalMousePosition = function (e) {
         return {x: e.clientX, y: e.clientY};
 
     };
 
-    this.getMousePosition = function(e) {
+    this.getMousePosition = function (e) {
         var globalMousePosition = this.getGlobalMousePosition(e);
         var mainImage = document.getElementById("project_canvas").getBoundingClientRect();
         var mousePosition = {x: globalMousePosition.x - mainImage.left, y: globalMousePosition.y - mainImage.top};
@@ -567,11 +572,10 @@ function AppInterface(csbApp) {
         return mousePosition;
     };
 
-    this.getCanvasPosition = function() {
+    this.getCanvasPosition = function () {
         var obj = this.csbApp.canvas;
         var position = {x: 0, y: 0};
-        while(obj.offsetParent)
-        {
+        while (obj.offsetParent) {
             position.x += obj.offsetLeft;
             position.y += obj.offsetTop;
             obj = obj.offsetParent;
@@ -579,7 +583,7 @@ function AppInterface(csbApp) {
         return position;
     };
 
-    this.getGlobalPositionOfMark = function(mark) {
+    this.getGlobalPositionOfMark = function (mark) {
         var mainImage = document.getElementById("project_canvas").getBoundingClientRect();
         return {
             x: mark.x * mainImage.width / csbApp.currentImage.image.width + this.getCanvasPosition().x,
@@ -587,7 +591,7 @@ function AppInterface(csbApp) {
         };
     };
 
-    this.getTouchPositions = function(e) {
+    this.getTouchPositions = function (e) {
         var x;
         var y;
         var touches = [];
@@ -596,17 +600,16 @@ function AppInterface(csbApp) {
             touches.push(e['targetTouches'][1]);
 
         var resultTouches = [];
-        for (var i = 0; i < touches.length;i++) {
+        for (var i = 0; i < touches.length; i++) {
             if (touches[i].pageX != undefined && touches[i].pageY != undefined) {
                 x = touches[i].pageX;
                 y = touches[i].pageY;
-            }
-            else{
+            } else {
                 x = touches[i].clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
                 y = touches[i].clientY + document.body.scrollTop + document.documentElement.scrollTop;
             }
             var parent = this.csbApp.canvas;
-            if(parent.offsetParent) {
+            if (parent.offsetParent) {
                 do {
                     x -= parent.offsetLeft;
                     y -= parent.offsetTop;
@@ -621,13 +624,13 @@ function AppInterface(csbApp) {
         return resultTouches;
     };
 
-    this.onTouchMove = function(event){
+    this.onTouchMove = function (event) {
         event.preventDefault();
         this.onMouseMove(event);
     };
 
-    this.onMouseMove = function(event){
-        if(!this.csbApp.isAppOn || !this.areMarksVisible || this.csbApp.isGallery) return;
+    this.onMouseMove = function (event) {
+        if (!this.csbApp.isAppOn || !this.areMarksVisible || this.csbApp.isGallery) return;
 
         var mousePosition = this.getMouseOrTouchPosition(event);
 
@@ -646,7 +649,7 @@ function AppInterface(csbApp) {
                 if (this.distanceBetween(closestMark, mousePosition) < closestMark.diameter / 2) {
                     this.markUnderMouse = closestMark;
                     this.csbApp.needToRedrawCanvas = true;
-                    if(!this.csbApp.isMobile)
+                    if (!this.csbApp.isMobile)
                         this.switchCursorTo('pointer');
                     if (this.markUnderMouse.type == "feature") {
                         this.markUnderMouse.displayMarkType(this.getGlobalMousePosition(e));
@@ -671,7 +674,7 @@ function AppInterface(csbApp) {
         this.csbApp.needToRedrawCanvas = true;
     };
 
-    this.onMouseDown = function(event){
+    this.onMouseDown = function (event) {
         // Only trigger when the app is interactable
         if (this.csbApp.isAppOn == false || this.csbApp.isGallery)
             return;
@@ -681,7 +684,9 @@ function AppInterface(csbApp) {
             return;
 
         // Clear standard canvas clicking operations
-        document.onselectstart = function() { return false; };
+        document.onselectstart = function () {
+            return false;
+        };
         if (window.getSelection)
             window.getSelection().removeAllRanges();
         else if (document.selection)
@@ -701,7 +706,7 @@ function AppInterface(csbApp) {
         this.csbApp.needToRedrawCanvas = true;
     };
 
-    this.onDoubleClick = function(event) {
+    this.onDoubleClick = function (event) {
         /*if (this.selectedTool != null)
             this.selectedTool.onDoubleClick(event, this);
 
@@ -709,7 +714,7 @@ function AppInterface(csbApp) {
             this.csbApp.tutorial.checkAllMarksAndRenewHint(this.selectedMark);*/
     };
 
-    this.onMouseUp = function(event) {
+    this.onMouseUp = function (event) {
         if (!this.csbApp.isAppOn || this.csbApp.isGallery)
             return;
 
@@ -732,24 +737,24 @@ function AppInterface(csbApp) {
         this.switchCursorTo('default');
     };
 
-    this.onMouseEnterCanvas = function(event) {
+    this.onMouseEnterCanvas = function (event) {
         // Trigger the selected tool's action
         if (this.selectedTool != null)
             this.selectedTool.onMouseEnter(event, this);
     };
 
-    this.onMouseLeaveCanvas = function(event) {
+    this.onMouseLeaveCanvas = function (event) {
         // Trigger the selected tool's action
         if (this.selectedTool != null)
             this.selectedTool.onMouseLeave(event, this);
     };
 
-    this.onMouseWheel = function(event) {
+    this.onMouseWheel = function (event) {
 
         return false;
     };
 
-    this.onImageLoad = function() {
+    this.onImageLoad = function () {
         for (var key in this.tools) {
             this.tools[key].onImageLoad(this);
         }
@@ -758,13 +763,13 @@ function AppInterface(csbApp) {
         }
     };
 
-    this.setCamera = function(x, y, zoom) {
+    this.setCamera = function (x, y, zoom) {
         this.cameraX = x;
         this.cameraY = y;
         this.cameraZoom = zoom;
     };
 
-    this.distanceBetweenMarkAndMouse = function(mark) {
+    this.distanceBetweenMarkAndMouse = function (mark) {
         var mousePosition = this.getSavedMousePosition();
         if (mark.type == "segment") {
             var closestDistance = 10000000;
@@ -776,36 +781,35 @@ function AppInterface(csbApp) {
                 }
             }
             return closestDistance;
-        }
-        else {
+        } else {
             return this.distanceBetween(mark, mousePosition);
         }
     };
 
-    this.distanceBetween = function(point1, point2) {
+    this.distanceBetween = function (point1, point2) {
         return Math.sqrt((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y));
     };
 
 
-    this.switchCursorTo = function(cursor) {
+    this.switchCursorTo = function (cursor) {
         if (document.body.style.cursor != cursor && !this.csbApp.isMobile)
             document.body.style.cursor = cursor;
     };
 
-    this.popup = function(index){
+    this.popup = function (index) {
         $("#csb-menu1").hide();
         $("#csb-menu2").hide();
-        var offset = $("#tools"+index).offset();
-        var menu = $("#csb-menu"+ index);
-        menu.css("top", (offset.top - menu.outerHeight(true) ) + "px" );
+        var offset = $("#tools" + index).offset();
+        var menu = $("#csb-menu" + index);
+        menu.css("top", (offset.top - menu.outerHeight(true)) + "px");
         menu.show();
     };
 
-    this.popdown = function(index){
+    this.popdown = function (index) {
         $("#csb-menu" + index).hide();
     };
 
-    this.getHtmlParameter = function(key) {
+    this.getHtmlParameter = function (key) {
         var result = null;
         var items = location.search.substr(1).split("&");
         for (var index = 0; index < items.length; index++) {
@@ -816,7 +820,7 @@ function AppInterface(csbApp) {
         return result;
     };
 
-    this.showTutorialText = function(returnData) {
+    this.showTutorialText = function (returnData) {
         var scoreData = returnData.data.score;
 
         var correct = scoreData.correct_marks_count;
@@ -837,14 +841,12 @@ function AppInterface(csbApp) {
                 "Hey! You've just marked one of our test images. Great job, your markings closely matched that of crater experts. " +
                 "Way to go!  Click the continue button to move on to the next image.");
             $("score-tutorial-button").hide();
-        }
-        else if (percent >= 50) {
+        } else if (percent >= 50) {
             $("#score-description").html("" +
                 "Hey! You've just marked one of our test images. You're doing a good job! <br /><br />" +
                 "Remember, your results will be combined with other citizen scientists which provide accurate results.");
             $("score-tutorial-button").show();
-        }
-        else {
+        } else {
             $("#score-description").html("" +
                 "Be sure to take your time when working through each image. Sometimes it takes a bit of practice to get the hang of it. " +
                 "You can always sharpen your crater marking skills by reviewing the tutorial or viewing the help pages. <br /><br />" +
@@ -860,25 +862,24 @@ function AppInterface(csbApp) {
      * @param owner One of these values: user, other_user, shared
      * @returns {boolean} returns true if the user wants to see marks from this user/group
      */
-    this.isDrawingCratersMadeBy = function(owner) {
+    this.isDrawingCratersMadeBy = function (owner) {
         return appInterface.craterTypesToDraw.indexOf(owner) != -1;
     };
 
-    this.getMouseOrTouchPosition = function(e) {
+    this.getMouseOrTouchPosition = function (e) {
         if (this.csbApp.isMobile) {
             var touchPositions = this.getTouchPositions(e);
             if (touchPositions.length > 0)
                 return touchPositions[0];
-        }
-        else
+        } else
             return this.getMousePosition(e);
     };
 
-    this.getSavedMousePosition = function() {
+    this.getSavedMousePosition = function () {
         return this.savedMousePosition;
     };
 
-    this.selectMark = function(mark) {
+    this.selectMark = function (mark) {
         if (this.selectedMark != null) {
             this.selectedMark.isSelected = false;
         }
@@ -892,7 +893,7 @@ function AppInterface(csbApp) {
         return mark;
     };
 
-    this.selectTool = function(tool) {
+    this.selectTool = function (tool) {
         if (tool == this.selectedTool)
             return;
 
@@ -905,49 +906,46 @@ function AppInterface(csbApp) {
         this.selectMark(null);
     };
 
-    this.disableSubmit = function() {
+    this.disableSubmit = function () {
         if (this.canSubmit) {
             this.canSubmit = false;
             this.updateSubmitButtonAppearance();
         }
     };
 
-    this.enableSubmit = function() {
+    this.enableSubmit = function () {
         if (!this.canSubmit) {
             this.canSubmit = true;
             this.updateSubmitButtonAppearance();
         }
     };
 
-    this.updateSubmitButtonAppearance = function() {
+    this.updateSubmitButtonAppearance = function () {
         if (this.canSubmit) {
             $("#submit-button").removeClass("submit-pressed");
             $("#submit-button").addClass("submit-unpressed");
-        }
-        else {
+        } else {
             $("#submit-button").removeClass("submit-unpressed");
             $("#submit-button").addClass("submit-pressed");
         }
     };
 
-    this.displayTextBubble = function(newBubble) {
+    this.displayTextBubble = function (newBubble) {
         if (this.textBubbleQueue.length == 0 && $("#text-bubble-blob").css("opacity") == 0) {
             this.currentTextBubble = newBubble;
             this.makeBubbleAppear(this.currentTextBubble);
-        }
-        else
+        } else
             this.textBubbleQueue.push(newBubble);
     };
 
-    this.makeBubbleAppear = function(textBubble) {
+    this.makeBubbleAppear = function (textBubble) {
         // Make the bubble re-appear
         $("#text-bubble-blob").show();
         //$(".app-menu").find(".slider").hide();
-        if (typeof(textBubble["title"]) != "undefined") {
+        if (typeof (textBubble["title"]) != "undefined") {
             $("#text-bubble-blob h4").show();
             $("#text-bubble-blob h4").html(textBubble.title);
-        }
-        else
+        } else
             $("#text-bubble-blob h4").hide();
         $("#text-bubble-blob p").html(textBubble.text);
         var leftOffset = parseInt($("#text-bubble-arrow").css("width"), 10) / -2;
@@ -956,8 +954,7 @@ function AppInterface(csbApp) {
         if (textBubble.showArrow) {
             $("#text-bubble-arrow").show();
             $("#text-bubble-okay-button").hide();
-        }
-        else {
+        } else {
             $("#text-bubble-arrow").hide();
             $("#text-bubble-okay-button").show();
         }
@@ -968,21 +965,21 @@ function AppInterface(csbApp) {
         $("#text-bubble-blob").css("top", (textBubble.y + 20) + topOffset + "px");
 
         var self = this;
-        setTimeout(function() {
+        setTimeout(function () {
             if (textBubble.showArrow)
                 $("#text-bubble-arrow").css("opacity", 1);
             $("#text-bubble-blob").css("opacity", 1);
             if (textBubble.isTemporary) {
-                setTimeout(function() {
+                setTimeout(function () {
                     self.hideTextBubble();
                 }, 3000);
             }
         }, 200 + textBubble.delay);
     };
 
-    this.displayTextBubbleOnElement = function(element, textBubble) {
+    this.displayTextBubbleOnElement = function (element, textBubble) {
         var self = this;
-        setTimeout(function() {
+        setTimeout(function () {
             var position = self.getAbsolutePositionOfElement(element);
             position.x += parseInt(element.css("width")) / 2;
             position.y += parseInt(element.css("height")) - 3;
@@ -992,7 +989,7 @@ function AppInterface(csbApp) {
         }, textBubble.delay);
     };
 
-    this.displayTextBubbleOnMark = function(mark, textBubble) {
+    this.displayTextBubbleOnMark = function (mark, textBubble) {
         var position = this.csbApp.appInterface.getGlobalPositionOfMark(mark);
         position.y += mark.diameter / 2 + 10;
         textBubble.x = position.x;
@@ -1006,12 +1003,12 @@ function AppInterface(csbApp) {
         }
     };
 
-    this.hideTextBubble = function() {
+    this.hideTextBubble = function () {
         $("#text-bubble-arrow").css("opacity", 0);
         $("#text-bubble-blob").css("opacity", 0);
     };
 
-    this.getAbsolutePositionOfElement = function(element) {
+    this.getAbsolutePositionOfElement = function (element) {
         element = element.get()[0];
         var position = {x: element.offsetLeft, y: element.offsetTop};
         var parent = element;
@@ -1022,20 +1019,20 @@ function AppInterface(csbApp) {
         return position;
     };
 
-    this.showExample = function(div) {
+    this.showExample = function (div) {
         div.show();
-        setTimeout(function() {
+        setTimeout(function () {
             div.addClass("app-example-opened");
         }, 30);
-        setTimeout(function() {
+        setTimeout(function () {
             $(".app-menu").find(".slider").hide();
         }, 500);
     };
 
-    this.hideExample = function() {
+    this.hideExample = function () {
         var div = $(".app-example-opened");
         $(".app-menu").find(".slider").show();
-        div.bind("transitionend", function() {
+        div.bind("transitionend", function () {
             div.unbind("transitionend");
             div.hide();
         });

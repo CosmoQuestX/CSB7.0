@@ -1,4 +1,3 @@
-
 function TutorialStep(image, correctMarks, goalText, startingHelpText, activeTools, isLiveHelpActive, correctCountNeeded) {
     this.image = image;
     this.currentTextIndex = 0;

@@ -1,4 +1,3 @@
-
 function Tutorial(csbApp) {
     this.csbApp = csbApp;
     this.currentStepIndex = -1;
@@ -14,7 +13,7 @@ function Tutorial(csbApp) {
     this.isPausing = false;
     this.autoCraterCreationQueue = [];
 
-    this.initialize = function() {
+    this.initialize = function () {
         this.moveToNextTutorialStep();
         $("#tutorial-steps-complete").show();
         this.csbApp.isAppOn = true;
@@ -24,17 +23,17 @@ function Tutorial(csbApp) {
         this.mouseDownImage.src = "/images/applications/tutorials/cursor-down.png";
 
         var self = this;
-        $("#text-bubble-okay-button").click(function() {
+        $("#text-bubble-okay-button").click(function () {
             $("#invisible-app-cover").hide();
             self.moveToNextTutorialStep();
         });
     };
 
-    this.getCurrentTutorialStep = function() {
+    this.getCurrentTutorialStep = function () {
         return this.csbApp.applications[this.csbApp.applicationName].tutorialSteps[this.currentStepIndex];
     };
 
-    this.submit = function() {
+    this.submit = function () {
         var success = this.checkAllMarksAndRenewHint(null);
         if (success) {
             csbApp.canSubmit = false;
@@ -44,11 +43,11 @@ function Tutorial(csbApp) {
         }
     };
 
-    this.moveToNextImage = function() {
+    this.moveToNextImage = function () {
         this.moveToNextTutorialStep();
     };
 
-    this.completeTutorial = function() {
+    this.completeTutorial = function () {
         $("#tutorial-steps-complete").hide();
         $("#invisible-app-cover").hide();
         this.csbApp.tutorial = null;
@@ -63,12 +62,12 @@ function Tutorial(csbApp) {
 
         this.csbApp.tutorialsCompleted.push(this.csbApp.applicationName);
 
-        $.post("/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}, function(returnData) {
+        $.post("/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}, function (returnData) {
             console.log(returnData);
         });
     };
 
-    this.onImageLoad = function() {
+    this.onImageLoad = function () {
         var step = this.getCurrentTutorialStep();
         this.muteTools();
         if (!step.isLiveHelpActive)
@@ -77,7 +76,7 @@ function Tutorial(csbApp) {
         this.checkAllMarksAndRenewHint(null);
     };
 
-    this.updateStatusOfAllMarks = function(marks, correctMarks) {
+    this.updateStatusOfAllMarks = function (marks, correctMarks) {
         for (var i = 0; i < correctMarks.length; i++) {
             correctMarks[i].status = "missed";
         }
@@ -93,7 +92,7 @@ function Tutorial(csbApp) {
         //return missedCraters;
     };
 
-    this.checkSegment = function(segment, correctMarks, closeSegmentsOnly) {
+    this.checkSegment = function (segment, correctMarks, closeSegmentsOnly) {
         var closestMatch = this.findBestMatchingMark(segment, correctMarks, closeSegmentsOnly);
         if (closestMatch == null) {
             segment.status = "way_too_far";
@@ -113,7 +112,7 @@ function Tutorial(csbApp) {
         return segment;
     };
 
-    this.checkCrater = function(crater, correctMarks, closeCratersOnly) {
+    this.checkCrater = function (crater, correctMarks, closeCratersOnly) {
         var closestMatch = this.findBestMatchingMark(crater, correctMarks, closeCratersOnly);
         if (closestMatch == null) {
             crater.status = "way_too_far";
@@ -146,25 +145,20 @@ function Tutorial(csbApp) {
                         crater.status = "too_large";
                     else
                         crater.status = "not_great";
-                }
-                else
+                } else
                     crater.status = "bad";
 
-            }
-            else {
+            } else {
                 if (distanceScore < -.3 || diameterScore <= 0) {
                     crater.status = "way_too_far";
-                }
-                else if (distanceScore <= 0.6) {
+                } else if (distanceScore <= 0.6) {
                     crater.status = "too_far";
-                }
-                else if (diameterScore <= 0.5) {
+                } else if (diameterScore <= 0.5) {
                     if (crater.diameter < closestMatch.diameter)
                         crater.status = "too_small";
                     else
                         crater.status = "too_large";
-                }
-                else {
+                } else {
                     crater.status = "correct";
                 }
             }
@@ -192,7 +186,10 @@ function Tutorial(csbApp) {
 
             var dCentroid = (r1 * r1 - r2 * r2 + d * d) / (2 * d);
             var h = Math.sqrt(r1 * r1 - dCentroid * dCentroid);
-            var centroid = {x: circle1.x + dCentroid * (circle2.x - circle1.x) / d, y: circle1.y + dCentroid * (circle2.y - circle1.y) / d};
+            var centroid = {
+                x: circle1.x + dCentroid * (circle2.x - circle1.x) / d,
+                y: circle1.y + dCentroid * (circle2.y - circle1.y) / d
+            };
             var p3 = {x: centroid.x + h * (circle2.y - circle1.y) / d, y: centroid.y - h * (circle2.x - circle1.x) / d};
             var p4 = {x: centroid.x - h * (circle2.y - circle1.y) / d, y: centroid.y + h * (circle2.x - circle1.x) / d};
 
@@ -222,7 +219,7 @@ function Tutorial(csbApp) {
         }
     };
 
-    this.getAdjacencyBetweenMarks = function(mark1, mark2, clampZeroToOne) {
+    this.getAdjacencyBetweenMarks = function (mark1, mark2, clampZeroToOne) {
         if (mark1.type != mark2.type)
             if (clampZeroToOne)
                 return 0;
@@ -241,13 +238,18 @@ function Tutorial(csbApp) {
                 totalScore = Math.max(0, Math.min(1, totalScore));
 
             return totalScore;
-        }
-        else if (type == 'boulder') {
+        } else if (type == 'boulder') {
             if (mark1.points.length < 2 || mark2.points.length < 2)
                 return 0;
             var variance = mark1.length() / 2 + .0001;
-            var center1 = {x: (mark1.points[0].x + mark1.points[1].x) / 2, y: (mark1.points[0].y + mark1.points[1].y) / 2};
-            var center2 = {x: (mark2.points[0].x + mark2.points[1].x) / 2, y: (mark2.points[0].y + mark2.points[1].y) / 2};
+            var center1 = {
+                x: (mark1.points[0].x + mark1.points[1].x) / 2,
+                y: (mark1.points[0].y + mark1.points[1].y) / 2
+            };
+            var center2 = {
+                x: (mark2.points[0].x + mark2.points[1].x) / 2,
+                y: (mark2.points[0].y + mark2.points[1].y) / 2
+            };
 
             /*
             var closestPointIndex0 = 0;
@@ -266,8 +268,7 @@ function Tutorial(csbApp) {
             if (clampZeroToOne)
                 score = Math.max(0, Math.min(1, score));
             return score;
-        }
-        else
+        } else
             return 0;
 
         function distanceBetween(p1, p2) {
@@ -275,7 +276,7 @@ function Tutorial(csbApp) {
         }
     };
 
-    this.getDiameterAdjacency = function(mark1, mark2, clampZeroToOne) {
+    this.getDiameterAdjacency = function (mark1, mark2, clampZeroToOne) {
         // multiplier of 2.0 basically makes 1/2 radius or x2 radius a score of zero
         var reductionMultiplier = 2.0;
         var smallerDiameter = Math.min(mark1.diameter, mark2.diameter);
@@ -286,7 +287,7 @@ function Tutorial(csbApp) {
         return score;
     };
 
-    this.getDistanceAdjacency = function(mark1, mark2, clampZeroToOne, oneSided) {
+    this.getDistanceAdjacency = function (mark1, mark2, clampZeroToOne, oneSided) {
         // multiplier of 2.0 basically makes 1 radius away a score of zero
         var score;
         var reductionMultiplier = 2.0;
@@ -296,8 +297,7 @@ function Tutorial(csbApp) {
         if (oneSided) {
             var averageDiameter = (mark1.diameter + mark2.diameter) / 2;
             score = 1 - (distance / averageDiameter * reductionMultiplier);
-        }
-        else
+        } else
             score = 1 - (distance / mark1.diameter * reductionMultiplier);
 
         if (clampZeroToOne)
@@ -305,7 +305,7 @@ function Tutorial(csbApp) {
         return score;
     };
 
-    this.findBestMatchingMark = function(mark, potentialMatches, closeMarksOnly) {
+    this.findBestMatchingMark = function (mark, potentialMatches, closeMarksOnly) {
         var highestScore = -1000;
         if (closeMarksOnly)
             highestScore = 0;
@@ -321,13 +321,13 @@ function Tutorial(csbApp) {
         return bestMatchingMark;
     };
 
-    this.checkAllMarksAndRenewHint = function(mark) {
+    this.checkAllMarksAndRenewHint = function (mark) {
         var correctMarks = this.correctMarks;
-        if (typeof(this.getCurrentTutorialStep()["mark-types"]) != "undefined") {
+        if (typeof (this.getCurrentTutorialStep()["mark-types"]) != "undefined") {
             correctMarks = this.getMarksOfType(this.getCurrentTutorialStep()["mark-types"]);
         }
 
-        if (typeof(correctMarks) == "undefined")
+        if (typeof (correctMarks) == "undefined")
             return;
 
         var userMarks = this.csbApp.currentImage.marks;
@@ -349,8 +349,12 @@ function Tutorial(csbApp) {
 
         if (mark)
             mark.hint = possibleHints[mark.status];
-        var missedCraters = correctMarks.filter(function(x) {return x.status == "missed"});
-        var wrongCraters = userMarks.filter(function(x) {return x.status != "correct"});
+        var missedCraters = correctMarks.filter(function (x) {
+            return x.status == "missed"
+        });
+        var wrongCraters = userMarks.filter(function (x) {
+            return x.status != "correct"
+        });
         var success = (correctMarks.length - missedCraters.length - wrongCraters.length >= this.csbApp.currentImage.requiredNumberOfTutorialCraters);
 
 
@@ -360,35 +364,52 @@ function Tutorial(csbApp) {
             if (this.getCurrentTutorialStep()["type"] == "find-marks")
                 this.moveToNextTutorialStep();
             this.csbApp.appInterface.enableSubmit();
-        }
-        else if (this.getCurrentTutorialStep()["type"] == "mark-ejecta" && userMarks.length > 0) {
+        } else if (this.getCurrentTutorialStep()["type"] == "mark-ejecta" && userMarks.length > 0) {
             this.csbApp.appInterface.disableSubmit();
             var mark = userMarks[userMarks.length - 1];
             if (mark.status == "correct") {
                 if (mark.correctCrater.isEjecta)
                     this.moveToNextTutorialStep();
                 else {
-                    this.csbApp.appInterface.displayTextBubbleOnMark(mark, {text: "This isn't the <b>ejecta</b> crater. Erase it and try again!", delay: 0, isTemporary: true, showArrow: true});
+                    this.csbApp.appInterface.displayTextBubbleOnMark(mark, {
+                        text: "This isn't the <b>ejecta</b> crater. Erase it and try again!",
+                        delay: 0,
+                        isTemporary: true,
+                        showArrow: true
+                    });
                     this.currentHint = {"crater": mark, "hint": mark.hint};
                 }
-            }
-            else {
+            } else {
                 if (!mark.correctCrater.isEjecta && mark.score > 0)
-                    this.csbApp.appInterface.displayTextBubbleOnMark(mark, {text: "This isn't the <b>ejecta</b> crater. Erase it and try again!", delay: 0, isTemporary: true, showArrow: true});
+                    this.csbApp.appInterface.displayTextBubbleOnMark(mark, {
+                        text: "This isn't the <b>ejecta</b> crater. Erase it and try again!",
+                        delay: 0,
+                        isTemporary: true,
+                        showArrow: true
+                    });
                 else {
-                    this.csbApp.appInterface.displayTextBubbleOnMark(mark, {text: mark.hint, delay: 0, isTemporary: true, showArrow: true});
+                    this.csbApp.appInterface.displayTextBubbleOnMark(mark, {
+                        text: mark.hint,
+                        delay: 0,
+                        isTemporary: true,
+                        showArrow: true
+                    });
                     this.currentHint = {"crater": mark, "hint": mark.hint};
                 }
             }
-        }
-        else {
+        } else {
             this.csbApp.appInterface.disableSubmit();
             if (userMarks.length == 0)
                 return;
             if (this.getCurrentTutorialStep()["type"] == "find-marks") {
                 if (mark && mark.status != "correct") {
                     if (this.currentHint != {"crater": mark, "hint": mark.hint}) {
-                        this.csbApp.appInterface.displayTextBubbleOnMark(mark, {text: mark.hint, delay: 0, isTemporary: true, showArrow: true});
+                        this.csbApp.appInterface.displayTextBubbleOnMark(mark, {
+                            text: mark.hint,
+                            delay: 0,
+                            isTemporary: true,
+                            showArrow: true
+                        });
                         this.currentHint = {"crater": mark, "hint": mark.hint};
                     }
                 }
@@ -403,21 +424,21 @@ function Tutorial(csbApp) {
         return success;
     };
 
-    this.getMarksOfType = function(types) {
+    this.getMarksOfType = function (types) {
         var marksOfType = [];
-        this.correctMarks.forEach(function(mark) {
+        this.correctMarks.forEach(function (mark) {
             if (types.indexOf(mark.type) >= 0)
                 marksOfType.push(mark);
         });
         return marksOfType;
     };
 
-    this.displayText = function(text) {
+    this.displayText = function (text) {
         //$("#app-text-box p").html(text);
     };
 
-    this.muteTools = function() {
-        if (typeof(this.getCurrentTutorialStep()["active-tools"]) == "undefined")
+    this.muteTools = function () {
+        if (typeof (this.getCurrentTutorialStep()["active-tools"]) == "undefined")
             return;
 
         var activeTools = this.getCurrentTutorialStep()["active-tools"];
@@ -434,7 +455,7 @@ function Tutorial(csbApp) {
         this.csbApp.appInterface.updateAllButtonAppearances();
     };
 
-    this.moveToNextTutorialStep = function() {
+    this.moveToNextTutorialStep = function () {
         this.csbApp.appInterface.hideTextBubble();
         var self = this;
         var appInterface = this.csbApp.appInterface;
@@ -452,25 +473,29 @@ function Tutorial(csbApp) {
             //appInterface.hideTextBubble();
             //if (this.currentStepIndex >= this.csbApp.applications[this.csbApp.applicationName].tutorialSteps.length)
             //this.completeTutorial();
-        }
-        else {
+        } else {
             var delay = 0;
-            if (typeof(step["delay"]) != "undefined")
+            if (typeof (step["delay"]) != "undefined")
                 delay = step["delay"];
 
             if (step["type"] == "set-image") {
-                var appImage = new AppImage({image: {file_location: step["image-location"], id: 0}}, this.applicationName, this);
+                var appImage = new AppImage({
+                    image: {
+                        file_location: step["image-location"],
+                        id: 0
+                    }
+                }, this.applicationName, this);
 
                 this.csbApp.appImage = appImage;
                 this.csbApp.updateDisplayedImage(appImage);
                 this.isAppOn = true;
 
-                if (typeof(step["required-score"]) != "undefined")
+                if (typeof (step["required-score"]) != "undefined")
                     appImage.requiredNumberOfTutorialCraters = step["required-score"];
-                if (typeof(step["correct-marks"]) != "undefined")
+                if (typeof (step["correct-marks"]) != "undefined")
                     this.correctMarks = step["correct-marks"];
 
-                if (typeof(step["existing-marks"]) != "undefined") {
+                if (typeof (step["existing-marks"]) != "undefined") {
                     // Create each crater
                     var marks = step["existing-marks"];
                     for (var i = 0; i < marks.length; i++) {
@@ -479,12 +504,11 @@ function Tutorial(csbApp) {
                 }
                 this.csbApp.needToRedrawCanvas = true;
                 self.moveToNextTutorialStep();
-            }
-            else if (step["type"] == "dropdown") {
+            } else if (step["type"] == "dropdown") {
                 // Change tutorial overlay text to be useful
                 $("#app-tutorial-title").html(step["title"]);
                 $("#app-tutorial-text").html(step["text"]);
-                if (typeof(step["is-end"]) == "undefined")
+                if (typeof (step["is-end"]) == "undefined")
                     step["is-end"] = false;
 
                 if (step["is-end"]) {
@@ -493,16 +517,14 @@ function Tutorial(csbApp) {
                         $("#app-tutorial-register-button").hide();
                         $("#app-tutorial-login-button").hide();
                         $("#app-tutorial-keep-practicing").hide();
-                    }
-                    else {
+                    } else {
                         $("#app-tutorial-okay-button").hide();
                         $("#app-tutorial-register-button").show();
                         $("#app-tutorial-login-button").show();
                         $("#app-tutorial-keep-practicing").show();
                     }
                     appInterface.hideTextBubble();
-                }
-                else {
+                } else {
                     $("#app-tutorial-okay-button").show();
                     $("#app-tutorial-register-button").hide();
                     $("#app-tutorial-login-button").hide();
@@ -510,20 +532,23 @@ function Tutorial(csbApp) {
                 }
 
                 appInterface.showExample($("#app-tutorial-overlay"));
-            }
-            else if (step["type"] == "click") {
+            } else if (step["type"] == "click") {
                 var target = $(step["jquery-id"]);
                 target.addClass("tutorial-highlight");
-                this.csbApp.appInterface.displayTextBubbleOnElement($(step["jquery-id"]), {text: step["text"], delay: delay, isTemporary: false, showArrow: true});
+                this.csbApp.appInterface.displayTextBubbleOnElement($(step["jquery-id"]), {
+                    text: step["text"],
+                    delay: delay,
+                    isTemporary: false,
+                    showArrow: true
+                });
 
-                var onClickFunction = function() {
+                var onClickFunction = function () {
                     self.csbApp.tutorial.moveToNextTutorialStep();
                     target.unbind("click", onClickFunction);
                 };
                 $(step["jquery-id"]).bind("click", onClickFunction);
-            }
-            else if (step["type"] == "wait-until-video-stopped") {
-                $(step["jquery-id"]).onStateChange(function(event) {
+            } else if (step["type"] == "wait-until-video-stopped") {
+                $(step["jquery-id"]).onStateChange(function (event) {
                     if (event.data == 0 || event.data == 2) {
                         self.moveToNextTutorialStep();
                     }
@@ -544,26 +569,49 @@ function Tutorial(csbApp) {
                 var position = appInterface.getAbsolutePositionOfElement($("#project_canvas"));
                 position.x += parseInt($("#project_canvas").css("width")) / 2;
                 position.y += parseInt($("#project_canvas").css("height")) / 2;
-                this.csbApp.appInterface.displayTextBubble({x: position.x, y: position.y, text: step["text"], title: step["title"], delay: delay, isTemporary: false, showArrow: false});
+                this.csbApp.appInterface.displayTextBubble({
+                    x: position.x,
+                    y: position.y,
+                    text: step["text"],
+                    title: step["title"],
+                    delay: delay,
+                    isTemporary: false,
+                    showArrow: false
+                });
                 $("#invisible-app-cover").show();
-            }
-            else if (step["type"] == "mark-ejecta") {
-                this.csbApp.appInterface.displayTextBubbleOnElement($("#project_canvas"), {text: step["text"], delay: delay, isTemporary: false, showArrow: true});
-            }
-            else if (step["type"] == "find-marks") {
-                this.csbApp.appInterface.displayTextBubbleOnElement($("#project_canvas"), {text: step["text"], delay: delay, isTemporary: false, showArrow: true});
-            }
-            else if (step["type"] == "erase-marks") {
+            } else if (step["type"] == "mark-ejecta") {
+                this.csbApp.appInterface.displayTextBubbleOnElement($("#project_canvas"), {
+                    text: step["text"],
+                    delay: delay,
+                    isTemporary: false,
+                    showArrow: true
+                });
+            } else if (step["type"] == "find-marks") {
+                this.csbApp.appInterface.displayTextBubbleOnElement($("#project_canvas"), {
+                    text: step["text"],
+                    delay: delay,
+                    isTemporary: false,
+                    showArrow: true
+                });
+            } else if (step["type"] == "erase-marks") {
                 var mark = this.csbApp.currentImage.marks[0];
-                this.csbApp.appInterface.displayTextBubbleOnMark(mark, {text: step["text"], delay: delay, isTemporary: false, showArrow: true});
-            }
-            else if (step["type"] == "auto-create-mark") {
+                this.csbApp.appInterface.displayTextBubbleOnMark(mark, {
+                    text: step["text"],
+                    delay: delay,
+                    isTemporary: false,
+                    showArrow: true
+                });
+            } else if (step["type"] == "auto-create-mark") {
                 this.autoCraterCreationQueue = Object.assign([], step["marks"]);
                 this.startNewMarkExample(self.autoCraterCreationQueue.shift());
-            }
-            else if (step["type"] == "wait-until-marks-have-been-made") {
-                this.csbApp.appInterface.displayTextBubbleOnElement($("#project_canvas"), {text: step["text"], delay: delay, isTemporary: false, showArrow: true});
-                var onClickFunction = function() {
+            } else if (step["type"] == "wait-until-marks-have-been-made") {
+                this.csbApp.appInterface.displayTextBubbleOnElement($("#project_canvas"), {
+                    text: step["text"],
+                    delay: delay,
+                    isTemporary: false,
+                    showArrow: true
+                });
+                var onClickFunction = function () {
                     if (self.csbApp.currentImage.marks.length >= step["mark-count"]) {
                         self.csbApp.tutorial.moveToNextTutorialStep();
                         $("#project_canvas").unbind("click", onClickFunction);
@@ -573,37 +621,33 @@ function Tutorial(csbApp) {
             }
 
             this.currentHint = step["text"];
-            if (typeof(this.currentHint) == "undefined")
+            if (typeof (this.currentHint) == "undefined")
                 this.csbApp.appInterface.hideTextBubble();
-            if (typeof(step["tutorial-percent"]) != "undefined") {
+            if (typeof (step["tutorial-percent"]) != "undefined") {
                 $("#tutorial-steps-complete-foreground").width(step["tutorial-percent"] + "%");
                 $("#tutorial-steps-complete-text").html("Tutorial " + step["tutorial-percent"] + "% Complete");
             }
-            if (typeof(step["force-image-complete"]) != "undefined" && step["force-image-complete"] == true)
+            if (typeof (step["force-image-complete"]) != "undefined" && step["force-image-complete"] == true)
                 this.csbApp.appInterface.enableSubmit();
             $("#tutorial-steps-complete").show();
         }
     };
 
-    this.autoMarkExampleLoop = function() {
+    this.autoMarkExampleLoop = function () {
         if (this.markBeingMadeStep == "moving-mouse-toward-mark") {
             this.moveTowardMakingAMark();
-        }
-        else if (this.markBeingMadeStep == "pause-before-making-mark") {
+        } else if (this.markBeingMadeStep == "pause-before-making-mark") {
             this.pauseBeforeMakingMark();
-        }
-        else if (this.markBeingMadeStep == "making-mark") {
+        } else if (this.markBeingMadeStep == "making-mark") {
             this.makingMark();
-        }
-        else if (this.markBeingMadeStep == "pause-after-making-mark") {
+        } else if (this.markBeingMadeStep == "pause-after-making-mark") {
             this.pauseAfterMakingMark();
-        }
-        else if (this.markBeingMadeStep == "done") {
+        } else if (this.markBeingMadeStep == "done") {
             this.finishMakingMark();
         }
     };
 
-    this.drawFakeCursor = function(context) {
+    this.drawFakeCursor = function (context) {
         if (this.fakeCursor != null) {
             context.globalAlpha = 1;
             if (this.fakeCursor.type == "mouse-up")
@@ -613,32 +657,35 @@ function Tutorial(csbApp) {
         }
     };
 
-    this.startNewMarkExample = function(crater) {
+    this.startNewMarkExample = function (crater) {
         this.desiredMark = crater;
         $("#invisible-app-cover").show();
         if (this.fakeCursor == null)
             this.fakeCursor = {x: 150, y: -110, type: "mouse-up"};
         this.markBeingMadeStep = "moving-mouse-toward-mark";
         var self = this;
-        this.autoCraterCreationLoop = setInterval(function() {self.autoMarkExampleLoop.call(self);}, 33);
+        this.autoCraterCreationLoop = setInterval(function () {
+            self.autoMarkExampleLoop.call(self);
+        }, 33);
     };
 
-    this.moveTowardMakingAMark = function() {
+    this.moveTowardMakingAMark = function () {
         var desiredPosition = null;
         if (this.desiredMark instanceof Crater) {
             desiredPosition = {
                 x: this.desiredMark.x + Math.cos(Math.PI * .85) * this.desiredMark.diameter / 2,
-                y: this.desiredMark.y + Math.sin(Math.PI * .85) * this.desiredMark.diameter / 2};
-        }
-        else if (this.desiredMark instanceof Segment) {
+                y: this.desiredMark.y + Math.sin(Math.PI * .85) * this.desiredMark.diameter / 2
+            };
+        } else if (this.desiredMark instanceof Segment) {
             desiredPosition = {
                 x: this.desiredMark.points[0].x,
-                y: this.desiredMark.points[0].y};
-        }
-        else if (this.desiredMark instanceof Rock) {
+                y: this.desiredMark.points[0].y
+            };
+        } else if (this.desiredMark instanceof Rock) {
             desiredPosition = {
                 x: this.desiredMark.x,
-                y: this.desiredMark.y};
+                y: this.desiredMark.y
+            };
         }
         var dx = desiredPosition.x - this.fakeCursor.x;
         var dy = desiredPosition.y - this.fakeCursor.y;
@@ -654,30 +701,28 @@ function Tutorial(csbApp) {
         this.csbApp.needToRedrawCanvas = true;
     };
 
-    this.actuallyMakeMark = function() {
+    this.actuallyMakeMark = function () {
         if (this.desiredMark instanceof Crater) {
             this.markBeingMade = new Crater(this.fakeCursor.x, this.fakeCursor.y, 0, this.csbApp.appInterface);
-        }
-        else if (this.desiredMark instanceof Segment) {
+        } else if (this.desiredMark instanceof Segment) {
             this.markBeingMade = new Segment(this.fakeCursor.x, this.fakeCursor.y, this.desiredMark.type, this.csbApp.appInterface);
             this.markBeingMade.points.push({x: this.fakeCursor.x, y: this.fakeCursor.y});
-        }
-        else if (this.desiredMark instanceof Rock) {
+        } else if (this.desiredMark instanceof Rock) {
             this.markBeingMade = new Rock(this.fakeCursor.x, this.fakeCursor.y, this.csbApp.appInterface);
         }
         this.markBeingMade.creationStartPosition = {x: this.fakeCursor.x, y: this.fakeCursor.y};
         this.csbApp.currentImage.marks.push(this.markBeingMade);
     };
 
-    this.pauseBeforeMakingMark = function() {
+    this.pauseBeforeMakingMark = function () {
         if (!this.isPausing) {
             this.isPausing = true;
             var self = this;
-            setTimeout(function() {
+            setTimeout(function () {
                 self.fakeCursor.type = "mouse-down";
                 self.csbApp.needToRedrawCanvas = true;
                 self.actuallyMakeMark();
-                setTimeout(function() {
+                setTimeout(function () {
                     self.markBeingMadeStep = "making-mark";
                     self.isPausing = false;
                     self.csbApp.needToRedrawCanvas = true;
@@ -686,7 +731,7 @@ function Tutorial(csbApp) {
         }
     };
 
-    this.makingMark = function() {
+    this.makingMark = function () {
         if (this.desiredMark instanceof Crater) {
             // Draw circle from this.markBeingMadeStartingPosition to this.fakeCursor
             var dx = (this.desiredMark.x - this.markBeingMade.creationStartPosition.x) * 2;
@@ -705,8 +750,7 @@ function Tutorial(csbApp) {
                 this.markBeingMade.y = (this.fakeCursor.y + this.markBeingMade.creationStartPosition.y) / 2;
                 this.markBeingMade.diameter = distance;
             }
-        }
-        else if (this.desiredMark instanceof Segment) {
+        } else if (this.desiredMark instanceof Segment) {
             var dx = this.desiredMark.points[1].x - this.desiredMark.points[0].x;
             var dy = this.desiredMark.points[1].y - this.desiredMark.points[0].y;
             var fakeCursorDx = this.fakeCursor.x - this.desiredMark.points[0].x;
@@ -722,21 +766,20 @@ function Tutorial(csbApp) {
                 this.markBeingMade.points[1].x = this.fakeCursor.x;
                 this.markBeingMade.points[1].y = this.fakeCursor.y;
             }
-        }
-        else if (this.desiredMark instanceof Rock) {
+        } else if (this.desiredMark instanceof Rock) {
             this.markBeingMadeStep = "pause-after-making-mark";
         }
         this.csbApp.needToRedrawCanvas = true;
     };
 
-    this.pauseAfterMakingMark = function() {
+    this.pauseAfterMakingMark = function () {
         if (!this.isPausing) {
             this.isPausing = true;
             var self = this;
-            setTimeout(function() {
+            setTimeout(function () {
                 self.fakeCursor.type = "mouse-up";
                 self.csbApp.needToRedrawCanvas = true;
-                setTimeout(function() {
+                setTimeout(function () {
                     self.markBeingMadeStep = "done";
                     self.isPausing = false;
                     self.csbApp.needToRedrawCanvas = true;
@@ -745,7 +788,7 @@ function Tutorial(csbApp) {
         }
     };
 
-    this.finishMakingMark = function() {
+    this.finishMakingMark = function () {
         this.desiredMark = null;
         this.markBeingMade = null;
         this.markBeingMadeStep = null;
@@ -755,8 +798,7 @@ function Tutorial(csbApp) {
         clearInterval(this.autoCraterCreationLoop);
         if (this.autoCraterCreationQueue.length > 0) {
             this.startNewMarkExample(this.autoCraterCreationQueue.shift());
-        }
-        else {
+        } else {
             this.fakeCursor = null;
             self.moveToNextTutorialStep();
         }

@@ -23,11 +23,11 @@ global $BASE_DIR, $BASE_URL, $adminFlag;
 // Check if an image was submitted. If not, get an image name
 
 
-if(isset($_GET['markX'])){
+if (isset($_GET['markX'])) {
     echo "<h3>Debug Submission Data</h3>";
     echo "<table id='submission-data' style='border-collapse: collapse;'>";
     echo "<tr><th>Name</th><th>Value</th></tr>";
-    foreach($_GET as $varname => $varval) {
+    foreach ($_GET as $varname => $varval) {
         echo "<tr><td>$varname</td><td>$varval</td></tr>";
     }
     echo "</table><style>#submission-data td,th {color:black; border: 1px black solid;}</style>";
@@ -43,14 +43,15 @@ if (!isset($_GET['image_set_name']) || $_GET['image_set_name'] == "") {
 }
 
 
-
 // Check if an image was already submitted
 if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
-    $name = basename(preg_replace("/[,;\\/]/", "", filter_input(INPUT_GET,'image_set_name',FILTER_SANITIZE_FULL_SPECIAL_CHARS,0)));
+    $name = basename(preg_replace("/[,;\\/]/", "", filter_input(INPUT_GET, 'image_set_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0)));
 
     ?>
     <div style="float:right; width:450px;">
-        <img id = "useImg" style="display:none;" src="https://s3.amazonaws.com/cosmoquest/data/mappers/osiris/ImageDelivery_20190520/RAWIMAGES/<?php echo $name;?>" style="width:100%">
+        <img id="useImg" style="display:none;"
+             src="https://s3.amazonaws.com/cosmoquest/data/mappers/osiris/ImageDelivery_20190520/RAWIMAGES/<?php echo $name; ?>"
+             style="width:100%">
         <canvas id="canvas" width="450" height="450">
         </canvas>
     </div>
@@ -67,35 +68,35 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
         var markLocation;
         var locationMarked = false;
 
-        window.onload = function(){
+        window.onload = function () {
             canvas = document.getElementById("canvas");
             ctx = canvas.getContext("2d");
-            ctx.drawImage(document.getElementById("useImg"), 0,0);
+            ctx.drawImage(document.getElementById("useImg"), 0, 0);
             animate();
 
             rect = canvas.getBoundingClientRect();
 
 
-            canvas.addEventListener("mouseenter", function(e){
-               drawLocationMarker = true;
+            canvas.addEventListener("mouseenter", function (e) {
+                drawLocationMarker = true;
             });
-            canvas.addEventListener("mouseleave", function(e){
-               drawLocationMarker = false;
+            canvas.addEventListener("mouseleave", function (e) {
+                drawLocationMarker = false;
             });
 
-            canvas.addEventListener("mousemove", function(e){
+            canvas.addEventListener("mousemove", function (e) {
                 mX = e.clientX - rect.left;
                 mY = e.clientY - rect.top;
             });
 
-            canvas.addEventListener("mousedown", function(e){
-                if(locationMarked){
+            canvas.addEventListener("mousedown", function (e) {
+                if (locationMarked) {
                     locationMarked = false;
                     document.getElementById("submit-button").disabled = true;
                 }
             });
 
-            canvas.addEventListener("mouseup", function(e){
+            canvas.addEventListener("mouseup", function (e) {
                 markLocation = {X: mX, Y: mY};
                 locationMarked = true;
 
@@ -109,41 +110,40 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
         }
 
 
-        function animate(){
+        function animate() {
             window.requestAnimationFrame(animate);
 
-            ctx.drawImage(document.getElementById("useImg"), 0,0);
+            ctx.drawImage(document.getElementById("useImg"), 0, 0);
 
             // when mouse is on canvas, draw X centered on mouse position
             // ../csb-content/images/buttons/Mapping_tools-04.png
-            if(locationMarked){
-                ctx.drawImage(locationMarker, markLocation.X - locationMarker.width/2, markLocation.Y - locationMarker.height/2);
+            if (locationMarked) {
+                ctx.drawImage(locationMarker, markLocation.X - locationMarker.width / 2, markLocation.Y - locationMarker.height / 2);
             }
 
-            if(!locationMarked && drawLocationMarker) {
-                ctx.drawImage(locationMarker, mX - locationMarker.width/2, mY - locationMarker.height/2);
+            if (!locationMarked && drawLocationMarker) {
+                ctx.drawImage(locationMarker, mX - locationMarker.width / 2, mY - locationMarker.height / 2);
             }
             // when mouse is clicked on canvas, alert with {X:, Y:}
 
         }
-        
 
 
     </script>
 
     <div style="margin-top:30px; width: 390px; /* 860-470 */">
         <?php
-        echo "<H3>Image:<br>".$name."</H3>";
+        echo "<H3>Image:<br>" . $name . "</H3>";
 
         // Get image set id
-        $query  = "SELECT * FROM image_sets WHERE name like '".$name."'";
+        $query = "SELECT * FROM image_sets WHERE name like '" . $name . "'";
         $resultset = $db->runQuery($query);
         $image_set_id = $resultset[0]['id'];
 
         // Get images in that set
         $query = "SELECT * FROM images WHERE image_set_id = $image_set_id";
         $resultSet = $db->runQuery($query);
-        foreach($resultSet as $result) {
+        foreach ($resultSet as $result) {
             $images[] = $result['id'];
         }
 
@@ -152,15 +152,15 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
         $query = "SELECT distinct(users.name) 
             FROM users, image_users
             WHERE (image_users.image_id = ";
-        foreach($images as $image) {
-            $query .= $image. " OR image_users.image_id =";
+        foreach ($images as $image) {
+            $query .= $image . " OR image_users.image_id =";
         }
         $query = substr($query, 0, -25); // remove the last, unneeded OR statement
         $query .= ") AND image_users.user_id = users.id ORDER BY users.name";
         $resultSet = $db->runQuery($query);
         $list = "";
-        foreach($resultSet as $result) {
-            $list .= $result['name'].", ";
+        foreach ($resultSet as $result) {
+            $list .= $result['name'] . ", ";
         }
         $list = substr($list, 0, -2);
         echo "$list</p>";
@@ -172,7 +172,7 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
         <p class="instructions">Place the X on the feature you want to propose a name for, and then
             enter the name you want to propose. Please do not use adult language of any kind. Proposed names will be
             reviewed by the mission team and put forward for discussion in the community.</p>
-        <form id="SubmitNames" action="<?php echo $BASE_URL;?>/extras/">
+        <form id="SubmitNames" action="<?php echo $BASE_URL; ?>/extras/">
             <input type="hidden" name="task" value="name_features">
             <div id="proposed_names">
                 <p>Names will appear here</p>

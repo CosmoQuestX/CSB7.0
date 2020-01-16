@@ -21,12 +21,12 @@ function Mark(type, x, y, appInterface) {
     this.isStatic = false; // Used for immobile craters like tutorial craters
     this.status = "normal"; // Options: normal, correct, too_far, too_small, too_large, way_too_far, premarked, machine
 
-    this.draw = function(context) {
+    this.draw = function (context) {
         console.log("Mark type not specified.");
     };
 
-    this.displayMarkType = function(globalMousePosition) {
-        if(globalMousePosition.y < 0)
+    this.displayMarkType = function (globalMousePosition) {
+        if (globalMousePosition.y < 0)
             $("#marker-type").css('top', globalMousePosition.y + 125 + 'px');
         else
             $("#marker-type").css('top', globalMousePosition.y - 100 + 'px');
@@ -34,13 +34,22 @@ function Mark(type, x, y, appInterface) {
         $("#marker-name").html(this.subType);
         $("#marker-type").show();
     };
-    
-    this.getSubmitData = function() {
-        return {x: this.x, y: this.y, diameter: this.diameter, submit_time: this.lastChangeTime, owner: this.owner, machine_id: this.machineId, type: this.type, sub_type: this.subType};
+
+    this.getSubmitData = function () {
+        return {
+            x: this.x,
+            y: this.y,
+            diameter: this.diameter,
+            submit_time: this.lastChangeTime,
+            owner: this.owner,
+            machine_id: this.machineId,
+            type: this.type,
+            sub_type: this.subType
+        };
     }
 }
 
-Mark.createMark = function(type, x, y, diameter, appInterface) {
+Mark.createMark = function (type, x, y, diameter, appInterface) {
     switch (type) {
         case 'rock':
             return new Rock(x, y, appInterface);

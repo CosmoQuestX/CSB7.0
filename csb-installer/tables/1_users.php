@@ -22,7 +22,7 @@ $structure = "CREATE TABLE `users` (
               `reset_password` tinyint(1) NOT NULL DEFAULT '0',
               `public_profile` tinyint(1) NOT NULL DEFAULT '1',
               `wp_id` int(11) NOT NULL DEFAULT '1',
-              `gravatar_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '". $BASE_URL ."csb-content/images/profile/Default_Avatar.png',
+              `gravatar_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '" . $BASE_URL . "csb-content/images/profile/Default_Avatar.png',
               `first_name` text COLLATE utf8_unicode_ci,
               `last_name` text COLLATE utf8_unicode_ci,
               `level` int(11) NOT NULL DEFAULT '0',

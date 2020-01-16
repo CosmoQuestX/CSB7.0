@@ -9,9 +9,9 @@
 /* ----------------------------------------------------------------------
    Load things needed always
    ---------------------------------------------------------------------- */
-    global $BASE_DIR, $BASE_URL, $adminFlag;
-    require("csb-settings.php");
-    $loader = TRUE;
+global $BASE_DIR, $BASE_URL, $adminFlag;
+require("csb-settings.php");
+$loader = TRUE;
 
 /* ----------------------------------------------------------------------
    Define the theme
@@ -21,41 +21,41 @@
        3. If setup, use that theme, else use default    TODO
    ---------------------------------------------------------------------- */
 
-    // Default theme (if nothing set in database)
-    global $THEME_URL, $THEME_DIR;
+// Default theme (if nothing set in database)
+global $THEME_URL, $THEME_DIR;
 
-    $THEME_DIR = $BASE_DIR . "csb-themes/default/";
-    $THEME_URL = $BASE_URL . "csb-themes/default/";
+$THEME_DIR = $BASE_DIR . "csb-themes/default/";
+$THEME_URL = $BASE_URL . "csb-themes/default/";
 
 /* ----------------------------------------------------------------------
    Define other useful directories
    ---------------------------------------------------------------------- */
 
-    global $ADMIN_DIR, $DB_class, $email_class;
+global $ADMIN_DIR, $DB_class, $email_class;
 
-    $ACC_URL = $BASE_URL . "csb-accounts/";
-    $ACC_DIR = $BASE_DIR . "csb-accounts/";
-    $ADMIN_URL = $BASE_URL . "csb-accounts/";
-    $ADMIN_DIR = $BASE_DIR . "csb-accounts/";
-    $DB_class  = $ADMIN_DIR. "db_class.php";
-    $email_class = $ADMIN_DIR."email_class.php";
-    $IMAGES_URL = $BASE_URL . "csb-content/images/";
+$ACC_URL = $BASE_URL . "csb-accounts/";
+$ACC_DIR = $BASE_DIR . "csb-accounts/";
+$ADMIN_URL = $BASE_URL . "csb-accounts/";
+$ADMIN_DIR = $BASE_DIR . "csb-accounts/";
+$DB_class = $ADMIN_DIR . "db_class.php";
+$email_class = $ADMIN_DIR . "email_class.php";
+$IMAGES_URL = $BASE_URL . "csb-content/images/";
 
 /* ----------------------------------------------------------------------
    Setup User Roles - needed because of potential customizations
    ---------------------------------------------------------------------- */
 
-    include($DB_class);
-    $db = new DB($db_servername, $db_username, $db_password, $db_name);
-    $query = "SELECT * FROM roles";
-    $result = $db->runQuery($query);
+include($DB_class);
+$db = new DB($db_servername, $db_username, $db_password, $db_name);
+$query = "SELECT * FROM roles";
+$result = $db->runQuery($query);
 
-    foreach ($result as $row ) {
-        $CQ_ROLES[$row['name']] = $row['id'];
-    }
-    $db->closeDB();
+foreach ($result as $row) {
+    $CQ_ROLES[$row['name']] = $row['id'];
+}
+$db->closeDB();
 
-    $adminFlag = FALSE;
+$adminFlag = FALSE;
 
 
 
