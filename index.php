@@ -35,17 +35,14 @@ $db = new DB($db_servername, $db_username, $db_password, $db_name);
 global $user;
 $user = isLoggedIn($db);
 
-
 /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
-global $page_title;
-
-$page_title = "";
+global $page_title, $header_title, $SITE_TITLE;
 
 require_once($BASE_DIR . "/csb-content/template_functions.php");
-loadHeader();
-require_once($THEME_DIR . "/home-template.php");
-require_once($THEME_DIR . "/footer.php");
 
+loadHeader($page_title);
+require_once($THEME_DIR . "/home-template.php");
+loadFooter();
 

@@ -39,30 +39,16 @@ $user = isLoggedIn($db);
 /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
-global $page_title;
-
-$page_title = "";
+global $page_title, $header_title, $SITE_TITLE;
 
 require_once($BASE_DIR . "/csb-content/template_functions.php");
-loadHeader();
-openMain();
-?>
-    <h1>
-        Register
-    </h1>
 
-    <form id="registration-form">
-        <div id="form-input-box">
-            <div id="form-input-row">
-                <div id="form-input-left">Username</div>
-                <div id="form-input-right"><input type="text" name="first_name"
-                                                  value="<?php echo $thisUser['first_name']; ?>"></div>
-            </div>
-        </div>
-    </form>
+$page_title = $SITE_TITLE."Registration";
 
-<?php
-closeMain();
-require_once($THEME_DIR . "/footer.php");
+//TODO Set error for if loading while logged in
+
+loadHeader($page_title);
+load3Col();
+loadFooter();
 
 

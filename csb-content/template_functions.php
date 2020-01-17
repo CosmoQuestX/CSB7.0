@@ -12,21 +12,18 @@
  *
  * @return void
  */
-function loadHeader()
+function loadHeader($page_title, $header_title = "")
 {
-    global $THEME_URL, $THEME_DIR, $BASE_URL, $csb_headers, $page_title;
+    global $THEME_URL, $THEME_DIR, $BASE_URL, $csb_headers;
 
     require_once($THEME_DIR . "header.php");
 }
 
-function openMain()
-{
-    echo "<div id='content'>";
-}
 
-function closeMain()
-{
-    echo "</div>";
+function load3Col() {
+    global $THEME_URL, $THEME_DIR, $BASE_URL;
+
+    require_once($THEME_DIR . "page-3col-template.php");
 }
 
 /**
@@ -51,8 +48,27 @@ function loadFooter()
  */
 function loadMeta()
 {
+    global $page_title, $BASE_URL, $THEME_URL;
 
-    $csb_headers = "<link rel='stylesheet' type='text/css' href='" . $BASE_URL . "csb-content/csb.css'>";
+    $csb_headers = "";
+
+    // Load style sheet
+    $csb_headers .=  "<link rel='stylesheet' type='text/css' href='" . $BASE_URL . "csb-content/csb.css'>\r\n";
+    $csb_headers .=  "<link rel='stylesheet' type='text/css' href='" . $THEME_URL . "style.css'>\r\n";
+
+    // Set title
+    $csb_headers .= "<title>".$page_title."</title>\r\n";
+
+    // Load libraries
+    $csb_headers .=  "<script src='".$THEME_URL."js/jquery-3.4.1.slim.min.js'
+            integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n'
+            crossorigin='anonymous'></script>";
+    $csb_headers .=  "<script src='".$THEME_URL."js/popper.min.js'
+            integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo'
+            crossorigin='anonymous'></script>";
+    $csb_headers .=  "<script src='".$THEME_URL."js/bootstrap.min.js'
+            integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6'
+            crossorigin='anonymous'></script>";
 
     echo $csb_headers;
 }
@@ -77,7 +93,7 @@ function loadUser()
         } else {
             echo "not logged in";
         }
-    } else {                           // LOGGED IN
+    } else {                           // LOGGEDIN
         echo "Hello, " . $user['name'];
         ?>
 
@@ -86,6 +102,27 @@ function loadUser()
         </form>
         <?php
     }
+}
+
+function checkPermissions($allowed) {
+    global $CQ_ROLES;
+
+    $flag = FALSE;
+
+    // Check if there is 1 or more fields to check and act accordingly
+    if (is_string($allowed) && ($_SESSION['roles'] == $CQ_ROLES[$allowed])) {
+        $flag = TRUE;
+    }
+    else
+    {
+        foreach($allowed as $level) {
+            if ($_SESSION['roles'] == $CQ_ROLES[$level]) {
+                $flag = TRUE;
+            }
+        }
+    }
+
+    return $flag;
 }
 
 /**
