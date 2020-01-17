@@ -22,7 +22,9 @@ $loader = TRUE;
    ---------------------------------------------------------------------- */
 
 // Default theme (if nothing set in database)
-global $THEME_URL, $THEME_DIR;
+global $THEME_URL, $THEME_DIR, $SITE_TITLE;
+
+$SITE_TITLE = $SITE_NAME." | ";
 
 $THEME_DIR = $BASE_DIR . "csb-themes/default/";
 $THEME_URL = $BASE_URL . "csb-themes/default/";

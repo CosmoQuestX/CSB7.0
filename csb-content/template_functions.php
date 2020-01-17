@@ -20,7 +20,7 @@ function loadHeader($page_title, $header_title = "")
 }
 
 
-function load3Col() {
+function load3Col($menus, $main, $notes) {
     global $THEME_URL, $THEME_DIR, $BASE_URL;
 
     require_once($THEME_DIR . "page-3col-template.php");

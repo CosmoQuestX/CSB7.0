@@ -12,20 +12,19 @@
 
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
-A
+            <?php echo $menus; ?>
         </div>
 
         <!-- main block --------------------------------------------------------------- -->
         <div id="app-main" class="col-md-6 p-4">
-B
+            <?php echo $main; ?>
         </div>
 
         <!-- Right block -------------------------------------------------------------- -->
         <div id="app-right" class="col-md-3 p-4">
-C
+            <?php echo $notes; ?>
         </div>
 
 
     </div>
 </div>
-
