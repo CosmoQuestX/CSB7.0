@@ -11,7 +11,7 @@
    ---------------------------------------------------------------------- */
 require_once("../csb-loader.php");
 require_once($DB_class);
-require_once($BASE_DIR . "csb-account/auth.php");
+require_once($BASE_DIR . "csb-accounts/auth.php");
 $adminFlag = 1;
 
 /* ----------------------------------------------------------------------
@@ -51,10 +51,10 @@ else {
 
     $page_title = "Profile & Settings";
 
-    require_once($BASE_DIR . "/csb-content/template_functions.php");
-    require_once("admin-dashboards.php");
+    require_once($BASE_DIR . "csb-content/template_functions.php");
+    require_once($BASE_DIR . "csb-admin/admin-dashboards.php");
 
-    loadHeader();
+    loadHeader($page_title);
 
     /* ----------------------------------------------------------------------
         are they trying to save something they input?
@@ -113,89 +113,99 @@ else {
     }
 
 
-// Go back to loading the page
+    /* ----------------------------------------------------------------------
+        Create the page
+       ---------------------------------------------------------------------- */
 
+    $menus = "Put Menus Here";
+    $main = "main";
+    $notes = "Put Instructions Here";
+
+
+
+    // Check whether to check the permission checkbox
     $thisUser = $db->getUser(filter_var($_SESSION['user_id'], FILTER_SANITIZE_NUMBER_INT));
-    ?>
 
-    <div id="main">
-        <div class="container">
+    if ($thisUser['public_name'] == 1) {
+        $checked = "checked";
+    }
+    else {
+        $checked = "";
+    }
 
-            <div id="" class="left-dash left">
-                Things to do will go here
+    // Create Registration Form
+    $main = "
+        <h3 class='font-weight-bold'>Welcome, " . $user['name'] . "!</h3>
+        <form id='profile-form' action='".$_SERVER['REQUEST_URI']."' method='POST'>
+            
+            <div class='row'>
+                <div class='col'>
+                    <label for='first-name'>First Name</label>
+                    <input type='text' id='first-name' name='first_name' class='form-control' value='".$thisUser['first_name']."'>
+                </div>
+                <div class='col'>
+                    <label for='last-name'>Last Name</label>
+                    <input type='text' id='last-name' name='last_name' class='form-control' value='".$thisUser['last_name']."'>
+                </div>
             </div>
+            
+            <label for='email'>Email</label>
+            <input type='text' id='email' name='email' class='form-control' value='".$thisUser['email']."'>
 
-            <div class="main-dash right">
-                <img class="right" src="<?php echo $IMAGES_URL; ?>Profile/Default_Avatar.png">
-                <h3>
-                    Welcome, <?php echo $user['name']; ?>
-                </h3>
-                <p>
-                    <strong> Account Settings </strong><br/>
-                    <span class="instructions">Your privacy matters! Our team programmers do have access to this
-                    information, but the only thing that can be publicly seen is your username. We will,
-                    with permission only, use your first and last name to give you credit for things
-                    you accomplish.</span></p>
-                <form id="profile-form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST"
-                      onSubmit="return checkPasswd(this);">
-                    <div id="form-input-box">
-                        <div id="form-input-row">
-                            <div id="form-input-left">First Name</div>
-                            <div id="form-input-right"><input type="text" name="first_name"
-                                                              value="<?php echo $thisUser['first_name']; ?>"></div>
-                        </div>
-                        <div id="form-input-row">
-                            <div id="form-input-left">Last Name</div>
-                            <div id="form-input-right"><input type="text" name="last_name"
-                                                              value="<?php echo $thisUser['last_name']; ?>"></div>
-                        </div>
-                        <div id="form-input-row">
-                            <div id="form-input-left">Email</div>
-                            <div id="form-input-right"><input type="text" name="email"
-                                                              value="<?php echo $thisUser['email']; ?>"></div>
-                        </div>
-                        <div id="form-input-row">
-                            <div id="form-input-left">Change your password?</div>
-                            <div id="form-input-right"><input type="checkbox" name="pck" onClick="fnShowHide();"></div>
-                        </div>
-                        <div id="newpass" class="newpass">
-                            <div id="form-input-left">New password</div>
-                            <div id="form-input-right"><input type="password" name="password"></div>
-                        </div>
-                        <div id="newpass" class="newpass">
-                            <div id="form-input-left">Repeat password</div>
-                            <div id="form-input-right"><input type="password" name="confirm_password"></div>
-                        </div>
+            <h3 class='font-weight-bold mt-4'>Change Password</h3>
+            
+            <label for='new-pass'>New Password</label>
+            <input type='password' id='new-pass' name='password' class='form-control'>
+            
+            <label for='confirm-pass'>Confirm New Password</label>
+            <input type='password' id='confirm-pass' name='confirm_password' class='form-control'>
 
-                        <div id="form-input-row">
-                            <input type="checkbox"
-                                   name="public_name"<?php if ($thisUser['public_name'] == 1) echo " checked" ?>> Do we
-                            have permission to publish your name with science results?
-                        </div>
+            <input type='checkbox' name='public_name' class='mt-4' $checked> Do we have permission to publish your name with science results?
 
-                        <input type="submit" value="Save Settings" class="btn-default right">
-                    </div>
-                </form>
-                <span class="red" id="message">
-                <?php
-                if (isset($saved) && $saved) {
-                    echo "Settings saved!";
-                    unset($saved);
-                } elseif (isset($saved) && !$saved) {
-                    echo "Error saving settings!";
-                    unset($saved);
-                }
-                ?>
-				</span>
-            </div>
-            <div class="clear"></div>
-        </div>
-    </div>
+            <input type='submit' value='Save Settings' class='btn btn-cq mt-4 right'>
+        </form>
+        ";
 
-    <script src='<?php echo $BASE_URL . "csb-content/js/profile.js" ?>'></script>
+        if (isset($saved) && $saved) {
+            $main .= "<div class='text-success'>Settings saved!</div>";
+            unset($saved);
+        }
+        elseif (isset($saved) && !$saved) {
+            $main .= "<div class='text-danger'>Error saving settings!</div>";
+            unset($saved);
+        }
 
-    <?php
+        $notes = "
+        <h5 class='font-weight-bold'>How we use your information</h5>
+        <p>
+        Your privacy matters! Our team programmers do have access to this
+        information, but the only thing that can be publicly seen is your username. We will,
+        with permission only, use your first and last name to give you credit for things
+        you accomplish.
+        </p>
+        ";
+
+
+    /* ----------------------------------------------------------------------
+    Load the view
+    ---------------------------------------------------------------------- */
+    global $page_title, $header_title, $SITE_TITLE;
+
+    require_once($BASE_DIR . "/csb-content/template_functions.php");
+
+    $page_title = $SITE_TITLE . "Registration";
+
+    //TODO Set error for if loading while logged in
+
+    loadHeader($page_title);
+    load3Col($menus, $main, $notes);
     loadFooter();
+
 }
+
+
+
+
+
 
 $db->closeDB();
