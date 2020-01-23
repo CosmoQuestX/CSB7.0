@@ -136,7 +136,7 @@ else {
     // Create Registration Form
     $main = "
         <h3 class='font-weight-bold'>Welcome, " . $user['name'] . "!</h3>
-        <form id='profile-form' action='".$_SERVER['REQUEST_URI']."' method='POST'>
+        <form id='profile-form' action='".$_SERVER['REQUEST_URI']."' method='POST' onSubmit='checkPasswd(this);'>
             
             <div class='row'>
                 <div class='col'>
@@ -200,6 +200,11 @@ else {
     loadHeader($page_title);
     load3Col($menus, $main, $notes);
     loadFooter();
+    
+
+    ?>
+    <script src='<?php echo $BASE_URL . "csb-content/js/profile.js" ?>'></script>
+    <?php
 
 }
 
