@@ -50,11 +50,9 @@ $lang = json_decode($lang, true);
             <?php
                 }
                 else {                           // LOGGED IN
-                ?><h3 class="font-weight-bold">Hello, <?php echo $user['name'];?> !</h3>
-                    <div class="center">
-                        <a class="btn-default" href="<?php echo $ADMIN_URL;?>profile.php">Profile</a>
-                    </div>
-            <?php
+                    ?>
+                    <h3 class="font-weight-bold">Hello, <?php echo $user['name'];?> !</h3>
+                    <?php
                 }
             ?>
 

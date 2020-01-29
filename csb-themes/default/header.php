@@ -20,6 +20,8 @@
 loadLoginBox();
 ?>
 
+<?php
+/*
 <div id="header" class="container d-flex justify-content-between align-items-center">
 
     <!-----------------------------------------------------------------------
@@ -52,7 +54,49 @@ loadLoginBox();
     </div>
 
 </div>
+*/
+?>
 
-<div class="clear"></div>
+
+<nav class="navbar navbar-expand-lg navbar-dark" style="background: none;">
+    <div class="container px-0">
+
+
+        <a class="" href="<?php echo $BASE_URL; ?>">
+            <img width="280" src="<?php echo $THEME_URL; ?>/images/header-logo.png">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?php echo $BASE_URL; ?>">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Community</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sample</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                
+
+            <?php
+                // Check if this is the registration page. If it is, don't show this
+                if (strcmp(basename($_SERVER['PHP_SELF']), "register.php")) {
+                    loadUser();
+                }
+            ?>
+
+
+            </ul>
+        </div>
+
+
+    </div>
+</nav>
+
 
 

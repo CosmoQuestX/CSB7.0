@@ -86,20 +86,33 @@ function loadUser()
     if ($user === FALSE) {         // NOT LOGGED IN
         if ($adminFlag === FALSE) {
             ?>
-            <button class="btn btn-cq" data-toggle="modal" data-target="#loginModal">Login</button>
-            <button class="btn btn-secondary" onclick="location.href='<?PHP echo $ACC_URL; ?>register.php';">Register
-            </button>
+
+            <li class="nav-item">
+                <a class="nav-link" href="<?PHP echo $ACC_URL; ?>register.php">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#loginModal" style="cursor:pointer;">Login</a>
+            </li>
+
             <?php
         } else {
             echo "not logged in";
         }
     } else {                           // LOGGEDIN
-        echo "Hello, " . $user['name'];
         ?>
 
-        <form action="<?php echo($BASE_URL); ?>csb-accounts/auth-login.php" method="get" id="form-logout">
-            <input type="submit" name="go" class="btn btn-cq float-right" value="logout">
-        </form>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Hello, <?php echo $user['name']; ?>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="<?php echo $BASE_URL;?>csb-accounts/profile.php">My Profile</a>
+                <form action="<?php echo($BASE_URL); ?>csb-accounts/auth-login.php" method="get" id="form-logout">
+                    <input type="submit" name="go" style="cursor:pointer;" class="dropdown-item" value="logout">
+                </form>
+            </div>
+        </li>
+        
         <?php
     }
 }
