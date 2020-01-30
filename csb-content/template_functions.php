@@ -74,7 +74,7 @@ function loadMeta()
 }
 
 /**
- * Displays a greeting and logout button when logged in and a login button
+ * Displays a greeting, logout, and profile button when logged in, and a login button
  * when not
  *
  * @return void
@@ -116,6 +116,34 @@ function loadUser()
         <?php
     }
 }
+
+
+/**
+ * Creates navigation links depending on login state
+ * 
+ *
+ * @return void
+ */
+function loadNavLinks()
+{
+
+    global $BASE_URL, $ACC_URL, $user, $adminFlag;
+
+    if ($user == TRUE) {         // LOGGED IN
+        ?>
+
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo $BASE_URL; ?>">Bennu Mapper</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo $BASE_URL; ?>">Other Mapper</a>
+        </li>
+
+        <?php
+    }
+}
+
+
 
 function checkPermissions($allowed) {
     global $CQ_ROLES;

@@ -20,42 +20,6 @@
 loadLoginBox();
 ?>
 
-<?php
-/*
-<div id="header" class="container d-flex justify-content-between align-items-center">
-
-    <!-----------------------------------------------------------------------
-        Load Logo TODO Make logo uploadable
-       ---------------------------------------------------------------------->
-    <div id="logo" class="left">
-        <a href="<?php echo $BASE_URL; ?>">
-            <img src="<?php echo $THEME_URL; ?>/images/header-logo.png">
-        </a>
-    </div>
-
-    <!-----------------------------------------------------------------------
-        Load Title
-       ---------------------------------------------------------------------->
-    <div id="title">
-        <h1> <?php echo $header_title; ?></h1>
-    </div>
-
-    <!-----------------------------------------------------------------------
-        Load User Area TODO ADD LOGIC TO LOGIN OR LOGOUT AS MAKES SENSE
-      ---------------------------------------------------------------------->
-    <div id="user">
-        <?php
-        // Check if this is the registration page. If it is, don't show this
-        if (strcmp(basename($_SERVER['PHP_SELF']), "register.php")) {
-            loadUser();
-        }
-        ?>
-
-    </div>
-
-</div>
-*/
-?>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background: none;">
@@ -70,15 +34,12 @@ loadLoginBox();
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo $BASE_URL; ?>">Home<span class="sr-only">(current)</span></a>
+                <li class="nav-item active" <?php if (strcmp(basename($_SERVER['PHP_SELF']), $BASE_URL)) { echo "active"; }?>>
+                    <a class="nav-link" href="<?php echo $BASE_URL; ?>">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Community</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sample</a>
-                </li>
+                <?php
+                loadNavLinks();
+                ?>
             </ul>
             <ul class="navbar-nav">
                 
