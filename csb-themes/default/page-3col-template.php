@@ -18,6 +18,10 @@
         <!-- main block --------------------------------------------------------------- -->
         <div id="app-main" class="col-md-6 p-4">
             <?php echo $main; ?>
+
+            <?php if(!empty($template)) { // if there is a template, load it here
+                require_once($TEMPLATES_DIR.$template);
+            } ?>
         </div>
 
         <!-- Right block -------------------------------------------------------------- -->

@@ -20,8 +20,8 @@ function loadHeader($page_title, $header_title = "")
 }
 
 
-function load3Col($menus, $main, $notes) {
-    global $THEME_URL, $THEME_DIR, $BASE_URL;
+function load3Col($menus="", $main="", $notes="", $template="") {
+    global $THEME_URL, $THEME_DIR, $BASE_URL, $TEMPLATES_DIR;
 
     require_once($THEME_DIR . "page-3col-template.php");
 }
@@ -81,7 +81,7 @@ function loadMeta()
  */
 function loadUser()
 {
-    global $BASE_URL, $ACC_URL, $user, $adminFlag;
+    global $BASE_URL, $ACC_URL, $user, $adminFlag, $IMAGES_URL;
 
     if ($user === FALSE) {         // NOT LOGGED IN
         if ($adminFlag === FALSE) {
@@ -103,7 +103,12 @@ function loadUser()
 
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Hello, <?php echo $user['name']; ?>
+            Hello, <?php echo $user['name'];
+            if (empty($user['gravatar_url'])) {
+                echo " <img src='" . $IMAGES_URL . "profile/Default_Avatar.png' alt='avatar' style='width:2em; height: 2em; margin: 0 auto;'>";
+            } else {
+                echo " <img src='".$user['gravatar_url']."' alt='avatar' style='width:2em; height: 2em; margin: 0 auto;'>";
+            } ?>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="<?php echo $BASE_URL;?>csb-accounts/profile.php">My Profile</a>
@@ -219,7 +224,7 @@ function loadLoginBox()
 
                         <div class="text-center">
                             <input type="submit" name="login" class="btn btn-block btn-cq mt-3" value="Login">
-                            <a href="<?PHP echo $ACC_URL; ?>register.php">Dont have an account?</a>
+                            <a href="<?PHP echo $ACC_URL; ?>register.php">Don't have an account?</a>
                         </div>
 
                     </form>

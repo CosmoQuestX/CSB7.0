@@ -23,9 +23,11 @@ require_once("db_class.php");
    Logging out? Asking to register?
    ---------------------------------------------------------------------- */
 
+
 $db = new DB($db_servername, $db_username, $db_password, $db_name);
 
 if (isset($_GET['go'])) {
+
     if ($_GET['go'] == 'logout') {
         logout();
     } elseif ($_GET['go'] == 'register') {
@@ -36,16 +38,17 @@ if (isset($_GET['go'])) {
 } elseif (isset($_POST['go'])) {
 
     /* Registering new user */
-
     if ($_POST['go'] == 'regForm') {
+
         // hash password & insert them into the database
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
         if ($db->checkDuplicateUser('name', filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0))) {
             $_SESSION['regmsg'] = "Cannot register, user name " . filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0) . " already exists!";
-            header("Location:" . $_SERVER['SCRIPT_NAME'] . "?go=register");
+            header("Location:" . $BASE_URL."csb-accounts/register.php");
         } elseif ($db->checkDuplicateUser('email', filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL))) {
             $_SESSION['regmsg'] = "Cannot register, email " . filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) . " already in use!";
-            header("Location:" . $_SERVER['SCRIPT_NAME'] . "?go=register");
+            header("Location:" . $BASE_URL."csb-accounts/register.php");
         } else {
             regUser($db, $_POST, $hashed);
             // Send the newly registered user off to the main page instead of presenting a blank page.
@@ -186,27 +189,33 @@ function logout()
  */
 function regUser($db, $user, $pwhash)
 {
-    global $CQ_ROLES;
+    global $CQ_ROLE;
 
     $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
     $params = array(filter_var($user['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash);
     $db->insert($query, "sss", $params);
 
-    $id = $db->getUserIdByName($user['name']);
+    $query = "SELECT id FROM users WHERE name = '".$user['name']."'";
+    //$query = "SELECT id FROM users WHERE name = 'test25'";
+
+    $id = $db->runBaseQuery($query)[0]['id'];
+
     if ($id === FALSE) {
+        echo "if";
         // This should not happen, since we just inserted a user 
         error_log("Could not find the freshly created user on registration.");
         die("Fatal error on registration. Please try again later.");
     } else {
+        echo "else";
         $user['id'] = $id;
     }
+
     // create their default role
     $roles = $CQ_ROLES['SITE_NONE'];
 
     $query = "INSERT INTO role_users (role_id, user_id) values (?, ?)";
     $params = array($roles, $id);
     $db->insert($query, "ii", $params);
-
 
     // create sessions / cookies TODO Make this a function
 
@@ -225,7 +234,6 @@ function regUser($db, $user, $pwhash)
         $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
         $params = array($user['id']);
         $db->runQueryWhere($query, "s", $params);
-
     } else {
         // How long will cookies last: 24min like sessions (set in php.ini)
         $timeout = time() + 60 * 24;

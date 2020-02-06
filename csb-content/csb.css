@@ -211,3 +211,24 @@ iframe {
     color: white;
 }
 
+/* --------------------------------------------------------------------------------
+   Forms
+   -------------------------------------------------------------------------------- */
+#form-input-box {
+    width: 100%;
+}
+
+.form-input-row {
+    width: 80%;
+}
+
+.form-input-left {
+    width: 40%;
+    float: left;
+}
+
+.form-input-right {
+    width: 60%;
+    float: right;
+}
+

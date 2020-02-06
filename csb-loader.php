@@ -42,6 +42,8 @@ $ADMIN_DIR = $BASE_DIR . "csb-accounts/";
 $DB_class = $ADMIN_DIR . "db_class.php";
 $email_class = $ADMIN_DIR . "email_class.php";
 $IMAGES_URL = $BASE_URL . "csb-content/images/";
+$TEMPLATES_URL = $BASE_URL . "csb-content/templates/";
+$TEMPLATES_DIR = $BASE_DIR . "csb-content/templates/";
 
 /* ----------------------------------------------------------------------
    Setup User Roles - needed because of potential customizations

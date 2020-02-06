@@ -40,16 +40,8 @@ $user = isLoggedIn($db);
    ---------------------------------------------------------------------- */
 
 $menus = "Put Menus Here";
-$main = "main";
+$main  = "";
 $notes = "Put Instructions Here";
-
-// Create Registration Form
-$main = "
-    <H3>Register for ".$SITE_NAME."</H3>
-    <p>Username</p>
-    <p>Email</p>
-    <p>Password</p>
-    ";
 
 $notes = "
     <h5>How we use your information</h5>
@@ -81,7 +73,7 @@ $page_title = $SITE_TITLE . "Registration";
 //TODO Set error for if loading while logged in
 
 loadHeader($page_title);
-load3Col($menus, $main, $notes);
+load3Col($menus, $main, $notes, 'reg-template.php');
 loadFooter();
 
 
