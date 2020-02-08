@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: starstryder
@@ -12,8 +13,9 @@
  *
  * @return void
  */
-function loadHeader($page_title, $header_title = "")
+function loadHeader($page_title = "", $header_title = "")
 {
+
     global $THEME_URL, $THEME_DIR, $BASE_URL, $csb_headers;
 
     require_once($THEME_DIR . "header.php");

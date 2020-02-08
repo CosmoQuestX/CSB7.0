@@ -39,9 +39,7 @@ foreach ($tables as $table) {
     require_once("tables/" . $table);
     $table = substr($table, 0, -4);
 
-    if (create_table($conn, $structure)) {
-        echo "created table " . $table . "<br/>";
-    } else {
+    if (!create_table($conn, $structure)) {
         echo mysqli_error($conn) . "<br/>";
         mysqli_close($conn);
         die("Couldn't create table " . $table . "<br/>");

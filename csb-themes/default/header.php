@@ -46,7 +46,8 @@ loadLoginBox();
 
             <?php
                 // Check if this is the registration page. If it is, don't show this
-                if (strcmp(basename($_SERVER['PHP_SELF']), "register.php")) {
+                if (strcmp(basename($_SERVER['PHP_SELF']), "register.php") ||
+                    strcmp(basename($_SERVER['PHP_SELF']), "index.php")) {
                     loadUser();
                 }
             ?>

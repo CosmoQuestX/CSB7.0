@@ -19,8 +19,24 @@ if ((@include "../csb-settings.php") == TRUE) {
    ---------------------------------------------------------------------- */
 if (isset($_SERVER) && isset($_SERVER['SCRIPT_FILENAME']))
     $BASE_DIR = stristr($_SERVER['SCRIPT_FILENAME'], "csb-installer", TRUE);
+
 $BASE_URL = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . stristr($_SERVER['REQUEST_URI'], "csb-installer", TRUE);
 require_once("installer-functions.php");
+
+/* ----------------------------------------------------------------------
+   Let's set a default theme so the installer doesn't look too boring.
+  ---------------------------------------------------------------------- */
+
+$page_title = "CSB Installer";
+
+$THEME_DIR = $BASE_DIR . "csb-themes/default/";
+$THEME_URL = $BASE_URL . "csb-themes/default/";
+
+global $THEME_URL, $THEME_DIR;
+
+require_once($BASE_DIR . "csb-content/template_functions.php");
+
+loadHeader();
 
 /* ----------------------------------------------------------------------
    If we called ourselves, we should try to write the config
@@ -43,7 +59,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
         // TODO Suggestion: rework the database layer to support table prefixes. Useful if CSB needs to be run on one shared database.
 
         foreach ($_POST as $key => $value) {
-            print "Key: $key - Value: $value <br />\n";
+            // print "Key: $key - Value: $value <br />\n";
             if ($key != "write_config" && $key != "submit") {
                 if (strpos($key, "email_") !== false) {
                     $index = str_replace("email_", "", $key);
@@ -63,8 +79,18 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
 
 
         // If we produced a readable configuration, we can carry on to step 2.
-        if (is_readable($BASE_DIR . "/csb-settings.php")) {
-            header("Location: installer.php");
+        if (is_readable($BASE_DIR . "/csb-settings.php")) { ?>
+            <div id="main">
+            <div id="" class="container">
+                <div id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;">
+                    <h3>Write down your password!</h3>
+                    <p><?php
+                        require_once("installer.php");
+                        ?></p><?php
+                    loadFooter(); ?>
+                </div>
+            </div>  <?php
+            die();
         } else {
             // Else, better not continue.
             die ("Failed reading the configuration, please check your configuration manually.");
@@ -72,22 +98,6 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
     }
 }
 
-
-/* ----------------------------------------------------------------------
-   Let's set a default theme so the installer doesn't look too boring.
-  ---------------------------------------------------------------------- */
-
-$page_title = "CSB Installer";
-
-$THEME_DIR = $BASE_DIR . "csb-themes/default/";
-$THEME_URL = $BASE_URL . "csb-themes/default/";
-
-global $THEME_URL, $THEME_DIR;
-$page_title;
-
-
-require_once($BASE_DIR . "/csb-content/template_functions.php");
-loadHeader();
 
 /* ---------------------------------------------------------------------
    The default header shows the login div id user on the top right.
@@ -106,9 +116,9 @@ echo '<div id="main">';
 echo '<div id="" class="container">';
 echo '<div id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;">';
 echo "<p><h4>You are running the Citizen Science Builder installer</h4> <br />\n";
-echo "I'm guessing the installation path on the Server is " . $BASE_DIR . "<br />\n";
-echo "I'm guessing the base URL is " . $BASE_URL . "<br />\n";
-echo "Checking whether the installation path is writeable: ";
+echo "Using installation path: " . $BASE_DIR . "<br />\n";
+echo "Using URL:" . $BASE_URL . "<br />\n";
+echo "The installation path is writeable by the webserver: ";
 if (is_writable($BASE_DIR)) {
     echo "<span style=\"font-weight:bold; color:green\">TRUE</span><br /></p>\n";
 } else {
