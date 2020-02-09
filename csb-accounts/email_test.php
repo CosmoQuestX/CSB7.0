@@ -7,12 +7,14 @@
  * Time: 5:57 PM
  */
 
+
 // Standard "How the hell did you get here?" Redirect to root directory
-GLOBAL $loader;
-if (!isset($loader) && !$loader) {
+if (!isset($loader) || !$loader) {
     header($_SERVER['HTTP_HOST']);
     exit();
 }
+
+//TODO
 
 //SETUP email admin
 //SETUP email logged in user

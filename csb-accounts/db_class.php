@@ -319,7 +319,7 @@ class DB
      * @param string $input The value to compare to
      * @return boolean Whether a user was found or not
      */
-    function checkDuplicateUser($field, $input)
+    function checkUser($field, $input)
     {
         $query = "SELECT $field FROM users WHERE $field = ?";
         $sql = $this->conn->prepare($query);

@@ -20,7 +20,7 @@ require_once("../csb-loader.php");
 require_once("db_class.php");
 
 /* ----------------------------------------------------------------------
-   Logging out? Asking to register?
+   Logging out? Asking to register? Rescuing Password?
    ---------------------------------------------------------------------- */
 
 
@@ -30,23 +30,26 @@ if (isset($_GET['go'])) {
 
     if ($_GET['go'] == 'logout') {
         logout();
-    } elseif ($_GET['go'] == 'register') {
-        require_once($BASE_DIR . "csb-content/templates/register.php");
     } else {
         echo "get thee gone, URL hacking wizard";
     }
-} elseif (isset($_POST['go'])) {
 
-    /* Registering new user */
-    if ($_POST['go'] == 'regForm') {
+} if (isset($_POST['go'])) {
+
+    /* Logging in? Check for post variables ----------------------------- */
+    if ($_POST['go'] == 'login') {
+        login($db, $_POST);
+
+    /* Registering new user --------------------------------------------- */
+    } elseif ($_POST['go'] == 'regForm') {
 
         // hash password & insert them into the database
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-        if ($db->checkDuplicateUser('name', filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0))) {
+        if ($db->checkUser('name', filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0))) {
             $_SESSION['regmsg'] = "Cannot register, user name " . filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0) . " already exists!";
             header("Location:" . $BASE_URL."csb-accounts/register.php");
-        } elseif ($db->checkDuplicateUser('email', filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL))) {
+        } elseif ($db->checkUser('email', filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL))) {
             $_SESSION['regmsg'] = "Cannot register, email " . filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) . " already in use!";
             header("Location:" . $BASE_URL."csb-accounts/register.php");
         } else {
@@ -55,9 +58,24 @@ if (isset($_GET['go'])) {
             header("Location: " . $BASE_URL);
         }
 
-    } /* Logging in? Check for post variables --------------------------------------- */
-    elseif ($_POST['go'] == 'login') {
-        login($db, $_POST);
+    /* Rescuing a Password ---------------------------------------------- */
+        /* Rescuing a Password ---------------------------------------------- */
+    } elseif ($_POST['go'] == 'rescueForm') {
+        $flag = TRUE;
+
+        $name  = filter_input(INPUT_POST, 'nameORemail', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, 'nameORemail', FILTER_SANITIZE_EMAIL);
+        echo $name."-".$email;
+        if ($db->checkUser('name', $name, 0)) {
+            $_SESSION['errMsg'] = "found $name. ";
+            die("STILL BEING IMPLEMENTED"); // will go to rescueUser("name", $name);
+        } elseif ($db->checkUser('email', $email)) {
+            $_SESSION['errMsg'] = "found $email. ";
+            die("STILL BEING IMPLEMENTED"); // will go to rescueUser("email", $email);
+        } else {
+            $_SESSION['errMsg'] = "No username or email matched: $name";
+            header("Location: " . $ACC_URL."/rescue.php");
+        }
 
     } else { // Javascript checks should prevent this from happening
         die("You don't belong here. Run away. Run away from the error.");
@@ -148,6 +166,8 @@ function login($db, $user)
             die("user not found");
         }
     }
+
+    $_SESSION['errmsg'] =  $_SESSION['errmsg'];
 
     // Send them where they belong 
     header("Location: " . $user['referringURL']);
@@ -250,6 +270,30 @@ function regUser($db, $user, $pwhash)
     $_SESSION['roles'] = $roles;
 
 
+}
+
+function rescueUser ($db, $form) {
+    GLOBAL $emailSettings;
+
+
+    //Check if name is empty, if not check if user exists if
+    //Check if email is empty, if not check if email exists
+    //Have a user? Email and confirm
+
+
+    require_once("email_class.php");
+
+    $email = new EMAIL($emailSettings);
+
+    $to = "starstryder@gmail.com";
+    $msg['subject'] = "CosmoQuest Password Reset";
+    $msg['body'] = "Someone has requested a ";
+
+    $email->sendMail($to, $msg);
+
+    die("here");
+
+    //No one? send error
 }
 
 ?>

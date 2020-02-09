@@ -8,7 +8,7 @@
 
 
 // Standard "How the hell did you get here?" Redirect to root directory
-GLOBAL $loader;
+GLOBAL $loader, $ACC_URL;
 if (!isset($loader) || !$loader) {
     header($_SERVER['HTTP_HOST']);
     exit();
@@ -34,11 +34,14 @@ $referringURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
             - signin instead TODO
 
    ---------------------------------------------------------------------->
-<h3 class="font-weight-bold">Register</h3>
+<h3 class="font-weight-bold">Rescue Password</h3>
 <div id="form-input-box">
+    <p>Please enter either the username or email address you use with this site.
+        We will send you an email with a new password that you can change (or note). </p>
+
     <form action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">
         <input type="hidden" name="referringURL" value="<?php echo $BASE_URL; ?>">
-        <input type="hidden" name="go" value="regForm">
+        <input type="hidden" name="go" value="rescueForm">
 
         <div class="error-msg"><?php if (isset($_SESSION['errMsg'])) {
                 echo "<span style=\"color: red;\">" . $_SESSION['errMsg'] . "</span>";
@@ -47,35 +50,13 @@ $referringURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         </div>
 
         <div class="form-input-row">
-            <div class="form-input-left"><label for="name">Username</label></div>
-            <div class="form-input-right"><input name="name" type="text"></div>
+            <div class="form-input-left"><label for="name">Username or Email</label></div>
+            <div class="form-input-right"><input name="nameORemail" type="text"></div>
         </div>
 
         <div class="clear"></div>
-        <div class="form-input-row">
-            <div class="form-input-left"><label for="email">Email</label></div>
-            <div class="form-input-right"><input name="email" type="text"></div>
-        </div>
-        <div class="clear"></div>
-        <div class="form-input-row">
-            <div class="form-input-left"><label for="password">Enter Password</label></div>
-            <div class="form-input-right"><input name="password" type="password"></div>
-        </div>
-        <div class="clear"></div>
-        <div class="form-input-row">
-            <div class="form-input-left"><label for="confirm">Confirm Password</label></div>
-            <div class="form-input-right"><input name="confirm" type="password"></div>
-        </div>
-        <div class="clear"></div>
-        <div class="form-input-row">
-            <div class="fields-checkbox">
-                <input type="checkbox" name="remember" id="remember">
-                <label for="remember-me">Remember me</label>
-            </div>
-        </div>
-        <div class="clear"></div>
         <div class="field-submit">
-            <input type="submit" name="register" value="Register"
+            <input type="submit" name="rescue" value="Reset Password"
                    class="form-submit-button">
         </div>
     </form>

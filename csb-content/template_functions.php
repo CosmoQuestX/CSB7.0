@@ -226,7 +226,8 @@ function loadLoginBox()
 
                         <div class="text-center">
                             <input type="submit" name="login" class="btn btn-block btn-cq mt-3" value="Login">
-                            <a href="<?PHP echo $ACC_URL; ?>register.php">Don't have an account?</a>
+                            <a href="<?PHP echo $ACC_URL; ?>register.php">Register</a> |
+                            <a href="<?PHP echo $ACC_URL; ?>rescue.php">Forgot Password</a>
                         </div>
 
                     </form>
