@@ -45,4 +45,3 @@ require_once($BASE_DIR . "/csb-content/template_functions.php");
 loadHeader($page_title);
 require_once($THEME_DIR . "/home-template.php");
 loadFooter();
-

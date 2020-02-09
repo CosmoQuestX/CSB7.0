@@ -6,7 +6,7 @@
  * Time: 9:45 PM
  */
 ?>
-
+<!DOCTYPE html>
 <html>
 <head>
     <?php loadMeta(); ?>

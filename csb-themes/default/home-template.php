@@ -7,8 +7,6 @@
  */
 
 /** Get the setup files for the app dynamically TODO make this a function */
-require_once ($BASE_DIR . "/csb-apps/Bennu/bennu-template.php");
-$lang = $BASE_DIR . "csb-apps/Bennu/lang/bennu.en.json";
 
 $lang = file_get_contents($lang);
 $lang = json_decode($lang, true);
@@ -21,21 +19,17 @@ $lang = json_decode($lang, true);
 
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
-            <?php $txt = $lang['app_page']['text-boxes']['app-left']; ?>
-            <h3 class="font-weight-bold"><?php echo $txt['title']; ?></h3>
-            <p> <?php echo $txt['fact1-title']; ?><br/>
-                <?php echo $txt['fact1-content']; ?></p>
-            <p> <?php echo $txt['fact2-title']; ?><br/>
-                <?php echo $txt['fact2-content']; ?></p>
-            <p> <?php echo $txt['fact3-title']; ?><br/>
-                <?php echo $txt['fact3-content']; ?></p>
-            <p> <?php echo $txt['completed']; ?><br/>
-                    #####</p>
-            <p><?php echo $txt['remaining']; ?><br/>
-                    #####</p>
-            <p><?php echo $txt['dueDate']; ?><br/>
-                <?php echo $txt['dueDateValue'];?></p>
-            <img class="app-spacecraft" src="<?php echo $BASE_URL.'csb-apps/Bennu/images/ORex-Transparent.png';?>">
+            <h3 class="font-weight-bold">Bennu Mappers</h3>
+            <ul>
+                <li>View Leaderboard</li>
+                <li>Provide a name to use in publications</li>
+                <li>See who marked possible sample sites</li>
+                <li>Learn what's next</li>
+            </ul>
+            <h3 class="font-weight-bold">Other Projects</h3>
+            <ul>
+                <li>Stay tuned...</li>
+            </ul>
         </div>
 
         <!-- main block --------------------------------------------------------------- -->
@@ -57,23 +51,16 @@ $lang = json_decode($lang, true);
             ?>
 
 
-            <p> Bennu Mappers Phase 1 is over, but we're not done!</p>
-            <p> You made more than 10 million rock measurements and
-                mapped the potential landing sites for the OSIRIS-REx
-                spacecraft. Phase 2 is coming for Hero Markers
-                (you know who you are). </p>
-            <p> We're developing cool extras for all of you. Stay tuned!</p>
+            <p> Intro Texxt</p>
+
         </div>
 
         <!-- Right block -------------------------------------------------------------- -->
         <?php $txt = $lang['app_page']['text-boxes']['app-right']; ?>
 
         <div id="app-right" class="col-md-3 p-4">
-            <h3 class="font-weight-bold"><?php echo $txt['title'];?></h3>
-            <p><?php echo $txt['blurb'];?></p>
-            <p><?php echo $txt['footer'];?></p>
-            <input type="button" value="Discord"><input type="button" value="Twitch"><br/>
-            <!-- <iframe src="https://titanembeds.com/embed/443490369443856384" height="245" width="350" frameborder="0"></iframe> -->
+            <h3 class="font-weight-bold">Why the update?</h3>
+            <p>right blurb</p>
         </div>
 
 
