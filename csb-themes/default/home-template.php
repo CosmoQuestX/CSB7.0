@@ -8,8 +8,9 @@
 
 /** Get the setup files for the app dynamically TODO make this a function */
 
-$lang = file_get_contents($lang);
-$lang = json_decode($lang, true);
+/**  TODO add language support */
+//$lang = file_get_contents($lang);
+//$lang = json_decode($lang, true);
 
 ?>
 
@@ -56,7 +57,7 @@ $lang = json_decode($lang, true);
         </div>
 
         <!-- Right block -------------------------------------------------------------- -->
-        <?php $txt = $lang['app_page']['text-boxes']['app-right']; ?>
+        <?php //$txt = $lang['app_page']['text-boxes']['app-right']; ?>
 
         <div id="app-right" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Why the update?</h3>

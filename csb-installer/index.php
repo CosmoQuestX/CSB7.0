@@ -83,13 +83,14 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
             <div id="main">
             <div id="" class="container">
                 <div id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;">
-                    <h3>Write down your password!</h3>
+
                     <p><?php
                         require_once("installer.php");
-                        ?></p><?php
-                    loadFooter(); ?>
+                        ?></p>
+                    <h3>Write down your password!</h3>
                 </div>
-            </div>  <?php
+            </div>
+            <?php
             die();
         } else {
             // Else, better not continue.
@@ -123,10 +124,11 @@ if (is_writable($BASE_DIR)) {
     echo "<span style=\"font-weight:bold; color:green\">TRUE</span><br /></p>\n";
 } else {
     echo "<span style=\"font-weight:bold; color:red;\">FALSE</span><br />\n";
-    echo "<h2>Make sure the directory ${BASE_DIR} is writeable for the webserver user</h2></p>";
+    echo "Make sure the directory ${BASE_DIR} is writeable for the webserver user. (for Ubuntu: sudo chmod -R www-data your_dir)</p>";
     // We cant' write our configuration so abort.
+    echo "Aborting the installer. </div></div></div>";
     require_once($THEME_DIR . "/footer.php");
-    die ("Aborting the installer");
+    die ("");
 }
 
 
@@ -140,7 +142,8 @@ echo "<p>Let's set up the basics: </p>";
 echo <<<EOT
 <form name="installation" action="${_SERVER['SCRIPT_NAME']}" method="post">
 <div id="form-input-box">
-<div id="form-input-row"><div id="form-input-left">Base Dir</div><div id="form-input-right"><input type="text" name="BASE_DIR" value="${BASE_DIR}"></div></div>
+        <div id="form-input-row"><div id="form-input-left">Site Name</div><div id="form-input-right"><input type="text" name="SITE_NAME" value="Do Science"></div></div>
+        <div id="form-input-row"><div id="form-input-left">Base Dir</div><div id="form-input-right"><input type="text" name="BASE_DIR" value="${BASE_DIR}"></div></div>
         <div id="form-input-row"><div id="form-input-left">Base URL</div><div id="form-input-right"><input type="text" name="BASE_URL" value="${BASE_URL}"></div></div>
         <div id="form-input-row"><div id="form-input-left">Site Admin Email</div><div id="form-input-right"><input type="text" name="rescue_email" value="admin@${_SERVER['SERVER_NAME']}"></div></div>
         <div id="form-input-row"><div id="form-input-left">Database Server</div><div id="form-input-right"><input type="text" name="db_servername" value="localhost"></div></div>
@@ -166,5 +169,4 @@ echo <<<EOT
 EOT;
 
 echo "</div></div></div>";
-require_once($THEME_DIR . "/footer.php");
-?>
+loadFooter();
