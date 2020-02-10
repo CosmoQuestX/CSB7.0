@@ -46,8 +46,8 @@ if (isset($_GET['go'])) {
         // hash password & insert them into the database
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-        if ($db->checkUser('name', filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0))) {
-            $_SESSION['regmsg'] = "Cannot register, user name " . filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0) . " already exists!";
+        if ($db->checkUser('name', filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS))) {
+            $_SESSION['regmsg'] = "Cannot register, user name " . filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS) . " already exists!";
             header("Location:" . $BASE_URL."csb-accounts/register.php");
         } elseif ($db->checkUser('email', filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL))) {
             $_SESSION['regmsg'] = "Cannot register, email " . filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) . " already in use!";
@@ -166,8 +166,6 @@ function login($db, $user)
             die("user not found");
         }
     }
-
-    $_SESSION['errmsg'] =  $_SESSION['errmsg'];
 
     // Send them where they belong 
     header("Location: " . $user['referringURL']);
