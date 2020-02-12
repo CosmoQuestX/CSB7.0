@@ -145,7 +145,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                             ?>
                             <span class="font-weight-bold text-danger">FALSE</span>
                     </p><p class="text-danger">Make sure the directory </br><code><?php echo $BASE_DIR; ?></code></br> is writeable for the webserver user. (for Ubuntu: sudo chmod -R www-data your_dir)</p>
-                            Aborting the installer.
+    Aborting the installer.</div></div></div></div></div>
                             <?php
                             require_once($THEME_DIR . "/footer.php");
                             die ("");
@@ -190,10 +190,10 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                                 <div class="col-md-6" id="directory-help">
                                     <h5>Directory Setup</h5>
                                     <ul>
-                                        <li>Site name - Displayed on top of page...</li>
-                                        <li>Base Directory - Directory that CSB7.0 is located within the server</li>
-                                        <li>Other info</li>
-                                        <p>Other Info</p>
+                                        <li>Site name: This is displayed in page titles & in headers</li>
+                                        <li>Base Directory: Complete installation directory (e.g. from pwd)</li>
+                                        <li>Base URL: What is the URL to get to CSB's root directory</li>
+                                        <li>Site Admin Email: This is used to rescue your admin user</li>
                                     </ul>
                                 </div>
                             </div>
@@ -212,6 +212,11 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                                 </div>
                                 <div class="col-md-6" id="database-help">
                                     <h5>Database Setup</h5>
+                                    <ul>
+                                        <li>Database Server: Often localhost, 127.0.0.1, or a remote server IP</li>
+                                        <li>Username: this is your database user (security tip: create a program-specific db user)</li>
+                                        <li>Database Name: This is where all CSB tables will go. Should be empty/new utf8 / utf8_bin DB schema.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -231,6 +236,9 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                                 </div>
                                 <div class="col-md-6" id="smtp-help">
                                     <h5>SMTP Setup</h5>
+                                    <p>These settings are specific to your email provider. For production installations
+                                    please use an email provider without rate caps. Some Google Business accounts have
+                                    no rate cap, and services like Sendgrid work well.</p>
                                 </div>
                             </div>
                         </div>
