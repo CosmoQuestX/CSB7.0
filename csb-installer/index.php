@@ -144,7 +144,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                             // Directory is not writeable, so abort
                             ?>
                             <span class="font-weight-bold text-danger">FALSE</span>
-                            Make sure the directory ${BASE_DIR} is writeable for the webserver user. (for Ubuntu: sudo chmod -R www-data your_dir)</p>
+                    </p><p class="text-danger">Make sure the directory </br><code><?php echo $BASE_DIR; ?></code></br> is writeable for the webserver user. (for Ubuntu: sudo chmod -R www-data your_dir)</p>
                             Aborting the installer.
                             <?php
                             require_once($THEME_DIR . "/footer.php");
@@ -172,7 +172,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                     </ul>
                 </div>
 
-                <form name="installation" action="<?php echo ${_SERVER['SCRIPT_NAME']}; ?>" method="post">
+                <form name="installation" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
                     <div class="card-body tab-content">
 
                         <div id="directories" class="tab-pane active in">
@@ -181,11 +181,11 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                                     <label>Site Name</label>
                                     <input type="text" class="form-control" name="SITE_NAME" placeholder="Do Science">
                                     <label>Base Directory</label>
-                                    <input type="text" class="form-control" name="BASE_DIR" value="<?php echo ${BASE_DIR}; ?>">
+                                    <input type="text" class="form-control" name="BASE_DIR" value="<?php echo $BASE_DIR; ?>">
                                     <label>Base URL</label>
-                                    <input type="text" class="form-control" name="BASE_URL" value="<?php echo ${BASE_URL}; ?>">
+                                    <input type="text" class="form-control" name="BASE_URL" value="<?php echo $BASE_URL; ?>">
                                     <label>Site Admin Email</label>
-                                    <input type="text" class="form-control" name="rescue_email" value="<?php //echo admin@${_SERVER['SERVER_NAME']}; ?>">
+                                    <input type="text" class="form-control" name="rescue_email" value="your@email.com">
                                 </div>
                                 <div class="col-md-6" id="directory-help">
                                     <h5>Directory Setup</h5>
@@ -227,7 +227,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                                     <label>Port</label>
                                     <input type="text" class="form-control" name="email_port" placeholder="587">
                                     <label>Sending Address</label>
-                                    <input type="text" class="form-control" name="email_from" value="<?php echo ${_SERVER['SERVER_NAME']}; ?>">
+                                    <input type="text" class="form-control" name="email_from" value="your@email.com">
                                 </div>
                                 <div class="col-md-6" id="smtp-help">
                                     <h5>SMTP Setup</h5>
@@ -236,7 +236,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                         </div>
 
                     </div>
-                </form>
+
 
 
 
@@ -244,7 +244,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                     <input type="hidden" name="write_config" value="true">
                     <input type="submit" class="btn btn-cq" name="submit" value="Write Configuration">
                 </div>
-
+                </form>
             </div>
 
         </div>
