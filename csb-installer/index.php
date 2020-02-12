@@ -11,7 +11,7 @@
    is already present. Just incase somebody tries.  
    ---------------------------------------------------------------------- */
 if ((@include "../csb-settings.php") == TRUE) {
-    header("Location: $BASE_URL");
+    //header("Location: $BASE_URL");
 }
 
 /* ----------------------------------------------------------------------
@@ -105,68 +105,161 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
    So since we definitely don't have a user yet, hide the div.
    --------------------------------------------------------------------- */
 
-echo "<script type=\"text/javascript\" language=\"JavaScript\">";
-echo "document.getElementById(\"user\").style.display = \"none\";";
-echo "</script>\n";
+?>
+
+<script type="text/javascript" language="JavaScript">
+    document.getElementById("user").style.display = "none";
+</script>
+
+<?php
 
 /* ---------------------------------------------------------------------
    Time to get things set up!
    --------------------------------------------------------------------- */
 
-echo '<div id="main">';
-echo '<div id="" class="container">';
-echo '<div id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;">';
-echo "<p><h4>You are running the Citizen Science Builder installer</h4> <br />\n";
-echo "Using installation path: " . $BASE_DIR . "<br />\n";
-echo "Using URL:" . $BASE_URL . "<br />\n";
-echo "The installation path is writeable by the webserver: ";
-if (is_writable($BASE_DIR)) {
-    echo "<span style=\"font-weight:bold; color:green\">TRUE</span><br /></p>\n";
-} else {
-    echo "<span style=\"font-weight:bold; color:red;\">FALSE</span><br />\n";
-    echo "Make sure the directory ${BASE_DIR} is writeable for the webserver user. (for Ubuntu: sudo chmod -R www-data your_dir)</p>";
-    // We cant' write our configuration so abort.
-    echo "Aborting the installer. </div></div></div>";
-    require_once($THEME_DIR . "/footer.php");
-    die ("");
-}
+?>
 
 
-/* ----------------------------------------------------------------------
-   Before we do the actual installation stuff, let the user give us our
-   default stuff.
-   ---------------------------------------------------------------------- */
+<div class="container text-dark">
+    <div class="row">
+        <div class="col">
 
-echo "<p>Let's set up the basics: </p>";
+            <div class="card">
+                <h4 class="card-header">Citizen Science Builder Installer</h4>
+                <div class="card-body">
+                    <p>Using installation path: <code><?php echo $BASE_DIR; ?></code></p>
+                    <p>Using URL: <code><?php echo $BASE_URL; ?></code></p>
+                    <p>The installation path is writeable by the webserver:
+                    <?php
 
-echo <<<EOT
-<form name="installation" action="${_SERVER['SCRIPT_NAME']}" method="post">
-<div id="form-input-box">
-        <div id="form-input-row"><div id="form-input-left">Site Name</div><div id="form-input-right"><input type="text" name="SITE_NAME" value="Do Science"></div></div>
-        <div id="form-input-row"><div id="form-input-left">Base Dir</div><div id="form-input-right"><input type="text" name="BASE_DIR" value="${BASE_DIR}"></div></div>
-        <div id="form-input-row"><div id="form-input-left">Base URL</div><div id="form-input-right"><input type="text" name="BASE_URL" value="${BASE_URL}"></div></div>
-        <div id="form-input-row"><div id="form-input-left">Site Admin Email</div><div id="form-input-right"><input type="text" name="rescue_email" value="admin@${_SERVER['SERVER_NAME']}"></div></div>
-        <div id="form-input-row"><div id="form-input-left">Database Server</div><div id="form-input-right"><input type="text" name="db_servername" value="localhost"></div></div>
-        <div id="form-input-row"><div id="form-input-left">Database User</div><div id="form-input-right"><input type="text" name="db_username" value="csb"></div></div>
-        <div id="form-input-row"><div id="form-input-left">Database Password</div><div id="form-input-right"><input type="password" name="db_password"></div></div>
-        <div id="form-input-row"><div id="form-input-left">Database name</div><div id="form-input-right"><input type="text" name="db_name" value="csb"></div></div>
-    <!-- Maybe we want to support table prefixes in the future.
-	     That needs some work on the database layer though, so
-		 we'll skip it for now.
-        <div id="form-input-row"><div id="form-input-left">Table prefix</div> <div id="form-input-right"><input type="text" name="db_prefix" value=""></div></div>
-	-->
-        <div id="form-input-row"><div id="form-input-left"></div><div id="form-input-right">&nbsp;</div></div>
-        <div id="form-input-row"><div id="form-input-left">Email Host</div><div id="form-input-right"><input type="text" name="email_host" value="smtp.yourprovider.example"></div></div>
-        <div id="form-input-row"><div id="form-input-left">Email User</div><div id="form-input-right"><input type="text" name="email_username" value=""></div></div>
-        <div id="form-input-row"><div id="form-input-left">Email Password</div><div id="form-input-right"><input type="password" name="email_password" value=""></div></div>
-        <div id="form-input-row"><div id="form-input-left">Email Port</div><div id="form-input-right"><input type="text" name="email_port" value="587"></div></div>
-        <div id="form-input-row"><div id="form-input-left">Email sender address</div><div id="form-input-right"><input type="text" name="email_from" value="csb@${_SERVER['SERVER_NAME']}"></div></div>
-        <br /><input type="hidden" name="write_config" value="true"><input type="submit" class="btn-default" name="submit" value="Write config">
+                        if (is_writable($BASE_DIR)) {
+
+                            // Directory is writeable
+                            ?>
+                            <span class="font-weight-bold text-success">TRUE</span>
+                            <?php
+
+                        } else {
+
+                            // Directory is not writeable, so abort
+                            ?>
+                            <span class="font-weight-bold text-danger">FALSE</span>
+                            Make sure the directory ${BASE_DIR} is writeable for the webserver user. (for Ubuntu: sudo chmod -R www-data your_dir)</p>
+                            Aborting the installer.
+                            <?php
+                            require_once($THEME_DIR . "/footer.php");
+                            die ("");
+
+                        }
+
+                    ?>
+                    </p>
+                </div>
+
+                
+                
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link active" href="#directories">Directories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link" href="#database">Database</a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link" href="#smtp">SMTP</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <form name="installation" action="<?php echo ${_SERVER['SCRIPT_NAME']}; ?>" method="post">
+                    <div class="card-body tab-content">
+
+                        <div id="directories" class="tab-pane active in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label>Site Name</label>
+                                    <input type="text" class="form-control" name="SITE_NAME" placeholder="Do Science">
+                                    <label>Base Directory</label>
+                                    <input type="text" class="form-control" name="BASE_DIR" value="<?php echo ${BASE_DIR}; ?>">
+                                    <label>Base URL</label>
+                                    <input type="text" class="form-control" name="BASE_URL" value="<?php echo ${BASE_URL}; ?>">
+                                    <label>Site Admin Email</label>
+                                    <input type="text" class="form-control" name="rescue_email" value="<?php //echo admin@${_SERVER['SERVER_NAME']}; ?>">
+                                </div>
+                                <div class="col-md-6" id="directory-help">
+                                    <h5>Directory Setup</h5>
+                                    <ul>
+                                        <li>Site name - Displayed on top of page...</li>
+                                        <li>Base Directory - Directory that CSB7.0 is located within the server</li>
+                                        <li>Other info</li>
+                                        <p>Other Info</p>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="database" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label>Database Server</label>
+                                    <input type="text" class="form-control" name="db_servername" value="localhost">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control" name="db_username" value="csb">
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" name="db_password">
+                                    <label>Database Name</label>
+                                    <input type="text" class="form-control" name="db_name" value="csb">
+                                </div>
+                                <div class="col-md-6" id="database-help">
+                                    <h5>Database Setup</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="smtp" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label>Email Host</label>
+                                    <input type="text" class="form-control" name="email_host" placeholder="smtp.yourprovider.example">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control" name="email_username" value="">
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" name="email_password" value="">
+                                    <label>Port</label>
+                                    <input type="text" class="form-control" name="email_port" placeholder="587">
+                                    <label>Sending Address</label>
+                                    <input type="text" class="form-control" name="email_from" value="<?php echo ${_SERVER['SERVER_NAME']}; ?>">
+                                </div>
+                                <div class="col-md-6" id="smtp-help">
+                                    <h5>SMTP Setup</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+
+
+                <div class="my-4 d-flex justify-content-center">
+                    <input type="hidden" name="write_config" value="true">
+                    <input type="submit" class="btn btn-cq" name="submit" value="Write Configuration">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 </div>
-</form>
 
 
-EOT;
 
-echo "</div></div></div>";
+
+
+
+
+
+
+</div>
+
+<?php
 loadFooter();
