@@ -53,4 +53,8 @@ require_once($BASE_DIR . "/csb-content/template_functions.php");
 
 loadHeader($page_title);
 require_once($THEME_DIR . "/app-template.php");
+?>
+<script src="/csb-content/js/Application.js"></script>
+<script src="/csb-content/js/applications/BennuMappers.js"></script>
+<?php
 loadFooter();

@@ -246,7 +246,7 @@ function loadLoginBox()
         })
 
         // Re-open login modal if login fails
-        if ('<?php echo $_SESSION['errmsg']; ?>' !== '') {
+        if ('<?php echo (isset($_SESSION['errmsg'])) ? $_SESSION['errmsg'] : ''; ?>' !== '') {
             $('#loginModal').removeClass('fade');
             $('#loginModal').modal('show');
         }
