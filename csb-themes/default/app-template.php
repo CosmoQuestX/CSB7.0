@@ -5,21 +5,13 @@
  * Date: 6/4/19
  * Time: 1:18 PM
  */
-
-/** Get the setup files for the app dynamically TODO make this a function */
-require_once($BASE_DIR . "/csb-apps/Bennu/bennu-template.php");
-$lang = $BASE_DIR . "csb-apps/Bennu/lang/bennu.en.json";
-
-$lang = file_get_contents($lang);
-$lang = json_decode($lang, true);
-
 ?>
 
-<div id="main">
-    <div class="container">
+<div class="container mt-3">
+    <div class="row">
 
-        <!-- Left block ----------------------------------------------------------------->
-        <div id="app-left" class="left">
+        <!-- Left block --------------------------------------------------------------- -->
+        <div id="app-left" class="col-md-3 p-4">
             <?php $txt = $lang['app_page']['text-boxes']['app-left']; ?>
             <h2><?php echo $txt['title']; ?></h2>
             <p> <?php echo $txt['fact1-title']; ?><br/>
@@ -55,36 +47,35 @@ $lang = json_decode($lang, true);
             </div>
         </div>
 
-        <!-- main block ----------------------------------------------------------------->
-        <div id="app-main" class="left">
+        <!-- main block --------------------------------------------------------------- -->
+        <div id="app-main" class="col-md-6 p-4">
+            <div class="row">
+                <div id="app-button-container" class="col-md-auto">
+                    <?php
 
-            <div id="app-button-container" class="left">
-                <?php
+                    foreach ($buttons as $button) {
+                        if ($button['name'] == $defaultButton) $status = "";
+                        else $status = ' notSelected';
 
-                foreach ($buttons as $button) {
-                    if ($button['name'] == $defaultButton) $status = "";
-                    else $status = ' notSelected';
+                        echo "<img class='app-button " . $status . "' src='" . $BASE_URL . "/csb-content/images/buttons/" . $button['img'] . "' alt='" . $button['name'] . "'><br/>";
+                    }
+                    ?>
+                </div>
 
-                    echo "<img class='app-button " . $status . "' src='" . $BASE_URL . "/csb-content/images/buttons/" . $button['img'] . "' alt='" . $button['name'] . "'><br/>";
-                }
-                ?>
+                <div id="app-canvas" class="col-md-auto">
+                </div>
+
             </div>
-            <div id="app-canvas" class="left">
-
-            </div>
-
-            <div class="clear"></div>
         </div>
 
         <!-- Right block ---------------------------------------------------------------->
         <?php $txt = $lang['app_page']['text-boxes']['app-right']; ?>
-        <div id="app-right" class="right">
+        <div id="app-right" class="col-md-3 p-4">
             <h1><?php echo $txt['title']; ?></h1>
             <p><?php echo $txt['blurb']; ?></p>
             <p><?php echo $txt['footer']; ?></p>
             <input type="button" value="Discord"><input type="button" value="Twitch"><br/>
-            <iframe src="https://titanembeds.com/embed/443490369443856384" height="245" width="350"></iframe>
+            <!-- <iframe src="https://titanembeds.com/embed/443490369443856384" height="245" width="350"></iframe> -->
         </div>
-        <div class="clear"></div>
     </div>
 </div>

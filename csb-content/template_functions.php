@@ -140,7 +140,7 @@ function loadNavLinks()
         ?>
 
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo $BASE_URL; ?>">Bennu Mapper</a>
+            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=Bennu'; ?>">Bennu Mapper</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="<?php echo $BASE_URL; ?>">Other Mapper</a>
