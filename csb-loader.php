@@ -10,7 +10,8 @@
    Load things needed always
    ---------------------------------------------------------------------- */
 global $BASE_DIR, $BASE_URL, $adminFlag;
-require("csb-settings.php");
+if (stream_resolve_include_path("csb-settings.php") === false) { header ("Location: csb-installer/"); }
+require "csb-settings.php";
 $loader = TRUE;
 
 /* ----------------------------------------------------------------------
