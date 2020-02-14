@@ -22,9 +22,9 @@ if (!isset($loader) || !$loader) {
 // Are they on this site?
 $referringURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-?>
 
-<!-----------------------------------------------------------------------
+
+/* -----------------------------------------------------------------------
    Registration form
         1) Tell them if there is an error (check with JS) TODO
         2) Get their info
@@ -33,7 +33,11 @@ $referringURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         Also include:
             - signin instead TODO
 
-   ---------------------------------------------------------------------->
+   ---------------------------------------------------------------------- */
+GLOBAL $ACC_URL;
+
+?>
+
 <h3 class="font-weight-bold">Register</h3>
 <div id="form-input-box">
     <form action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">

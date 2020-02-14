@@ -65,13 +65,14 @@ if (isset($_GET['go'])) {
 
         $name  = filter_input(INPUT_POST, 'nameORemail', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'nameORemail', FILTER_SANITIZE_EMAIL);
-        echo $name."-".$email;
+
         if ($db->checkUser('name', $name, 0)) {
             $_SESSION['errMsg'] = "found $name. ";
-            die("STILL BEING IMPLEMENTED"); // will go to rescueUser("name", $name);
+            rescueUser($db, "name", $name);
         } elseif ($db->checkUser('email', $email)) {
+            echo "found email $email";
             $_SESSION['errMsg'] = "found $email. ";
-            die("STILL BEING IMPLEMENTED"); // will go to rescueUser("email", $email);
+            die("STILL BEING IMPLEMENTED"); // will go to rescueUser($db, "email", $email);
         } else {
             $_SESSION['errMsg'] = "No username or email matched: $name";
             header("Location: " . $ACC_URL."/rescue.php");
@@ -214,7 +215,6 @@ function regUser($db, $user, $pwhash)
     $db->insert($query, "sss", $params);
 
     $query = "SELECT id FROM users WHERE name = '".$user['name']."'";
-    //$query = "SELECT id FROM users WHERE name = 'test25'";
 
     $id = $db->runBaseQuery($query)[0]['id'];
 
@@ -270,26 +270,40 @@ function regUser($db, $user, $pwhash)
 
 }
 
-function rescueUser ($db, $form) {
-    GLOBAL $emailSettings;
+function rescueUser ($db, $using, $value) {
+    GLOBAL $emailSettings, $ACC_URL, $BASE_URL;
 
+// Get the email to send information to
+    if(strcmp($using, "email")==0) {
+        $to = $value;
+    } else {
+        $id = $db->getUserIdByName($value);
+        $to = $db->getUser($id)['email'];
 
-    //Check if name is empty, if not check if user exists if
-    //Check if email is empty, if not check if email exists
-    //Have a user? Email and confirm
+    }
 
+    // Set up the hash value to store
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_-=+;:,.?";
+    $token = substr(str_shuffle($chars), 0, 12);
+    $hashedToken = password_hash($token, PASSWORD_DEFAULT);
+
+    $query = "INSERT INTO password_resets (email, token) VALUES ('$to', '$token')";
+    $db->runQuery($query);
 
     require_once("email_class.php");
 
     $email = new EMAIL($emailSettings);
 
-    $to = "starstryder@gmail.com";
+
+
     $msg['subject'] = "CosmoQuest Password Reset";
-    $msg['body'] = "Someone has requested a ";
+    $msg['body'] = "Someone has requested a password reset for your account. If you made
+                    this request and would like to reset your password, please follow
+                    this link: ".$ACC_URL."rescue.php?go=".$to."&token=".$token;
 
     $email->sendMail($to, $msg);
 
-    die("here");
+    header("Location: $BASE_URL");
 
     //No one? send error
 }

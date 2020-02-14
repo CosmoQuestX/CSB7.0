@@ -102,7 +102,10 @@ class DB
         if ($result = mysqli_query($this->conn, $query)) {
             error_log(mysqli_error($this->conn));
 
-            if ($result->num_rows > 0) {
+            if ($result === TRUE) {
+                return TRUE;
+
+            } elseif ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $resultSet[] = $row;
                 }
@@ -295,10 +298,12 @@ class DB
      */
     function getUserIdByName($name)
     {
-        $sql = "SELECT id from users WHERE name = ?";
+        $query = "SELECT id from users WHERE name = ?";
+        $sql = $this->conn->prepare($query);
         $param_value_array = array($name);
         $param_type = "s";
         $this->bindQueryParams($sql, $param_type, $param_value_array);
+
         $sql->execute();
         $result = $sql->get_result();
 

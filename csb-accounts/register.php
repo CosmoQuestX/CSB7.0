@@ -32,7 +32,7 @@ require_once($BASE_DIR . "csb-accounts/auth.php");
 
 $db = new DB($db_servername, $db_username, $db_password, $db_name);
 
-global $user;
+global $user, $ACC_URL;
 $user = isLoggedIn($db);
 
 /* ----------------------------------------------------------------------
@@ -71,6 +71,7 @@ require_once($BASE_DIR . "/csb-content/template_functions.php");
 $page_title = $SITE_TITLE . "Registration";
 
 //TODO Set error for if loading while logged in
+
 
 loadHeader($page_title);
 load3Col($menus, $main, $notes, 'reg-template.php');
