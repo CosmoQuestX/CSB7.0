@@ -17,8 +17,9 @@ echo "You are running the Citizen science Builder installer <br>";
    ---------------------------------------------------------------------- */
 
 $conn = new mysqli($db_servername, $db_username, $db_password, $db_name);
+
 if ($conn->connect_error) {
-    die("Connection to Database Unsuccessful. Did you create the database '" . $db_name . "' on ".$db_servernam."?");
+    die("Connection to Database Unsuccessful. Did you create the database '" . $db_name . "' on ".$db_servername."?");
 } else {
     echo "Connected to database: " . $db_name . "<br/>";
 }
