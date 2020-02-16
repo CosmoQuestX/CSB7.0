@@ -54,7 +54,61 @@ require_once($BASE_DIR . "/csb-content/template_functions.php");
 loadHeader($page_title);
 require_once($THEME_DIR . "/app-template.php");
 ?>
+<script src="/csb-content/js/network.js"></script>
+<script src="/csb-content/js/tools/Tool.js"></script>
+<script src="/csb-content/js/tools/CircleTool.js"></script>
+<script src="/csb-content/js/tools/DarkenScreenTool.js"></script>
+<script src="/csb-content/js/tools/EraserTool.js"></script>
+<script src="/csb-content/js/tools/FeatureTool.js"></script>
+<script src="/csb-content/js/tools/LinearTool.js"></script>
+<script src="/csb-content/js/tools/MarkerTool.js"></script>
+<script src="/csb-content/js/tools/PaintingTool.js"></script>
+<script src="/csb-content/js/tools/ShowHideTool.js"></script>
+<script src="/csb-content/js/tools/ZoomWindowTool.js"></script>
+
+<script src="/csb-content/js/Marks/Blanket.js"></script>
+<script src="/csb-content/js/Marks/CheckMark.js"></script>
+<script src="/csb-content/js/Marks/Crater.js"></script>
+<script src="/csb-content/js/Marks/Feature.js"></script>
+<script src="/csb-content/js/Marks/LinearFeature.js"></script>
+<script src="/csb-content/js/Marks/PaintMark.js"></script>
+<script src="/csb-content/js/Marks/Rock.js"></script>
+<script src="/csb-content/js/Marks/Segment.js"></script>
+<script src="/csb-content/js/Marks/Transient.js"></script>
+<script src="/csb-content/js/Marks/XMark.js"></script>
+<script src="/csb-content/js/Marks/Mark.js"></script>
+
+
+<script src="/csb-content/js/AppInterface.js"></script>
+<script src="/csb-content/js/AppImage.js"></script>
+<script src="/csb-content/js/Tutorial.js"></script>
+<script src="/csb-content/js/TutorialStep.js"></script>
 <script src="/csb-content/js/Application.js"></script>
+<script src="/csb-content/js/CsbApp.js"></script>
 <script src="/csb-content/js/applications/BennuMappers.js"></script>
+<script src="/csb-content/js/applications/MarsMappers.js"></script>
+<script src="/csb-content/js/applications/MercuryMappers.js"></script>
+<script src="/csb-content/js/applications/MoonMappers.js"></script>
+<script type="text/javascript">
+    const urlParams = new URLSearchParams(window.location.search);
+    const launchButton = document.getElementById('app-launcher');
+
+    if (launchButton && urlParams.has('app')) {
+        launchButton.addEventListener("click", () => {
+            // show the mapping app
+            let cqMappingToolDiv = document.getElementById('cq-mapping-tool');
+            cqMappingToolDiv.style = '';
+
+            // dynamically determine which mapping app to load
+            let csbApp = new CsbApp('project_canvas', true);
+            const mapper = urlParams.get('app').toLowerCase() + '_mappers';
+
+            // setup and start the mapping app
+            csbApp.initialize([], true);
+            csbApp.startApp(mapper);
+        });
+    }
+</script>
+
 <?php
 loadFooter();

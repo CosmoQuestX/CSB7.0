@@ -20,7 +20,9 @@ var span = document.getElementsByClassName("close")[0];
 
 if (btnHome) {
     btnHome.onclick = function () {
-        alert.style.display = "block";
+        if (alert) {
+            alert.style.display = "block";
+        }
     }
 }
 
@@ -33,8 +35,10 @@ if (span) {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
-    if (event.target == alert) {
-        alert.style.display = "none";
+    if (event.target && event.target == alert) {
+        if (alert) {
+            alert.style.display = "none";
+        }
     }
 }
 

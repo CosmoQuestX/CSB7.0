@@ -18,9 +18,9 @@ function Tutorial(csbApp) {
         $("#tutorial-steps-complete").show();
         this.csbApp.isAppOn = true;
         this.mouseUpImage = document.createElement('img');
-        this.mouseUpImage.src = "/images/applications/tutorials/cursor-up.png";
+        this.mouseUpImage.src = "/csb-content/images/applications/tutorials/cursor-up.png";
         this.mouseDownImage = document.createElement('img');
-        this.mouseDownImage.src = "/images/applications/tutorials/cursor-down.png";
+        this.mouseDownImage.src = "/csb-content/images/applications/tutorials/cursor-down.png";
 
         var self = this;
         $("#text-bubble-okay-button").click(function () {
@@ -62,7 +62,7 @@ function Tutorial(csbApp) {
 
         this.csbApp.tutorialsCompleted.push(this.csbApp.applicationName);
 
-        $.post("/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}, function (returnData) {
+        postData("/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}).then( returnData => {
             console.log(returnData);
         });
     };
@@ -323,7 +323,10 @@ function Tutorial(csbApp) {
 
     this.checkAllMarksAndRenewHint = function (mark) {
         var correctMarks = this.correctMarks;
-        if (typeof (this.getCurrentTutorialStep()["mark-types"]) != "undefined") {
+        var currentTutorialStep = this.getCurrentTutorialStep();
+        if (currentTutorialStep && currentTutorialStep.hasOwnProperty('mark-types') 
+            && typeof currentTutorialStep["mark-types"] != "undefined"
+        ) {
             correctMarks = this.getMarksOfType(this.getCurrentTutorialStep()["mark-types"]);
         }
 
@@ -470,9 +473,9 @@ function Tutorial(csbApp) {
         step = this.getCurrentTutorialStep();
 
         if (step == null) {
-            //appInterface.hideTextBubble();
-            //if (this.currentStepIndex >= this.csbApp.applications[this.csbApp.applicationName].tutorialSteps.length)
-            //this.completeTutorial();
+            appInterface.hideTextBubble();
+            if (this.currentStepIndex >= this.csbApp.applications[this.csbApp.applicationName].tutorialSteps.length)
+                this.completeTutorial();
         } else {
             var delay = 0;
             if (typeof (step["delay"]) != "undefined")

@@ -1,0 +1,933 @@
+@import "globals";
+
+/*detective_search styles*/
+
+.canvasInfoContainer, .canvasInfoContainerZoom
+{
+  margin-top: 15px;
+}
+
+
+#cq-mapping-tool {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color: rgba(0, 0, 0, .5);
+  z-index: 9001;
+  border: none;
+  padding: 0;
+
+  #science-application {
+    position: absolute;
+    width: 840px;
+    height: $app-image-window-height + 140;
+    top: 5%;
+    left: 50%;
+    margin-left: -400px;
+    background-color: black;
+    font: 300 14px/20px "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+
+    #x-button {
+      cursor: pointer;
+      &:hover {
+
+      }
+    }
+
+    #app-login-box-container {
+      #app-login-box-title {
+        font-size: 20px;
+        margin-top: 50px;
+        margin-bottom: 40px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .app-social-media-row{
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #app-social-media-title {
+        font-size: 20px;
+        margin-top: 50px;
+        margin-bottom: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      a, a:visited {
+        color: white !important;
+      }
+      .app-social-media-button{
+        font-size: 20px;
+        margin: 10px auto;
+        padding: 10px;
+        text-align: center;
+        border: 1px solid darkgray;
+        background-color: #3b3b3b;
+        width: 350px;
+
+
+      }
+
+      #app-social-media-box {
+        color: white;
+        margin: 20px;
+        background-color: #252525;
+        padding: 30px 10px;
+      }
+
+      #continue-without-login {
+        font-size: 20px;
+        margin: 40px auto;
+        padding: 10px;
+        text-align: center;
+        border: 1px solid darkgray;
+        background-color: #3b3b3b;
+        width: 350px;
+
+        &:hover {
+          background-color: #505050;
+        }
+      }
+      #app-login-box {
+        color: white;
+        margin: 20px;
+        background-color: #252525;
+        padding: 30px 10px;
+
+        #app-login-button {
+          border-radius: 1px;
+          background-color: #19807F;
+          border: 0;
+          color: #fff;
+          padding: 5px 10px;
+          margin-left: 7px;
+          transition: .25s ease;
+        }
+
+        .app-login-input {
+          background-color: white;
+          padding: 5px;
+          margin: 5px;
+          color: rgb(102, 102, 102);
+        }
+
+        #app-login-error-message {
+          color: darkred;
+          font-style: italic;
+          margin: 10px 0 0 10px;
+        }
+
+        .app-login-remember-div {
+          float: right;
+          margin-right: 80px;
+
+          #remember {
+            float: left;
+          }
+
+          p {
+            float: left;
+            margin-left: 5px;
+          }
+        }
+
+        a {
+          color: white;
+          margin: 10px;
+          &:hover {
+            color: gray;
+          }
+        }
+      }
+    }
+
+    table {
+      border: none;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+    }
+
+    img {
+      background: none;
+      padding: 0;
+    }
+
+    #app {
+      background-color: #111111;
+    }
+
+    #app-tool-buttons-box {
+      width: 150px;
+      height: 456px;
+      background-color: #252525;
+      margin: 15px auto 10px;
+      padding-bottom: 10px;
+      border:none;
+
+      .app-tool-buttons-table {
+        list-style-type: none;
+        text-decoration: none;
+        border-collapse: collapse;
+        border: 0;
+        background: none;
+        color: #dddddd;
+
+        td {
+          margin: 0;
+          padding: 0;
+          width: 75px;
+          height: 50px;
+          vertical-align: middle;
+          text-align: center;
+          display: table-cell;
+
+          img {
+            height: 40px;
+            width: 40px;
+            background-size: 100%;
+          }
+        }
+
+        .small-td {
+          height: 35px !important;
+          background-color: $app-secondary-background-color;
+          border: 1px solid #444444 !important;
+          cursor: pointer;
+          margin: 0;
+        }
+
+        .selected {
+          background-color: #3b3b3b;
+          outline: 1px solid #999999;
+          img {
+            opacity: 1;
+          }
+        }
+
+        .not-selected {
+          background-color: $app-secondary-background-color ;
+        }
+
+        p {
+          margin-bottom: 5px;
+        }
+
+        .muted-button {
+          color: #666666;
+          width: 75px;
+          height: 50px;
+          background-color: $app-secondary-background-color;
+          border: 1px solid #444444 !important;
+          text-align: center;
+          cursor: default;
+          margin: 0;
+
+          img {
+            height: 40px;
+            width: 40px;
+            background-size: 100%;
+            opacity: .3;
+          }
+          img:hover {
+            background: none;
+          }
+        }
+        .muted-button:hover {
+          background: none;
+        }
+      }
+
+      .app-tool-button {
+         background-color: $app-secondary-background-color;
+         border: 2px solid #444444;
+         cursor: pointer;
+
+         img {
+           opacity: .8;
+         }
+
+         &:hover {
+           background-color: #3b3b3b;
+         }
+       }
+
+      #app-tool-help-button {
+        width: 75px;
+        height: 50px;
+        padding-top: .25em;
+        vertical-align: middle;
+        text-align: center;
+        margin: 0 auto;
+
+        img {
+          height: 40px;
+          width: 40px;
+          background-size: 100%;
+        }
+      }
+
+      p {
+        color: white;
+      }
+    }
+
+    #app-bottom-left-box {
+      position: absolute;
+      width: 170px;
+      height: 89px;
+      padding-top: 7px;
+      z-index: 1001;
+      background-color: #111;
+
+      .app-bottom-left-button {
+        text-align: center;
+        border: 1px solid #444444;
+        width: 80%;
+        margin: auto;
+        padding: 5px 0;
+        cursor: pointer;
+        font-size: 1.2em;
+        background-color: #222222;
+
+        &:hover {
+          background-color: #999999;
+        }
+      }
+    }
+
+    #app-goal-box {
+      height: 40px;
+      width: 100%;
+      background-color: #252525;
+      border: 1px solid #666666;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 8px;
+    }
+
+    #app-title-image {
+      width: 100%;
+      height: 40px;
+      border-bottom: 1px solid black;
+    }
+
+    .app-sidebar-title {
+      width: 100%;
+      text-align: center;
+      margin: 10px 0 0;
+    }
+
+    #more-examples-button {
+      width: 120px;
+      margin: 0 25px;
+    }
+
+    #example-images {
+      text-align: center;
+      width: 100%;
+      height: 395px;
+      padding: 0px;
+      .example-image {
+        width: 120px;
+        height: 120px;
+        margin: 5px 0;
+        border: 1px solid white;
+      }
+    }
+
+    #app-example-up-arrow {
+      margin: 1em auto 0;
+      display: block;
+      width: 1.75em;
+      height: 1.75em;
+
+      &:hover {
+        filter: brightness(1.5);
+        cursor: pointer;
+      }
+    }
+
+    #app-example-down-arrow {
+      margin: 0 auto;
+      display: block;
+      width: 1.75em;
+      height: 1.75em;
+
+      &:hover {
+        filter: brightness(1.5);
+        cursor: pointer;
+      }
+    }
+
+    #app-header {
+      background-color: $app-primary-background-color;
+      color: $app-secondary-text-color;
+      padding: 10px;
+      border-bottom: 1px solid #444444;
+      width: 100%;
+      height: 40px;
+
+      #app-title {
+        float: left;
+      }
+
+      #tutorial-steps-complete {
+        margin-top: -5px;
+        width: 25%;
+        height: 30px;
+        position: absolute;
+        left: 37.5%;
+
+        #tutorial-steps-complete-background {
+          float: left;
+          width: 100%;
+          height: 100%;
+          background-color: #333333;
+          border: 1px solid #555555;
+          position: absolute;
+
+          #tutorial-steps-complete-foreground {
+            float: left;
+            background-color: #555555;
+            height: 100%;
+            transition: width ease 1s;
+          }
+
+          #tutorial-steps-complete-text {
+            width: 100%;
+            text-align: center;
+            color: #d2d2d2;
+            margin-top: 5px;
+            position: absolute;
+          }
+        }
+      }
+    }
+
+    .app-button {
+      background: $button-color linear-gradient(#505050, #404040);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: .25em;
+      padding: .25em .5em;
+      user-select: none;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    #app-tutorial-overlay {
+      position: absolute;
+      display: none;
+      width: 100%;
+      height: 0;
+      overflow: hidden;
+      transition: height .5s ease;
+      background-color: $app-primary-background-color;
+      color: $app-primary-text-color !important;
+      z-index: 1010;
+      padding: 1em;
+      text-align: center;
+      top: 40px;
+
+      img {
+        margin-top: 0;
+        margin-right: .5em;
+        height: 2em;
+      }
+
+      h1 {
+        /* Yes this is already done just above, but wordpress needs to know it a second time */
+        color: $app-primary-text-color !important;
+      }
+
+      .app-description {
+        /* Yes this is already done just above, but wordpress needs to know it a second time */
+        color: $app-primary-text-color !important;
+      }
+
+      ol {
+        li {
+          /* Yes this is already done just above, but wordpress needs to know it a second time */
+          color: $app-primary-text-color !important;
+        }
+      }
+
+      ul {
+        list-style-type: disc !important;
+        text-align: left;
+        margin: 1em 0 0 6em;
+        font-size: 0.9em;
+        line-height: 1.5em;
+        padding: 0;
+      }
+
+      #app-tutorial-title {
+        font-size: 3em;
+      }
+
+      #app-tutorial-text {
+        font-size: 2em;
+        line-height: 1.2em;
+        margin: 1em 0;
+
+        h2 {
+          font-weight: bold;
+        }
+
+        .tutorial-note {
+          position: absolute;
+          bottom: 1.5em;
+          left: 1.5em;
+          color: #81BBFF;
+          font-size: 0.6em;
+          font-weight: normal;
+        }
+      }
+
+      #app-tutorial-okay-button {
+        position: absolute;
+        bottom: 1.5em;
+        width: 20%;
+        left: 50%;
+        margin-left: -10%;
+      }
+
+      .app-tutorial-last-page-button {
+        width: 25%;
+        margin: 1.5em auto 0;
+        padding: .5em;
+        display: block;
+      }
+    }
+
+    .tutorial-text {
+      display: none;
+    }
+
+    .app-example {
+      position: absolute;
+      display: none;
+      width: 100%;
+      height: 0;
+      overflow: hidden;
+      transition: height .5s ease;
+      background-color: $app-primary-background-color;
+      color: $app-primary-text-color;
+      z-index: 1010;
+      padding: 1em;
+      top: 5%;
+      font-size: 1.5em;
+      line-height: 1.5em;
+
+      h2 {
+        font-weight: bold;
+      }
+
+      ul {
+        margin-left: 2em;
+      }
+
+      .app-example-images {
+        height: 60%;
+        margin: 1em auto;
+        text-align: center;
+
+        .app-example-image {
+          border: 2px solid #444444;
+          margin: .5em .5em;
+          height: 50%;
+        }
+
+        .app-example-large-image {
+          border: 2px solid #444444;
+          height: 100%;
+          margin: .5em .5em;
+        }
+      }
+    }
+
+    .app-example-opened {
+      height: 600px !important;
+    }
+
+    #app-login-register-window {
+      text-align: center;
+      font-size: 1.3em;
+
+      li {
+        margin: 1em 3em 0 0;
+        float: right;
+        clear: both;
+        list-style-type: none;
+
+        input[type=text], input[type=password] {
+          width: 15em;
+          color: black;
+          font-size: 70%;
+        }
+      }
+
+      #app-login-side {
+        width: 50%;
+        float: left;
+        height: 70%;
+        position: relative;
+
+        #app-forgot-password {
+          font-size: .7em;
+          float: right;
+          margin: 1em 4.2em 0 0;
+
+          a {
+            color: #BBBBBB;
+          }
+        }
+
+        #app-remember-me {
+          margin-right: 5.5em;
+          margin-top: 2em;
+        }
+
+        #app-login-button-container {
+          text-align: center;
+          width: 100%;
+          float: right;
+          position: absolute;
+          bottom: 3em;
+        }
+      }
+
+      #app-register-side {
+        width: 50%;
+        float: right;
+        height: 70%;
+        border-left: .1em solid #999999;
+        position: relative;
+
+        #app-register-button-container {
+          text-align: center;
+          width: 100%;
+          float: right;
+          position: absolute;
+          bottom: 3em;
+        }
+        ul {
+          margin-left: 0;
+          li {
+             margin-right: 1em;
+          }
+        }
+      }
+
+      #app-login-error-text {
+        color: red;
+        font-size: .8em;
+      }
+
+      #app-register-error-text {
+        color: red;
+        font-size: .8em;
+      }
+
+      #app-dont-want-to-login-button {
+        margin-top: 2em;
+      }
+    }
+
+    .app-example-opened {
+      height: 95%;
+    }
+
+    #science-application-inner {
+      background-color: $app-primary-background-color;
+      color: white;
+    }
+    .app-middle{
+      background: $app-primary-background-color;
+      width: $app-image-window-width;
+      height: $app-image-window-height + 100;
+      float: left;
+    }
+
+    .app-left-side {
+      width: 170px;
+      background: $app-primary-background-color;
+      color: $app-primary-text-color;
+      float: left;
+      text-align: center;
+    }
+
+    hr {
+      margin: 15px;
+      border: 1px solid $app-tertiary-background-color;
+      background-color: $app-tertiary-background-color;
+      color: $app-tertiary-background-color;
+    }
+
+    .app-right-side {
+      width: 170px;
+      height: 600px;
+      margin-bottom: 10px;
+      background: $app-primary-background-color;
+      color: $app-primary-text-color;
+      float: left;
+    }
+
+    #app-text-box {
+      background: #000000;
+      color: white;
+      width: $app-image-window-width;
+      height: 60px;
+      clear: both;
+      padding: 8px;
+
+      p {
+        color: white;
+      }
+    }
+
+    .submit-button {
+      text-align: center;
+      border: 1px solid #444444;
+      width: 80%;
+      margin:auto;
+      padding: 5px 0;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+
+    .submit-pressed {
+      background-color: #222222;
+      color: #666666;
+      cursor: default;
+    }
+    .submit-unpressed {
+      background-color: $app-secondary-background-color;
+      cursor: pointer;
+    }
+
+    .undo-button {
+      background-color: #666666;
+      display: inline-flex;
+      border-radius: 10px;
+      border: 3px solid #000000;
+      height: 50px;
+      width: 50px;
+      margin: auto;
+      padding: 5px 0;
+      cursor: pointer;
+    }
+
+    .undo-pressed {
+      background-color: #666666;
+    }
+    .undo-unpressed {
+      background-color: rgb(150, 120, 60);
+    }
+
+    #mark-choices {
+      display: none;
+      margin:auto;
+      background-color: #888888;
+      padding: 10px;
+      z-index: 50;
+      border-radius: 10px;
+      border: 3px solid black;
+    }
+
+    .mark-choice {
+      padding: 10px;
+      border-bottom: 1px solid white;
+    }
+
+    .mark-choices-title {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .mark-choice:hover {
+      background-color: #AAAAAA;
+    }
+
+    .app_task img, .app_task span{
+    }
+
+    #csb-popdown {
+      border-radius: 4px;
+      text-align: center;
+      font-weight: bold;
+      color: #731810;
+      margin:auto;
+      display: flex;
+      justify-content: space-around;
+    }
+    #csb-popdown a {
+      text-decoration: none;
+      color: #731810;
+    }
+
+    #zoom-canvas{
+      z-index: 47;
+      position: absolute;
+      display:none;
+      border: 1px solid gray;
+    }
+
+    #project_canvas{
+      width: $app-image-window-width;
+      height: $app-image-window-height;
+      background:url('/csb-content/images/applications/loading.gif') no-repeat center;
+      border: 1px solid gray;
+    }
+
+    #text-box-next-arrow {
+      width: 29px;
+      height: 29px;
+      margin: 12px;
+    }
+
+    .submit-pressed {
+      color: #444444;
+    }
+
+    #back-button {
+      float: right;
+      margin-right: 50px;
+      font-weight: bold;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  #text-bubble-arrow {
+    // This will eventually become a darker color with white text, but this is for testing purposes
+    width: 20px;
+    height: 20px;
+    border-bottom: 10px solid white;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    z-index: 1020;
+    transition: opacity .4s ease;
+    opacity: 0;
+    pointer-events:none;
+  }
+
+  #text-bubble-blob {
+    padding: .5em;
+    background-color: #202020;
+    color: white;
+    position: absolute;
+    border: 1px solid white;
+    border-radius: .5em;
+    z-index: 1020;
+    transition: opacity .4s ease;
+    opacity: 0;
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 1.5em;
+
+    h4 {
+      margin: 5px 0 10px;
+      font-size: 1.5em;
+      line-height: 1.8em;
+      font-weight: bold;
+      color: white;
+    }
+
+    p {
+      margin: 5px 0 10px;
+      font-size: 1.2em;
+      line-height: 1.8em;
+      color: white;
+    }
+
+    #text-bubble-okay-button {
+      padding: .5em 1em;
+    }
+  }
+
+  #text-bubble-okay-button {
+    background: $button-color linear-gradient(#505050, #404040);
+    color: white;
+    font-weight: bold;
+    border: none;
+    z-index: 1021;
+    border-radius: .25em;
+    padding: .25em .5em;
+    user-select: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .tutorial-highlight {
+    border-color: #FFFFFF;
+  }
+
+  ol {
+    text-align: left;
+    margin: .75em auto;
+    font-size: 1.2em;
+    line-height: 2.3em;
+    width: fit-content;
+    display: inline-block;
+
+    li {
+      list-style-type: none;
+
+      img {
+        height: 1.75em;
+        border: 0 !important;
+        margin-top: .3em;
+        float: left;
+        margin-right: 1em;
+        margin-left: 0em;
+      }
+    }
+  }
+
+  .app-large-button {
+    font-size: 2em;
+    padding: .5em !important;
+  }
+
+  .example-video {
+    display: block;
+    margin: 1em auto 0;
+    width: 400px;
+    height: 300px;
+  }
+
+  #invisible-app-cover {
+    width: 840px;
+    height: 640px;
+    top: 50%;
+    left: 50%;
+    margin-top: -350px;
+    margin-left: -400px;
+    opacity: 0;
+    z-index: 1000;
+    position: absolute;
+  }
+
+  .okay-button {
+    text-align: center;
+    width: 20%;
+    position: absolute;
+    left: 50%;
+    bottom: 1.5em;
+    margin-left: -10%;
+    font-size: 1.2em;
+    padding: .5em 1em;
+  }
+}

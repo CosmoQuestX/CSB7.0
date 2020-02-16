@@ -34,6 +34,8 @@ function CsbApp(canvasElementName, isDebugging) {
     this.appInterface = null;
     this.appImage = null;
 
+    this.attemptCount = 0;
+
     var self = this;
 
     this.initialize = function (tutorialsCompleted, isUserLoggedIn) {
@@ -58,8 +60,8 @@ function CsbApp(canvasElementName, isDebugging) {
                 new MarsMappers(this),
             "mercury_mappers":
                 new MercuryMappers(this),
-            "vesta_mappers":
-                new VestaMappers(this),
+            /*"vesta_mappers":
+                new VestaMappers(this),*/
             "bennu_mappers":
                 new BennuMappers(this)
         };
@@ -107,37 +109,40 @@ function CsbApp(canvasElementName, isDebugging) {
                     self.tutorialsCompleted.push(tutorial);
             });
             this.setTutorialsCookie();
-            $.post("/finish_tutorial", {tutorials_complete: this.tutorialsCompleted}, function (returnData) {
+            postData("/finish_tutorial", {tutorials_complete: this.tutorialsCompleted}).then( returnData => {
                 console.log(returnData);
-            }).fail(function (event) {
-                console.log("Fail: " + JSON.stringify(event));
+            }).catch( err => {
+                console.log("Fail: " + err);
             });
         }
     };
 
     this.initializeAjax = function () {
+        /* TODO not sure this is necessary...
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        */
     };
 
-    this.requestImage = function (attemptCount, imageId) {
-        if (!isSet(attemptCount))
-            attemptCount = 1;
-        if (attemptCount > 5)
+    this.requestImage = function (imageId) {
+        if (this.attemptCount > 5) {
+            this.attemptCount = 0;
             this.updateDisplayedImage(null);
+            return;
+        }
 
-        var fileToPostTo = "/image/next/" + this.applicationName;
+        var fileToPostTo = "/api/image/next/" + this.applicationName;
 
         if (isSet(imageId)) {
-            fileToPostTo = "/image/id/" + imageId;
+            fileToPostTo = "/api/image/id/" + imageId;
         }
 
         var self = this;
 
-        $.post(fileToPostTo, function (returnData) {
+        getData(fileToPostTo).then( returnData => {
             //if (self.isDebugging)
             console.log(JSON.stringify(returnData));
 
@@ -149,9 +154,10 @@ function CsbApp(canvasElementName, isDebugging) {
             self.lastImageData = self.currentImageData;
             self.currentImageData = returnData;
             self.loadImageData(returnData);
-        }).fail(function (event) {
-            console.log("Fail: " + JSON.stringify(event));
-            self.requestImage(attemptCount + 1, imageId);
+        }).catch( err => {
+            console.log("Fail: " + err);
+            this.attemptCount++;
+            self.requestImage(imageId);
         });
     };
 
@@ -200,7 +206,7 @@ function CsbApp(canvasElementName, isDebugging) {
 
         self.imagesDone += 1;
         if (this.isUserLoggedIn) {
-            $.post("/app/" + this.applicationName + "/submit_data", dataToSubmit, function (returnText) {
+            postData("/app/" + this.applicationName + "/submit_data", dataToSubmit).then( returnText => {
                 //if(isDebugging)
                 console.log(returnText);
 
@@ -226,15 +232,20 @@ function CsbApp(canvasElementName, isDebugging) {
                     self.attemptNewImageRequest();
 
                 $(".undo-button").attr("class", "undo-button undo-unpressed");
-            });
+            }).catch( err => {
+                console.error(err);
+            })
 
             var data = {
                 "app": this.applicationName,
                 "count": 1
             };
+
             // Post to our api, puts request on Queue
-            $.post("/api/scistarter", data, function (data) {
+            postData("/api/scistarter", data).then( data => {
                 console.log(data);
+            }).catch( err => {
+                console.error(err);
             });
 
         } else {
@@ -275,7 +286,7 @@ function CsbApp(canvasElementName, isDebugging) {
     this.updateDisplayedImage = function (newImage) {
         var self = this;
         var canvas = this.canvas;
-        var outOfImagesSrc = "/images/applications/out-of-images.png";
+        var outOfImagesSrc = "/csb-content/images/applications/out-of-images.png";
 
         if (newImage == null) {
             var data = {image: {file_location: outOfImagesSrc, sun_angle: null}};

@@ -3,24 +3,24 @@ function MoonMappers(csbApp) {
         "Moon Mappers",
         {
             "circle-button": [
-                "/images/applications/moon_mappers/examples/crater_1.png",
-                "/images/applications/moon_mappers/examples/crater_2.png",
-                "/images/applications/moon_mappers/examples/crater_3.png",
-                "/images/applications/moon_mappers/examples/crater_4.png",
-                "/images/applications/moon_mappers/examples/crater_5.png",
-                "/images/applications/moon_mappers/examples/crater_6.png",
-                "/images/applications/moon_mappers/examples/crater_7.png",
-                "/images/applications/moon_mappers/examples/crater_8.png",
-                "/images/applications/moon_mappers/examples/crater_9.png",
-                "/images/applications/moon_mappers/examples/crater_10.png",
-                "/images/applications/moon_mappers/examples/crater_11.png"
+                "/csb-content/applications/moon_mappers/examples/crater_1.png",
+                "/csb-content/applications/moon_mappers/examples/crater_2.png",
+                "/csb-content/applications/moon_mappers/examples/crater_3.png",
+                "/csb-content/applications/moon_mappers/examples/crater_4.png",
+                "/csb-content/applications/moon_mappers/examples/crater_5.png",
+                "/csb-content/applications/moon_mappers/examples/crater_6.png",
+                "/csb-content/applications/moon_mappers/examples/crater_7.png",
+                "/csb-content/applications/moon_mappers/examples/crater_8.png",
+                "/csb-content/applications/moon_mappers/examples/crater_9.png",
+                "/csb-content/applications/moon_mappers/examples/crater_10.png",
+                "/csb-content/applications/moon_mappers/examples/crater_11.png"
             ],
             "eraser-button": []
         },
         [
             {
                 "type": "set-image",
-                "image-location": "/images/applications/tutorials/moon/moon_1.png",
+                "image-location": "/csb-content/images/applications/tutorials/moon/moon_1.png",
                 "correct-marks": [
                     new Crater(282, 50, 119, csbApp.appInterface),
                     new Crater(192, 178, 72, csbApp.appInterface),
@@ -35,7 +35,7 @@ function MoonMappers(csbApp) {
             {
                 "type": "dropdown",
                 "title": "Tutorial",
-                "text": "Welcome to Mars Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/images/applications/tutorials/icons/eraser.png' /> Erase a mistake</li><li><img src='/images/applications/tutorials/icons/crater.png' /> Find a crater</li><li><img src='/images/applications/tutorials/icons/light-image.png' /> Complete a light image</li><li><img src='/images/applications/tutorials/icons/dark-image.png' /> Complete a dark image</li>",
+                "text": "Welcome to Mars Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/csb-content/images/applications/tutorials/icons/eraser.png' /> Erase a mistake</li><li><img src='/csb-content/images/applications/tutorials/icons/crater.png' /> Find a crater</li><li><img src='/csb-content/images/applications/tutorials/icons/light-image.png' /> Complete a light image</li><li><img src='/csb-content/images/applications/tutorials/icons/dark-image.png' /> Complete a dark image</li>",
                 "ok-button": {}, // Should have text like "Okay, let's start!",
                 "goal": "GOAL: Learn About Craters"
             },
@@ -107,7 +107,7 @@ function MoonMappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/images/applications/tutorials/moon/moon_2.png",
+                "image-location": "/csb-content/images/applications/tutorials/moon/moon_2.png",
                 "correct-marks": [
                     new Crater(256, 13, 146),
                     new Crater(385, 39, 65),
@@ -155,7 +155,7 @@ function MoonMappers(csbApp) {
             },
             {
                 "type": "find-marks",
-                "text": "Try to mark at least <b>10 craters</b>. We're only interested in craters larger than this: <img src='/images/applications/tutorials/red-circle.png' style='width: 16px; height: 16px;' /><br /><b>TIP:</b> If a crater is too small, your circle will be <b style='color: red'>red</b>",
+                "text": "Try to mark at least <b>10 craters</b>. We're only interested in craters larger than this: <img src='/csb-content/images/applications/tutorials/red-circle.png' style='width: 16px; height: 16px;' /><br /><b>TIP:</b> If a crater is too small, your circle will be <b style='color: red'>red</b>",
                 "delay": 500
             },
             {
@@ -165,7 +165,7 @@ function MoonMappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/images/applications/tutorials/moon/moon_3.png",
+                "image-location": "/csb-content/images/applications/tutorials/moon/moon_3.png",
                 "correct-marks": [
                     new Crater(122, 133, 35, csbApp.appInterface),
                     new Crater(211, 107, 57, csbApp.appInterface),
