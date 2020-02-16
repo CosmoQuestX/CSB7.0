@@ -16,7 +16,7 @@ class Auth
 {
     function getUserByName($name)
     {
-        $db_handle = new DBController();
+        $db_handle = new DB();
         $query = "Select * from users where name = ?";
         $result = $db_handle->runQuery($query, 's', array($username));
         return $result;

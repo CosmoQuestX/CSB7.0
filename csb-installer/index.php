@@ -11,7 +11,8 @@
    is already present. Just incase somebody tries.  
    ---------------------------------------------------------------------- */
 if ((@include "../csb-settings.php") == TRUE) {
-    //header("Location: $BASE_URL");
+    header("Location: $BASE_URL");
+    exit();
 }
 
 /* ----------------------------------------------------------------------
@@ -49,7 +50,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
         $config_body = "";
         $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";
 
-        $avar = array('BASE_DIR', 'BASE_URL', 'db_servername', 'db_username', 'db_password', 'email_host', 'email_username', 'email_password', 'email_port', 'email_from');
+        $avar = array('SITE_NAME','BASE_DIR', 'BASE_URL', 'db_servername', 'db_username', 'db_password', 'email_host', 'email_username', 'email_password', 'email_port', 'email_from');
         foreach ($avar as $varname) {
             if (!isset($varname)) {
                 // TODO We should probably exit more gracefully.
@@ -117,6 +118,16 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
    Time to get things set up!
    --------------------------------------------------------------------- */
 
+// Requirement definition
+$min_version = "70200";
+$min_version_readable = "7.2";
+$extensions = array("mysqli");
+$optionals = array("PEAR::Mail");
+$rq_met = false;
+$rq1=false;
+$rq2=false;
+$rqe=array();
+
 ?>
 
 
@@ -161,7 +172,10 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                            <a data-toggle="tab" class="nav-link active" href="#directories">Directories</a>
+                            <a data-toggle="tab" class="nav-link active" href="#requirements">Requirements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link" href="#directories">Directories</a>
                         </li>
                         <li class="nav-item">
                             <a data-toggle="tab" class="nav-link" href="#database">Database</a>
@@ -175,7 +189,74 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                 <form name="installation" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
                     <div class="card-body tab-content">
 
-                        <div id="directories" class="tab-pane active in">
+                        <div id="requirements" class="tab-pane active in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label>PHP Version greater <?php echo $min_version_readable; ?></label> 
+                                    <?php 
+                                    if (checkForPHP($min_version)) { 
+                                        echo "<span class=\"font-weight-bold text-success\">TRUE</span>"; 
+                                        $rq1 = true;
+                                    }  
+                                        else {
+                                            echo "<span class=\"font-weight-bold text-danger\">FALSE</span>";
+                                        $rq1 = false;
+                                    }
+                                    ?>
+                                    <br />
+                                    <label>Checking for required PHP Extensions: <br></label>
+                                    <ul>
+                                    <?php 
+                                    foreach ($extensions as $extension) {
+                                        
+                                        if (checkForExtension($extension)) { 
+                                            echo "<li>Extension $extension: <span class=\"font-weight-bold text-success\">TRUE</span></li>"; 
+                                            $rqe[]=true;
+                                        }  
+                                            else {
+                                                echo "<li><span class=\"font-weight-bold text-danger\">FALSE</span></li>";
+                                            $rqe[] = false;
+                                        }
+                                        if (in_array(false,$rqe)) { 
+                                            $rq2 = false; 
+                                        } 
+                                        else 
+                                        { 
+                                            $rq2=true; 
+                                        }
+                                    }
+                                    ?>
+                                    </ul>
+
+                                    <label>Optional Components: </label>
+                                   <ul>
+                                    <?php 
+                                    foreach ($optionals as $optional) {
+                                        
+                                        if (checkForClass($optional)) { 
+                                            echo "<li>Class $optional: <span class=\"font-weight-bold text-success\">TRUE</span></li>"; 
+                                        }  
+                                            else {
+                                                echo "<li>Class $optional: <span class=\"font-weight-bold text-danger\">FALSE</span></li>";
+                                        }
+
+                                    }
+                                    ?>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6" id="requirements-help">
+                                    <h5>Requirements</h5>
+                                    Currently, the requirements are as follows:
+                                    <ul>
+                                        <li>PHP: Version 7.2 and above</li>
+                                        <li>Extensions: mysqli</li>
+                                        <li>Optional components: PEAR:Mail</li>
+                                        <li>Optional components are, as the name suggests, optional, but they might provide useful functions that you are missing out on if you don't have them installed.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="directories" class="tab-pane fade in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
                                     <label>Site Name</label>
@@ -250,10 +331,10 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
 
                 <div class="my-4 d-flex justify-content-center">
                     <input type="hidden" name="write_config" value="true">
-                    <input type="submit" class="btn btn-cq" name="submit" value="Write Configuration">
+                    <input type="submit" class="btn btn-cq" name="submit" value="Write Configuration" <?php if ($rq1 === false || $rq2 === false ) { echo "disabled"; } ?> >
                 </div>
                 </form>
-            </div>
+<!--             </div>
 
         </div>
     </div>
@@ -268,6 +349,6 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
 
 
 </div>
-
+ -->
 <?php
 loadFooter();
