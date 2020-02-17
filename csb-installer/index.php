@@ -10,10 +10,7 @@
    We should make sure the installer is not called when the settings file
    is already present. Just incase somebody tries.  
    ---------------------------------------------------------------------- */
-if ((@include "../csb-settings.php") == TRUE) {
-    header("Location: $BASE_URL");
-    exit();
-}
+if (stream_resolve_include_path("csb-settings.php") === true) { header ("Location: $BASE_URL"); }
 
 /* ----------------------------------------------------------------------
    First, we should guesstimate our BASE_DIR and BASE_URL

@@ -48,14 +48,17 @@ if (isset($_GET['go'])) {
 
         if ($db->checkUser('name', filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS))) {
             $_SESSION['regmsg'] = "Cannot register, user name " . filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS) . " already exists!";
-            header("Location:" . $BASE_URL."csb-accounts/register.php");
+            header("Location:" . $BASE_URL."csb-accounts/register.php"); 
+            exit();
         } elseif ($db->checkUser('email', filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL))) {
             $_SESSION['regmsg'] = "Cannot register, email " . filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) . " already in use!";
             header("Location:" . $BASE_URL."csb-accounts/register.php");
+            exit();
         } else {
             regUser($db, $_POST, $hashed);
             // Send the newly registered user off to the main page instead of presenting a blank page.
             header("Location: " . $BASE_URL);
+            exit();
         }
 
     /* Rescuing a Password ---------------------------------------------- */
@@ -75,6 +78,7 @@ if (isset($_GET['go'])) {
         } else {
             $_SESSION['errMsg'] = "No username or email matched: $name";
             header("Location: " . $ACC_URL."/rescue.php");
+            exit();
         }
 
     } else { // Javascript checks should prevent this from happening
@@ -169,7 +173,7 @@ function login($db, $user)
 
     // Send them where they belong 
     header("Location: " . $user['referringURL']);
-
+    exit();
 }
 
 /**
