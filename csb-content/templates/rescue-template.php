@@ -32,7 +32,7 @@ if (isset($_GET['go'])) {
             <h1>Please enter your password</h1>
             <form action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">
                 <input type="hidden" name="go" value="passwordReset">
-                <input type="hidden" name="email" value="Fred">
+                <input type="hidden" name="email" value="<?php echo $_POST['email']; ?>">
                 <div class="error-msg"><?php if (isset($_SESSION['errMsg'])) {
                         echo "<span style=\"color: red;\">" . $_SESSION['errMsg'] . "</span>";
                         unset($_SESSION['errMsg']);
