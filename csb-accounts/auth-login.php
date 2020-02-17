@@ -299,8 +299,6 @@ function rescueUser ($db, $using, $value) {
     $token = substr(str_shuffle($chars), 0, 12);
     $hashedToken = password_hash($token, PASSWORD_DEFAULT);
 
-    echo $hashedToken;
-
     $query = "INSERT INTO password_resets (email, token) VALUES ('$to', '$hashedToken')";
     $db->runQuery($query);
 
