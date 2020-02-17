@@ -10,7 +10,7 @@
    Load things needed always
    ---------------------------------------------------------------------- */
 global $BASE_DIR, $BASE_URL, $adminFlag;
-if (stream_resolve_include_path("csb-settings.php") === false) { header ("Location: csb-installer/"); }
+if (stream_resolve_include_path("csb-settings.php") === false) { header ("Location: csb-installer/"); exit(); }
 require "csb-settings.php";
 $loader = TRUE;
 
@@ -40,8 +40,8 @@ $ACC_URL = $BASE_URL . "csb-accounts/";
 $ACC_DIR = $BASE_DIR . "csb-accounts/";
 $ADMIN_URL = $BASE_URL . "csb-accounts/";
 $ADMIN_DIR = $BASE_DIR . "csb-accounts/";
-$DB_class = $ADMIN_DIR . "db_class.php";
-$email_class = $ADMIN_DIR . "email_class.php";
+$DB_class = $ACC_DIR . "db_class.php";
+$email_class = $ACC_DIR . "email_class.php";
 $IMAGES_URL = $BASE_URL . "csb-content/images/";
 $TEMPLATES_URL = $BASE_URL . "csb-content/templates/";
 $TEMPLATES_DIR = $BASE_DIR . "csb-content/templates/";

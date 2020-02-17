@@ -17,45 +17,42 @@ echo "You are running the Citizen science Builder installer <br>";
    ---------------------------------------------------------------------- */
 
 $conn = new mysqli($db_servername, $db_username, $db_password, $db_name);
+
 if ($conn->connect_error) {
-    die("Connection to Database Unsuccessful. Did you create the database '" . $db_name . "' on ".$db_servernam."?");
+    die("Connection to Database Unsuccessful. Did you create the database '" . $db_name . "' on ".$db_servername."?");
 } else {
     echo "Connected to database: " . $db_name . "<br/>";
 }
 
 /* ----------------------------------------------------------------------
    Check if Tables Exist, throw error if it does, otherwise setup
-    TODO Number all the tables sensibly
    ---------------------------------------------------------------------- */
 
 // Get files of all tables
-$dir = "tables";
-$tables = array_diff(scandir($dir), array('..', '.'));
+$dir = __DIR__ . DIRECTORY_SEPARATOR . "tables" . DIRECTORY_SEPARATOR;
+print "Descending into the depths of $dir <br />\n";
 
-foreach ($tables as $table) {
+foreach (glob($dir . "*.sql") as $table) {
+    error_log("Creating $table");
+    $table_name = substr(str_replace($dir,"",strstr($table, ".sql", true)),2);
 
-    // Read in each table
-    $inserts = FALSE;
-    require_once("tables/" . $table);
-    $table = substr($table, 0, -4);
-
-    if (!create_table($conn, $structure)) {
-        echo mysqli_error($conn) . "<br/>";
+    // Read the whole file
+    $fh = fopen($table,"r");
+    $sql = fread($fh,filesize($table));
+    fclose($fh);
+    // Prepare tables depending on configuration
+    //$sql = str_replace("|TABLE_PREFIX|", $table_prefix, $sql);
+    
+    if (create_table($conn,$sql)) {
+        error_log("Created table " . $table_name);
+        echo "Created table " . $table_name . "<br>\n";
+    } else {
+        error_log(mysqli_errno($conn) . mysqli_error($conn));
         mysqli_close($conn);
-        die("Couldn't create table " . $table . "<br/>");
-    }
-
-    // If there are any defaults, insert them
-    if ($inserts !== FALSE) {
-        foreach ($inserts as $insert) {
-            if (mysqli_query($conn, $insert) == FALSE) {
-                mysqli_close($conn);
-                die("FAILED: $insert <br/>");
-            }
-
-        }
+        die("Couldn't create table " . $table_name . "<br/>");
     }
 }
+
 
 
 /* ----------------------------------------------------------------------
@@ -75,7 +72,7 @@ if (mysqli_query($conn, $sql) == FALSE) {
 }
 
 // Create their admin role
-$sql = "INSERT INTO role_users (role_id, user_id) VALUES (1, 1);";
+$sql = "INSERT INTO role_users (role_id, user_id) VALUES (8, 1);";
 if (mysqli_query($conn, $sql) == FALSE) {
     mysqli_close($conn);
     die("Couldn't create admin role <br/>");

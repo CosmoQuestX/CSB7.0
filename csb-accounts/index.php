@@ -40,7 +40,7 @@ if ($login || $user === FALSE) { // NOT LOGGED IN
    Do they have the correct role?
    ---------------------------------------------------------------------- */
 
-elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN']) {
+elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SUPERADMIN'] || $_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN']) {
     die("ERROR: You don't have permission to be here");
 } /* ----------------------------------------------------------------------
    load things

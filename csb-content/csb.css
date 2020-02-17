@@ -187,7 +187,7 @@ iframe {
     height: 450px;
 }
 
-#app-canvas {
+#project_canvas {
     width: 450px;
     height: 450px;
     background: #cccccc url('images/buttons/Loading.gif') center center no-repeat;

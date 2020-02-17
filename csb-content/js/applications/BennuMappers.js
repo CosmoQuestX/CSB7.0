@@ -11,26 +11,26 @@ function BennuMappers(csbApp) {
         "Bennu Mappers",
         {
             "circle-button": [
-                "/images/applications/bennu/examples/Crater1.png",
-                "/images/applications/bennu/examples/Crater2.png",
-                "/images/applications/bennu/examples/Crater3.png"
+                "/csb-content/images/applications/bennu/examples/Crater1.png",
+                "/csb-content/images/applications/bennu/examples/Crater2.png",
+                "/csb-content/images/applications/bennu/examples/Crater3.png"
             ],
             "eraser-button": [],
             "rock-button": [
-                "/images/applications/bennu/examples/Rocks1.png",
-                "/images/applications/bennu/examples/Rocks2.png",
-                "/images/applications/bennu/examples/Rocks3.png",
+                "/csb-content/images/applications/bennu/examples/rock1.png",
+                "/csb-content/images/applications/bennu/examples/rock2.png",
+                "/csb-content/images/applications/bennu/examples/rock3.png",
             ],
             "boulder-button": [
-                "/images/applications/bennu/examples/Rock1.png",
-                "/images/applications/bennu/examples/Rock2.png",
-                "/images/applications/bennu/examples/Rock3.png",
+                "/csb-content/images/applications/bennu/examples/boulder1.png",
+                "/csb-content/images/applications/bennu/examples/boulder2.png",
+                "/csb-content/images/applications/bennu/examples/boulder3.png",
             ]
         },
         [
             {
                 "type": "set-image",
-                "image-location": "/images/applications/bennu/bennu-tutorial-1.png",
+                "image-location": "/csb-content/images/applications/bennu/bennu-tutorial-1.png",
                 "correct-marks": [
                     new Crater(347, 132, 42, csbApp.appInterface),
                     new Crater(107, 53, 33, csbApp.appInterface),
@@ -254,7 +254,7 @@ function BennuMappers(csbApp) {
             {
                 "type": "dropdown",
                 "title": "Tutorial",
-                "text": "<div class='app-description'>Welcome to Bennu Mappers! To start,<br />  we'll quickly explain how to do the following:</div><ol><li><img src='/images/applications/tutorials/icons/eraser.png' /> Erase a mistake</li><li><img src='/images/applications/tutorials/icons/crater.png' /> Find craters</li><li><img src='/images/applications/tutorials/icons/boulder.png' /> Measure boulders</li><li><img src='/images/applications/tutorials/icons/rocks.png' /> Mark rocks(!!)</li>",
+                "text": "<div class='app-description'>Welcome to Bennu Mappers! To start,<br />  we'll quickly explain how to do the following:</div><ol><li><img src='/csb-content/images/buttons/Button-erase.png' /> Erase a mistake</li><li><img src='/csb-content/images/buttons/Button-crater.png' /> Find craters</li><li><img src='/csb-content/images/buttons/Button-boulder.png' /> Measure boulders</li><li><img src='/csb-content/images/buttons/Button-rocks.png' /> Mark rocks(!!)</li>",
                 "ok-button": {}, // Should have text like "Okay, let's start!",
                 "goal": "GOAL: Learn About Craters"
             },

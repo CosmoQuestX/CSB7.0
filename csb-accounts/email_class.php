@@ -73,6 +73,7 @@ class email
 
         if (PEAR::isError($mail)) {
             error_log($mail->getMessage() . "/n");
+            die($mail->getMessage());
         }
     }
 }
