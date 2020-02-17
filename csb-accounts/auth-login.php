@@ -86,7 +86,7 @@ if (isset($_GET['go'])) {
         }
     } elseif ($_POST['go'] == 'passwordReset') {
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $query = "UPDATE users SET password ='".$hashed."' WHERE email = '".$_POST['email']."'";
+        $query = "UPDATE users SET password ='".$hashed."',  WHERE email = '".$_POST['email']."'";
         $db->runQuery($query);
         header("Location: " . $ACC_URL."/rescue.php?go=success");
 
@@ -311,7 +311,7 @@ function rescueUser ($db, $using, $value) {
 
 
     $msg['subject'] = "CosmoQuest Password Reset";
-    $msg['body'] = $hashedToken." "."Someone has requested a password reset for your account. If you made
+    $msg['body'] =  "Someone has requested a password reset for your account. If you made
                     this request and would like to reset your password, please follow
                     this link: ".$ACC_URL."rescue.php?go=".$to."&token=".$token;
 

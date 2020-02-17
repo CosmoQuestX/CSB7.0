@@ -6,7 +6,7 @@ CREATE TABLE `slides` (
   `icon_image` text COLLATE utf8_unicode_ci NOT NULL,
   `icon_text` text COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+              `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+              `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

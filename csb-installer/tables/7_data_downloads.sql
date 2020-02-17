@@ -1,7 +1,7 @@
 CREATE TABLE data_downloads (
     id int(10) unsigned NOT NULL AUTO_INCREMENT,
-    created_at timestamp NULL DEFAULT NULL,
-    updated_at timestamp NULL DEFAULT NULL,
+              `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+              `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     provider varchar(255) COLLATE utf8_unicode_ci NOT NULL,
     success tinyint(1) NOT NULL,
     user_id int(10) unsigned DEFAULT NULL,
