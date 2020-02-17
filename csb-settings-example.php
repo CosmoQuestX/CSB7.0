@@ -9,11 +9,15 @@
 /** ---------------------------------------------------------------------
  *  ---------------------------------------------------------------------
  *  Instructions:
- *     1) Create a copy of this file named csb-settings.php
+ *    This is an example of how the csb-settings.php file should look like.
+ *    You do not need to create it yourself, as it will be auto-generated
+ *    by the installer.
+ * 
+ *    Use this as reference for when moving across servers of just as 
+ *    a reference for how your eventual file should look like.
+ * 
  *        ** Never add your settings file to a public repo! **
  *
- *     2) Fill in on values for the following sections
- *          a) Database Settings
  *
  * ----------------------------------------------------------------------
  * ---------------------------------------------------------------------- **/
