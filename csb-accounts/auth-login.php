@@ -229,7 +229,7 @@ function regUser($db, $user, $pwhash)
     }
 
     // create their default role
-    $roles = $CQ_ROLES['SITE_NONE'];
+    $roles = $CQ_ROLES['SITE_USER'];
 
     $query = "INSERT INTO role_users (role_id, user_id) values (?, ?)";
     $params = array($roles, $id);
