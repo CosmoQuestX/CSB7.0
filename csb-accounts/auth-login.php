@@ -43,23 +43,30 @@ if (isset($_GET['go'])) {
     /* Registering new user --------------------------------------------- */
     } elseif ($_POST['go'] == 'regForm') {
 
-        // hash password & insert them into the database
+        // hash password
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
+        $error = "";
+        // Check if name or email are in use, throw an error if it is
         if ($db->checkUser('name', filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS))) {
-            $_SESSION['regmsg'] = "Cannot register, user name " . filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS) . " already exists!";
-            header("Location:" . $BASE_URL."csb-accounts/register.php");
-        } elseif ($db->checkUser('email', filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL))) {
-            $_SESSION['regmsg'] = "Cannot register, email " . filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) . " already in use!";
-            header("Location:" . $BASE_URL."csb-accounts/register.php");
-        } else {
+            $error .= "Username " . filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS) . " already exists. ";
+        }
+        if ($db->checkUser('email', filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL))) {
+            $error .= "Email " . filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) . " already in use!";
+        }
+
+        if(!empty($error)) {
+            $_SESSION['errMsg'] = "Error:" . $error;
+            header("Location: " . $ACC_URL . "register.php");
+        }
+        // No errors? Kill the error
+        else {
             regUser($db, $_POST, $hashed);
             // Send the newly registered user off to the main page instead of presenting a blank page.
             header("Location: " . $BASE_URL);
         }
 
     /* Rescuing a Password ---------------------------------------------- */
-        /* Rescuing a Password ---------------------------------------------- */
     } elseif ($_POST['go'] == 'rescueForm') {
         $flag = TRUE;
 
@@ -77,6 +84,11 @@ if (isset($_GET['go'])) {
             $_SESSION['errMsg'] = "No username or email matched: $name";
             header("Location: " . $ACC_URL."/rescue.php");
         }
+    } elseif ($_POST['go'] == 'passwordReset') {
+        $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $query = "UPDATE users SET password ='".$hashed."' WHERE email = '".$_POST['email']."'";
+        $db->runQuery($query);
+        header("Location: " . $ACC_URL."/rescue.php?go=success");
 
     } else { // Javascript checks should prevent this from happening
         die("You don't belong here. Run away. Run away from the error.");
@@ -283,11 +295,13 @@ function rescueUser ($db, $using, $value) {
     }
 
     // Set up the hash value to store
-    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*_-=+;:,.?";
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     $token = substr(str_shuffle($chars), 0, 12);
     $hashedToken = password_hash($token, PASSWORD_DEFAULT);
 
-    $query = "INSERT INTO password_resets (email, token) VALUES ('$to', '$token')";
+    echo $hashedToken;
+
+    $query = "INSERT INTO password_resets (email, token) VALUES ('$to', '$hashedToken')";
     $db->runQuery($query);
 
     require_once("email_class.php");
@@ -297,15 +311,22 @@ function rescueUser ($db, $using, $value) {
 
 
     $msg['subject'] = "CosmoQuest Password Reset";
-    $msg['body'] = "Someone has requested a password reset for your account. If you made
+    $msg['body'] = $hashedToken." "."Someone has requested a password reset for your account. If you made
                     this request and would like to reset your password, please follow
                     this link: ".$ACC_URL."rescue.php?go=".$to."&token=".$token;
 
     $email->sendMail($to, $msg);
 
-    header("Location: $BASE_URL");
+    if (PEAR::isError($mail)) {
+        error_log($mail->getMessage() . "/n");
+        die("email settings aren't working. Contact the system administrator.");
+    }
 
-    //No one? send error
+    // Everything worked so remove error msg
+    unset($_SESSION['errMsg']);
+    header("Location: ".$ACC_URL."rescue.php?go=submitted");
+
+
 }
 
 ?>
