@@ -49,7 +49,10 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
         $config_head = "<?php \n";
         $config_body = "";
         $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";
-
+        
+        // TODO We aren't checking whether $BASE_DIR/logs/error.log is creatable 
+        // TODO We could make this an option whether to log to the specified file, the default SAPI error log ("webserver log") or the system log ("syslog")
+        
         $avar = array('SITE_NAME','BASE_DIR', 'BASE_URL', 'db_servername', 'db_username', 'db_password', 'email_host', 'email_username', 'email_password', 'email_port', 'email_from');
         foreach ($avar as $varname) {
             if (!isset($varname)) {
@@ -248,7 +251,7 @@ $rqe=array();
                                     <h5>Requirements</h5>
                                     Currently, the requirements are as follows:
                                     <ul>
-                                        <li>PHP: Version 7.2 and above</li>
+                                        <li>PHP: Version <?php echo $min_version_readable; ?> and above</li>
                                         <li>Extensions: mysqli</li>
                                         <li>Optional components: PEAR:Mail</li>
                                         <li>Optional components are, as the name suggests, optional, but they might provide useful functions that you are missing out on if you don't have them installed.</li>

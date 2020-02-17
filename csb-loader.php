@@ -17,9 +17,9 @@ $loader = TRUE;
 /* ----------------------------------------------------------------------
    Define the theme
 
-       1. Check if one is defined in the database  TODO
-       2. Check if it is configured correctly       TODO
-       3. If setup, use that theme, else use default    TODO
+       1. TODO Check if one is defined in the database  
+       2. TODO Check if it is configured correctly       
+       3. TODO If setup, use that theme, else use default    
    ---------------------------------------------------------------------- */
 
 // Default theme (if nothing set in database)
