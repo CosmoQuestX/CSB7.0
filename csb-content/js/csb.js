@@ -1,10 +1,11 @@
 // Get the button that opens the alert. When it is clicked
 // change the display: none; to display: blocl for related alert
 var logonBtn = document.getElementById("alert-login");
-logonBtn.onclick = function () {
-    alert.style.display = "block";
+if (logonBtn) {
+    logonBtn.onclick = function () {
+        alert.style.display = "block";
+    }
 }
-
 
 // Get the alert-box
 var alert = document.getElementById("alert-box");
@@ -17,20 +18,27 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal
 
-
-btnHome.onclick = function () {
-    alert.style.display = "block";
+if (btnHome) {
+    btnHome.onclick = function () {
+        if (alert) {
+            alert.style.display = "block";
+        }
+    }
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    alert.style.display = "none";
+if (span) {
+    span.onclick = function () {
+        alert.style.display = "none";
+    }
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
-    if (event.target == alert) {
-        alert.style.display = "none";
+    if (event.target && event.target == alert) {
+        if (alert) {
+            alert.style.display = "none";
+        }
     }
 }
 
@@ -46,7 +54,7 @@ function login(form) {
     }
 }
 
-window.addEventListener(window, "load", function () {
+window.addEventListener("load", window, function () {
     var loginForm = document.getElementById("LoginForm");
     window.addEventListener(loginForm, "submit", function () {
         login(loginForm);

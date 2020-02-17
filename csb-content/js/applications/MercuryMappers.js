@@ -10,25 +10,25 @@ function MercuryMappers(csbApp) {
         "Mercury Mappers",
         {
             "circle-button": [
-                "/images/applications/mercury_mappers/examples/craters/crater2.png",
-                "/images/applications/mercury_mappers/examples/craters/crater3.png",
-                "/images/applications/mercury_mappers/examples/craters/crater5.png",
-                "/images/applications/mercury_mappers/examples/craters/crater4.png",
-                "/images/applications/mercury_mappers/examples/craters/crater1.png",
-                "/images/applications/mercury_mappers/examples/craters/crater6.png",
-                "/images/applications/mercury_mappers/examples/craters/crater7.png",
-                "/images/applications/mercury_mappers/examples/craters/crater8.png",
-                "/images/applications/mercury_mappers/examples/craters/crater9.png",
-                "/images/applications/mercury_mappers/examples/craters/crater10.png",
-                "/images/applications/mercury_mappers/examples/craters/crater11.png",
-                "/images/applications/mercury_mappers/examples/craters/crater12.png"
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater2.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater3.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater5.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater4.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater1.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater6.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater7.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater8.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater9.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater10.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater11.png",
+                "/csb-content/images/applications/mercury_mappers/examples/craters/crater12.png"
             ],
             "eraser-button": []
         },
         [
             {
                 "type": "set-image",
-                "image-location": "/images/applications/tutorials/mercury/mercury-tutorial-2.png",
+                "image-location": "/csb-content/images/applications/tutorials/mercury/mercury-tutorial-2.png",
                 "correct-marks": [
                     new Crater(238, 116, 62, csbApp.appInterface),
                     new Crater(230, 392, 22, csbApp.appInterface),
@@ -44,7 +44,7 @@ function MercuryMappers(csbApp) {
             {
                 "type": "dropdown",
                 "title": "Tutorial",
-                "text": "Welcome to Mars Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/images/applications/tutorials/icons/eraser.png' /> Erase a mistake</li><li><img src='/images/applications/tutorials/icons/crater.png' /> Find a crater</li><li><img src='/images/applications/tutorials/icons/easy.png' /> Complete an easy image</li><li><img src='/images/applications/tutorials/icons/hard.png' /> Complete a hard image</li>",
+                "text": "Welcome to Mars Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/csb-content/images/applications/tutorials/icons/eraser.png' /> Erase a mistake</li><li><img src='/csb-content/images/applications/tutorials/icons/crater.png' /> Find a crater</li><li><img src='/csb-content/images/applications/tutorials/icons/easy.png' /> Complete an easy image</li><li><img src='/csb-content/images/applications/tutorials/icons/hard.png' /> Complete a hard image</li>",
                 "ok-button": {}, // Should have text like "Okay, let's start!",
                 "goal": "GOAL: Learn About Craters"
             },
@@ -116,7 +116,7 @@ function MercuryMappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/images/applications/tutorials/mercury/mercury-tutorial-3.png",
+                "image-location": "/csb-content/images/applications/tutorials/mercury/mercury-tutorial-3.png",
                 "correct-marks": [
                     new Crater(81, 354, 62, csbApp.appInterface),
                     new Crater(167, 285, 67, csbApp.appInterface),
@@ -151,7 +151,7 @@ function MercuryMappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/images/applications/tutorials/mercury/mercury-tutorial-4.png",
+                "image-location": "/csb-content/images/applications/tutorials/mercury/mercury-tutorial-4.png",
                 "correct-marks": [
                     new Crater(305, 149, 124, csbApp.appInterface),
                     new Crater(406, 200, 25, csbApp.appInterface),
@@ -224,7 +224,7 @@ function MercuryMappers(csbApp) {
             },
             {
                 "type": "find-marks",
-                "text": "Try to mark <b>12 craters</b>. We're only interested in craters larger than this: <img src='/images/applications/tutorials/red-circle.png' style='width: 16px; height: 16px;' /><br /><b>TIP:</b> If a crater is too small, your circle will be <b style='color: red'>red</b>",
+                "text": "Try to mark <b>12 craters</b>. We're only interested in craters larger than this: <img src='/csb-content/images/applications/tutorials/red-circle.png' style='width: 16px; height: 16px;' /><br /><b>TIP:</b> If a crater is too small, your circle will be <b style='color: red'>red</b>",
                 "delay": 500
             },
             {

@@ -282,16 +282,16 @@ function AppInterface(csbApp) {
         this.icons = {};
 
         this.icons.featureImage = new Image();
-        this.icons.featureImage.src = "/images/applications/markers/marker.png";
+        this.icons.featureImage.src = "/csb-content/images/applications/markers/marker.png";
 
         this.icons.featureSelectedImage = new Image();
-        this.icons.featureSelectedImage.src = "/images/applications/markers/marker-selected.png";
+        this.icons.featureSelectedImage.src = "/csb-content/images/applications/markers/marker-selected.png";
 
         this.icons.rockImage = new Image();
-        this.icons.rockImage.src = "/images/applications/markers/rock.png";
+        this.icons.rockImage.src = "/csb-content/images/applications/markers/rock.png";
 
         this.icons.sunImage = new Image();
-        this.icons.sunImage.src = "/images/applications/sun.png";
+        this.icons.sunImage.src = "/csb-content/images/applications/sun.png";
     };
 
 

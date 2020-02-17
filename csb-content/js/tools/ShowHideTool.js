@@ -12,6 +12,6 @@ function ShowHideTool(options) {
      */
     this.onToggle = function (appInterface) {
         appInterface.areMarksVisible = this.isToggledOn;
-        csbApp.needToRedrawCanvas = true;
+        appInterface.csbApp.needToRedrawCanvas = true;
     }
 }

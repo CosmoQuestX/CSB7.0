@@ -3,33 +3,33 @@ function MarsMappers(csbApp) {
         "Mars Mappers",
         {
             "circle-button": [
-                "/images/applications/mars_mappers/examples/mars-crater-1.png",
-                "/images/applications/mars_mappers/examples/mars-crater-2.png",
-                "/images/applications/mars_mappers/examples/mars-crater-13.png",
-                "/images/applications/mars_mappers/examples/mars-crater-4.png",
-                "/images/applications/mars_mappers/examples/mars-crater-10.png",
-                "/images/applications/mars_mappers/examples/mars-crater-3.png",
-                "/images/applications/mars_mappers/examples/mars-crater-7.png",
-                "/images/applications/mars_mappers/examples/mars-crater-8.png",
-                "/images/applications/mars_mappers/examples/mars-crater-5.png",
-                "/images/applications/mars_mappers/examples/mars-crater-6.png",
-                "/images/applications/mars_mappers/examples/mars-crater-9.png",
-                "/images/applications/mars_mappers/examples/mars-crater-11.png",
-                "/images/applications/mars_mappers/examples/mars-crater-12.png"
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-1.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-2.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-13.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-4.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-10.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-3.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-7.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-8.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-5.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-6.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-9.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-11.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-crater-12.png"
             ],
             "eraser-button": [],
             "ejecta-button": [
-                "/images/applications/mars_mappers/examples/mars-ejecta-1.png",
-                "/images/applications/mars_mappers/examples/mars-ejecta-2.png",
-                "/images/applications/mars_mappers/examples/mars-ejecta-3.png",
-                "/images/applications/mars_mappers/examples/mars-ejecta-4.png",
-                "/images/applications/mars_mappers/examples/mars-ejecta-5.png"
+                "/csb-content/images/applications/mars_mappers/examples/mars-ejecta-1.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-ejecta-2.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-ejecta-3.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-ejecta-4.png",
+                "/csb-content/images/applications/mars_mappers/examples/mars-ejecta-5.png"
             ]
         },
         [
             {
                 "type": "set-image",
-                "image-location": "/images/applications/tutorials/mars/mars-tutorial-1.png",
+                "image-location": "/csb-content/images/applications/tutorials/mars/mars-tutorial-1.png",
                 "correct-marks": [
                     new Crater(145, 128, 27, csbApp.appInterface),
                     new Crater(161, 85, 25, csbApp.appInterface),
@@ -44,7 +44,7 @@ function MarsMappers(csbApp) {
             {
                 "type": "dropdown",
                 "title": "Tutorial",
-                "text": "Welcome to Mars Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/images/applications/tutorials/icons/eraser.png' /> Erase a mistake</li><li><img src='/images/applications/tutorials/icons/crater.png' /> Find a crater</li><li><img src='/images/applications/tutorials/icons/light-image.png' /> Complete an image</li><li><img src='/images/applications/tutorials/icons/ejecta.png' /> Find crater ejecta</li>",
+                "text": "Welcome to Mars Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/csb-content/images/applications/tutorials/icons/eraser.png' /> Erase a mistake</li><li><img src='/csb-content/images/applications/tutorials/icons/crater.png' /> Find a crater</li><li><img src='/csb-content/images/applications/tutorials/icons/light-image.png' /> Complete an image</li><li><img src='/csb-content/images/applications/tutorials/icons/ejecta.png' /> Find crater ejecta</li>",
                 "ok-button": {}, // Should have text like "Okay, let's start!",
                 "goal": "GOAL: Learn About Craters"
             },
@@ -116,7 +116,7 @@ function MarsMappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/images/applications/tutorials/mars/mars-tutorial-2.png",
+                "image-location": "/csb-content/images/applications/tutorials/mars/mars-tutorial-2.png",
                 "correct-marks": [
                     new Crater(60, 45, 60),
                     new Crater(148, 67, 27),
@@ -140,7 +140,7 @@ function MarsMappers(csbApp) {
             {
 
                 "type": "find-marks",
-                "text": "Mark the <b>8 largest craters</b>. We're only interested in craters larger than this: <img src='/images/applications/tutorials/red-circle.png' style='width: 16px; height: 16px;' /><br /><b>TIP:</b> If a crater is too small, your circle will be <b style='color: red'>red</b>",
+                "text": "Mark the <b>8 largest craters</b>. We're only interested in craters larger than this: <img src='/csb-content/images/applications/tutorials/red-circle.png' style='width: 16px; height: 16px;' /><br /><b>TIP:</b> If a crater is too small, your circle will be <b style='color: red'>red</b>",
                 "delay": 500
             },
             {
@@ -150,7 +150,7 @@ function MarsMappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/images/applications/tutorials/mars/mars-tutorial-3.png",
+                "image-location": "/csb-content/images/applications/tutorials/mars/mars-tutorial-3.png",
                 "correct-marks": [
                     new Crater(216, 44, 107, csbApp.appInterface),
                     new Crater(338, 12, 21, csbApp.appInterface),
