@@ -77,16 +77,16 @@ if (isset($_GET['go'])) {
             $_SESSION['errMsg'] = "found $name. ";
             rescueUser($db, "name", $name);
         } elseif ($db->checkUser('email', $email)) {
-            echo "found email $email";
             $_SESSION['errMsg'] = "found $email. ";
-            die("STILL BEING IMPLEMENTED"); // will go to rescueUser($db, "email", $email);
+            rescueUser($db, "email", $email);
         } else {
             $_SESSION['errMsg'] = "No username or email matched: $name";
             header("Location: " . $ACC_URL."/rescue.php");
         }
     } elseif ($_POST['go'] == 'passwordReset') {
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $query = "UPDATE users SET password ='".$hashed."',  WHERE email = '".$_POST['email']."'";
+
+        $query = "UPDATE users SET password ='".$hashed."'  WHERE email = '".$_POST['email']."'";
         $db->runQuery($query);
         header("Location: " . $ACC_URL."/rescue.php?go=success");
 
