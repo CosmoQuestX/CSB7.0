@@ -1,0 +1,19 @@
+version: '3'
+services:
+  apache:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/app
+  db:
+    image: mariadb:10.5.1
+    ports:
+      - "13306:3306"
+    environment:
+      MYSQL_DATABASE: csb
+      MYSQL_USER: csb
+      MYSQL_PASSWORD: csb
+      MYSQL_ROOT_PASSWORD: root

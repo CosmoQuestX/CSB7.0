@@ -1,0 +1,13 @@
+////////////
+// IMPORT //
+////////////
+/*
+  Use:
+
+  ~$ sass --watch style.scss:../style.css
+
+  to live update any sass changes
+*/
+@import "bootstrap.scss";
+@import "theme.scss";
+@import "app";
