@@ -89,6 +89,7 @@ if (isset($_GET['go'])) {
         $query = "UPDATE users SET password ='".$hashed."' WHERE email = '".$_POST['email']."'";
         $db->runQuery($query);
         header("Location: " . $ACC_URL."/rescue.php?go=success");
+        exit();
 
     } else { // Javascript checks should prevent this from happening
         die("You don't belong here. Run away. Run away from the error.");
@@ -220,7 +221,7 @@ function logout()
  */
 function regUser($db, $user, $pwhash)
 {
-    global $CQ_ROLE;
+    global $CQ_ROLE, $SITE_NAME, $BASE_URL, $emailSettings;
 
     $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
     $params = array(filter_var($user['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash);
@@ -246,6 +247,15 @@ function regUser($db, $user, $pwhash)
     $query = "INSERT INTO role_users (role_id, user_id) values (?, ?)";
     $params = array($roles, $id);
     $db->insert($query, "ii", $params);
+
+    // They are in the DB, so send them an email
+    require_once("email_class.php");
+    $email = new EMAIL($emailSettings);
+
+    $msg['subject'] = "Welcome to CosmoQuest";
+    $msg['body'] = "Thank you for registering at $SITE_NAME";
+
+    $email->sendMail(filter_var($user['email']), $msg);
 
     // create sessions / cookies TODO Make this a function
 
@@ -317,16 +327,10 @@ function rescueUser ($db, $using, $value) {
 
     $email->sendMail($to, $msg);
 
-    if (PEAR::isError($mail)) {
-        error_log($mail->getMessage() . "/n");
-        die("email settings aren't working. Contact the system administrator.");
-    }
-
     // Everything worked so remove error msg
     unset($_SESSION['errMsg']);
     header("Location: ".$ACC_URL."rescue.php?go=submitted");
-
-
+    exit();
 }
 
 ?>
