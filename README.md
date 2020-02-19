@@ -51,7 +51,7 @@ Go to http://yourhost/csb-installer/ in your browser.
 Download and install the corresponding docker desktop version for your OS from [Docker](https://hub.docker.com/search?q=&type=edition&offering=community)
 
 #### 2. Build and Start CSB
-For Windows - open either Command Console or Powershell
+For Windows - open either Command Console or Powershell\
 For Mac or Linux - open your command shell
 
 Execute the following command from the CSB directory:
