@@ -24,6 +24,7 @@ $user = isLoggedIn($db);
 
 if (!$user) {
     header("Location: $BASE_URL");
+    exit();
 }
 
 /* ----------------------------------------------------------------------
@@ -33,6 +34,7 @@ if (!$user) {
 if (!isset($_GET) || !isset($_GET['app']) || !is_dir(realpath($BASE_DIR . 'csb-apps/' . $_GET['app']))) {
     // TODO this could probably redirect to a 404 page
     header("Location: $BASE_URL");
+    exit();
 }
 
 $app = $_GET['app'];

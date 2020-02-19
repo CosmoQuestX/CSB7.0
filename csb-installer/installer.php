@@ -19,6 +19,7 @@ echo "You are running the Citizen science Builder installer <br>";
 $conn = new mysqli($db_servername, $db_username, $db_password, $db_name);
 
 if ($conn->connect_error) {
+    unlink($BASE_DIR . "/csb-settings.php");
     die("Connection to Database Unsuccessful. Did you create the database '" . $db_name . "' on ".$db_servername."?");
 } else {
     echo "Connected to database: " . $db_name . "<br/>";
@@ -45,11 +46,12 @@ foreach (glob($dir . "*.sql") as $table) {
     
     if (create_table($conn,$sql)) {
         error_log("Created table " . $table_name);
-        echo "Created table " . $table_name . "<br>\n";
     } else {
         error_log(mysqli_errno($conn) . mysqli_error($conn));
         mysqli_close($conn);
-        die("Couldn't create table " . $table_name . "<br/>");
+        error_log("Couldn't create table " . $table_name . "");
+        unlink($BASE_DIR . "/csb-settings.php");
+        die("Error in creating tables, see logfile for further information!");
     }
 }
 

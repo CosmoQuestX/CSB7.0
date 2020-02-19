@@ -58,12 +58,14 @@ if (isset($_GET['go'])) {
         if(!empty($error)) {
             $_SESSION['errMsg'] = "Error:" . $error;
             header("Location: " . $ACC_URL . "register.php");
+            exit();
         }
         // No errors? Kill the error
         else {
             regUser($db, $_POST, $hashed);
             // Send the newly registered user off to the main page instead of presenting a blank page.
             header("Location: " . $BASE_URL);
+            exit();
         }
 
     /* Rescuing a Password ---------------------------------------------- */
@@ -82,6 +84,7 @@ if (isset($_GET['go'])) {
         } else {
             $_SESSION['errMsg'] = "No username or email matched: $name";
             header("Location: " . $ACC_URL."/rescue.php");
+            exit();
         }
     } elseif ($_POST['go'] == 'passwordReset') {
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -89,7 +92,7 @@ if (isset($_GET['go'])) {
         $query = "UPDATE users SET password ='".$hashed."'  WHERE email = '".$_POST['email']."'";
         $db->runQuery($query);
         header("Location: " . $ACC_URL."/rescue.php?go=success");
-
+        exit();
     } else { // Javascript checks should prevent this from happening
         die("You don't belong here. Run away. Run away from the error.");
     }
@@ -182,7 +185,7 @@ function login($db, $user)
 
     // Send them where they belong 
     header("Location: " . $user['referringURL']);
-
+    exit();
 }
 
 /**
@@ -323,8 +326,7 @@ function rescueUser ($db, $using, $value) {
     // Everything worked so remove error msg
     unset($_SESSION['errMsg']);
     header("Location: ".$ACC_URL."rescue.php?go=submitted");
-
-
+    exit();
 }
 
 ?>
