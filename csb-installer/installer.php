@@ -9,8 +9,31 @@
 require_once("../csb-settings.php");
 require_once("installer-functions.php");
 
-echo "You are running the Citizen science Builder installer <br>";
+// Valid types:
+// primary, secondary, success, danger, warning, info, light, dark
+// See: https://getbootstrap.com/docs/4.4/components/list-group/
+function status_update($message, $type=null)
+{
+    $context_class = "list-group-item";
+    if(!is_null($type))
+    {
+        $context_class .= " list-group-item-" . $type;
+    }
+    echo "<li class=\"" . $context_class . "\">" . $message . "</li>";
+}
 
+?>
+<div class="container text-dark">
+    <div class="row">
+        <div class="col">
+            <div class="card-deck">
+                <div class="card">
+                    <h4 class="card-header">Citizen Science Builder Installer</h4>
+                    <div class="card-body">
+                        <ul class="list-group">
+<?php
+
+status_update("You are running the Citizen Science Builder installer", "primary");
 
 /* ----------------------------------------------------------------------
    Check if Database Exists
@@ -26,7 +49,7 @@ $on_error = function ($log_messages, $frontend_messages, $data_added=true) use (
         {
             // TODO If we handle the table creation as migrations, we can roll back automatically.
             // Transaction rollback doesn't work here because MYSQL doesn't handle DDL in transactions consistently.
-            echo "An error occurred after the database was modified. You should drop and recreate the database before trying again.<br />\n";
+            status_update("An error occurred after the database was modified. You should drop and recreate the database before trying again.", "warning");
         }
         mysqli_close($conn);
     }
@@ -38,8 +61,9 @@ $on_error = function ($log_messages, $frontend_messages, $data_added=true) use (
     }
     foreach($frontend_messages as $message)
     {
-        echo $message . "<br/>\n";
+        status_update($message, "danger");
     }
+    echo "</ul></div></div></div></div></div></div>";
     die();
 };
 
@@ -50,7 +74,7 @@ if ($conn->connect_error) {
         false
     );
 } else {
-    echo "Connected to database: " . $db_name . "<br/>";
+    status_update("Connected to database: " . $db_name . "<br/>", "success");
 }
 
 /* ----------------------------------------------------------------------
@@ -59,7 +83,7 @@ if ($conn->connect_error) {
 
 // Get files of all tables
 $dir = __DIR__ . DIRECTORY_SEPARATOR . "tables" . DIRECTORY_SEPARATOR;
-echo "Descending into the depths of $dir <br />\n";
+status_update("Descending into the depths of $dir", "info");
 
 $created_tables = 0;
 foreach (glob($dir . "*.sql") as $table) {
@@ -84,7 +108,7 @@ foreach (glob($dir . "*.sql") as $table) {
         );
     }
 }
-echo "Created " . $created_tables . " tables successfully!<br />\n";
+status_update("Created " . $created_tables . " tables successfully!", "success");
 
 
 
@@ -108,17 +132,30 @@ $sql = "INSERT INTO role_users (role_id, user_id) VALUES (8, 1);";
 if (mysqli_query($conn, $sql) == FALSE) {
     $on_error([mysqli_errno($conn) . ": " . mysqli_error($conn)], ["Couldn't assign admin user to admin role"]);
 }
+status_update("Admin user set up", "success");
 
-// Tell them their info
-echo "Your Admin username is: " . $username . "</br>";
-echo "Your password is: <pre>" . $password . "</pre><br/>";
-echo "Make sure you write down this password, we looked deep into your soul and randomly generated it - it won't be visible again!<br />";
+?>
+                        </ul>
+                    </div>
+                </div>
 
+                <div class="card">
+                    <h4 class="card-header">Admin Information</h4>
+                    <div class="card-body">
+                        <p>Your admin username is: <code><?php echo $username ?></code></p>
+                        <p>Your password is: <code><?php echo $password ?></code></p>
+                        <p>Make sure you save this password in your password manager, it was randomly generated and won't be visible again!<p>
+                        <h3>Setup complete</h3>
+                        <a href="/" class="btn btn-primary">Get started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
 /* ----------------------------------------------------------------------
    End Session
    ---------------------------------------------------------------------- */
-
 mysqli_close($conn);
-
-echo "<h3>Setup complete!</h3>";
-echo "<a href=\"/\">Click here</a> to start sciencing with " . $SITE_NAME . ".";
+?>
