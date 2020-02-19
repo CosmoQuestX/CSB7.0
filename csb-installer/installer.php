@@ -18,9 +18,37 @@ echo "You are running the Citizen science Builder installer <br>";
 
 $conn = new mysqli($db_servername, $db_username, $db_password, $db_name);
 
-if ($conn->connect_error) {
+$on_error = function ($log_messages, $frontend_messages, $data_added=true) use ($conn, $BASE_DIR)
+{
+    if(!is_null($conn))
+    {
+        if($data_added)
+        {
+            // TODO If we handle the table creation as migrations, we can roll back automatically.
+            // Transaction rollback doesn't work here because MYSQL doesn't handle DDL in transactions consistently.
+            echo "An error occurred after the database was modified. You should drop and recreate the database before trying again.<br />\n";
+        }
+        mysqli_close($conn);
+    }
+
     unlink($BASE_DIR . "/csb-settings.php");
-    die("Connection to Database Unsuccessful. Did you create the database '" . $db_name . "' on ".$db_servername."?");
+    foreach($log_messages as $log)
+    {
+        error_log($log);
+    }
+    foreach($frontend_messages as $message)
+    {
+        echo $message . "<br/>\n";
+    }
+    die();
+};
+
+if ($conn->connect_error) {
+    $on_error(
+        ["Database connection failed.", "Server: " . $db_servername, "User: " . $db_username, "Database: " . $db_name],
+        ["Connection to Database unsuccessful. Did you create the database '" . $db_name . "' on ".$db_servername."?"],
+        false
+    );
 } else {
     echo "Connected to database: " . $db_name . "<br/>";
 }
@@ -31,8 +59,9 @@ if ($conn->connect_error) {
 
 // Get files of all tables
 $dir = __DIR__ . DIRECTORY_SEPARATOR . "tables" . DIRECTORY_SEPARATOR;
-print "Descending into the depths of $dir <br />\n";
+echo "Descending into the depths of $dir <br />\n";
 
+$created_tables = 0;
 foreach (glob($dir . "*.sql") as $table) {
     error_log("Creating $table");
     $table_name = substr(str_replace($dir,"",strstr($table, ".sql", true)),2);
@@ -43,17 +72,19 @@ foreach (glob($dir . "*.sql") as $table) {
     fclose($fh);
     // Prepare tables depending on configuration
     //$sql = str_replace("|TABLE_PREFIX|", $table_prefix, $sql);
-    
+
     if (create_table($conn,$sql)) {
         error_log("Created table " . $table_name);
+        $created_tables += 1;
     } else {
-        error_log(mysqli_errno($conn) . mysqli_error($conn));
-        mysqli_close($conn);
-        error_log("Couldn't create table " . $table_name . "");
-        unlink($BASE_DIR . "/csb-settings.php");
-        die("Error in creating tables, see logfile for further information!");
+        $on_error(
+            [mysqli_errno($conn) . ": " . mysqli_error($conn)],
+            ["Couldn't create table " . $table_name, "Check your server logs for details."],
+            $created_tables > 0
+        );
     }
 }
+echo "Created " . $created_tables . " tables successfully!<br />\n";
 
 
 
@@ -69,24 +100,25 @@ $hashed = password_hash($password, PASSWORD_DEFAULT);
 // Create the user with email from settings
 $sql = "INSERT INTO users (id, name, email, password) VALUES (1, '" . $username . "', '" . $rescue_email . "', '" . $hashed . "');";
 if (mysqli_query($conn, $sql) == FALSE) {
-    mysqli_close($conn);
-    die("Couldn't create admin user <br/>");
+    $on_error([mysqli_errno($conn) . ": " . mysqli_error($conn)], ["Couldn't create admin user"]);
 }
 
 // Create their admin role
 $sql = "INSERT INTO role_users (role_id, user_id) VALUES (8, 1);";
 if (mysqli_query($conn, $sql) == FALSE) {
-    mysqli_close($conn);
-    die("Couldn't create admin role <br/>");
+    $on_error([mysqli_errno($conn) . ": " . mysqli_error($conn)], ["Couldn't assign admin user to admin role"]);
 }
 
 // Tell them their info
-echo "Your Admin username is: CodeHerder</br>";
-echo "Your password is: " . $password . "<br/>";
-
+echo "Your Admin username is: " . $username . "</br>";
+echo "Your password is: <pre>" . $password . "</pre><br/>";
+echo "Make sure you write down this password, we looked deep into your soul and randomly generated it - it won't be visible again!<br />";
 
 /* ----------------------------------------------------------------------
    End Session
    ---------------------------------------------------------------------- */
 
 mysqli_close($conn);
+
+echo "<h3>Setup complete!</h3>";
+echo "<a href=\"/\">Click here</a> to start sciencing with " . $SITE_NAME . ".";
