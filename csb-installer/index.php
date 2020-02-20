@@ -88,7 +88,6 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                     <p><?php
                         require_once("installer.php");
                         ?></p>
-                    <h3>Write down your password!</h3>
                 </div>
             </div>
             <?php
