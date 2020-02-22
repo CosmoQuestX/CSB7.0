@@ -10,9 +10,11 @@
    Get the settings and check if the person is logged in
    ---------------------------------------------------------------------- */
 
+
 require_once("../csb-loader.php");
 require_once($DB_class);
-require_once($BASE_DIR . "csb-account/auth.php");
+require_once($ACC_DIR . "auth.php");
+
 
 /* ----------------------------------------------------------------------
    Is the person logged in?
@@ -47,48 +49,29 @@ elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENTIST'] && $_SESSION['roles'] 
 else { // they clearly have permissions
     global $page_title;
 
-    $page_title = "";
+    $dir = $BASE_DIR . "/science/tasks";
+    $listings = array_diff(scandir($dir), array('..', '.'));
 
-    ?>
-    <div id="main">
-        <div class="container">
-
-            <div id="" class="left-dash left">
-                <?php
-
-                $dir = $BASE_DIR . "/science/tasks";
-                $listings = array_diff(scandir($dir), array('..', '.'));
-                ?>
-
-                <h3>Options</h3>
+    $page_title = "science";
 
 
-                <?php
-                foreach ($listings as $item) { ?>
-                    <a href="<?php echo $_SERVER['SCRIPT_NAME'] ?>?task=<?php echo $item; ?>"><?php echo $item; ?></a>
-                    <br/>
-                    <?php
-                }
+    $left = "<h3>Options</h3>\n";
+    foreach ($listings as $item) {
+        $left .= "<a href='" . $_SERVER['SCRIPT_NAME'] . "?task=$item'>$item</a><br/>";
+    }
 
-                ?>
-            </div>
+    // Is a value set?  Check if task exists. If yes, execute. Else, instructions!
+    $task = basename(filter_input(INPUT_GET, 'task', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0));
+    if ($task !== NULL && file_exists($BASE_DIR . "science/tasks/" . $task . "/" . $task . ".php")) {
+        $main = "<h2>Task: " . $task . "</h2>";
+        require_once($BASE_DIR . "science/tasks/" . $task . "/" . $task . ".php");
+    } else {
+        error_log("Somebody tried to call the science task {$task}");
+        $main =  "Select a task to do from the lefthand menu";
+    }
 
-            <div class="main-dash right">
-                <?php
-                // Is a value set?  Check if task exists. If yes, execute. Else, instructions!
-                $task = basename(filter_input(INPUT_GET, 'task', FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0));
-                if ($task !== NULL && file_exists($BASE_DIR . "science/tasks/" . $task . "/" . $task . ".php")) {
-                    echo "<h2>Task: " . $task . "</h2>";
-                    require_once($BASE_DIR . "science/tasks/" . $task . "/" . $task . ".php");
-                } else {
-                    error_log("Somebody tried to call the science task {$task}");
-                    echo "Select a task to do from the lefthand menu";
-                }
-                ?>
-            </div>
-            <div class="clear"></div>
-        </div>
-    </div>
-    <?php
 }
+loadHeader();
+load3Col($left, $main, "More Stuff");
 loadFooter();
+?>
