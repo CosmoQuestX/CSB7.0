@@ -92,9 +92,11 @@ function checkForExtension($extension)
  */
 function checkForClass($class)
 {
-    /* Optional Classes are hard defined in the installer
+    /* Optional classes are hard defined in the installer
      * TODO Maybe it would be nice to not hard-code requirements
      */
+    @include "$class.php";
+    
     if (class_exists($class)) {
         $rt = true;
     }

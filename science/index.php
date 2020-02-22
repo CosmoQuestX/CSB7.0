@@ -22,7 +22,7 @@ require_once($ACC_DIR . "auth.php");
 
 $db = new DB($db_servername, $db_username, $db_password, $db_name);
 
-global $user;
+global $user, $CQ_ROLES;
 $user = isLoggedIn($db);
 
 // if $login isn't set, set it to avoid a PHP notice.
@@ -74,4 +74,3 @@ else { // they clearly have permissions
 loadHeader();
 load3Col($left, $main, "More Stuff");
 loadFooter();
-?>
