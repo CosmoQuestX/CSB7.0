@@ -1,0 +1,28 @@
+name: CI
+
+on: [push]
+
+env:
+  CI: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install SASS
+        run: sudo npm install -g sass
+
+      - name: Compile SASS
+        run: sass --style=compressed csb-themes/default/sass/style.scss:csb-themes/default/style.css
+
+      - name: Copy files to build artifact folder
+        run: rsync -av . /tmp/build --exclude .git
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: csb-build
+          path: /tmp/build
