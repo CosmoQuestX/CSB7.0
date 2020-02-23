@@ -58,12 +58,14 @@ if (isset($_GET['go'])) {
         if(!empty($error)) {
             $_SESSION['errMsg'] = "Error:" . $error;
             header("Location: " . $ACC_URL . "register.php");
+            exit();
         }
         // No errors? Kill the error
         else {
             regUser($db, $_POST, $hashed);
             // Send the newly registered user off to the main page instead of presenting a blank page.
             header("Location: " . $BASE_URL);
+            exit();
         }
 
     /* Rescuing a Password ---------------------------------------------- */
@@ -77,20 +79,20 @@ if (isset($_GET['go'])) {
             $_SESSION['errMsg'] = "found $name. ";
             rescueUser($db, "name", $name);
         } elseif ($db->checkUser('email', $email)) {
-            echo "found email $email";
             $_SESSION['errMsg'] = "found $email. ";
-            die("STILL BEING IMPLEMENTED"); // will go to rescueUser($db, "email", $email);
+            rescueUser($db, "email", $email);
         } else {
             $_SESSION['errMsg'] = "No username or email matched: $name";
             header("Location: " . $ACC_URL."/rescue.php");
+            exit();
         }
     } elseif ($_POST['go'] == 'passwordReset') {
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $query = "UPDATE users SET password ='".$hashed."' WHERE email = '".$_POST['email']."'";
+
+        $query = "UPDATE users SET password ='".$hashed."'  WHERE email = '".$_POST['email']."'";
         $db->runQuery($query);
         header("Location: " . $ACC_URL."/rescue.php?go=success");
         exit();
-
     } else { // Javascript checks should prevent this from happening
         die("You don't belong here. Run away. Run away from the error.");
     }
@@ -183,7 +185,7 @@ function login($db, $user)
 
     // Send them where they belong 
     header("Location: " . $user['referringURL']);
-
+    exit();
 }
 
 /**
@@ -221,7 +223,7 @@ function logout()
  */
 function regUser($db, $user, $pwhash)
 {
-    global $CQ_ROLE, $SITE_NAME, $BASE_URL, $emailSettings;
+    global $CQ_ROLE;
 
     $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
     $params = array(filter_var($user['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash);
@@ -247,15 +249,6 @@ function regUser($db, $user, $pwhash)
     $query = "INSERT INTO role_users (role_id, user_id) values (?, ?)";
     $params = array($roles, $id);
     $db->insert($query, "ii", $params);
-
-    // They are in the DB, so send them an email
-    require_once("email_class.php");
-    $email = new EMAIL($emailSettings);
-
-    $msg['subject'] = "Welcome to CosmoQuest";
-    $msg['body'] = "Thank you for registering at $SITE_NAME";
-
-    $email->sendMail(filter_var($user['email']), $msg);
 
     // create sessions / cookies TODO Make this a function
 
@@ -309,8 +302,6 @@ function rescueUser ($db, $using, $value) {
     $token = substr(str_shuffle($chars), 0, 12);
     $hashedToken = password_hash($token, PASSWORD_DEFAULT);
 
-    echo $hashedToken;
-
     $query = "INSERT INTO password_resets (email, token) VALUES ('$to', '$hashedToken')";
     $db->runQuery($query);
 
@@ -321,11 +312,16 @@ function rescueUser ($db, $using, $value) {
 
 
     $msg['subject'] = "CosmoQuest Password Reset";
-    $msg['body'] = $hashedToken." "."Someone has requested a password reset for your account. If you made
+    $msg['body'] =  "Someone has requested a password reset for your account. If you made
                     this request and would like to reset your password, please follow
                     this link: ".$ACC_URL."rescue.php?go=".$to."&token=".$token;
 
     $email->sendMail($to, $msg);
+
+    if (PEAR::isError($mail)) {
+        error_log($mail->getMessage() . "/n");
+        die("email settings aren't working. Contact the system administrator.");
+    }
 
     // Everything worked so remove error msg
     unset($_SESSION['errMsg']);

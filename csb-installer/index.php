@@ -88,7 +88,6 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                     <p><?php
                         require_once("installer.php");
                         ?></p>
-                    <h3>Write down your password!</h3>
                 </div>
             </div>
             <?php
@@ -100,70 +99,16 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
     }
 }
 
+
 /* ---------------------------------------------------------------------
    The default header shows the login div id user on the top right.
    So since we definitely don't have a user yet, hide the div.
    --------------------------------------------------------------------- */
 
 ?>
-<!-- DB Connection Tester -->
-<script type="text/javascript" src="../csb-content/js/network.js"></script>
-<script type="text/javascript" language="JavaScript">
-    $(document).ready(function(){
-        $("#db-tester").click(function() {
-            data = {
-                "db_servername": $("[name='db_servername']").val(),
-                "db_username": $("[name='db_username']").val(),
-                "db_password": $("[name='db_password']").val(), // Is this secure? Do we care at this point?
-                "db_name": $("[name='db_name']").val()
-            }
-            
-            /*
-             The response will always be with a 200 status.
-             It will look like this for success: { result: true }
-             And like this for failures:
-             {
-                 result: false,
-                 code: <code>,
-                 message: <error message>
-             }
-             */
 
-            postData("db-tester.php", data).then( response => {
-                if (response.result)
-                {
-                    $("#test-status").html("Looks good! 👍")
-                        .attr("class", "alert alert-success col-12") //Style the message
-                        .css({ 
-                            "margin-top": "1rem",
-                            "display": "block",
-                            "width": "auto",
-                            "height": "auto"
-                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-                }
-                else 
-                {
-                    $("#test-status").html("Error: " + response.message)
-                        .attr("class", "alert alert-danger col-12")  //Style the message
-                        .css({
-                                "margin-top": "1rem",
-                                "display": "block",
-                                "width": "auto",
-                                "height": "auto"
-                            }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-                }
-            }).catch( err => { 
-                $("#test-status").html("An unexpected error occurred!")
-                    .attr("class", "alert alert-danger col-12")  //Style the message
-                    .css({
-                            "margin-top": "1rem",
-                            "display": "block",
-                            "width": "auto",
-                            "height": "auto"
-                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-            });
-        });
-    });
+<script type="text/javascript" language="JavaScript">
+    document.getElementById("user").style.display = "none";
 </script>
 
 <?php
@@ -176,7 +121,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
 $min_version = "70200";
 $min_version_readable = "7.2";
 $extensions = array("mysqli");
-$optionals = array("PEAR::Mail");
+$optionals = array("Mail");
 $rq_met = false;
 $rq1=false;
 $rq2=false;
@@ -302,9 +247,9 @@ $rqe=array();
                                     <h5>Requirements</h5>
                                     Currently, the requirements are as follows:
                                     <ul>
-                                        <li>PHP: Version 7.2 and above</li>
+                                        <li>PHP: Version <?php echo $min_version_readable; ?> and above</li>
                                         <li>Extensions: mysqli</li>
-                                        <li>Optional components: PEAR:Mail</li>
+                                        <li>Optional components: Mail (from PEAR)</li>
                                         <li>Optional components are, as the name suggests, optional, but they might provide useful functions that you are missing out on if you don't have them installed.</li>
                                     </ul>
                                 </div>
@@ -344,8 +289,6 @@ $rqe=array();
                                     <input type="password" class="form-control" name="db_password">
                                     <label>Database Name</label>
                                     <input type="text" class="form-control" name="db_name" value="csb">
-                                    <br>
-                                    <input type="button" class="btn btn-cq" name="db_tester" id="db-tester" value="Test Connection">
                                 </div>
                                 <div class="col-md-6" id="database-help">
                                     <h5>Database Setup</h5>
@@ -355,7 +298,6 @@ $rqe=array();
                                         <li>Database Name: This is where all CSB tables will go. Should be empty/new utf8 / utf8_bin DB schema.</li>
                                     </ul>
                                 </div>
-                                <p id="test-status"></p>
                             </div>
                         </div>
                         <div id="smtp" class="tab-pane fade in">
