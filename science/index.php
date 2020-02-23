@@ -10,7 +10,6 @@
    Get the settings and check if the person is logged in
    ---------------------------------------------------------------------- */
 
-
 require_once("../csb-loader.php");
 require_once($DB_class);
 require_once($ACC_DIR . "auth.php");
@@ -30,11 +29,11 @@ if (!isset($login)) {
     $login = FALSE;
 }
 
-require_once($BASE_DIR . "/csb-content/template_functions.php");
-loadHeader();
 
 if (filter_var($login, FILTER_VALIDATE_BOOLEAN) || $user === FALSE) { // NOT LOGGED IN
     echo "Login Required"; // TODO open login alert
+
+
 } /* ----------------------------------------------------------------------
    Do they have the correct role?
    ---------------------------------------------------------------------- */
@@ -42,6 +41,7 @@ if (filter_var($login, FILTER_VALIDATE_BOOLEAN) || $user === FALSE) { // NOT LOG
 elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENTIST'] && $_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN'] && $_SESSION['roles'] != $CQ_ROLES['SITE_SUPERADMIN']) {
     // TODO be a bit politer when rejecting nosy users
     die("ERROR: You don't have permission to be here");
+
 } /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
@@ -71,6 +71,9 @@ else { // they clearly have permissions
     }
 
 }
+
+require_once($BASE_DIR . "/csb-content/template_functions.php");
+
 loadHeader();
 load3Col($left, $main, "More Stuff");
 loadFooter();
