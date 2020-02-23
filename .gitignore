@@ -1,3 +1,5 @@
 csb-settings.php
 .sass-cache
 *.DS_Store
+csb-themes/default/style.css
+csb-themes/default/style.css.map

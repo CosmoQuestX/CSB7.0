@@ -1,6 +1,8 @@
 # CSB7.0
 An open source implementation of CosmoQuest's Citizen Science Builder software.
 
+To get a production build of the software, go the [latest `master` CI run](https://github.com/CosmoQuestX/CSB7.0/actions?query=branch%3Amaster) and download the `csb-build` artifact.
+
 ### Step 1: Setup the Server
 #### 1.1 Setup LAMP Server
 
