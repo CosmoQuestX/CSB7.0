@@ -1,3 +1,5 @@
+![CI](https://github.com/CosmoQuestX/CSB7.0/workflows/CI/badge.svg) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
+
 # CSB7.0
 An open source implementation of CosmoQuest's Citizen Science Builder software.
 
