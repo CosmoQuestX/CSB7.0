@@ -183,7 +183,7 @@ function login($db, $user)
         }
     }
 
-    // Send them where they belong 
+    // Send them where they belong
     header("Location: " . $user['referringURL']);
     exit();
 }
@@ -234,12 +234,10 @@ function regUser($db, $user, $pwhash)
     $id = $db->runBaseQuery($query)[0]['id'];
 
     if ($id === FALSE) {
-        echo "if";
-        // This should not happen, since we just inserted a user 
+        // This should not happen, since we just inserted a user
         error_log("Could not find the freshly created user on registration.");
         die("Fatal error on registration. Please try again later.");
     } else {
-        echo "else";
         $user['id'] = $id;
     }
 
