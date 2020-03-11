@@ -39,8 +39,10 @@ GLOBAL $ACC_URL;
 ?>
 
 <h3 class="font-weight-bold">Register</h3>
+
 <div id="form-input-box">
-    <form action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">
+    <script src="../csb-content/js/register.js"></script>
+    <form name="register" action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">
         <input type="hidden" name="referringURL" value="<?php echo $BASE_URL; ?>">
         <input type="hidden" name="go" value="regForm">
 
@@ -50,28 +52,28 @@ GLOBAL $ACC_URL;
             } ?>
         </div>
 
-        <div class="form-input-row">
+        <div class="form-input-row form-group">
             <div class="form-input-left"><label for="name">Username</label></div>
-            <div class="form-input-right"><input name="name" type="text"></div>
+            <div class="form-input-right"><input name="name" class="form-control" type="text"></div>
         </div>
 
         <div class="clear"></div>
-        <div class="form-input-row">
+        <div class="form-input-row form-group">
             <div class="form-input-left"><label for="email">Email</label></div>
-            <div class="form-input-right"><input name="email" type="text"></div>
+            <div class="form-input-right"><input name="email" type="text"class="form-control"></div>
         </div>
         <div class="clear"></div>
-        <div class="form-input-row">
+        <div class="form-input-row form-group">
             <div class="form-input-left"><label for="password">Enter Password</label></div>
-            <div class="form-input-right"><input name="password" type="password"></div>
+            <div class="form-input-right"><input name="password" id="password1" type="password" class="form-control"></div>
         </div>
         <div class="clear"></div>
-        <div class="form-input-row">
+        <div class="form-input-row form-group">
             <div class="form-input-left"><label for="confirm">Confirm Password</label></div>
-            <div class="form-input-right"><input name="confirm" type="password"></div>
+            <div class="form-input-right"><input name="confirm" id="password2" type="password" class="form-control"></div>
         </div>
         <div class="clear"></div>
-        <div class="form-input-row">
+        <div class="form-input-row form-group">
             <div class="fields-checkbox">
                 <input type="checkbox" name="remember" id="remember">
                 <label for="remember-me">Remember me</label>
@@ -80,7 +82,7 @@ GLOBAL $ACC_URL;
         <div class="clear"></div>
         <div class="field-submit">
             <input type="submit" name="register" value="Register"
-                   class="form-submit-button">
+                   class="btn btn-cq form-submit-button">
         </div>
     </form>
 </div>

@@ -30,7 +30,8 @@ if (isset($_GET['go'])) {
         if(password_verify($_GET['token'], $result['token'])) {
             ?>
             <h1>Please enter your password</h1>
-            <form action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">
+            <script src="../../csb-content/js/rescue.js"></script>
+            <form name="rescue"  action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">
                 <input type="hidden" name="go" value="passwordReset">
                 <input type="hidden" name="email" value="<?php echo $_GET['go']; ?>">
                 <div class="error-msg"><?php if (isset($_SESSION['errMsg'])) {
@@ -42,17 +43,17 @@ if (isset($_GET['go'])) {
                 <div class="clear"></div>
                 <div class="form-input-row">
                     <div class="form-input-left"><label for="password">Enter Password</label></div>
-                    <div class="form-input-right"><input name="password" type="password"></div>
+                    <div class="form-input-right"><input name="password" id="password1" type="password" class="form-control"></div>
                 </div>
                 <div class="clear"></div>
                 <div class="form-input-row">
                     <div class="form-input-left"><label for="confirm">Confirm Password</label></div>
-                    <div class="form-input-right"><input name="confirm" type="password"></div>
+                    <div class="form-input-right"><input name="confirm" id="password2" type="password" class="form-control"></div>
                 </div>
                 <div class="clear"></div>
                 <div class="field-submit">
                     <input type="submit" name="register" value="Register"
-                           class="form-submit-button">
+                           class="form-submit-button btn btn-cq">
                 </div>
             </form>
             <?php
@@ -85,8 +86,8 @@ if (isset($_GET['go'])) {
     <div id="form-input-box">
         <p>Please enter either the username or email address you use with this site.
             We will send you an email with a new password that you can change (or note). </p>
-
-        <form action="<?php echo($ACC_URL . "auth-login.php"); ?>" method="post">
+        <script src="../../csb-content/js/rescue.js"></script>
+        <form action="<?php echo($ACC_URL . "auth-login.php"); ?>" method="post" name="rescue">
             <input type="hidden" name="referringURL" value="<?php echo $BASE_URL; ?>">
             <input type="hidden" name="go" value="rescueForm">
 
@@ -96,16 +97,18 @@ if (isset($_GET['go'])) {
                 } ?>
             </div>
 
-            <div class="form-input-row">
-                <div class="form-input-left"><label for="name">Username or Email</label></div>
-                <div class="form-input-right"><input name="nameORemail" type="text"></div>
+            <div class="form-group">
+                <div><label for="name">Username or Email</label></div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input name="nameORemail" class="form-control" type="text">
+                        <div class="input-group-append">
+                            <input type="submit" name="rescue" value="Reset Password" class="form-submit-button btn btn-cq">
+                        </div>
+                    </div>
+                </div>
             </div>
-
             <div class="clear"></div>
-            <div class="field-submit">
-                <input type="submit" name="rescue" value="Reset Password"
-                       class="form-submit-button">
-            </div>
         </form>
     </div>
 
