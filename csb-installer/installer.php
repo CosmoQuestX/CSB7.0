@@ -146,7 +146,7 @@ status_update("Admin user set up", "success");
                         <p>Your password is: <code><?php echo $password ?></code></p>
                         <p>Make sure you save this password in your password manager, it was randomly generated and won't be visible again!<p>
                         <h3>Setup complete</h3>
-                        <a href="/" class="btn btn-primary">Get started</a>
+                        <a href="<?php echo $BASE_URL; ?>" class="btn btn-primary">Get started</a>
                     </div>
                 </div>
             </div>
