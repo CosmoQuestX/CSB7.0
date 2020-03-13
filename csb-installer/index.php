@@ -11,8 +11,8 @@
    is already present. Just incase somebody tries.  
    ---------------------------------------------------------------------- */
 if ((@include "../csb-settings.php") == TRUE) {
-    //header("Location: $BASE_URL");
-    //exit();
+    header("Location: $BASE_URL");
+    exit();
 }
 
 /* ----------------------------------------------------------------------
