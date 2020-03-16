@@ -1,7 +1,7 @@
 CREATE TABLE `unlock_codes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+              `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+              `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `code` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `expiration_date` datetime NOT NULL,
   `badge_id` int(10) unsigned NOT NULL,

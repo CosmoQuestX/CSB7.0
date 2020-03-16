@@ -9,7 +9,6 @@
 /* ----------------------------------------------------------------------
    Start / renew the session
    ---------------------------------------------------------------------- */
-
 session_start();
 
 
@@ -21,6 +20,7 @@ session_start();
  * @param string $name
  * @return boolean
  */
+
 function chk_UserId($db, $id, $name)
 {
 

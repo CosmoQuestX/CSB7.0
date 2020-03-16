@@ -88,7 +88,6 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                     <p><?php
                         require_once("installer.php");
                         ?></p>
-                    <h3>Write down your password!</h3>
                 </div>
             </div>
             <?php
@@ -122,7 +121,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
 $min_version = "70200";
 $min_version_readable = "7.2";
 $extensions = array("mysqli");
-$optionals = array("PEAR::Mail");
+$optionals = array("Mail");
 $rq_met = false;
 $rq1=false;
 $rq2=false;
@@ -186,7 +185,7 @@ $rqe=array();
                     </ul>
                 </div>
 
-                <form name="installation" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
+                <form name="installation" id="installation" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
                     <div class="card-body tab-content">
 
                         <div id="requirements" class="tab-pane active in">
@@ -248,9 +247,9 @@ $rqe=array();
                                     <h5>Requirements</h5>
                                     Currently, the requirements are as follows:
                                     <ul>
-                                        <li>PHP: Version 7.2 and above</li>
+                                        <li>PHP: Version <?php echo $min_version_readable; ?> and above</li>
                                         <li>Extensions: mysqli</li>
-                                        <li>Optional components: PEAR:Mail</li>
+                                        <li>Optional components: Mail (from PEAR)</li>
                                         <li>Optional components are, as the name suggests, optional, but they might provide useful functions that you are missing out on if you don't have them installed.</li>
                                     </ul>
                                 </div>
@@ -262,11 +261,11 @@ $rqe=array();
                                     <label>Site Name</label>
                                     <input type="text" class="form-control" name="SITE_NAME" placeholder="Do Science">
                                     <label>Base Directory</label>
-                                    <input type="text" class="form-control" name="BASE_DIR" value="<?php echo $BASE_DIR; ?>">
+                                    <input type="text" class="form-control" name="BASE_DIR" id="BASE_DIR" value="<?php echo $BASE_DIR; ?>">
                                     <label>Base URL</label>
-                                    <input type="text" class="form-control" name="BASE_URL" value="<?php echo $BASE_URL; ?>">
+                                    <input type="text" class="form-control" name="BASE_URL" id="BASE_URL" value="<?php echo $BASE_URL; ?>">
                                     <label>Site Admin Email</label>
-                                    <input type="text" class="form-control" name="rescue_email" value="your@email.com">
+                                    <input type="text" class="form-control" name="rescue_email" id="rescue_email" value="your@email.com">
                                 </div>
                                 <div class="col-md-6" id="directory-help">
                                     <h5>Directory Setup</h5>
@@ -283,13 +282,13 @@ $rqe=array();
                             <div class="row">
                                 <div class="col-md-6 px-5">
                                     <label>Database Server</label>
-                                    <input type="text" class="form-control" name="db_servername" value="localhost">
+                                    <input type="text" class="form-control" name="db_servername" id="db_servername" value="localhost">
                                     <label>Username</label>
-                                    <input type="text" class="form-control" name="db_username" value="csb">
+                                    <input type="text" class="form-control" name="db_username" id="db_username" value="csb">
                                     <label>Password</label>
                                     <input type="password" class="form-control" name="db_password">
                                     <label>Database Name</label>
-                                    <input type="text" class="form-control" name="db_name" value="csb">
+                                    <input type="text" class="form-control" name="db_name" id="db_name" value="csb">
                                 </div>
                                 <div class="col-md-6" id="database-help">
                                     <h5>Database Setup</h5>
@@ -323,32 +322,39 @@ $rqe=array();
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
 
 
 
-                <div class="my-4 d-flex justify-content-center">
-                    <input type="hidden" name="write_config" value="true">
-                    <input type="submit" class="btn btn-cq" name="submit" value="Write Configuration" <?php if ($rq1 === false || $rq2 === false ) { echo "disabled"; } ?> >
-                </div>
+                    <div class="my-4 d-flex justify-content-center">
+                        <input type="hidden" name="write_config" value="true">
+                        <input type="submit" class="btn btn-cq" name="submit" value="Write Configuration" <?php if ($rq1 === false || $rq2 === false ) { echo "disabled"; } ?> >
+                    </div>
                 </form>
-<!--             </div>
+
+
+            </div>
 
         </div>
     </div>
 </div>
 
 
-
-
-
-
-
-
-
 </div>
- -->
+
+
+<!-- Validation -->
+<script src="<?php echo $BASE_URL; ?>csb-themes/default/js/bs4-form-validation.min.js"></script>
+<script>
+    let install = new Validation("installation");
+    install.requireText("BASE_DIR", 0, 999, [], []);
+    install.requireText("BASE_URL", 0, 999, [], []);
+    install.requireEmail("rescue_email", 4, 999, [], []);
+    install.requireText("db_servername", 0, 999, [], []);
+    install.requireText("db_username", 0, 999, [], []);
+    install.requireText("db_name", 0, 999, [], []);
+</script>
+
 <?php
 loadFooter();

@@ -39,55 +39,44 @@ GLOBAL $ACC_URL;
 ?>
 
 <h3 class="font-weight-bold">Register</h3>
-<div id="form-input-box">
-    <form action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">
-        <input type="hidden" name="referringURL" value="<?php echo $BASE_URL; ?>">
-        <input type="hidden" name="go" value="regForm">
 
-        <div class="error-msg"><?php if (isset($_SESSION['errMsg'])) {
-                echo "<span style=\"color: red;\">" . $_SESSION['errMsg'] . "</span>";
-                unset($_SESSION['errMsg']);
-            } ?>
-        </div>
+<form id="registration" class="px-4" action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">
 
-        <div class="form-input-row">
-            <div class="form-input-left"><label for="name">Username</label></div>
-            <div class="form-input-right"><input name="name" type="text"></div>
-        </div>
+    <input type="hidden" name="referringURL" value="<?php echo $BASE_URL; ?>">
+    <input type="hidden" name="go" value="regForm">
 
-        <div class="clear"></div>
-        <div class="form-input-row">
-            <div class="form-input-left"><label for="email">Email</label></div>
-            <div class="form-input-right"><input name="email" type="text"></div>
-        </div>
-        <div class="clear"></div>
-        <div class="form-input-row">
-            <div class="form-input-left"><label for="password">Enter Password</label></div>
-            <div class="form-input-right"><input name="password" type="password"></div>
-        </div>
-        <div class="clear"></div>
-        <div class="form-input-row">
-            <div class="form-input-left"><label for="confirm">Confirm Password</label></div>
-            <div class="form-input-right"><input name="confirm" type="password"></div>
-        </div>
-        <div class="clear"></div>
-        <div class="form-input-row">
-            <div class="fields-checkbox">
-                <input type="checkbox" name="remember" id="remember">
-                <label for="remember-me">Remember me</label>
-            </div>
-        </div>
-        <div class="clear"></div>
-        <div class="field-submit">
-            <input type="submit" name="register" value="Register"
-                   class="form-submit-button">
-        </div>
-    </form>
-</div>
-
-<?php /*
-
- */ ?>
+    <div class="error-msg">
+        <?php if (isset($_SESSION['errMsg'])) {
+            echo "<span style=\"color: red;\">" . $_SESSION['errMsg'] . "</span>";
+            unset($_SESSION['errMsg']);
+        } ?>
+    </div>
 
 
+    <label for="name">Username</label>
+    <input name="name" id="name" class="form-control" type="text">
+
+    <label for="email">Email</label>
+    <input name="email" id="email" class="form-control" type="text">
+
+    <label for="password">Enter Password</label>
+    <input name="password" id="registerPassword" class="form-control" type="password">
+
+    <label for="confirm">Confirm Password</label>
+    <input name="confirm" id="confirm" class="form-control" type="password">
+
+    <input type="checkbox" name="remember" class="mr-3" style="vertical-align:middle;" id="remember"><label for="remember">Remember me</label>
+    
+    <input type="submit" name="register" value="Register" class="btn btn-cq btn-block mt-3">
+
+</form>
+
+<!-- Validation -->
+<script src="<?php echo $BASE_URL; ?>csb-themes/default/js/bs4-form-validation.min.js"></script>
+<script>
+    let registration = new Validation("registration");
+    registration.requireText("name", 0, 50, [], []);
+    registration.requireEmail("email", 4, 99, [], []);
+    registration.registerPassword("registerPassword", 6, 50, [], [], "confirm");
+</script>
 
