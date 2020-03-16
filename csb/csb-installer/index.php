@@ -338,8 +338,7 @@ $rqe=array();
                                     <input type="password" class="form-control" name="db_password">
                                     <label>Database Name</label>
                                     <input type="text" class="form-control" name="db_name" id="db_name" value="csb">
-                                    <br />
-                                    <input type="button" class="btn btn-cq" name="db_tester" id="db-tester" value="Test Connection">
+                                    
                                 </div>
                                 <div class="col-md-6" id="database-help">
                                     <h5>Database Setup</h5>
@@ -348,8 +347,10 @@ $rqe=array();
                                         <li>Username: this is your database user (security tip: create a program-specific db user)</li>
                                         <li>Database Name: This is where all CSB tables will go. Should be empty/new utf8 / utf8_bin DB schema.</li>
                                     </ul>
+                                    <br />
+                                    <input type="button" class="btn btn-cq" name="db_tester" id="db-tester" value="Test Connection">
                                 </div>
-                                <p id="test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</p>
+                                <div id="test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</div>
                             </div>
                         </div>
                         <div id="smtp" class="tab-pane fade in">
