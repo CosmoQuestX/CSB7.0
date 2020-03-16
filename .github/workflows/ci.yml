@@ -19,7 +19,7 @@ jobs:
         run: sudo npm install -g sass
 
       - name: Compile SASS
-        run: sass --style=compressed csb-themes/default/sass/style.scss:csb-themes/default/style.css
+        run: sass --style=compressed csb/csb-themes/default/sass/style.scss:csb/csb-themes/default/style.css
 
       - name: Copy files to the build artifact folder
         # Exclude the .git folder from the build artifact
