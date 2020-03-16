@@ -117,6 +117,68 @@ $rqe=array();
 ?>
 
 
+<!-- DB Connection Tester -->
+<script type="text/javascript" src="../csb-content/js/network.js"></script>
+<script type="text/javascript" language="JavaScript">
+    $(document).ready(function(){
+        $("#db-tester").click(function() {
+            data = {
+                "db_servername": $("[name='db_servername']").val(),
+                "db_username": $("[name='db_username']").val(),
+                "db_password": $("[name='db_password']").val(), // Is this secure? Do we care at this point?
+                "db_name": $("[name='db_name']").val()
+            }
+
+            /*
+             The response will always be with a 200 status.
+             It will look like this for success: { result: true }
+             And like this for failures:
+             {
+                 result: false,
+                 code: <code>,
+                 message: <error message>
+             }
+             */
+
+            postData("db-tester.php", data).then( response => {
+                if (response.result)
+                {
+                    $("#test-status").html("Looks good! 👍")
+                        .attr("class", "alert alert-success col-12") //Style the message
+                        .css({ 
+                            "margin-top": "1rem",
+                            "display": "block",
+                            "width": "auto",
+                            "height": "auto"
+                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+                }
+                else 
+                {
+                    $("#test-status").html("Error: " + response.message)
+                        .attr("class", "alert alert-danger col-12")  //Style the message
+                        .css({
+                                "margin-top": "1rem",
+                                "display": "block",
+                                "width": "auto",
+                                "height": "auto"
+                            }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+                }
+            }).catch( err => { 
+                $("#test-status").html("An unexpected error occurred!")
+                    .attr("class", "alert alert-danger col-12")  //Style the message
+                    .css({
+                            "margin-top": "1rem",
+                            "display": "block",
+                            "width": "auto",
+                            "height": "auto"
+                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+            });
+        });
+    });
+</script>
+
+<!-- end DB Connection Tester -->
+
 <div class="container text-dark">
     <div class="row">
         <div class="col">
@@ -276,6 +338,8 @@ $rqe=array();
                                     <input type="password" class="form-control" name="db_password">
                                     <label>Database Name</label>
                                     <input type="text" class="form-control" name="db_name" id="db_name" value="csb">
+                                    <br />
+                                    <input type="button" class="btn btn-cq" name="db_tester" id="db-tester" value="Test Connection">
                                 </div>
                                 <div class="col-md-6" id="database-help">
                                     <h5>Database Setup</h5>
@@ -285,6 +349,7 @@ $rqe=array();
                                         <li>Database Name: This is where all CSB tables will go. Should be empty/new utf8 / utf8_bin DB schema.</li>
                                     </ul>
                                 </div>
+                                <p id="test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</p>
                             </div>
                         </div>
                         <div id="smtp" class="tab-pane fade in">
