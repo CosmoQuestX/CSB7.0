@@ -110,7 +110,6 @@ $min_version = "70200";
 $min_version_readable = "7.2";
 $extensions = array("mysqli");
 $optionals = array("Mail");
-$rq_met = false;
 $rq1=false;
 $rq2=false;
 $rqe=array();
@@ -258,7 +257,7 @@ $rqe=array();
                                 <div class="col-md-6" id="directory-help">
                                     <h5>Directory Setup</h5>
                                     <ul>
-                                        <li>Site name: This is displayed in page titles & in headers</li>
+                                        <li>Site name: This is displayed in page titles and in headers</li>
                                         <li>Base Directory: Complete installation directory (e.g. from pwd)</li>
                                         <li>Base URL: What is the URL to get to CSB's root directory</li>
                                         <li>Site Admin Email: This is used to rescue your admin user</li>
