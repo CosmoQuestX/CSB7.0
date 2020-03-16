@@ -100,6 +100,18 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
 }
 
 
+/* ---------------------------------------------------------------------
+   The default header shows the login div id user on the top right.
+   So since we definitely don't have a user yet, hide the div.
+   --------------------------------------------------------------------- */
+
+?>
+
+<script type="text/javascript" language="JavaScript">
+    document.getElementById("user").style.display = "none";
+</script>
+
+<?php
 
 /* ---------------------------------------------------------------------
    Time to get things set up!

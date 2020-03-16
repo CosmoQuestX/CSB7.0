@@ -27,6 +27,7 @@ This is an open source image annotation platform suitable for citizen science, c
 To get a production build of the software, go the [latest `master` CI run](https://github.com/CosmoQuestX/CSB7.0/actions?query=branch%3Amaster) and download the `csb-build` artifact.
 
 ### Step 1: Setup the Server
+
 #### 1.1 Setup LAMP Server
 
 Setup an Apache 2 / MySQL 8 / PHP 7 environment. If we don't have specific instructions you need below, look for
@@ -73,3 +74,22 @@ General installation use https://pear.php.net/manual/en/installation.getting.php
 ### Step 2: Launch the installer
 Go to http://yourhost/csb-installer/ in your browser.
   This will let you configure your installation and then install databases and setup an admin user using the settings in csb-settings.php
+
+### Optional - Using Docker
+
+#### 1. Install Docker Desktop for your platform
+Download and install the corresponding docker desktop version for your OS from [Docker](https://hub.docker.com/search?q=&type=edition&offering=community)
+
+#### 2. Build and Start CSB
+For Windows - open either Command Console or Powershell\
+For Mac or Linux - open your command shell
+
+Execute the following command from the CSB directory:
+```docker-compose up```
+
+To stop docker and close the app, press Ctrl+C
+
+#### 3. Launch the installer
+Go to http://localhost:8080/csb-installer/ in your browser. 
+  To use the docker MariaDB, use ```db``` as your database hostname
+  Default docker username, password, and database are all ```csb```
