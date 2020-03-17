@@ -100,18 +100,6 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
 }
 
 
-/* ---------------------------------------------------------------------
-   The default header shows the login div id user on the top right.
-   So since we definitely don't have a user yet, hide the div.
-   --------------------------------------------------------------------- */
-
-?>
-
-<script type="text/javascript" language="JavaScript">
-    document.getElementById("user").style.display = "none";
-</script>
-
-<?php
 
 /* ---------------------------------------------------------------------
    Time to get things set up!
@@ -122,13 +110,74 @@ $min_version = "70200";
 $min_version_readable = "7.2";
 $extensions = array("mysqli");
 $optionals = array("Mail");
-$rq_met = false;
 $rq1=false;
 $rq2=false;
 $rqe=array();
 
 ?>
 
+
+<!-- DB Connection Tester -->
+<script type="text/javascript" src="../csb-content/js/network.js"></script>
+<script type="text/javascript" language="JavaScript">
+    $(document).ready(function(){
+        $("#db-tester").click(function() {
+            data = {
+                "db_servername": $("[name='db_servername']").val(),
+                "db_username": $("[name='db_username']").val(),
+                "db_password": $("[name='db_password']").val(), // Is this secure? Do we care at this point?
+                "db_name": $("[name='db_name']").val()
+            }
+
+            /*
+             The response will always be with a 200 status.
+             It will look like this for success: { result: true }
+             And like this for failures:
+             {
+                 result: false,
+                 code: <code>,
+                 message: <error message>
+             }
+             */
+
+            postData("db-tester.php", data).then( response => {
+                if (response.result)
+                {
+                    $("#test-status").html("Looks good! 👍")
+                        .attr("class", "alert alert-success col-12") //Style the message
+                        .css({ 
+                            "margin-top": "1rem",
+                            "display": "block",
+                            "width": "auto",
+                            "height": "auto"
+                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+                }
+                else 
+                {
+                    $("#test-status").html("Error: " + response.message)
+                        .attr("class", "alert alert-danger col-12")  //Style the message
+                        .css({
+                                "margin-top": "1rem",
+                                "display": "block",
+                                "width": "auto",
+                                "height": "auto"
+                            }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+                }
+            }).catch( err => { 
+                $("#test-status").html("An unexpected error occurred!")
+                    .attr("class", "alert alert-danger col-12")  //Style the message
+                    .css({
+                            "margin-top": "1rem",
+                            "display": "block",
+                            "width": "auto",
+                            "height": "auto"
+                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+            });
+        });
+    });
+</script>
+
+<!-- end DB Connection Tester -->
 
 <div class="container text-dark">
     <div class="row">
@@ -270,7 +319,7 @@ $rqe=array();
                                 <div class="col-md-6" id="directory-help">
                                     <h5>Directory Setup</h5>
                                     <ul>
-                                        <li>Site name: This is displayed in page titles & in headers</li>
+                                        <li>Site name: This is displayed in page titles and in headers</li>
                                         <li>Base Directory: Complete installation directory (e.g. from pwd)</li>
                                         <li>Base URL: What is the URL to get to CSB's root directory</li>
                                         <li>Site Admin Email: This is used to rescue your admin user</li>
@@ -289,6 +338,7 @@ $rqe=array();
                                     <input type="password" class="form-control" name="db_password">
                                     <label>Database Name</label>
                                     <input type="text" class="form-control" name="db_name" id="db_name" value="csb">
+                                    
                                 </div>
                                 <div class="col-md-6" id="database-help">
                                     <h5>Database Setup</h5>
@@ -297,7 +347,10 @@ $rqe=array();
                                         <li>Username: this is your database user (security tip: create a program-specific db user)</li>
                                         <li>Database Name: This is where all CSB tables will go. Should be empty/new utf8 / utf8_bin DB schema.</li>
                                     </ul>
+                                    <br />
+                                    <input type="button" class="btn btn-cq" name="db_tester" id="db-tester" value="Test Connection">
                                 </div>
+                                <div id="test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</div>
                             </div>
                         </div>
                         <div id="smtp" class="tab-pane fade in">
