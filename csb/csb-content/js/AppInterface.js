@@ -139,7 +139,6 @@ function AppInterface(csbApp) {
 
         $("#x-button").click(function () {
             $("#cq-mapping-tool").hide();
-            location.reload();
         });
 
         $("#app-dont-want-to-login-button").click(function () {
