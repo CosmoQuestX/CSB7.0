@@ -56,7 +56,7 @@ class DB
         $conn = mysqli_connect($this->host, $this->user, $this->password, $this->database);
 
         if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
+            die("MySQL connection failed: " . mysqli_connect_error());
         }
 
         return $conn;
