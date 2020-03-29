@@ -163,24 +163,19 @@ function login($db, $user)
             $_SESSION['roles'] = $roles;
             session_start();
 
-        } else {
-
-            $db->closeDB();
-            $_SESSION['errmsg'] = "Login failed: Wrong password";
-            // In case of error, exit not quite as gracefully.
-            if (!isset($BASE_URL)) {
-                die("wrong password");
-            }
+            // Send them where they belong
+            header("Location: " . $user['referringURL']);
+            exit();
         }
+    }
+    
+    // If we've reached here, there's been an error
 
-    } else {
-
-        $db->closeDB();
-        $_SESSION['errmsg'] = "Login failed: User " . $user['name'] . " not found";
-        // In case of error, exit not quite as gracefully.
-        if (!isset($BASE_URL)) {
-            die("user not found");
-        }
+    $db->closeDB();
+    $_SESSION['errmsg'] = "Login failed: Wrong username or password";
+    // In case of error, exit not quite as gracefully.
+    if (!isset($BASE_URL)) {
+        die("Login Failed.");
     }
 
     // Send them where they belong
