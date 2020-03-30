@@ -38,7 +38,23 @@ if (isset($_GET['go'])) {
 
     /* Logging in? Check for post variables ----------------------------- */
     if ($_POST['go'] == 'login') {
-        login($db, $_POST);
+        $user=array();
+        foreach ($_POST as $postkey=>$postvalue) {
+            // We shouldn't need to except password, since you shouldn't be able
+            // to sneak a password with a special char past the input filter. 
+            // But better err on the side of caution. The password is hashed
+            // anyway.             
+            if ($postkey == 'password') {
+                $user[$postkey]=$_POST[$postkey];
+            }
+            else if ($postkey == 'referringURL'){
+                $user[$postkey]=filter_input(INPUT_POST, $postkey, FILTER_SANITIZE_URL);
+            }
+            else {
+                $user[$postkey]=filter_input(INPUT_POST, $postkey, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            }
+        }
+        login($db, $user);
 
     /* Registering new user --------------------------------------------- */
     } elseif ($_POST['go'] == 'regForm') {
