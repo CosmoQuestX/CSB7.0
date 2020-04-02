@@ -203,7 +203,7 @@ $rqe=array();
                             // Directory is not writeable, so abort
                             ?>
                             <span class="font-weight-bold text-danger">FALSE</span>
-                    </p><p class="text-danger">Make sure the directory </br><code><?php echo $BASE_DIR; ?></code></br> is writeable for the webserver user. (for Ubuntu: sudo chown -R www-data your_dir)</p>
+                    </p><p class="text-danger">Make sure the directory <br /><code><?php echo $BASE_DIR; ?></code><br /> is writeable for the webserver user. (for Ubuntu: sudo chown -R www-data your_dir)</p>
     Aborting the installer.</div></div></div></div></div>
                             <?php
                             require_once($THEME_DIR . "/footer.php");
