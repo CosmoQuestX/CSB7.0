@@ -20,7 +20,7 @@ global $user;
 $user = isLoggedIn($db);
 
 // Now let's see which error we have been called with
-$error=filter_input(INPUT_GET, 'error', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$error=filter_input(INPUT_GET, 'error', FILTER_SANITIZE_NUMBER_INT);
 
 // Load the view
 global $page_title, $header_title, $SITE_TITLE;
@@ -29,12 +29,21 @@ require_once($BASE_DIR . "/csb-content/template_functions.php");
 
 loadHeader($page_title);
 
+// Let's make sure we output an image that exists. Now let's hope that at least
+// the fallback image exists. 
+if(file_exists($THEME_DIR."images/".$error.".png")) {
+    $img = $THEME_URL."images/".$error.".png";
+}
+else {
+    $img = $THEME_URL."images/error.png";
+}
+
 ?>
 <div id='container-md'>
 	<div class='row'>
         <div class="center">
         	<div id='app-error' class="col-md">
-        		<img src='<?php echo $THEME_URL . "images/" . $error; ?>.png' alt='Error image for error <?php echo $error?>.'>
+        		<img src='<?php echo $img; ?>' alt='Error image for error <?php echo $error?>.'>
         		<div id='app-error-btn' class="center">
         		<?php if(isset($referrer)) {
         		?>
