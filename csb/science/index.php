@@ -40,6 +40,7 @@ if (filter_var($login, FILTER_VALIDATE_BOOLEAN) || $user === FALSE) { // NOT LOG
 
 elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENTIST'] && $_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN'] && $_SESSION['roles'] != $CQ_ROLES['SITE_SUPERADMIN']) {
     header("Location: $BASE_URL/error/error.php?error=403");
+    exit();
 
 } /* ----------------------------------------------------------------------
    Load the view
