@@ -26,12 +26,11 @@ $referringURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 /* -----------------------------------------------------------------------
    Registration form
-        1) Tell them if there is an error (check with JS) TODO
+        1) TODO Tell them if there is an error (check with JS) 
         2) Get their info
         3) Send their info and the return to URL in the form
 
-        Also include:
-            - signin instead TODO
+        TODO Also include signin instead 
 
    ---------------------------------------------------------------------- */
 GLOBAL $ACC_URL;
