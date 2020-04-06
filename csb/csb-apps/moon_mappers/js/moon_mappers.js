@@ -20,7 +20,7 @@ function moon_mappers(csbApp) {
         [
             {
                 "type": "set-image",
-                "image-location": "/csb/csb-apps/moon_mappers/images/tutorials/moon-tutorial-1.png",
+                "image-location": "/csb/csb-apps/moon_mappers/images/tutorial/moon-tutorial-1.png",
                 "correct-marks": [
                     new Crater(282, 50, 119, csbApp.appInterface),
                     new Crater(192, 178, 72, csbApp.appInterface),
@@ -107,7 +107,7 @@ function moon_mappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/csb/csb-apps/moon_mappers/images/tutorials/moon-tutorial-2.png",
+                "image-location": "/csb/csb-apps/moon_mappers/images/tutorial/moon-tutorial-2.png",
                 "correct-marks": [
                     new Crater(256, 13, 146),
                     new Crater(385, 39, 65),
@@ -165,7 +165,6 @@ function moon_mappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/csb/csb-apps/moon_mappers/images/tutorials/moon-tutorial-3.png",
                 "correct-marks": [
                     new Crater(122, 133, 35, csbApp.appInterface),
                     new Crater(211, 107, 57, csbApp.appInterface),

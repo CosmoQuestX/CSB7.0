@@ -206,7 +206,7 @@ global $app;
                 </ul>
                 <?php if ($app == "mercury_mappers") { 
 
-                echo "<video controls preload='metadata' id='mercury-crater-video' class='example-video'><source src='/csb/csb-content/images/applications/tutorials/mercury/crater-video.mp4' type='video/mp4'>You need to update your browser to view animations. </video>";
+                echo "<video controls preload='metadata' id='mercury-crater-video' class='example-video'><source src='/csb/csb-apps/mercury_mappers/images/tutorial/crater-video.mp4' type='video/mp4'>You need to update your browser to view animations. </video>";
                 }
                 ?>
                 <div class="app-button okay-button">Got it</div>
