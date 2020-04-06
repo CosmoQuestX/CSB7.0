@@ -141,10 +141,16 @@ function loadNavLinks()
         ?>
 
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=Bennu'; ?>">Bennu Mapper</a>
+            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=bennu_mappers'; ?>">Bennu Mappers</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="<?php echo $BASE_URL; ?>">Other Mapper</a>
+            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=moon_mappers'; ?>">Moon Mappers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=mars_mappers'; ?>">Mars Mappers</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=mercury_mappers'; ?>">Mercury Mappers</a>
         </li>
 
         <?php

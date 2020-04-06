@@ -5,6 +5,8 @@
  * Date: 6/4/19
  * Time: 1:18 PM
  */
+
+global $app;
 ?>
 <div class="container mt-3">
     <div class="row">
@@ -61,7 +63,6 @@
             <p><?php echo $txt['blurb']; ?></p>
             <p><?php echo $txt['footer']; ?></p>
             <input type="button" value="Discord"><input type="button" value="Twitch"><br/>
-            <!-- <iframe src="https://titanembeds.com/embed/443490369443856384" height="245" width="350"></iframe> -->
         </div>
     </div>
 </div>
@@ -71,7 +72,7 @@
     <div id="science-application">
         <div id="app-header">
             <div id="app-title">CosmoQuest Mapping Tool</div>
-            <div id="x-button" style="float: right;"><img src="/csb-content/images/applications/x-button.png" style="width: 18px; height: 18px;" /></div>
+            <div id="x-button" style="float: right;"><img src="/csb/csb-content/images/applications/x-button.png" style="width: 18px; height: 18px;" /></div>
             <div id="tutorial-steps-complete">
                 <div id="tutorial-steps-complete-background">
                     <div id="tutorial-steps-complete-foreground"></div>
@@ -85,21 +86,21 @@
                 <div id="app-tool-buttons-box">
                     <table class="app-tool-buttons-table">
                         <tr>
-                            <td id="circle-button" class="app-tool-button selected muted-button" title="Mark a Crater"><img src="/csb-content//images/applications/buttons/circle-button.png" /></td>
-                            <td id="eraser-button" class="app-tool-button not-selected muted-button" title="Erase a Mistake"><img src="/csb-content//images/applications/buttons/eraser-button.png" /></td>
+                            <td id="circle-button" class="app-tool-button selected muted-button" title="Mark a Crater"><img src="/csb/csb-content/images/applications/buttons/circle-button.png" /></td>
+                            <td id="eraser-button" class="app-tool-button not-selected muted-button" title="Erase a Mistake"><img src="/csb/csb-content/images/applications/buttons/eraser-button.png" /></td>
                         </tr><tr>
-                            <td id="ejecta-button" class="app-tool-button not-selected muted-button" title="Mark Crater Ejecta"><img src="/csb-content/images/applications/buttons/ejecta-button.png" /></td>
-                            <!--<td id="concentric-crater-button" class="app-tool-button not-selected muted-button" title="Mark a Concentric Crater"><img src="/csb-content/images/applications/buttons/concentric-crater-button.png" /></td>-->
-                            <td id="crater-chain-button" class="app-tool-button not-selected muted-button" title="Mark a Crater Chain"><img src="/csb-content/images/applications/buttons/crater-chain-button.png" /></td>
+                            <td id="ejecta-button" class="app-tool-button not-selected muted-button" title="Mark Crater Ejecta"><img src="/csb/csb-content/images/applications/buttons/ejecta-button.png" /></td>
+                            <!--<td id="concentric-crater-button" class="app-tool-button not-selected muted-button" title="Mark a Concentric Crater"><img src="/csb/csb-content/images/applications/buttons/concentric-crater-button.png" /></td>-->
+                            <td id="crater-chain-button" class="app-tool-button not-selected muted-button" title="Mark a Crater Chain"><img src="/csb/csb-content/images/applications/buttons/crater-chain-button.png" /></td>
                         </tr><tr>
-                            <td id="boulder-button" class="app-tool-button not-selected muted-button" title="Mark a Boulder"><img src="/csb-content/images/applications/buttons/boulder-button.png" /></td>
-                            <td id="rock-button" class="app-tool-button not-selected muted-button" title="Rocks Tool"><img src="/csb-content/images/applications/buttons/rocks-button.png" /></td>
+                            <td id="boulder-button" class="app-tool-button not-selected muted-button" title="Mark a Boulder"><img src="/csb/csb-content/images/applications/buttons/boulder-button.png" /></td>
+                            <td id="rock-button" class="app-tool-button not-selected muted-button" title="Rocks Tool"><img src="/csb/csb-content/images/applications/buttons/rocks-button.png" /></td>
                         </tr>
                     </table>
 
                     <br />
                     <!--
-                        <div id="app-tool-help-button" class="app-tool-button selected" style="width: 50px;" title="Mark a Crater"><img src="/csb-content/images/applications/buttons/help-button.png" /></div>
+                        <div id="app-tool-help-button" class="app-tool-button selected" style="width: 50px;" title="Mark a Crater"><img src="/csb/csb-content/images/applications/buttons/help-button.png" /></div>
                         <br />
                     -->
                     <hr />
@@ -121,24 +122,25 @@
                 <div id="app-image-display">
                     <canvas class="canvas" id="project_canvas">
                         <p>Your browser is too old to use canvas. Here are links to update your browser.</p>
-                        <a href="http://windows.microsoft.com/en-us/internet-explorer/products/ie/home"><img src="/csb-content/images/browsers/ie.png"></a>
-                        <a href="http://www.mozilla.org/en-US/firefox/new/"><img src="/csb-content/images/browsers/firefox.png"></a>
-                        <a href="https://www.google.com/chrome"><img src="/csb-content/images/browsers/chrome.png"></a>
-                        <a href="http://www.apple.com/safari/download/"><img src="/csb-content/images/browsers/safari.png"></a>
-                        <a href="http://www.opera.com/download/"><img src="/csb-content/images/browsers/opera.png"></a>
+                        <a href="http://windows.microsoft.com/en-us/internet-explorer/products/ie/home"><img src="/csb/csb-content/images/browsers/ie.png"></a>
+                        <a href="http://www.mozilla.org/en-US/firefox/new/"><img src="/csb/csb-content/images/browsers/firefox.png"></a>
+                        <a href="https://www.google.com/chrome"><img src="/csb/csb-content/images/browsers/chrome.png"></a>
+                        <a href="http://www.apple.com/safari/download/"><img src="/csb/csb-content/images/browsers/safari.png"></a>
+                        <a href="http://www.opera.com/download/"><img src="/csb/csb-content/images/browsers/opera.png"></a>
                     </canvas>
                 </div>
             </div>
 
             <div class="app-right-side">
                 <div class="app-sidebar-title">Examples</div>
-                <img id="app-example-up-arrow" src="/csb-content/images/applications/buttons/up-arrow.png" />
+                <img id="app-example-up-arrow" src="/csb/csb-content/images/applications/buttons/up-arrow.png" />
                 <div id="example-images">
-                    <img class="example-image" src="/csb-content/images/applications/mercury_mappers/examples/craters/crater1.png" />
-                    <img class="example-image" src="/csb-content/images/applications/mercury_mappers/examples/craters/crater2.png" />
-                    <img class="example-image" src="/csb-content/images/applications/mercury_mappers/examples/craters/crater3.png" />
+                
+                    <img class="example-image" src="/csb/csb-apps/<?php  echo $app; ?>/images/examples/crater/crater1.png" />
+                    <img class="example-image" src="/csb/csb-apps/<?php  echo $app; ?>/images/examples/crater/crater2.png" />
+                    <img class="example-image" src="/csb/csb-apps/<?php  echo $app; ?>/images/examples/crater/crater3.png" />
                 </div>
-                <img id="app-example-down-arrow" src="/csb-content/images/applications/buttons/down-arrow.png" />
+                <img id="app-example-down-arrow" src="/csb/csb-content/images/applications/buttons/down-arrow.png" />
                 <hr />
                 <div id="submit-button" class="submit-button submit-pressed">
                     Image Done!
@@ -157,7 +159,7 @@
                     <ul>
                         <li>Username <input id="app-login-username" type="text" /></li>
                         <li>Password <input id="app-login-password" type="password" /></li>
-                        <li id="app-forgot-password"><a href="/password/reset">I forgot my password</a></li>
+                        <li id="app-forgot-password"><a href="/csb/api/passwordreset">I forgot my password</a></li>
                         <li id="app-remember-me"><input type="checkbox"> Remember Me</li>
                         <li id="app-login-error-text"></li>
                     </ul>
@@ -202,7 +204,11 @@
                         </ul>
                     </li>
                 </ul>
-                <video controls preload='metadata' id="mercury-crater-video" class='example-video'><source src='/csb-content/images/applications/tutorials/mercury/crater-video.mp4' type='video/mp4'>You need to update your browser to view animations. </video>
+                <?php if ($app == "mercury_mappers") { 
+
+                echo "<video controls preload='metadata' id='mercury-crater-video' class='example-video'><source src='/csb/csb-content/images/applications/tutorials/mercury/crater-video.mp4' type='video/mp4'>You need to update your browser to view animations. </video>";
+                }
+                ?>
                 <div class="app-button okay-button">Got it</div>
             </div>
             <div id="app-example-eraser-button" class="app-example">

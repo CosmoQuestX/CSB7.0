@@ -18,9 +18,9 @@ function Tutorial(csbApp) {
         $("#tutorial-steps-complete").show();
         this.csbApp.isAppOn = true;
         this.mouseUpImage = document.createElement('img');
-        this.mouseUpImage.src = "/csb-content/images/applications/tutorials/cursor-up.png";
+        this.mouseUpImage.src = "/csb/csb-content/images/applications/tutorials/cursor-up.png";
         this.mouseDownImage = document.createElement('img');
-        this.mouseDownImage.src = "/csb-content/images/applications/tutorials/cursor-down.png";
+        this.mouseDownImage.src = "/csb/csb-content/images/applications/tutorials/cursor-down.png";
 
         var self = this;
         $("#text-bubble-okay-button").click(function () {
@@ -62,7 +62,7 @@ function Tutorial(csbApp) {
 
         this.csbApp.tutorialsCompleted.push(this.csbApp.applicationName);
 
-        postData("/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}).then( returnData => {
+        postData("/csb/api/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}).then( returnData => {
             console.log(returnData);
         });
     };

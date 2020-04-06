@@ -45,7 +45,7 @@ function PaintingTool(options) {
     };
 
     this.onMouseEnter = function (event, appInterface) {
-        $('#' + appInterface.csbApp.canvasName).css("cursor", "url(/csb-content/images/applications/markers/marker-paint.png) 13 13, auto");
+        $('#' + appInterface.csbApp.canvasName).css("cursor", "url(/csb/csb-content/images/applications/markers/marker-paint.png) 13 13, auto");
     };
 
     this.onMouseLeave = function (event, appInterface) {

@@ -1,0 +1,12 @@
+RewriteEngine on
+RewriteBase /
+
+RewriteCond     %{REQUEST_URI}  ^/csb/api/finish_tutorial       [OR]
+RewriteCond     %{REQUEST_URI}  ^/csb/api/image                 [OR]
+RewriteCond     %{REQUEST_URI}  ^/csb/api/scistarter            [OR]
+RewriteCond     %{REQUEST_URI}  ^/csb/api/ajax_login            [OR]
+RewriteCond     %{REQUEST_URI}  ^/csb/api/passwordreset
+RewriteRule     ^(.*)$          /csb/api/api.php
+
+RewriteCond     %{REQUEST_URI}  ^/$
+RewriteRule     ^(.*)$          /csb/$1             [L,R]

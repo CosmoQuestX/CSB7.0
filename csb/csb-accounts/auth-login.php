@@ -181,9 +181,8 @@ function login($db, $user)
             // Set sessions and cookie
             $_SESSION['user_id'] = $chkuser['id'];
             setcookie('name', $user['name'], $timeout, "/");
-            setcookie('tutorials_complete', $tcresult['tutorials_completed'] ,$timeout,"/");
+            setcookie('tutorials_complete', $tcresult['tutorials_completed'],$timeout,"/");
             $_SESSION['roles'] = $roles;
-            session_start();
 
             // Send them where they belong
             header("Location: " . $user['referringURL']);
