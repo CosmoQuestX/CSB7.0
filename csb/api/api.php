@@ -33,7 +33,7 @@ define ("elog",false);
 require '../csb-loader.php';
 
 // If setup correctly, we get the REQUEST_URI passed, which is something
-// like /api/one/two/three - something we can easily digest.
+// like /csb/api/one/two/three/four - something we can easily digest.
 // There's some endpoints that are - more or less - static and some that
 // reqire parsing the request string, so let's switch through those.
 $operation=$_SERVER['REQUEST_URI'];
@@ -69,7 +69,7 @@ switch ($operation) {
         // an argument
         $arg_arr=explode("/",$operation);
         if (debug) { print_r($arg_arr); print "<br />\n"; }
-        if(in_array("id",$arg_arr)){
+        if(in_array("byID",$arg_arr)){
             //  /csb/api/image/byID/<number>
             // We're passing the number as an argument. 
             getImageById($arg_arr[5]);
@@ -132,8 +132,7 @@ function finish_tutorial() {
     $db_conn->connectDB();
     
     // Get the "tutorials_completed" column for the logged in user from the database.
-    $user_name=filter_var($_COOKIE['name'],FILTER_SANITIZE_FULL_SPECIAL_CHARS,0);
-    $user_sql="SELECT tutorials_completed from users WHERE name = \"" . $user_name . "\"";
+    $user_sql="SELECT tutorials_completed from users WHERE id = " . $_SESSION['user_id'] . "";
     if (debug) { print $user_sql . "<br \>\n"; }
     $user_res=$db_conn->runQuery($user_sql);
     if ($user_res !== false) {
@@ -144,9 +143,8 @@ function finish_tutorial() {
         }
     }
     else { 
-            echo "User not found"; 
             $db_conn->closeDB(); 
-            exit(); 
+            die("User not found");
     }
     
     /**
@@ -393,7 +391,7 @@ function submit_data($application_unsafe) {
     $db_conn=new DB($db_servername,$db_username,$db_password,$db_name);
     $db_conn->connectDB();
 
-    $user = getUserIDFromCookie();
+    $user = $_SESSION['user_id'];
     if ($user === false) {
     // We didn't find a user, so let's be false
         error_log("No user found, for submitted image data, exiting");
@@ -539,7 +537,7 @@ function scistarter() {
         fclose($fh);
     }
     
-    $user=getUserIDFromCookie();
+    $user=$_SESSION['user_id'];
     if ($user !== false) {
         if (elog) { error_log("Submitting scistarter information with user id " . $user); }
     
@@ -571,27 +569,5 @@ function ajax_login() {
     exit();
 }
 
-/**
- * Get the user ID from the database where the username is equal to the cookie
- * value from the logged in user.
- * @return boolean|integer   Returns either the user id or false 
- */
-function getUserIDFromCookie() {
-    // In absence of a better method, determine the user from the browser session
-    if (isset($_COOKIE['name'])) {
-        $username=filter_var( $_COOKIE['name'],FILTER_SANITIZE_FULL_SPECIAL_CHARS,0);
-        if (debug) { print "Getting user id from name " . $username . " <br />\n"; }
-        $id_sql="SELECT id from users where name = \"". $username ."\"";
-        $id_res=$db_conn->runQuery($id_sql);
-        $user=$id_res[0]['id'];
-        if (debug) { print "Found user id " . $user . " <br />\n"; }
-        // Do we need more information?
-    }
-    else{
-        // We didn't find a user, so let's be false
-        $user=false;
-    }
-    return $user;
-}
 
 ?>

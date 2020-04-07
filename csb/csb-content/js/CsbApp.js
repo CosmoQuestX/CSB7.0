@@ -132,7 +132,7 @@ function CsbApp(canvasElementName, isDebugging) {
             return;
         }
 
-        var fileToPostTo = "/csb/api/image/" + this.applicationName + "next";
+        var fileToPostTo = "/csb/api/image/" + this.applicationName + "/next";
 
         if (isSet(imageId)) {
             fileToPostTo = "/csb/api/image/byID/" + imageId;
