@@ -162,28 +162,33 @@ function login($db, $user)
             // Get the person's roles
             $query = "SELECT role_id, user_id FROM role_users WHERE user_id = ?";
             $params = array($chkuser['id']);
-            $result = $db->runQueryWhere($query, "s", $params);
+            $result = $db->runQueryWhere($query, "i", $params);
 
             if (isset($result['role_id'])) {
                 $roles = $result['role_id'];
             } else {
-                $roles = "";
-                foreach ($result as $role) {
-                    $roles .= $role['role_id'] . ",";
-                }
+                $roles = implode(",",$role['role_id']);
+                // Original code was:
+                // foreach ($result as $role) {
+                // $roles = "";
+                // $roles .= $role['role_id'] . ",";
+                // }
             }
 
             // Get the person's tutorials completed
             $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
             $tcparams = array($chkuser['id']);
-            $tcresult = $db->runQueryWhere($query, "i", $params);
+            $tcresult = $db->runQueryWhere($tcquery, "i", $params);
+            if($tcresult === false){
+                error_log("Query failed for tutorials_completed; SQL was: $tcquery with params=" . print_r($tcparams));
+            }
             
             // Set sessions and cookie
             $_SESSION['user_id'] = $chkuser['id'];
             setcookie('name', $user['name'], $timeout, "/");
             setcookie('tutorials_complete', $tcresult['tutorials_completed'],$timeout,"/");
             $_SESSION['roles'] = $roles;
-
+            
             // Send them where they belong
             header("Location: " . $user['referringURL']);
             exit();
