@@ -28,9 +28,9 @@ $exampleSets = array(
     array(
         'name' => 'Rock',
         'examples' => array(
-            $BASE_URL . 'csb-apps/moon_mappers/images/examples/Rocks1.png',
-            $BASE_URL . 'csb-apps/moon_mappers/images/examples/Rocks2.png',
-            $BASE_URL . 'csb-apps/moon_mappers/images/examples/Rocks1.png'
+            $BASE_URL . 'csb-apps/moon_mappers/images/examples/Rock1.png',
+            $BASE_URL . 'csb-apps/moon_mappers/images/examples/Rock2.png',
+            $BASE_URL . 'csb-apps/moon_mappers/images/examples/Rock3.png'
         )
     ),
     array(
