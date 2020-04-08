@@ -244,7 +244,7 @@ function logout()
  */
 function regUser($db, $user, $pwhash)
 {
-    global $CQ_ROLE;
+    global $CQ_ROLES;
 
     $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
     $params = array(filter_var($user['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash);
@@ -267,7 +267,10 @@ function regUser($db, $user, $pwhash)
 
     $query = "INSERT INTO role_users (role_id, user_id) values (?, ?)";
     $params = array($roles, $id);
-    $db->insert($query, "ii", $params);
+    $role_insert=$db->insert($query, "ii", $params);
+    if ($role_insert !== true) {
+        error_log("Error adding role $roles for user $id");
+    }
 
     // create sessions / cookies TODO Make this a function
 
