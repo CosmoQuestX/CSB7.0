@@ -138,22 +138,25 @@ function loadNavLinks()
     global $BASE_URL, $ACC_URL, $user, $adminFlag;
 
     if ($user == TRUE) {         // LOGGED IN
-        ?>
+        // Just hacking something together for now. 
+        // TODO We should totally pull those from the database - "select name from applications where active=1" or something like that.
+        $links=array(
+                array('target'=>"",'desc'=>"Home"),
+                array('target'=>"apps.php?app=bennu_mappers",'desc'=>"Bennu Mappers"),
+                array('target'=>"apps.php?app=moon_mappers",'desc'=>"Moon Mappers"),
+                array('target'=>"apps.php?app=mars_mappers",'desc'=>"Mars Mappers"),
+                array('target'=>"apps.php?app=mercury_mappers",'desc'=>"Mercury Mappers")
+                );
 
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=bennu_mappers'; ?>">Bennu Mappers</a>
+                foreach ($links as $link) {
+                    // "Home" is a special case and needs special matching. But there is probably a much better way.
+                    ?>
+		<li class="nav-item <?php if (strstr($_SERVER['REQUEST_URI'],$link['target']) !== false || ($_SERVER['REQUEST_URI'] == "/csb/" && $link['target']=="")) { echo "active"; }?>">
+        	<a class="nav-link" href="<?php echo $BASE_URL . $link['target']; ?>"><?php echo $link['desc'] ?></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=moon_mappers'; ?>">Moon Mappers</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=mars_mappers'; ?>">Mars Mappers</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=mercury_mappers'; ?>">Mercury Mappers</a>
-        </li>
+                    <?php 
 
-        <?php
+        }
     }
 }
 

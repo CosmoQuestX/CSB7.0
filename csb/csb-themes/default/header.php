@@ -34,9 +34,6 @@ loadLoginBox();
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active" <?php if (strcmp(basename($_SERVER['PHP_SELF']), $BASE_URL)) { echo "active"; }?>>
-                    <a class="nav-link" href="<?php echo $BASE_URL; ?>">Home</a>
-                </li>
                 <?php
                 loadNavLinks();
                 ?>
