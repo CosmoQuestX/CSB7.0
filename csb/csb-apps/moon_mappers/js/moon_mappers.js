@@ -165,6 +165,7 @@ function moon_mappers(csbApp) {
             },
             {
                 "type": "set-image",
+                "image-location": "/csb/csb-apps/moon_mappers/images/tutorial/moon-tutorial-3.png",
                 "correct-marks": [
                     new Crater(122, 133, 35, csbApp.appInterface),
                     new Crater(211, 107, 57, csbApp.appInterface),
