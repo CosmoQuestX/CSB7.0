@@ -28,9 +28,11 @@ define ("log",false);
 //define ("elog",true);
 define ("elog",false);
 
-
 // We need our basic configuration, so include the loader from the directory above
 require '../csb-loader.php';
+
+// Turn off logging, since that could accidentally output something when it shouldn't
+ini_set("log_errors", 1);
 
 // If setup correctly, we get the REQUEST_URI passed, which is something
 // like /csb/api/one/two/three/four - something we can easily digest.
