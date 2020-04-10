@@ -237,6 +237,7 @@ function finish_tutorial() {
 }
 
 function getNextImageForUser($application_unsafe) {
+    global $userdata;
     $application=filter_var($application_unsafe, FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0);
     if (debug) { echo "Here's your next image for application " . $application . "<br />\n"; }
 
@@ -258,9 +259,8 @@ function getNextImageForUser($application_unsafe) {
         $app_name=$application;
     }
     else {
-        die("I don't know of the application you're speaking of: " . $application);
+        die(json_encode(array('error'=>'Unknown application ' . $application )));
     }
-    
     
     // Get the single application_id from the database
     $app_sql= "SELECT id from applications where name = \"" . $app_name . "\" LIMIT 0,1";
@@ -282,7 +282,7 @@ function getNextImageForUser($application_unsafe) {
     $app_id = $app_res[0]['id'];
     if (debug) { print "Fetching image for application ID " . $app_id . " <br />\n"; }
     
-    $user=getUserFromCookie();
+    $user=$userdata['user_id'];
     
     
     if ($user !== false) {
