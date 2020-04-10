@@ -158,7 +158,7 @@ function loadNavLinks()
         foreach ($links as $link) {
                     // "Home" is a special case and needs special matching. But there is probably a much better way.
                     ?>
-		<li class="nav-item <?php if (strstr($_SERVER['REQUEST_URI'],$link['target']) !== false || ($_SERVER['REQUEST_URI'] == "/csb/" && $link['target']=="")) { echo "active"; }?>">
+		<li class="nav-item <?php if (($link['target']!="" && strstr($_SERVER['REQUEST_URI'],$link['target']) !== false) || ($_SERVER['REQUEST_URI'] == "/csb/" && $link['target']=="")) { echo "active"; }?>">
         	<a class="nav-link" href="<?php echo $BASE_URL . $link['target']; ?>"><?php echo $link['desc'] ?></a>
         </li>
                     <?php 
