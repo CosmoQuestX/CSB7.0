@@ -91,7 +91,7 @@ switch ($operation) {
         else {
             // If we arrived here, we should probably throw an error...
             if (debug) { echo "I still haven't found what I'm looking for..."; }
-            die("Unknown operation");
+            die(json_encode(array('error'=>'Unknown operation')));
         }
 }
 
@@ -403,9 +403,7 @@ function getImageById($id_unsafe, $attach_marks=false) {
                        );
     }
     else { 
-        echo "Image not found"; 
-        $db_conn->closeDB(); 
-        exit(); 
+        $response=array('error'=>'image_not_found');
     }
     $db_conn->closeDB();
     // Return the json-encoded image data
