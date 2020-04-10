@@ -8,6 +8,7 @@
  * best idea to rely on the presence of a cookie to determine a user.
  */
 
+session_start();
 
 /** This is for development purposes and should probably be replaced by more
  * useful logging at some point. I used it mainly to make a sense of the calls
@@ -22,23 +23,26 @@
 //define ("debug",true);
 define ("debug",false);
 
-//define ("log",true);
-define ("log",false);
+define ("log",true);
+//define ("log",false);
 
-//define ("elog",true);
-define ("elog",false);
+define ("elog",true);
+//define ("elog",false);
 
 // We need our basic configuration, so include the loader from the directory above
 require '../csb-loader.php';
 
-// Turn off logging, since that could accidentally output something when it shouldn't
-ini_set("log_errors", 1);
+// Turn off error display, since that could accidentally output something 
+// when it shouldn't - you can turn it on for debugging.
+ini_set("display_errors", 1);
 
 // If setup correctly, we get the REQUEST_URI passed, which is something
 // like /csb/api/one/two/three/four - something we can easily digest.
 // There's some endpoints that are - more or less - static and some that
 // reqire parsing the request string, so let's switch through those.
 $operation=$_SERVER['REQUEST_URI'];
+$userdata=$_SESSION;
+
 if (debug) { echo "Trying with request string " . $operation . "<br />\n"; }
 
 // Let's start by reading how we were called
@@ -106,13 +110,20 @@ function finish_tutorial() {
      *		b) would require a major rework 
      *      c) existing installations would need to transform all the users' 
      *         tutorial information in the database to the new table.
+     * Currently, this is interestingly called twice, once on load of the app 
+     * and once on finishing the tutorial of the active app. Maybe this is to
+     * ensure that the cookie containing the tutorials_completed is fresh.
+     * 
      * My hacky solution is to urldecode/urlencode as needed, hoping I don't 
      * forget a place. 
      * Also, the api needs to know the user to query against the database. 
      * This doesn't get passed. For now, not knowing a different solution, 
-     * I'll take the user from the login cookie and hope for the best.
+     * I'll take the user id from the session and hope for the best.
+     * 
      * TODO Create a table that stores information about finished tutorials
      */
+    global $userdata;
+    
     $raw = file_get_contents("php://input");
     $ret = json_decode(urldecode($raw),true);
     if ( elog ) { error_log(urldecode($raw)); }
@@ -120,13 +131,19 @@ function finish_tutorial() {
         // I assume that we are logged in since we are calling this. Otherwise
         // logging should be turned off! But better be safe than sorry. 
         if(isset($_COOKIE['PHPSESSID'])) {
-            $fn=$_COOKIE['PHPSESSID']. ".txt";
+            $fn=dirname(ini_get("error_log")) . DIRECTORY_SEPARATOR . $_COOKIE['PHPSESSID']. ".txt";
             $fh = fopen($fn, "w+");
             fwrite($fh,"Input value\n");
             fwrite($fh,urldecode($raw));
             fclose($fh);
         }
     }
+
+    // Avoid not having an array here.
+    if($ret['tutorials_complete']=="") {
+        $ret['tutorials_complete']=array("");
+    }
+    
     // Variable definitions
     global $db_servername, $db_username, $db_password, $db_name;
     // Set up database connection     
@@ -134,7 +151,7 @@ function finish_tutorial() {
     $db_conn->connectDB();
     
     // Get the "tutorials_completed" column for the logged in user from the database.
-    $user_sql="SELECT tutorials_completed from users WHERE id = " . $_SESSION['user_id'] . "";
+    $user_sql="SELECT tutorials_completed from users WHERE id = " . $userdata['user_id'] . "";
     if (debug) { print $user_sql . "<br \>\n"; }
     $user_res=$db_conn->runQuery($user_sql);
     if ($user_res !== false) {
@@ -142,6 +159,11 @@ function finish_tutorial() {
             print "User result array: <br />\n"; 
             print_r($user_res); 
             print "<br>\n-----<br />\n"; 
+        }
+        // If we have an empty result because he didn't complete any tutorials,
+        // add a comma to make it an empty array.
+        if($user_res[0]['tutorials_completed']=="") {
+            $user_res[0]['tutorials_completed']=",";
         }
     }
     else { 
@@ -155,9 +177,25 @@ function finish_tutorial() {
      * the array up, join the arrays and filter out the duplicates.
     */
     $user['tutorials_completed']=explode(",",$user_res[0]['tutorials_completed']);
-    $union=array_merge($ret['tutorials_complete'],$user['tutorials_completed']);
-    $sleek=array_unique($union);
-    
+
+    // If either is not an array, don't even try to merge them. 
+    if (is_array($ret['tutorials_complete']) && is_array($user['tutorials_completed'])) {
+        $union=array_merge($ret['tutorials_complete'],$user['tutorials_completed']);
+        $sleek=array_unique($union);
+    }
+    else if (is_array($ret['tutorials_complete'])) {
+        /* If the user return isn't an array, the database stored value isn't either,
+         * so we only need to check that one if not both are an array. This would be
+         * the case if a user that hadn't completed a tutorial before has now completed
+         * one
+         */
+        $sleek=$ret['tutorials_complete'];
+    }
+    else {
+        $sleek=array("");
+    }
+        
+        
     if ( log ) {
         $user_json=json_encode($user_res);
         $fh=fopen($fn,"a");
@@ -173,7 +211,7 @@ function finish_tutorial() {
         fwrite($fh,"\n----------------\n");
         fwrite($fh,"Merged array\n");
         fwrite($fh,json_encode($sleek));
-        fclose($fn);
+        fclose($fh);
     }
     
     // This should leave us with an array of unique tutorials_completed.
@@ -181,7 +219,7 @@ function finish_tutorial() {
     // Let's compare the result to the value stored in the database 
     if( $joined != $user_res[0]['tutorials_completed'])  {
         //There appears to be a difference, so update the database
-        $sql="UPDATE users set tutorials_completed=\"". $joined . "\" WHERE name = \"" . $user_name . "\"";
+        $sql="UPDATE users set tutorials_completed=\"". $joined . "\" WHERE id = " . $userdata['user_id'] . "";
         if ( log ) {
             $fh=fopen($fn,"a");
             fwrite($fh,"\n----------------\n");
@@ -191,7 +229,7 @@ function finish_tutorial() {
         }
         $ret=$db_conn->runQuery($sql);
         if ($ret === false) {
-            error_log("Error writing tutorials_completed to the database, user is " . $user_name . " and tutorials_completed is " . $joined);
+            error_log("Error writing tutorials_completed to the database, user id is " . $userdata['user_id'] . " and tutorials_completed is " . $joined);
         }
     }
     // Make sure to close the database before exiting!
@@ -379,6 +417,8 @@ function getImageById($id_unsafe, $attach_marks=false) {
  * @param string $application
  */
 function submit_data($application_unsafe) {
+    global $userdata;
+    
     $application=filter_var($application_unsafe, FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0);
     if (elog) { echo "Submitting data for application " . $application ."<br />\n"; }
     /*
@@ -393,7 +433,7 @@ function submit_data($application_unsafe) {
     $db_conn=new DB($db_servername,$db_username,$db_password,$db_name);
     $db_conn->connectDB();
 
-    $user = $_SESSION['user_id'];
+    $user = $userdata['user_id'];
     if ($user === false) {
     // We didn't find a user, so let's be false
         error_log("No user found, for submitted image data, exiting");
@@ -515,6 +555,8 @@ function submit_data($application_unsafe) {
  * collects the information from the text file and sends it to scistarter.
  */
 function scistarter() {
+    global $userdata;
+    
     if ( debug) { echo "Submitting data to scistarter<br />\n"; }
     
     // Variable definitions
@@ -539,7 +581,7 @@ function scistarter() {
         fclose($fh);
     }
     
-    $user=$_SESSION['user_id'];
+    $user=$userdata['user_id'];
     if ($user !== false) {
         if (elog) { error_log("Submitting scistarter information with user id " . $user); }
     
