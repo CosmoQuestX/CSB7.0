@@ -383,7 +383,7 @@ function bennu_mappers(csbApp) {
             },
             {
                 "type": "text-bubble",
-                "title": "Marking Craters",
+                "title": "Marking Rocks",
                 "text": "Awesome! Remember: In a real image, you want to mark <b>all</b> of the rocks that you can find. <br />Every tiny dot. It will take a while, but it's very important!",
                 "delay": 500,
                 "tutorial-percent": 80
