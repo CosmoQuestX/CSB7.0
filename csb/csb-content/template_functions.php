@@ -135,20 +135,27 @@ function loadUser()
 function loadNavLinks()
 {
 
-    global $BASE_URL, $ACC_URL, $user, $adminFlag;
+    global $BASE_URL, $ACC_URL, $user, $adminFlag, $db_servername, $db_username, $db_password, $db_name;
 
     if ($user == TRUE) {         // LOGGED IN
-        // Just hacking something together for now. 
-        // TODO We should totally pull those from the database - "select name from applications where active=1" or something like that.
-        $links=array(
-                array('target'=>"",'desc'=>"Home"),
-                array('target'=>"apps.php?app=bennu_mappers",'desc'=>"Bennu Mappers"),
-                array('target'=>"apps.php?app=moon_mappers",'desc'=>"Moon Mappers"),
-                array('target'=>"apps.php?app=mars_mappers",'desc'=>"Mars Mappers"),
-                array('target'=>"apps.php?app=mercury_mappers",'desc'=>"Mercury Mappers")
-                );
+        
 
-                foreach ($links as $link) {
+        // Initialize the array with the links
+        $links=array(array('target'=>"",'desc'=>"Home"));
+
+        // This pulls the apps to link from the database
+        $db_conn = new DB($db_servername, $db_username, $db_password, $db_name);
+        $app_sql="SELECT name,title FROM  applications WHERE active = 1";
+        $app_res = $db_conn->runQuery($app_sql);
+        if ($app_res !== false) {
+            foreach ($app_res as $app) {
+                $links[]=array('target'=>"apps.php?app=".$app['name'],'desc'=>$app['title']);
+            }
+        }
+        $db_conn->closeDB();
+        
+        
+        foreach ($links as $link) {
                     // "Home" is a special case and needs special matching. But there is probably a much better way.
                     ?>
 		<li class="nav-item <?php if (strstr($_SERVER['REQUEST_URI'],$link['target']) !== false || ($_SERVER['REQUEST_URI'] == "/csb/" && $link['target']=="")) { echo "active"; }?>">
