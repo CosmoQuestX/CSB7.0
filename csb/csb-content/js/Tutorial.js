@@ -693,8 +693,8 @@ function Tutorial(csbApp) {
         var dx = desiredPosition.x - this.fakeCursor.x;
         var dy = desiredPosition.y - this.fakeCursor.y;
         var distance = Math.sqrt(dx * dx + dy * dy);
-        this.fakeCursor.x += dx / distance * (distance + 7) / 35;
-        this.fakeCursor.y += dy / distance * (distance + 7) / 35;
+        this.fakeCursor.x += dx / distance * (distance + 7) / 20;
+        this.fakeCursor.y += dy / distance * (distance + 7) / 20;
         if (distance < 1) {
             this.fakeCursor.x = desiredPosition.x;
             this.fakeCursor.y = desiredPosition.y;
@@ -746,7 +746,7 @@ function Tutorial(csbApp) {
             if (distance > this.desiredMark.diameter)
                 this.markBeingMadeStep = "pause-after-making-mark";
             else {
-                var movementPerFrame = 1;
+                var movementPerFrame = 2;
                 this.fakeCursor.x += dx / this.desiredMark.diameter * movementPerFrame;
                 this.fakeCursor.y += dy / this.desiredMark.diameter * movementPerFrame;
                 this.markBeingMade.x = (this.fakeCursor.x + this.markBeingMade.creationStartPosition.x) / 2;
