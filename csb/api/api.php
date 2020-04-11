@@ -23,18 +23,18 @@ session_start();
 //define ("debug",true);
 define ("debug",false);
 
-define ("log",true);
-//define ("log",false);
+//define ("log",true);
+define ("log",false);
 
-define ("elog",true);
-//define ("elog",false);
+//define ("elog",true);
+define ("elog",false);
 
 // We need our basic configuration, so include the loader from the directory above
 require '../csb-loader.php';
 
 // Turn off error display, since that could accidentally output something 
 // when it shouldn't - you can turn it on for debugging.
-ini_set("display_errors", 1);
+ini_set("display_errors", 0);
 
 // If setup correctly, we get the REQUEST_URI passed, which is something
 // like /csb/api/one/two/three/four - something we can easily digest.
@@ -278,17 +278,14 @@ function getNextImageForUser($application_unsafe) {
         exit();
     }
     
-    
     $app_id = $app_res[0]['id'];
     if (debug) { print "Fetching image for application ID " . $app_id . " <br />\n"; }
     
-    $user=$userdata['user_id'];
-    
-    
-    if ($user !== false) {
+    if (isset($userdata['user_id'])) {
+        $user=$userdata['user_id'];
         /*
-         * This is one of the most infuriating queries in here. It makes
-         * no sense to me. The source Laravel Query Builder code is:
+         * This is one of the most infuriating queries in here. 
+         * The source Laravel Query Builder code is:
          * $query = Image::where('images.application_id', $application->id)
          * 		->select(['images.id', 'file_location', 'sun_angle'])
          * 		->where('done', '=', false)
@@ -314,34 +311,45 @@ function getNextImageForUser($application_unsafe) {
          * we want images that the user hasn't already marked. Or maybe
          * I'm wrong here, then please correct this.
          */
-        $sql = "SELECT images.id, file_location, sun_angle FROM images " .
-            "LEFT JOIN image_users ON images.id = image_users.image_id " .
-            "WHERE images.application_id = " . $app_id . " " .
-            "AND image_users.user_id != " . $user . " " .
-            "AND done=0 " .
+         /* 
+          * So that's my failed attempt, let's try this Keeper Of Maps suggested
+          * $sql = "SELECT images.id, file_location, sun_angle FROM images " .
+          *  "LEFT JOIN image_users ON images.id = image_users.image_id " .
+          *  "WHERE images.application_id = " . $app_id . " " .
+          *  "AND image_users.user_id != " . $user . " " .
+          *  "AND done = 0 " .
+          *  "GROUP BY images.id " .
+          *  "LIMIT 0,50;";
+          */
+        $sql = "SELECT images.id, file_location, sun_angle from images " .
+            "WHERE images.application_id = ". $app_id ." " .
+            "AND images.done = 0 " .
+            "AND images.id not in " .  
+            "  (SELECT DISTINCT image_id from image_users" . 
+            "   WHERE application_id = ". $app_id ." " . 
+            "   AND user_id = " . $user .") " .
             "GROUP BY images.id " .
-            "LIMIT 0,50;";
-        /* If we have lots of images, just get a maximum of 50.
+            "LIMIT 20;";
+        
+        /* If we have lots of images, just get a maximum of 20.
          * I dropped the "order by priority" since we're picking a random image out
-         * of 50, and ordering is a resource hog. Side effect: Since we're - in
+         * of 20, and ordering is a resource hog. Side effect: Since we're - in
          * contrast to Laravel - not using a cache of any sort the user will receive
          * a different imave every time he opens the application. This is different
-         * than "old CSB" behaved. Nevertheless, hopefully it is adequate in
-         * loading performance since it does not need to sort (ordering took 5.6*
-         * the time to perform the same query - 78 ms vs. 437 ms).
+         * than "old CSB" behaved. 
          */
     }
     else {
         // The original comment was "IF the user isn't logged in, just pick one. 
-        //The submitted data won't be saved". In my opinion, this should never get
+        // The submitted data won't be saved". In my opinion, this should never get
         // called unless something is seriously wrong.
         $sql = "SELECT images.id, file_location, sun_angle from images " .
             "WHERE images.application_id = " . $app_id . " " .
             "AND done = 'false' " .
             "GROUP BY images.id " .
             "ORDER BY priority ASC " .
-            "LIMIT 0,50;";
-        // Get a maximum of 50, nevertheless.
+            "LIMIT 20;";
+        // Get a maximum of 20, nevertheless.
     }
     
     if (debug) { print "Executing query " . $sql . " <br />\n"; }
@@ -351,7 +359,7 @@ function getNextImageForUser($application_unsafe) {
     if (debug) { 
         print "Result array: <br />\n"; 
         print_r($result); 
-        print "-----<br />\n"; 
+        print "\n<br />-----<br />\n"; 
     }
     $db_conn->closeDB();
     
@@ -394,11 +402,11 @@ function getImageById($id_unsafe, $attach_marks=false) {
     $results=$db_conn->runQuery($sql);
     if ($results !== false) {
         if (debug) { print "<br />Image results: \n"; print_r($results); print "<br />\n"; }
-        $response=array('image'=>array('id'=>$results[0]['id'],
-                        'file_location'=>$results[0]['file_location'],
-                        'sun_angle'=>$results[0]['sun_angle']),
-                        'user_data'=>array('needs_tutorial' => 
-                                           'false','earned_badges'=>''
+        $response=array('image'=>array('id'             => $results[0]['id'],
+                                        'file_location' => $results[0]['file_location'],
+                                        'sun_angle'     => $results[0]['sun_angle']),
+                        'user_data'=>array('needs_tutorial' => 'false',
+                                           'earned_badges'  => ''
                                           )
                        );
     }
@@ -464,12 +472,13 @@ function submit_data($application_unsafe) {
      */
     // First, get the application_id from the database
     $app_sql= "SELECT id from applications where name = \"" . $submit['application_name'] . "\"";
-    //$app_sql = "SELECT * from applications";
     $app_res=$db_conn->runQuery($app_sql);
     
-    // If we don't find the application, bug out.
+    // If we can't find the application, bug out.
     if ($app_res === false) {
         error_log("Error submitting image: Application ID not found for application " . $submit['application_name'] );
+        echo json_encode(array('error'=>'application_not_found'));
+        $db_conn->closeDB();
         exit();
     }
     $app_id = $app_res[0]['id'];
