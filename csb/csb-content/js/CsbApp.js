@@ -422,7 +422,7 @@ function CsbApp(canvasElementName, isDebugging) {
     this.setTutorialsCookie = function () {
         var date = new Date();
         date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
-        document.cookie = "tutorials_complete=" + this.tutorialsCompleted.join(',') + "; expires=" + date.toUTCString() + "; path=/";
+        document.cookie = "tutorials_complete=" + encodeURIComponent(this.tutorialsCompleted.join(',')) + "; expires=" + date.toUTCString() + "; path=/";
     };
 
     this.getTutorialsFromCookie = function () {
@@ -434,7 +434,7 @@ function CsbApp(canvasElementName, isDebugging) {
             return [];
 
         var cookie = cookies[0];
-        var tutorialString = cookie.substring(cookie.indexOf('=') + 1);
+        var tutorialString = decodeURIComponent(cookie.substring(cookie.indexOf('=') + 1));
         var tutorials = tutorialString.split(',');
         return tutorials;
     };

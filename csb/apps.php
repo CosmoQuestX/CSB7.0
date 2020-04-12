@@ -32,8 +32,7 @@ if (!$user) {
    ---------------------------------------------------------------------- */
    // TODO if projects are made to be dynamic as opposed to directories, this will need refactored
 if (!isset($_GET) || !isset($_GET['app']) || !is_dir(realpath($BASE_DIR . 'csb-apps/' . $_GET['app']))) {
-    // TODO this could probably redirect to a 404 page
-    header("Location: $BASE_URL");
+    header("Location: $BASE_URL/error/error.php?error=404");
     exit();
 }
 

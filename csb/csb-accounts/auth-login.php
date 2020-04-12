@@ -173,9 +173,15 @@ function login($db, $user)
                 }
             }
 
+            // Get the person's tutorials completed
+            $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
+            $tcparams = array($chkuser['id']);
+            $tcresult = $db->runQueryWhere($tcquery, "i", $params);
+            
             // Set sessions and cookie
             $_SESSION['user_id'] = $chkuser['id'];
             setcookie('name', $user['name'], $timeout, "/");
+            setcookie('tutorials_complete', $tcresult['tutorials_completed'] ,$timeout,"/");
             $_SESSION['roles'] = $roles;
             session_start();
 
