@@ -179,9 +179,11 @@ function login($db, $user)
             $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
             $tcparams = array($chkuser['id']);
             $tcresult = $db->runQueryWhere($tcquery, "i", $params);
+
             if($tcresult === false){
                 error_log("Query failed for tutorials_completed; SQL was: $tcquery with params=" . print_r($tcparams));
             }
+
             
             // Set sessions and cookie
             $_SESSION['user_id'] = $chkuser['id'];
