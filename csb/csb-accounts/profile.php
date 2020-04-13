@@ -178,7 +178,7 @@ else {
         $notes = "
         <h5 class='font-weight-bold'>How we use your information</h5>
         <p>
-        Your privacy matters! Our team programmers do have access to this
+        Your privacy matters! Our team of programmers do have access to this
         information, but the only thing that can be publicly seen is your username. We will,
         with permission only, use your first and last name to give you credit for things
         you accomplish.
@@ -201,10 +201,6 @@ else {
     load3Col($menus, $main, $notes);
     loadFooter();
     
-
-    ?>
-    <script src='<?php echo $BASE_URL . "csb-content/js/profile.js" ?>'></script>
-    <?php
 
 }
 
