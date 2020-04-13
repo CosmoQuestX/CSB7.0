@@ -227,7 +227,7 @@ function loadLoginBox()
                             } ?></div>
 
                         <label for="username">Username</label>
-                        <input id="username" name="name" type="text" class="form-control"
+                        <input id="username" name="username" type="text" class="form-control"
                                value="<?php if (isset($_COOKIE["name"])) {
                                    echo $_COOKIE["name"];
                                } ?>">

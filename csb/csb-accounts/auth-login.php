@@ -133,7 +133,7 @@ function login($db, $user)
     global $BASE_URL;
     $query = "SELECT * FROM users WHERE name = ? ";
 
-    if ($chkuser = $db->runQueryWhere($query, "s", array($user['name']))) {
+    if ($chkuser = $db->runQueryWhere($query, "s", array($user['username']))) {
 
         // Verify the password, set the cookie and session variable
         if (password_verify($user['password'], $chkuser['password'])) {
@@ -187,7 +187,7 @@ function login($db, $user)
             
             // Set sessions and cookie
             $_SESSION['user_id'] = $chkuser['id'];
-            setcookie('name', $user['name'], $timeout, "/");
+            setcookie('name', $user['username'], $timeout, "/");
             setcookie('tutorials_complete', $tcresult['tutorials_completed'],$timeout,"/");
             $_SESSION['roles'] = $roles;
             
@@ -248,16 +248,17 @@ function regUser($db, $user, $pwhash)
 {
     global $CQ_ROLES;
 
+    // Insert the user into the database
     $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-    $params = array(filter_var($user['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash);
+    $params = array(filter_var($user['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash);
     $db->insert($query, "sss", $params);
 
-    $query = "SELECT id FROM users WHERE name = '".$user['name']."'";
-
+    // Get the id for the freshly created user
+    $query = "SELECT id FROM users WHERE name = '".$user['username']."'";
     $id = $db->runBaseQuery($query)[0]['id'];
 
     if ($id === FALSE) {
-        // This should not happen, since we just inserted a user
+        // This should not happen, since we just created the user!
         error_log("Could not find the freshly created user on registration.");
         die("Fatal error on registration. Please try again later.");
     } else {
@@ -303,9 +304,8 @@ function regUser($db, $user, $pwhash)
 
     // Set sessions and cookie
     $_SESSION['user_id'] = $user['id'];
-    setcookie('name', $user['name'], $timeout, "/");
+    setcookie('name', $user['username'], $timeout, "/");
     $_SESSION['roles'] = $roles;
-
 
 }
 
