@@ -178,10 +178,9 @@ else {
         $notes = "
         <h5 class='font-weight-bold'>How we use your information</h5>
         <p>
-        Your privacy matters! Our team of programmers do have access to this
-        information, but the only thing that can be publicly seen is your username. We will,
-        with permission only, use your first and last name to give you credit for things
-        you accomplish.
+        Your privacy matters! While our developers have access to your profile information, 
+        the only thing that can be publicly seen is your username. We will, with permission 
+        only, use your first and last name to give you credit for things you accomplish.
         </p>
         ";
 
