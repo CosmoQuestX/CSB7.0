@@ -231,9 +231,12 @@ function finish_tutorial() {
         if ($ret === false) {
             error_log("Error writing tutorials_completed to the database, user id is " . $userdata['user_id'] . " and tutorials_completed is " . $joined);
         }
+        // Finally, update the cookie
+        setcookie('tutorials_complete', $joined ,$timeout,"/");
     }
     // Make sure to close the database before exiting!
     $db_conn->closeDB();
+
 }
 
 function getNextImageForUser($application_unsafe) {
