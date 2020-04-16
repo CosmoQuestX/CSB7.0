@@ -26,8 +26,8 @@ define ("debug",false);
 //define ("log",true);
 define ("log",false);
 
-//define ("elog",true);
-define ("elog",false);
+define ("elog",true);
+//define ("elog",false);
 
 // We need our basic configuration, so include the loader from the directory above
 require '../csb-loader.php';
@@ -232,8 +232,11 @@ function finish_tutorial() {
             error_log("Error writing tutorials_completed to the database, user id is " . $userdata['user_id'] . " and tutorials_completed is " . $joined);
         }
         // Finally, update the cookie
-        setcookie('tutorials_complete', $joined ,$timeout,"/");
+        $timeout = time() + 60 * 24;
+        setcookie('tutorials_complete', $joined, $timeout,"/");
     }
+    // Send back something nice
+    echo json_encode(array('tutorials_complete'=>$joined));
     // Make sure to close the database before exiting!
     $db_conn->closeDB();
 
@@ -286,6 +289,11 @@ function getNextImageForUser($application_unsafe) {
     
     if (isset($userdata['user_id'])) {
         $user=$userdata['user_id'];
+    }
+    else if (isset ($_COOKIE[ini_get('session.name')])) {
+        $user = getUserIDFromSessionDB();
+    }
+    
         /*
          * This is one of the most infuriating queries in here. 
          * The source Laravel Query Builder code is:
@@ -324,16 +332,16 @@ function getNextImageForUser($application_unsafe) {
           *  "GROUP BY images.id " .
           *  "LIMIT 0,50;";
           */
-        $sql = "SELECT images.id, file_location, sun_angle from images " .
-            "WHERE images.application_id = ". $app_id ." " .
-            "AND images.done = 0 " .
-            "AND images.id not in " .  
-            "  (SELECT DISTINCT image_id from image_users" . 
-            "   WHERE application_id = ". $app_id ." " . 
-            "   AND user_id = " . $user .") " .
-            "GROUP BY images.id " .
-            "LIMIT 20;";
-        
+    if(isset($user) && $user !== false) {
+    $sql = "SELECT images.id, file_location, sun_angle from images " .
+        "WHERE images.application_id = ". $app_id ." " .
+        "AND images.done = 0 " .
+        "AND images.id not in " .  
+        "  (SELECT DISTINCT image_id from image_users" . 
+        "   WHERE application_id = ". $app_id ." " . 
+        "   AND user_id = " . $user .") " .
+        "GROUP BY images.id " .
+        "LIMIT 20;";
         /* If we have lots of images, just get a maximum of 20.
          * I dropped the "order by priority" since we're picking a random image out
          * of 20, and ordering is a resource hog. Side effect: Since we're - in
@@ -342,17 +350,24 @@ function getNextImageForUser($application_unsafe) {
          * than "old CSB" behaved. 
          */
     }
+    
     else {
         // The original comment was "IF the user isn't logged in, just pick one. 
         // The submitted data won't be saved". In my opinion, this should never get
         // called unless something is seriously wrong.
-        $sql = "SELECT images.id, file_location, sun_angle from images " .
-            "WHERE images.application_id = " . $app_id . " " .
-            "AND done = 'false' " .
-            "GROUP BY images.id " .
-            "ORDER BY priority ASC " .
-            "LIMIT 20;";
+        //$sql = "SELECT images.id, file_location, sun_angle from images " .
+        //    "WHERE images.application_id = " . $app_id . " " .
+        //    "AND done = 'false' " .
+        //    "GROUP BY images.id " .
+        //    "ORDER BY priority ASC " .
+        //    "LIMIT 20;";
         // Get a maximum of 20, nevertheless.
+        // If we can't determine the user, maybe it is better not to just send out 
+        // an image; better send an error and finish 
+        if (elog) { error_log("Could not find a user so not sending out any image"); }
+        echo json_encode(array('error'=>'out_of_images'));
+        $db_conn->closeDB();
+        exit();
     }
     
     if (debug) { print "Executing query " . $sql . " <br />\n"; }
@@ -429,7 +444,7 @@ function submit_data($application_unsafe) {
     global $userdata;
     
     $application=filter_var($application_unsafe, FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0);
-    if (elog) { echo "Submitting data for application " . $application ."<br />\n"; }
+    if (elog) { error_log("Submitting data for application " . $application ); }
     /*
      * We'll get an image that was marked and an array of all the
      * marks including the types to write into the database. Hopefully we
@@ -442,14 +457,21 @@ function submit_data($application_unsafe) {
     $db_conn=new DB($db_servername,$db_username,$db_password,$db_name);
     $db_conn->connectDB();
 
-    $user = $userdata['user_id'];
-    if ($user === false) {
-    // We didn't find a user, so let's be false
-        error_log("No user found, for submitted image data, exiting");
-        $response=array('error'=>'user not found');
-        echo json_encode($response);
-        $db_conn->closeDB();
-        exit();
+
+    if ($userdata['user_id'] === false || !isset($userdata['user_id'])) {
+        // If no user id is set in the session, try to get it from the Database
+        $user = getUserIDFromSessionDB();
+        if ($user = false) {
+            // We didn't find a user, so let's be false
+            error_log("No user found, for submitted image data, exiting");
+            $response=array('error'=>'user not found');
+            echo json_encode($response);
+            $db_conn->closeDB();
+            exit();
+        }
+    }
+    else {
+        $user = $userdata['user_id'];
     }
     
     $submit_raw=file_get_contents("php://input");
@@ -550,6 +572,9 @@ function submit_data($application_unsafe) {
         }
     }
     
+    // On sending an image, update the timestamp for the user session:
+    updateSessionTimestamp($db_conn, $user);
+    
     //Finally, return something nice.
     $returndata = array('user_data'=>array('needs_tutorial' => 'false','earned_badges'=>''));
     echo json_encode($returndata);
@@ -596,8 +621,8 @@ function scistarter() {
         if (elog) { error_log("Submitting scistarter information with user id " . $user); }
     
         // For now, just drop information into a text file
-        $scistarter_fn="scistarter.txt";
-        $scistarter_fh=fopen($scistarter_fn,"a");
+        $scistarter_fn = "scistarter.txt";
+        $scistarter_fh = fopen($scistarter_fn,"a");
         $save=array('application_name'=>$submit['app'],'user_id'=>$user,'count'=>1);
         fwrite($scistarter_fh,json_encode($save));
         fclose($scistarter_fh);
@@ -623,5 +648,42 @@ function ajax_login() {
     exit();
 }
 
+function getUserIDFromSessionDB() {
+    // Using the session parametes to get the user ID seems not to work too well
+    // so we'll try storing the session information in the
+    
+    if (elog) { error_log("Attempting to fetch user_id from session - " . ini_get('session.name') . "is " . $_COOKIE[ini_get('session.name')]);  }
+    $session_query = "SELECT user_id from sessions WHERE id = ?";
+    $session_params = array($_COOKIE[ini_get('session.name')]);
+    $session_result = $db_conn->runQueryWhere($session_query, "s", $session_params);
+    if ($session_result !== false) {
+        $ret = $session_result[0]['user_id'];
+    }
+    else {
+        // Second try - get user id from the session table using the ip and user agent
+        $session_query="SELECT user_id from sessions where ip_address = ? AND user_agent = ?";
+        $session_params = array($_SERVER['REMOTE_ADDR'],$_SERVER['HTTP_USER_AGENT']);
+        $session_result = $db_conn->runQueryWhere($session_query, "ss", $session_params);
+        if ($session_result !== false) {
+            $ret = $session_result[0]['user_id'];
+        }
+        else {
+            error_log("Error reading user id from session, query was: ". $session_query);
+            $ret = false;
+        }
+    }
+    return $ret;
+}
 
+function updateSessionTimestamp($db_conn, $user_id) {
+    $timestamp=time();
+    $session_query = "UPDATE sessions set last_activity = ? WHERE user_id = ? AND user_agent = ?";
+    $session_params=array($timestamp,$user_id,$_SERVER['HTTP_USER_AGENT']);
+    $session_res=$db_conn->update($session_query,"iis",$session_params);
+
+    if ($session_res === false) {
+        error_log("Error executing SQL: UPDATE session set last_activity = " . $timestamp . " WHERE user_id = " . $user_id . " AND user_agent = '". $_SERVER['HTTP_USER_AGENT'] . "'");
+    }
+    if ( elog ) { error_log("Result from updating the user session: ". $session_res); }
+}
 ?>

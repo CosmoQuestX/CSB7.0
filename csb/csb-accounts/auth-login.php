@@ -29,7 +29,7 @@ $db = new DB($db_servername, $db_username, $db_password, $db_name);
 if (isset($_GET['go'])) {
 
     if ($_GET['go'] == 'logout') {
-        logout();
+        logout($db);
     } else {
         echo "get thee gone, URL hacking wizard";
     }
@@ -175,6 +175,34 @@ function login($db, $user)
                 // }
             }
 
+            /*
+             * Since it can happen that a users' session gets garbage collected we need to have
+             * an alternative way to determine which user tried to save something. So let's take
+             * the information we have and write it into the database.
+             * The information entered is: 
+             * - Session ID 
+             * - User ID
+             * - IP Address the request originated from 
+             * - the User agent (e.g. Browser). 
+             * - the epoch of the last request.
+             * There's another field in the database table that is called "payload"; I don't know
+             * what it is good for, though. Since it does not accept null values, store the base64
+             * encoded request string. 
+             */
+            
+            $session_query= "INSERT INTO sessions (id, user_id, ip_address, user_agent, payload, last_activity) " .
+                            "VALUES ('" . 
+                                $_COOKIE[ini_get('session.name')] ."'," .
+                                $chkuser['id'].", '" .
+                                $_SERVER['REMOTE_ADDR'] ."', '" . 
+                                $_SERVER['HTTP_USER_AGENT'] ."',' " . 
+                                base64_encode('http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) ."'," .
+                                time() . 
+                            ")";
+            if ($session_result = $db->runQuery($session_query) === false) {
+                error_log("Query to insert session data failed; SQL was: ". $session_query);
+            }
+                                
             // Get the person's tutorials completed
             $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
             $tcparams = array($chkuser['id']);
@@ -183,7 +211,6 @@ function login($db, $user)
             if($tcresult === false){
                 error_log("Query failed for tutorials_completed; SQL was: $tcquery with params=" . print_r($tcparams));
             }
-
             
             // Set sessions and cookie
             $_SESSION['user_id'] = $chkuser['id'];
@@ -216,25 +243,30 @@ function login($db, $user)
  *
  * @return void
  */
-function logout()
+function logout($db)
 {
     global $BASE_URL;
 
     $timeout = time() - 3600;
     setcookie("token", "", $timeout, "/");
     setcookie('name', "", $timeout, "/");
+    // Remove the session info from the database before clearing the session
+    $session_query = "DELETE FROM sessions " . 
+                      "WHERE id = '" . $_COOKIE[ini_get('session.name')] . 
+                      "' AND user_id = " . $_SESSION['user_id'] .
+                      " AND ip_address = '". $_SERVER['REMOTE_ADDR']. "'";
+    $session_result = $db->runQuery($session_query);
+    if ($session_result === false) {
+        error_log("Error deleting session, query was: ". $session_query);
+    }
+
     $_SESSION = array();
     session_destroy();
     session_start();
 
-    ?>
-    <html>
-    <head>
-        <meta http-equiv="Refresh" content="0; url=<?php echo($BASE_URL); ?>"/>
-    </head>
-    </html>
-    <?php
-
+    // Send them where they belong
+    header("Location: " . $BASE_URL);
+    exit();
 }
 
 /**
