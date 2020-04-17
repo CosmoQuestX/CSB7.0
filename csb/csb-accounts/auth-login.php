@@ -175,33 +175,8 @@ function login($db, $user)
                 // }
             }
 
-            /*
-             * Since it can happen that a users' session gets garbage collected we need to have
-             * an alternative way to determine which user tried to save something. So let's take
-             * the information we have and write it into the database.
-             * The information entered is: 
-             * - Session ID 
-             * - User ID
-             * - IP Address the request originated from 
-             * - the User agent (e.g. Browser). 
-             * - the epoch of the last request.
-             * There's another field in the database table that is called "payload"; I don't know
-             * what it is good for, though. Since it does not accept null values, store the base64
-             * encoded request string. 
-             */
-            
-            $session_query= "INSERT INTO sessions (id, user_id, ip_address, user_agent, payload, last_activity) " .
-                            "VALUES ('" . 
-                                $_COOKIE[ini_get('session.name')] ."'," .
-                                $chkuser['id'].", '" .
-                                $_SERVER['REMOTE_ADDR'] ."', '" . 
-                                $_SERVER['HTTP_USER_AGENT'] ."',' " . 
-                                base64_encode('http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) ."'," .
-                                time() . 
-                            ")";
-            if ($session_result = $db->runQuery($session_query) === false) {
-                error_log("Query to insert session data failed; SQL was: ". $session_query);
-            }
+            // Insert the users' session information into the database
+            insertUserSession($db, $chkuser['id']);
                                 
             // Get the person's tutorials completed
             $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
@@ -308,7 +283,10 @@ function regUser($db, $user, $pwhash)
     }
 
     // create sessions / cookies TODO Make this a function
-
+    
+    // Insert the users' session information into the database
+    insertUserSession($db, $user['id']);
+    
     // Set timeout variable & token for cookies based on remember checkbox
     if (isset($user['remember']) && !strcmp($user['remember'], 'on')) {
 
@@ -383,6 +361,43 @@ function rescueUser ($db, $using, $value) {
     unset($_SESSION['errMsg']);
     header("Location: ".$ACC_URL."rescue.php?go=submitted");
     exit();
+}
+
+/**
+ * Inserts the users' information into the session table of the datbase
+ * @param resource $db A valid database connection
+ * @param int $user The user id from the user
+ */
+
+function insertUserSession($db, $user) {
+ 
+    /*
+     * Since it can happen that a users' session gets garbage collected we need to have
+     * an alternative way to determine which user tried to save something. So let's take
+     * the information we have and write it into the database.
+     * The information entered is:
+     * - Session ID
+     * - User ID
+     * - IP Address the request originated from
+     * - the User agent (e.g. Browser).
+     * - the epoch of the last request.
+     * There's another field in the database table that is called "payload"; I don't know
+     * what it is good for, though. Since it does not accept null values, store the base64
+     * encoded request string.
+     */
+    
+    $session_query= "INSERT INTO sessions (id, user_id, ip_address, user_agent, payload, last_activity) " .
+        "VALUES ('" .
+        $_COOKIE[ini_get('session.name')] ."'," .
+        $user .", '" .
+        $_SERVER['REMOTE_ADDR'] ."', '" .
+        $_SERVER['HTTP_USER_AGENT'] ."',' " .
+        base64_encode('http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) ."'," .
+        time() .
+        ")";
+        if ($session_result = $db->runQuery($session_query) === false) {
+            error_log("Query to insert session data failed; SQL was: ". $session_query);
+        }
 }
 
 ?>

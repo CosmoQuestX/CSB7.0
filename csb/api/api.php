@@ -149,10 +149,19 @@ function finish_tutorial() {
     // Set up database connection     
     $db_conn=new DB($db_servername,$db_username,$db_password,$db_name);
     $db_conn->connectDB();
+
+    if (isset($userdata['user_id'])) {
+        $user = $userdata['user_id'];
+    }
+    else {
+        $user = getUserIDFromSessionDB($db_conn);
+    }
     
     // Get the "tutorials_completed" column for the logged in user from the database.
-    $user_sql="SELECT tutorials_completed from users WHERE id = " . $userdata['user_id'] . "";
+    $user_sql="SELECT tutorials_completed from users WHERE id = " . $user . "";
     if (debug) { print $user_sql . "<br \>\n"; }
+    if (elog) { error_log(" Executing SQL: SELECT tutorials_complete from usere WHERE id = " . $user); }
+    
     $user_res=$db_conn->runQuery($user_sql);
     if ($user_res !== false) {
         if (debug) { 
@@ -291,7 +300,7 @@ function getNextImageForUser($application_unsafe) {
         $user=$userdata['user_id'];
     }
     else if (isset ($_COOKIE[ini_get('session.name')])) {
-        $user = getUserIDFromSessionDB();
+        $user = getUserIDFromSessionDB($db_conn);
     }
     
         /*
@@ -460,7 +469,7 @@ function submit_data($application_unsafe) {
 
     if ($userdata['user_id'] === false || !isset($userdata['user_id'])) {
         // If no user id is set in the session, try to get it from the Database
-        $user = getUserIDFromSessionDB();
+        $user = getUserIDFromSessionDB($db_conn);
         if ($user = false) {
             // We didn't find a user, so let's be false
             error_log("No user found, for submitted image data, exiting");
@@ -648,7 +657,7 @@ function ajax_login() {
     exit();
 }
 
-function getUserIDFromSessionDB() {
+function getUserIDFromSessionDB($db_conn) {
     // Using the session parametes to get the user ID seems not to work too well
     // so we'll try storing the session information in the
     
@@ -668,7 +677,7 @@ function getUserIDFromSessionDB() {
             $ret = $session_result[0]['user_id'];
         }
         else {
-            error_log("Error reading user id from session, query was: ". $session_query);
+            error_log("Error reading user id from session, query was:  SELECT user_id from sessions where ip_address = ". $_SERVER['REMOTE_ADDR'] ." AND user_agent = ". $_SERVER['HTTP_USER_AGENT'] );
             $ret = false;
         }
     }
