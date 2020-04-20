@@ -664,7 +664,7 @@ function getUserIDFromSessionDB($db_conn) {
     if (elog) { error_log("Attempting to fetch user_id from session - " . ini_get('session.name') . "is " . $_COOKIE[ini_get('session.name')]);  }
     $session_query = "SELECT user_id from sessions WHERE id = ?";
     $session_params = array($_COOKIE[ini_get('session.name')]);
-    $session_result = $db_conn->runQueryWhere($session_query, "s", $session_params);
+    $session_result = $db_conn->runQueryWhere($session_query, "s", $session_params)[0];
     if ($session_result !== false) {
         $ret = $session_result[0]['user_id'];
     }
@@ -672,7 +672,7 @@ function getUserIDFromSessionDB($db_conn) {
         // Second try - get user id from the session table using the ip and user agent
         $session_query="SELECT user_id from sessions where ip_address = ? AND user_agent = ?";
         $session_params = array($_SERVER['REMOTE_ADDR'],$_SERVER['HTTP_USER_AGENT']);
-        $session_result = $db_conn->runQueryWhere($session_query, "ss", $session_params);
+        $session_result = $db_conn->runQueryWhere($session_query, "ss", $session_params)[0];
         if ($session_result !== false) {
             $ret = $session_result[0]['user_id'];
         }

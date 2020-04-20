@@ -133,7 +133,7 @@ function login($db, $user)
     global $BASE_URL;
     $query = "SELECT * FROM users WHERE name = ? ";
 
-    if ($chkuser = $db->runQueryWhere($query, "s", array($user['username']))) {
+    if ($chkuser = $db->runQueryWhere($query, "s", array($user['username']))[0]) {
 
         // Verify the password, set the cookie and session variable
         if (password_verify($user['password'], $chkuser['password'])) {
@@ -152,7 +152,7 @@ function login($db, $user)
                 $token_hash = password_hash($token, PASSWORD_DEFAULT);
                 $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
                 $params = array($user['id']);
-                $db->runQueryWhere($query, "s", $params);
+                $db->update($query, "s", $params);
 
             } else {
                 // How long will cookies last: 24min like sessions (set in php.ini)
@@ -160,19 +160,14 @@ function login($db, $user)
             }
 
             // Get the person's roles
-            $query = "SELECT role_id, user_id FROM role_users WHERE user_id = ?";
+            $query = "SELECT role_id FROM role_users WHERE user_id = ?";
             $params = array($chkuser['id']);
             $result = $db->runQueryWhere($query, "i", $params);
 
-            if (isset($result['role_id'])) {
-                $roles = $result['role_id'];
-            } else {
-                $roles = implode(",",$role['role_id']);
-                // Original code was:
-                // foreach ($result as $role) {
-                // $roles = "";
-                // $roles .= $role['role_id'] . ",";
-                // }
+            if ($result !== false) {
+                foreach ($result as $role) {
+                    $roles[]= $role['role_id'];
+                }
             }
 
             // Insert the users' session information into the database
@@ -181,7 +176,7 @@ function login($db, $user)
             // Get the person's tutorials completed
             $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
             $tcparams = array($chkuser['id']);
-            $tcresult = $db->runQueryWhere($tcquery, "i", $params);
+            $tcresult = $db->runQueryWhere($tcquery, "i", $params)[0];
 
             if($tcresult === false){
                 error_log("Query failed for tutorials_completed; SQL was: $tcquery with params=" . print_r($tcparams));
@@ -301,7 +296,7 @@ function regUser($db, $user, $pwhash)
         $token_hash = password_hash($token, PASSWORD_DEFAULT);
         $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
         $params = array($user['id']);
-        $db->runQueryWhere($query, "s", $params);
+        $db->update($query, "s", $params);
     } else {
         // How long will cookies last: 24min like sessions (set in php.ini)
         $timeout = time() + 60 * 24;
