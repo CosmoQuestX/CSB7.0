@@ -124,8 +124,8 @@ class DB
      * @param string $query
      * @param string $param_type
      * @param array $param_value_array
-     * @return array|boolean an array consisting of one associative array with
-     *    the first result row or false if the query was unsuccessful
+     * @return array|boolean an array consisting of an array of arrays with
+     *    the associative result rows or false if the query was unsuccessful
      */
     function runQueryWhere($query, $param_type, $param_value_array)
     {
@@ -144,7 +144,7 @@ class DB
             }
 
             if (!empty($resultSet)) {
-                return $resultSet[0];
+                return $resultSet;
             }
         } else
             die("SQL error on " . $this->database);
