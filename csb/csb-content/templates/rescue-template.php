@@ -51,7 +51,7 @@ if (isset($_GET['go'])) {
                 </div>
                 <div class="clear"></div>
                 <div class="field-submit">
-                    <input type="submit" name="register" value="Register"
+                    <input type="submit" name="rescue" value="Rescue me!"
                            class="form-submit-button">
                 </div>
             </form>
