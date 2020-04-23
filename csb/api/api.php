@@ -185,10 +185,10 @@ function finish_tutorial() {
      * Since we need to compare them to what is sent via API, we need to split
      * the array up, join the arrays and filter out the duplicates.
     */
-    $user['tutorials_completed']=explode(",",$user_res[0]['tutorials_completed']);
+    $user_ck['tutorials_completed']=explode(",",$user_res[0]['tutorials_completed']);
 
     // If either is not an array, don't even try to merge them. 
-    if (is_array($ret['tutorials_complete']) && is_array($user['tutorials_completed'])) {
+    if (is_array($ret['tutorials_complete']) && is_array($user_ck['tutorials_completed'])) {
         $union=array_merge($ret['tutorials_complete'],$user['tutorials_completed']);
         $sleek=array_unique($union);
     }
