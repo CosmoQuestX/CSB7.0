@@ -132,7 +132,7 @@ function login($db, $user)
 
     global $BASE_URL;
     $query = "SELECT * FROM users WHERE name = ? ";
-    $chkuser = $db->runQueryWhere($query, "s", array($user['username']));
+    $chkuser = $db->runQueryWhere($query, "s", array($user['username']))[0];
     
     if ($chkuser !== false ) {
 
@@ -177,7 +177,7 @@ function login($db, $user)
             // Get the person's tutorials completed
             $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
             $tcparams = array($chkuser['id']);
-            $tcresult = $db->runQueryWhere($tcquery, "i", $params);
+            $tcresult = $db->runQueryWhere($tcquery, "i", $params)[0];
 
             if($tcresult === false){
                 error_log("Query failed for tutorials_completed; SQL was: $tcquery with params=" . print_r($tcparams));
