@@ -177,7 +177,7 @@ function login($db, $user)
             // Get the person's tutorials completed
             $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
             $tcparams = array($chkuser['id']);
-            $tcresult = $db->runQueryWhere($tcquery, "i", $params)[0];
+            $tcresult = $db->runQueryWhere($tcquery, "i", $params);
 
             if($tcresult === false){
                 error_log("Query failed for tutorials_completed; SQL was: $tcquery with params=" . print_r($tcparams));
