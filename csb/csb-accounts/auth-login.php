@@ -221,10 +221,7 @@ function logout($db)
     setcookie("token", "", $timeout, "/");
     setcookie('name', "", $timeout, "/");
     // Remove the session info from the database before clearing the session
-    $session_query = "DELETE FROM sessions " . 
-                      "WHERE id = '" . $_COOKIE[ini_get('session.name')] . 
-                      "' AND user_id = " . $_SESSION['user_id'] .
-                      " AND ip_address = '". $_SERVER['REMOTE_ADDR']. "'";
+    $session_query = "DELETE FROM sessions WHERE id = '" . $_COOKIE[ini_get('session.name')] . "'";
     $session_result = $db->runQuery($session_query);
     if ($session_result === false) {
         error_log("Error deleting session, query was: ". $session_query);
@@ -257,7 +254,7 @@ function regUser($db, $user, $pwhash)
 
     // Get the id for the freshly created user
     $query = "SELECT id FROM users WHERE name = '".$user['username']."'";
-    $id = $db->runBaseQuery($query)[0]['id'];
+    $id = $db->runQuery($query)[0]['id'];
 
     if ($id === FALSE) {
         // This should not happen, since we just created the user!
@@ -362,6 +359,7 @@ function rescueUser ($db, $using, $value) {
  * Inserts the users' information into the session table of the datbase
  * @param resource $db A valid database connection
  * @param int $user The user id from the user
+ * @return boolean True if successful, otherwise false
  */
 
 function insertUserSession($db, $user) {
@@ -381,18 +379,34 @@ function insertUserSession($db, $user) {
      * encoded request string.
      */
     
-    $session_query= "INSERT INTO sessions (id, user_id, ip_address, user_agent, payload, last_activity) " .
-        "VALUES ('" .
-        $_COOKIE[ini_get('session.name')] ."'," .
-        $user .", '" .
-        $_SERVER['REMOTE_ADDR'] ."', '" .
-        $_SERVER['HTTP_USER_AGENT'] ."',' " .
-        base64_encode('http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']) ."'," .
-        time() .
-        ")";
-        if ($session_result = $db->runQuery($session_query) === false) {
+    $ret = true;
+    // Let's get this out of the way, we will use it anyway.
+    $payload = base64_encode('http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+    
+    // First, check if there is arlready a session for the session id 
+    // If there is, insert the session information into the table
+    if ($db->runQuery("SELECT id FROM sessions WHERE id = '" . $_COOKIE[ini_get('session.name')]. "'") === false) {
+    
+        $session_query= "INSERT INTO sessions (id, user_id, ip_address, user_agent, payload, last_activity) " .
+            "VALUES (?, ?, ?, ?, ?, ?);";  
+        $session_param = array($_COOKIE[ini_get('session.name')], $user, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $payload, time());
+        $session_result = $db->insert($session_query, "sisssi", $session_param);
+        if ($session_result === false) {
             error_log("Query to insert session data failed; SQL was: ". $session_query);
+            $ret=false;
         }
+    }
+    else {
+        // We found a session with the same session id, so update it with the information.
+        $session_query= "UPDATE sessions SET user_id = ?, ip_address = ?, user_agent = ?, payload = ?, last_activity = ? WHERE id = ?" ;
+        $session_param = array($user, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $payload, time(), $_COOKIE[ini_get('session.name')]);
+        $session_result = $db->update($session_query, "isssis", $session_param);
+        if ($session_result === false) {
+            error_log("Query to update session data failed; SQL was: ". $session_query);
+        $ret=false;
+        }
+    }
+    return $ret;
 }
 
 ?>
