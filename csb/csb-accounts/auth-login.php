@@ -132,8 +132,9 @@ function login($db, $user)
 
     global $BASE_URL;
     $query = "SELECT * FROM users WHERE name = ? ";
-
-    if ($chkuser = $db->runQueryWhere($query, "s", array($user['username']))[0]) {
+    $chkuser = $db->runQueryWhere($query, "s", array($user['username']));
+    
+    if ($chkuser !== false ) {
 
         // Verify the password, set the cookie and session variable
         if (password_verify($user['password'], $chkuser['password'])) {
