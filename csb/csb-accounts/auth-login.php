@@ -163,7 +163,7 @@ function login($db, $user)
             // Get the person's roles
             $query = "SELECT role_id FROM role_users WHERE user_id = ?";
             $params = array($chkuser['id']);
-            $result = $db->runQueryWhere($query, "i", $params);
+            $result = $db->runQueryWhere($query, "i", $params)[0];
 
             if ($result !== false) {
                 foreach ($result as $role) {
