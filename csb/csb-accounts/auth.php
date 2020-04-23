@@ -92,3 +92,18 @@ function isLoggedIn($db)
         return FALSE;
 }
 
+/**
+ * Checks if the user is assigned to one of the roles supplied as an argument
+ * @param string ...$roles Any number of roles to check
+ * @return boolean true if at least one match is found, false if not
+ */
+function userHasRole(...$roles)
+{
+    if (count(array_intersect($roles ,$_SESSION['roles'])) > 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+    
+}
