@@ -22,7 +22,17 @@ $db = new DB($db_servername, $db_username, $db_password, $db_name);
 
 global $user;
 $user = isLoggedIn($db);
+// if $login isn't set, set it to avoid a PHP notice.
+if (!isset($login)) {
+    $login = FALSE;
+}
 
+
+if (filter_var($login, FILTER_VALIDATE_BOOLEAN) || $user === FALSE) { // NOT LOGGED IN
+    echo "Login Required"; // TODO open login alert
+    exit();
+    
+}
 /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
