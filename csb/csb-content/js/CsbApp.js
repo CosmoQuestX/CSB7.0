@@ -1,5 +1,15 @@
 currentTutorialStep = null;
 
+function cleanArray(actual) {
+	var newArray = new Array();
+	for (var i = 0; i < actual.length; i++) {
+		if (actual[i]) {
+			newArray.push(actual[i]);
+	    }
+	}
+	return newArray;
+}
+
 function isSet(value) {
     return (typeof value != "undefined" && value !== null);
 }
@@ -420,7 +430,8 @@ function CsbApp(canvasElementName, isDebugging) {
     this.setTutorialsCookie = function () {
         var date = new Date();
         date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
-        document.cookie = "tutorials_complete=" + encodeURIComponent(this.tutorialsCompleted.join(',')) + "; expires=" + date.toUTCString() + "; path=/";
+        this.tutorialsClean=cleanArray(this.tutorialsCompleted);
+        document.cookie = "tutorials_complete=" + encodeURIComponent(this.tutorialsClean.join(',')) + "; expires=" + date.toUTCString() + "; path=/";
     };
 
     this.getTutorialsFromCookie = function () {

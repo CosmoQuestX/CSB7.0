@@ -26,8 +26,8 @@ define ("debug",false);
 //define ("log",true);
 define ("log",false);
 
-define ("elog",true);
-//define ("elog",false);
+//define ("elog",true);
+define ("elog",false);
 
 // We need our basic configuration, so include the loader from the directory above
 require '../csb-loader.php';
@@ -160,7 +160,7 @@ function finish_tutorial() {
     // Get the "tutorials_completed" column for the logged in user from the database.
     $user_sql="SELECT tutorials_completed from users WHERE id = " . $user . "";
     if (debug) { print $user_sql . "<br \>\n"; }
-    if (elog) { error_log(" Executing SQL: SELECT tutorials_complete from usere WHERE id = " . $user); }
+    if (elog) { error_log(" Executing SQL: " .$user_sql); }
     
     $user_res=$db_conn->runQuery($user_sql);
     if ($user_res !== false) {
@@ -189,7 +189,7 @@ function finish_tutorial() {
 
     // If either is not an array, don't even try to merge them. 
     if (is_array($ret['tutorials_complete']) && is_array($user_ck['tutorials_completed'])) {
-        $union=array_merge($ret['tutorials_complete'],$user['tutorials_completed']);
+        $union=array_merge($ret['tutorials_complete'],$user_ck['tutorials_completed']);
         $sleek=array_unique($union);
     }
     else if (is_array($ret['tutorials_complete'])) {
@@ -224,6 +224,8 @@ function finish_tutorial() {
     }
     
     // This should leave us with an array of unique tutorials_completed.
+    // Filter out empty values before joining into a string.
+    $sleek=array_filter($sleek,"strlen");
     $joined = implode(",",$sleek);
     // Let's compare the result to the value stored in the database 
     if( $joined != $user_res[0]['tutorials_completed'])  {
