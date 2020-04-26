@@ -116,6 +116,7 @@ function Tutorial(csbApp) {
         var closestMatch = this.findBestMatchingMark(crater, correctMarks, closeCratersOnly);
         if (closestMatch == null) {
             crater.status = "way_too_far";
+            crater.isWrong = true;
             return crater;
         }
 
@@ -132,6 +133,7 @@ function Tutorial(csbApp) {
 
         function setCraterStatusBasedOnScore(crater, diameterScore, distanceScore) {
             var mousePosition = csbApp.appInterface.getSavedMousePosition();
+            crater.isWrong=true;
             if (crater.isBeingMade) {
                 var score = findPercentThatCircleOccupiesCircle(closestMatch, crater);
                 if (score >= .6 && distanceScore >= .6 && diameterScore >= .5)
@@ -160,6 +162,7 @@ function Tutorial(csbApp) {
                         crater.status = "too_large";
                 } else {
                     crater.status = "correct";
+                    crater.isWrong=false;
                 }
             }
 
@@ -359,7 +362,6 @@ function Tutorial(csbApp) {
             return x.status != "correct"
         });
         var success = (correctMarks.length - missedCraters.length - wrongCraters.length >= this.csbApp.currentImage.requiredNumberOfTutorialCraters);
-
 
         if (success) {
             if (userMarks.length == 0)
