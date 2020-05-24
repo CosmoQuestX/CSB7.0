@@ -29,16 +29,14 @@ function mars_mappers(csbApp) {
         [
             {
                 "type": "set-image",
-                "image-location": "/csb/csb-apps/mars_mappers/images/tutorial/mars-tutorial-1.png",
+                "image-location": "/csb/csb-apps/mars_mappers/images/tutorial/new_mars-tutorial-1.png",
                 "correct-marks": [
-                    new Crater(145, 128, 27, csbApp.appInterface),
-                    new Crater(161, 85, 25, csbApp.appInterface),
-                    new Crater(278, 263, 80, csbApp.appInterface)
+                    new Crater(255, 84, 140, csbApp.appInterface)
                 ],
                 "existing-marks": [
                     new Crater(150, 180, 75, csbApp.appInterface)
                 ],
-                "required-score": 3,
+                "required-score": 1,
                 "tutorial-percent": 0
             },
             {
@@ -66,26 +64,14 @@ function mars_mappers(csbApp) {
             {
                 "type": "text-bubble",
                 "title": "Marking Craters",
-                "text": "Nice! Now you need to find the <b>craters</b> in this image.<br /><br /> Craters are <b>circular holes</b> in the ground with</br /><b>bright sunlight</b> on one side and a <b>dark shadow</b> on the other.",
+                "text": "Nice! Now I need you to find the <b>crater</b> in this image.<br /><br /> Craters are <b>circular holes</b> in the ground with</br /><b>bright sunlight</b> on one side and a <b>dark shadow</b> on the other.",
                 "delay": 500,
                 "tutorial-percent": 10
             },
             {
-                "type": "text-bubble",
-                "text": "I'll show you how to mark the first two, then you can get the third!",
-                "delay": 500
-            },
-            {
-                "type": "auto-create-mark",
-                "marks": [
-                    new Crater(278, 263, 80, csbApp.appInterface),
-                    new Crater(161, 85, 25, csbApp.appInterface)
-                ]
-            },
-            {
                 "type": "click",
                 "jquery-id": "#circle-button",
-                "text": "Now you can mark the <b>third crater</b>!<br />Select the Crater Tool."
+                "text": "To mark the <b>crater</b>!<br />Select the Crater Tool."
             },
             {
                 "type": "click",
@@ -107,7 +93,7 @@ function mars_mappers(csbApp) {
             },
             {
                 "type": "find-marks",
-                "text": "Mark the last crater in the image by clicking and dragging the mouse."
+                "text": "Mark the big crater in the image by clicking and dragging the mouse."
             },
             {
                 "type": "click",
@@ -116,16 +102,22 @@ function mars_mappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/csb/csb-apps/mars_mappers/images/tutorial/mars-tutorial-2.png",
+                "image-location": "/csb/csb-apps/mars_mappers/images/tutorial/new_mars-tutorial-7.png",
                 "correct-marks": [
-                    new Crater(60, 45, 60),
-                    new Crater(148, 67, 27),
-                    new Crater(45, 157, 32),
-                    new Crater(129, 369, 32),
-                    new Crater(224, 311, 25),
-                    new Crater(388, 159, 34),
-                    new Crater(409, 101, 32),
-                    new Crater(365, 100, 66)
+                    new Crater(161, 189, 80, csbApp.appInterface),
+                    new Crater(129, 137, 22, csbApp.appInterface),
+                    new Crater(58, 237, 46, csbApp.appInterface),
+                    new Crater(305, 338, 37, csbApp.appInterface),
+                    new Crater(352, 407, 27, csbApp.appInterface),
+                    new Crater(306, 289, 21, csbApp.appInterface),
+                    new Crater(399, 101, 44, csbApp.appInterface),
+                    new Crater(380, 71, 24, csbApp.appInterface),
+                    new Crater(227, 61, 33, csbApp.appInterface),
+                    new Crater(199, 48, 24, csbApp.appInterface),
+                    new Crater(265, 3, 22, csbApp.appInterface),
+                    new Crater(50, 115, 20, csbApp.appInterface),
+                    new Crater(36, 98, 19, csbApp.appInterface),
+                    new Crater(410, 150, 21, csbApp.appInterface)
                 ],
                 "required-score": 8,
                 "active-tools": ["circle-button", "eraser-button"],
@@ -140,7 +132,7 @@ function mars_mappers(csbApp) {
             {
 
                 "type": "find-marks",
-                "text": "Mark the <b>8 largest craters</b>. We're only interested in craters larger than this: <img src='/csb/csb-content/images/applications/tutorials/red-circle.png' style='width: 16px; height: 16px;' /><br /><b>TIP:</b> If a crater is too small, your circle will be <b style='color: red'>red</b>",
+                "text": "Mark <b>8 craters</b> in this image. We're only interested in craters larger than this: <img src='/csb/csb-content/images/applications/tutorials/red-circle.png' style='width: 16px; height: 16px;' /><br /><b>TIP:</b> If a crater is too small, your circle will be <b style='color: red'>red</b>",
                 "delay": 500
             },
             {
@@ -150,14 +142,14 @@ function mars_mappers(csbApp) {
             },
             {
                 "type": "set-image",
-                "image-location": "/csb/csb-apps/mars_mappers/images/tutorial/mars-tutorial-3.png",
+                "image-location": "/csb/csb-apps/mars_mappers/images/tutorial/mars-tutorial-6.png",
                 "correct-marks": [
-                    new Crater(216, 44, 107, csbApp.appInterface),
-                    new Crater(338, 12, 21, csbApp.appInterface),
-                    new Crater(376, 140, 23, csbApp.appInterface),
-                    new Crater(192, 192, 60, csbApp.appInterface),
-                    new Crater(63, 280, 35, csbApp.appInterface),
-                    new Crater(299, 256, 94, csbApp.appInterface, true)
+                    new Crater(172, 38, 18, csbApp.appInterface),
+                    new Crater(350, 205, 32, csbApp.appInterface),
+                    new Crater(435, 181, 20, csbApp.appInterface),
+                    new Crater(438, 230, 27, csbApp.appInterface),
+                    new Crater(323, 374, 68, csbApp.appInterface),
+                    new Crater(196, 242, 128, csbApp.appInterface, true)
                 ],
                 "required-score": 4,
                 "active-tools": ["circle-button", "eraser-button", "ejecta-button"],
