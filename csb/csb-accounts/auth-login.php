@@ -29,7 +29,7 @@ $db = new DB($db_servername, $db_username, $db_password, $db_name);
 if (isset($_GET['go'])) {
 
     if ($_GET['go'] == 'logout') {
-        logout();
+        logout($db);
     } else {
         echo "get thee gone, URL hacking wizard";
     }
@@ -132,8 +132,9 @@ function login($db, $user)
 
     global $BASE_URL;
     $query = "SELECT * FROM users WHERE name = ? ";
-
-    if ($chkuser = $db->runQueryWhere($query, "s", array($user['name']))) {
+    $chkuser = $db->runQueryWhere($query, "s", array($user['username']))[0];
+    
+    if ($chkuser !== false ) {
 
         // Verify the password, set the cookie and session variable
         if (password_verify($user['password'], $chkuser['password'])) {
@@ -152,7 +153,7 @@ function login($db, $user)
                 $token_hash = password_hash($token, PASSWORD_DEFAULT);
                 $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
                 $params = array($user['id']);
-                $db->runQueryWhere($query, "s", $params);
+                $db->update($query, "s", $params);
 
             } else {
                 // How long will cookies last: 24min like sessions (set in php.ini)
@@ -160,31 +161,35 @@ function login($db, $user)
             }
 
             // Get the person's roles
-            $query = "SELECT role_id, user_id FROM role_users WHERE user_id = ?";
+            $query = "SELECT role_id FROM role_users WHERE user_id = ?";
             $params = array($chkuser['id']);
-            $result = $db->runQueryWhere($query, "s", $params);
+            $result = $db->runQueryWhere($query, "i", $params);
 
-            if (isset($result['role_id'])) {
-                $roles = $result['role_id'];
-            } else {
-                $roles = "";
+            if ($result !== false) {
                 foreach ($result as $role) {
-                    $roles .= $role['role_id'] . ",";
+                    $roles[]= $role['role_id'];
+                    
                 }
             }
 
+            // Insert the users' session information into the database
+            insertUserSession($db, $chkuser['id']);
+                                
             // Get the person's tutorials completed
             $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
             $tcparams = array($chkuser['id']);
-            $tcresult = $db->runQueryWhere($tcquery, "i", $params);
+            $tcresult = $db->runQueryWhere($tcquery, "i", $params)[0];
+
+            if($tcresult === false){
+                error_log("Query failed for tutorials_completed; SQL was: $tcquery with params=" . print_r($tcparams));
+            }
             
             // Set sessions and cookie
             $_SESSION['user_id'] = $chkuser['id'];
-            setcookie('name', $user['name'], $timeout, "/");
-            setcookie('tutorials_complete', $tcresult['tutorials_completed'] ,$timeout,"/");
+            setcookie('name', $user['username'], $timeout, "/");
+            setcookie('tutorials_complete', $tcresult['tutorials_completed'],$timeout,"/");
             $_SESSION['roles'] = $roles;
-            session_start();
-
+            
             // Send them where they belong
             header("Location: " . $user['referringURL']);
             exit();
@@ -210,25 +215,27 @@ function login($db, $user)
  *
  * @return void
  */
-function logout()
+function logout($db)
 {
     global $BASE_URL;
 
     $timeout = time() - 3600;
     setcookie("token", "", $timeout, "/");
     setcookie('name', "", $timeout, "/");
+    // Remove the session info from the database before clearing the session
+    $session_query = "DELETE FROM sessions WHERE id = '" . $_COOKIE[ini_get('session.name')] . "'";
+    $session_result = $db->runQuery($session_query);
+    if ($session_result === false) {
+        error_log("Error deleting session, query was: ". $session_query);
+    }
+
     $_SESSION = array();
     session_destroy();
     session_start();
 
-    ?>
-    <html>
-    <head>
-        <meta http-equiv="Refresh" content="0; url=<?php echo($BASE_URL); ?>"/>
-    </head>
-    </html>
-    <?php
-
+    // Send them where they belong
+    header("Location: " . $BASE_URL);
+    exit();
 }
 
 /**
@@ -240,18 +247,19 @@ function logout()
  */
 function regUser($db, $user, $pwhash)
 {
-    global $CQ_ROLE;
+    global $CQ_ROLES;
 
+    // Insert the user into the database
     $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-    $params = array(filter_var($user['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash);
+    $params = array(filter_var($user['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash);
     $db->insert($query, "sss", $params);
 
-    $query = "SELECT id FROM users WHERE name = '".$user['name']."'";
-
-    $id = $db->runBaseQuery($query)[0]['id'];
+    // Get the id for the freshly created user
+    $query = "SELECT id FROM users WHERE name = '".$user['username']."'";
+    $id = $db->runQuery($query)[0]['id'];
 
     if ($id === FALSE) {
-        // This should not happen, since we just inserted a user
+        // This should not happen, since we just created the user!
         error_log("Could not find the freshly created user on registration.");
         die("Fatal error on registration. Please try again later.");
     } else {
@@ -263,10 +271,16 @@ function regUser($db, $user, $pwhash)
 
     $query = "INSERT INTO role_users (role_id, user_id) values (?, ?)";
     $params = array($roles, $id);
-    $db->insert($query, "ii", $params);
+    $role_insert=$db->insert($query, "ii", $params);
+    if ($role_insert !== true) {
+        error_log("Error adding role $roles for user $id");
+    }
 
     // create sessions / cookies TODO Make this a function
-
+    
+    // Insert the users' session information into the database
+    insertUserSession($db, $user['id']);
+    
     // Set timeout variable & token for cookies based on remember checkbox
     if (isset($user['remember']) && !strcmp($user['remember'], 'on')) {
 
@@ -281,7 +295,7 @@ function regUser($db, $user, $pwhash)
         $token_hash = password_hash($token, PASSWORD_DEFAULT);
         $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
         $params = array($user['id']);
-        $db->runQueryWhere($query, "s", $params);
+        $db->update($query, "s", $params);
     } else {
         // How long will cookies last: 24min like sessions (set in php.ini)
         $timeout = time() + 60 * 24;
@@ -294,9 +308,8 @@ function regUser($db, $user, $pwhash)
 
     // Set sessions and cookie
     $_SESSION['user_id'] = $user['id'];
-    setcookie('name', $user['name'], $timeout, "/");
+    setcookie('name', $user['username'], $timeout, "/");
     $_SESSION['roles'] = $roles;
-
 
 }
 
@@ -342,6 +355,60 @@ function rescueUser ($db, $using, $value) {
     unset($_SESSION['errMsg']);
     header("Location: ".$ACC_URL."rescue.php?go=submitted");
     exit();
+}
+
+/**
+ * Inserts the users' information into the session table of the datbase
+ * @param resource $db A valid database connection
+ * @param int $user The user id from the user
+ * @return boolean True if successful, otherwise false
+ */
+
+function insertUserSession($db, $user) {
+ 
+    /*
+     * Since it can happen that a users' session gets garbage collected we need to have
+     * an alternative way to determine which user tried to save something. So let's take
+     * the information we have and write it into the database.
+     * The information entered is:
+     * - Session ID
+     * - User ID
+     * - IP Address the request originated from
+     * - the User agent (e.g. Browser).
+     * - the epoch of the last request.
+     * There's another field in the database table that is called "payload"; I don't know
+     * what it is good for, though. Since it does not accept null values, store the base64
+     * encoded request string.
+     */
+    
+    $ret = true;
+    // Let's get this out of the way, we will use it anyway.
+    $payload = base64_encode('http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+    
+    // First, check if there is arlready a session for the session id 
+    // If there is, insert the session information into the table
+    if ($db->runQuery("SELECT id FROM sessions WHERE id = '" . $_COOKIE[ini_get('session.name')]. "'") === false) {
+    
+        $session_query= "INSERT INTO sessions (id, user_id, ip_address, user_agent, payload, last_activity) " .
+            "VALUES (?, ?, ?, ?, ?, ?);";  
+        $session_param = array($_COOKIE[ini_get('session.name')], $user, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $payload, time());
+        $session_result = $db->insert($session_query, "sisssi", $session_param);
+        if ($session_result === false) {
+            error_log("Query to insert session data failed; SQL was: ". $session_query);
+            $ret=false;
+        }
+    }
+    else {
+        // We found a session with the same session id, so update it with the information.
+        $session_query= "UPDATE sessions SET user_id = ?, ip_address = ?, user_agent = ?, payload = ?, last_activity = ? WHERE id = ?" ;
+        $session_param = array($user, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $payload, time(), $_COOKIE[ini_get('session.name')]);
+        $session_result = $db->update($session_query, "isssis", $session_param);
+        if ($session_result === false) {
+            error_log("Query to update session data failed; SQL was: ". $session_query);
+        $ret=false;
+        }
+    }
+    return $ret;
 }
 
 ?>

@@ -2,7 +2,7 @@
  * Created by Ryan Owens on 6/14/16.
  */
 
-function Crater(x, y, diameter, appInterface, isEjecta) {
+function Crater(x, y, diameter, appInterface, isEjecta, isWrong) {
     Mark.call(this, 'crater', x, y, appInterface);
     this.diameter = diameter;
     this.isEjecta = typeof (isEjecta) == "undefined" ? false : isEjecta;
@@ -58,12 +58,17 @@ function Crater(x, y, diameter, appInterface, isEjecta) {
             context.strokeStyle = "#BB0000";
         } else {
             if (this.isEjecta) {
-                // Good => blue mark
+                // Good size => blue mark
                 context.fillStyle = "#6699FF";
                 context.strokeStyle = "#FFFFFF";
-            } else {
-                // Good => green mark
-                context.fillStyle = "#39b54a";
+            } 
+            else if (this.isWrong) {
+                context.fillStyle = "#E05000";
+                context.strokeStyle = "#FE0000";
+            }
+            else {
+                // Good size => green mark
+                context.fillStyle = "#39B54A";
                 context.strokeStyle = "#FFFFFF";
             }
         }

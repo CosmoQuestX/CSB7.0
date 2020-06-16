@@ -35,6 +35,13 @@ $db = new DB($db_servername, $db_username, $db_password, $db_name);
 global $user;
 $user = isLoggedIn($db);
 
+if ($user !== false) {
+    // When the user is logged in, he does not need to recover his password. 
+    // Redirect him to the main page. 
+    header("Location: " . $BASE_URL);
+    exit();
+}
+
 /* ----------------------------------------------------------------------
    Load content
    ---------------------------------------------------------------------- */
