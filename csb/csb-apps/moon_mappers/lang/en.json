@@ -1,0 +1,42 @@
+{
+  "app_page": {
+    "title": "Moon Mappers",
+    "text-boxes": {
+      "app-left": {
+        "title": "Quick Facts",
+        "fact1-title": "The Moon:",
+        "fact1-content": "Our only companion",
+        "fact2-title": "Resolution:",
+        "fact2-content": "n/a",
+        "fact3-title": "Number of Views Required:",
+        "fact3-content": "15 per image",
+        "completed": "Completed images:",
+        "remaining": "Remaining images:",
+        "dueDate": "",
+        "dueDateValue": "",
+        "examples": "Examples",
+        "footer": "We can only mark all craters with your help!"
+      },
+      "app-main": {
+        "greeting": "Hello,",
+        "profile": "View Profile",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "title": "Please login to the Moon Mappers Project.",
+        "blurb": "Please register with an accurate email address so we can contact you with results! You will receive credit for your efforts using either your user name, or your actual name if you enter it on your profile page. Your email will not be shared outside of our science team and will only be used for science updates and any questions we may have related to giving you credit for your discoveries. For more information, please see our Privacy Policy.",
+        "app-button": "Launch Application",
+        "Links": "Helpful Links",
+        "link1": "FAQ",
+        "link2": "Science Case",
+        "link3": "",
+        "link4": ""
+      },
+      "app-right": {
+        "title": "Our Goals (& Yours)",
+        "blurb": "We are mapping craters on the moon, and so are you!",
+        "footer": "Together, we can make it!"
+      }
+    }
+  }
+}

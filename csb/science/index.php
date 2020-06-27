@@ -32,13 +32,13 @@ if (!isset($login)) {
 
 if (filter_var($login, FILTER_VALIDATE_BOOLEAN) || $user === FALSE) { // NOT LOGGED IN
     echo "Login Required"; // TODO open login alert
-
+    exit();
 
 } /* ----------------------------------------------------------------------
    Do they have the correct role?
    ---------------------------------------------------------------------- */
 
-elseif ($_SESSION['roles'] != $CQ_ROLES['SITE_SCIENTIST'] && $_SESSION['roles'] != $CQ_ROLES['SITE_ADMIN'] && $_SESSION['roles'] != $CQ_ROLES['SITE_SUPERADMIN']) {
+elseif (!userHasRole($CQ_ROLES['SITE_SCIENTIST'],$CQ_ROLES['SITE_ADMIN'],$CQ_ROLES['SITE_SUPERADMIN'])) {
     header("Location: $BASE_URL/error/error.php?error=403");
     exit();
 

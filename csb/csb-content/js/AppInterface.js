@@ -137,8 +137,12 @@ function AppInterface(csbApp) {
             self.csbApp.tutorial.moveToNextTutorialStep();
         });
 
+        // When closing the app, it needs a page reload to return to a 
+        // clean state, so that's why the location.reload() is in. 
+        // TODO look into resetting the state without reloading the page
         $("#x-button").click(function () {
             $("#cq-mapping-tool").hide();
+            location.reload();
         });
 
         $("#app-dont-want-to-login-button").click(function () {
@@ -281,16 +285,16 @@ function AppInterface(csbApp) {
         this.icons = {};
 
         this.icons.featureImage = new Image();
-        this.icons.featureImage.src = "/csb-content/images/applications/markers/marker.png";
+        this.icons.featureImage.src = "/csb/csb-content/images/applications/markers/marker.png";
 
         this.icons.featureSelectedImage = new Image();
-        this.icons.featureSelectedImage.src = "/csb-content/images/applications/markers/marker-selected.png";
+        this.icons.featureSelectedImage.src = "/csb/csb-content/images/applications/markers/marker-selected.png";
 
         this.icons.rockImage = new Image();
-        this.icons.rockImage.src = "/csb-content/images/applications/markers/rock.png";
+        this.icons.rockImage.src = "/csb/csb-content/images/applications/markers/rock.png";
 
         this.icons.sunImage = new Image();
-        this.icons.sunImage.src = "/csb-content/images/applications/sun.png";
+        this.icons.sunImage.src = "/csb/csb-content/images/applications/sun.png";
     };
 
 

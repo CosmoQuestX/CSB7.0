@@ -160,9 +160,7 @@ iframe {
 }
 
 #app-examples {
-    position: absolute;
-    top: 365px;
-    height: 100px;
+    height: 120px;
 }
 
 #app-examples h4 {

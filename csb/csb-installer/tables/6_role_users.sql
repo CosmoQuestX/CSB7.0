@@ -10,4 +10,4 @@ CREATE TABLE `role_users` (
           KEY `role_users_user_id_foreign` (`user_id`),
           KEY `role_users_application_id_foreign` (`application_id`),
           CONSTRAINT `role_users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
-        ) ENGINE=InnoDB AUTO_INCREMENT=193103 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+        ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

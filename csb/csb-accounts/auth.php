@@ -26,9 +26,8 @@ function chk_UserId($db, $id, $name)
 
     $query = "SELECT id, name FROM users WHERE id = ?";
     $params = array($id);
-    $result = $db->runQueryWhere($query, "s", $params);
-
-
+    $result = $db->runQueryWhere($query, "s", $params)[0];
+    
     // strip out any white space and make everything lower case because typing
     $comp = strtolower(trim($result['name'], "\t\n\r\0\x0B"));
     $name = strtolower(trim($name, " \t\n\r\0\x0B"));
@@ -54,14 +53,13 @@ function chk_Token($db, $token, $name)
 
     $query = "SELECT id, name, remember_token FROM users WHERE name = ?";
     $params = array($name);
-    $result = $db->runQueryWhere($query, "s", $params);
+    $result = $db->runQueryWhere($query, "s", $params)[0];
 
     if (password_verify($token, $result['remember_token'])) {
         return TRUE;
     } else {
         return FALSE;
     }
-
 }
 
 /**
@@ -94,3 +92,18 @@ function isLoggedIn($db)
         return FALSE;
 }
 
+/**
+ * Checks if the user is assigned to one of the roles supplied as an argument
+ * @param string ...$roles Any number of roles to check
+ * @return boolean true if at least one match is found, false if not
+ */
+function userHasRole(...$roles)
+{
+    if (count(array_intersect($roles ,$_SESSION['roles'])) > 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+    
+}

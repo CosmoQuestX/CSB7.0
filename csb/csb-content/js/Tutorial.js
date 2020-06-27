@@ -18,9 +18,9 @@ function Tutorial(csbApp) {
         $("#tutorial-steps-complete").show();
         this.csbApp.isAppOn = true;
         this.mouseUpImage = document.createElement('img');
-        this.mouseUpImage.src = "/csb-content/images/applications/tutorials/cursor-up.png";
+        this.mouseUpImage.src = "/csb/csb-content/images/applications/tutorials/cursor-up.png";
         this.mouseDownImage = document.createElement('img');
-        this.mouseDownImage.src = "/csb-content/images/applications/tutorials/cursor-down.png";
+        this.mouseDownImage.src = "/csb/csb-content/images/applications/tutorials/cursor-down.png";
 
         var self = this;
         $("#text-bubble-okay-button").click(function () {
@@ -62,7 +62,7 @@ function Tutorial(csbApp) {
 
         this.csbApp.tutorialsCompleted.push(this.csbApp.applicationName);
 
-        postData("/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}).then( returnData => {
+        postData("/csb/api/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}).then( returnData => {
             console.log(returnData);
         });
     };
@@ -116,6 +116,7 @@ function Tutorial(csbApp) {
         var closestMatch = this.findBestMatchingMark(crater, correctMarks, closeCratersOnly);
         if (closestMatch == null) {
             crater.status = "way_too_far";
+            crater.isWrong = true;
             return crater;
         }
 
@@ -132,6 +133,7 @@ function Tutorial(csbApp) {
 
         function setCraterStatusBasedOnScore(crater, diameterScore, distanceScore) {
             var mousePosition = csbApp.appInterface.getSavedMousePosition();
+            crater.isWrong=true;
             if (crater.isBeingMade) {
                 var score = findPercentThatCircleOccupiesCircle(closestMatch, crater);
                 if (score >= .6 && distanceScore >= .6 && diameterScore >= .5)
@@ -160,6 +162,7 @@ function Tutorial(csbApp) {
                         crater.status = "too_large";
                 } else {
                     crater.status = "correct";
+                    crater.isWrong=false;
                 }
             }
 
@@ -359,7 +362,6 @@ function Tutorial(csbApp) {
             return x.status != "correct"
         });
         var success = (correctMarks.length - missedCraters.length - wrongCraters.length >= this.csbApp.currentImage.requiredNumberOfTutorialCraters);
-
 
         if (success) {
             if (userMarks.length == 0)
@@ -693,8 +695,8 @@ function Tutorial(csbApp) {
         var dx = desiredPosition.x - this.fakeCursor.x;
         var dy = desiredPosition.y - this.fakeCursor.y;
         var distance = Math.sqrt(dx * dx + dy * dy);
-        this.fakeCursor.x += dx / distance * (distance + 7) / 35;
-        this.fakeCursor.y += dy / distance * (distance + 7) / 35;
+        this.fakeCursor.x += dx / distance * (distance + 7) / 20;
+        this.fakeCursor.y += dy / distance * (distance + 7) / 20;
         if (distance < 1) {
             this.fakeCursor.x = desiredPosition.x;
             this.fakeCursor.y = desiredPosition.y;
@@ -746,7 +748,7 @@ function Tutorial(csbApp) {
             if (distance > this.desiredMark.diameter)
                 this.markBeingMadeStep = "pause-after-making-mark";
             else {
-                var movementPerFrame = 1;
+                var movementPerFrame = 2;
                 this.fakeCursor.x += dx / this.desiredMark.diameter * movementPerFrame;
                 this.fakeCursor.y += dy / this.desiredMark.diameter * movementPerFrame;
                 this.markBeingMade.x = (this.fakeCursor.x + this.markBeingMade.creationStartPosition.x) / 2;

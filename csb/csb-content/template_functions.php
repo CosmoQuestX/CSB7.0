@@ -135,19 +135,35 @@ function loadUser()
 function loadNavLinks()
 {
 
-    global $BASE_URL, $ACC_URL, $user, $adminFlag;
+    global $BASE_URL, $ACC_URL, $user, $adminFlag, $db_servername, $db_username, $db_password, $db_name;
 
     if ($user == TRUE) {         // LOGGED IN
-        ?>
+        
 
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo $BASE_URL . 'apps.php?app=Bennu'; ?>">Bennu Mapper</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<?php echo $BASE_URL; ?>">Other Mapper</a>
-        </li>
+        // Initialize the array with the links
+        $links=array(array('target'=>"",'desc'=>"Home"));
 
-        <?php
+        // This pulls the apps to link from the database
+        $db_conn = new DB($db_servername, $db_username, $db_password, $db_name);
+        $app_sql="SELECT name,title FROM  applications WHERE active = 1";
+        $app_res = $db_conn->runQuery($app_sql);
+        if ($app_res !== false) {
+            foreach ($app_res as $app) {
+                $links[]=array('target'=>"apps.php?app=".$app['name'],'desc'=>$app['title']);
+            }
+        }
+        $db_conn->closeDB();
+        
+        
+        foreach ($links as $link) {
+                    // "Home" is a special case and needs special matching. But there is probably a much better way.
+                    ?>
+		<li class="nav-item <?php if (($link['target']!="" && strstr($_SERVER['REQUEST_URI'],$link['target']) !== false) || ($_SERVER['REQUEST_URI'] == "/csb/" && $link['target']=="")) { echo "active"; }?>">
+        	<a class="nav-link" href="<?php echo $BASE_URL . $link['target']; ?>"><?php echo $link['desc'] ?></a>
+        </li>
+                    <?php 
+
+        }
     }
 }
 
@@ -211,7 +227,7 @@ function loadLoginBox()
                             } ?></div>
 
                         <label for="username">Username</label>
-                        <input id="username" name="name" type="text" class="form-control"
+                        <input id="username" name="username" type="text" class="form-control"
                                value="<?php if (isset($_COOKIE["name"])) {
                                    echo $_COOKIE["name"];
                                } ?>">

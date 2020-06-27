@@ -52,11 +52,11 @@ GLOBAL $ACC_URL;
     </div>
 
 
-    <label for="name">Username</label>
-    <input name="name" id="name" class="form-control" type="text">
+    <label for="username">Username</label>
+    <input name="username" id="username" class="form-control" type="text">
 
     <label for="email">Email</label>
-    <input name="email" id="email" class="form-control" type="text">
+    <input name="email" id="email" class="form-control" type="email">
 
     <label for="password">Enter Password</label>
     <input name="password" id="registerPassword" class="form-control" type="password">

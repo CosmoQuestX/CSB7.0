@@ -1,5 +1,15 @@
 currentTutorialStep = null;
 
+function cleanArray(actual) {
+	var newArray = new Array();
+	for (var i = 0; i < actual.length; i++) {
+		if (actual[i]) {
+			newArray.push(actual[i]);
+	    }
+	}
+	return newArray;
+}
+
 function isSet(value) {
     return (typeof value != "undefined" && value !== null);
 }
@@ -55,15 +65,13 @@ function CsbApp(canvasElementName, isDebugging) {
     this.initializeApplications = function () {
         this.applications = {
             "moon_mappers":
-                new MoonMappers(this),
+                new moon_mappers(this),
             "mars_mappers":
-                new MarsMappers(this),
+                new mars_mappers(this),
             "mercury_mappers":
-                new MercuryMappers(this),
-            /*"vesta_mappers":
-                new VestaMappers(this),*/
+                new mercury_mappers(this),
             "bennu_mappers":
-                new BennuMappers(this)
+                new bennu_mappers(this)
         };
     }
 
@@ -109,7 +117,7 @@ function CsbApp(canvasElementName, isDebugging) {
                     self.tutorialsCompleted.push(tutorial);
             });
             this.setTutorialsCookie();
-            postData("/finish_tutorial", {tutorials_complete: this.tutorialsCompleted}).then( returnData => {
+            postData("/csb/api/finish_tutorial", {tutorials_complete: this.tutorialsCompleted}).then( returnData => {
                 console.log(returnData);
             }).catch( err => {
                 console.log("Fail: " + err);
@@ -134,10 +142,10 @@ function CsbApp(canvasElementName, isDebugging) {
             return;
         }
 
-        var fileToPostTo = "/api/image/next/" + this.applicationName;
+        var fileToPostTo = "/csb/api/image/" + this.applicationName + "/next";
 
         if (isSet(imageId)) {
-            fileToPostTo = "/api/image/id/" + imageId;
+            fileToPostTo = "/csb/api/image/byID/" + imageId;
         }
 
         var self = this;
@@ -206,7 +214,7 @@ function CsbApp(canvasElementName, isDebugging) {
 
         self.imagesDone += 1;
         if (this.isUserLoggedIn) {
-            postData("/app/" + this.applicationName + "/submit_data", dataToSubmit).then( returnText => {
+            postData("/csb/api/image/" + this.applicationName + "/submit_data", dataToSubmit).then( returnText => {
                 //if(isDebugging)
                 console.log(returnText);
 
@@ -242,7 +250,7 @@ function CsbApp(canvasElementName, isDebugging) {
             };
 
             // Post to our api, puts request on Queue
-            postData("/api/scistarter", data).then( data => {
+            postData("/csb/api/scistarter", data).then( data => {
                 console.log(data);
             }).catch( err => {
                 console.error(err);
@@ -256,7 +264,7 @@ function CsbApp(canvasElementName, isDebugging) {
 
     this.loginUser = function () {
         var self = this;
-        $.post('/auth/ajax_login', {
+        $.post('/csb/api/ajax_login', {
             'username-or-email': $("#app-login-username-or-email").val(),
             'password': $("#app-login-password").val()
         }, function (result) {
@@ -265,7 +273,7 @@ function CsbApp(canvasElementName, isDebugging) {
                 if (error == "incorrect_username_or_email")
                     $("#app-login-error-message").html("That username or email doesn't exist");
                 else if (error == "reset_password")
-                    window.location = "/password/reset";
+                    window.location = "/csb/api/passwordreset";
                 else if (error == "incorrect_password")
                     $("#app-login-error-message").html("Incorrect password");
             } else if (isSet(result['user'])) {
@@ -274,7 +282,7 @@ function CsbApp(canvasElementName, isDebugging) {
                 while (self.unsubmittedData.length > 0)
                     self.submitImage(true);
                 self.appInterface.setupBeingLoggedIn();
-                $.post("/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}, function (returnData) {
+                $.post("/csb/api/finish_tutorial", {tutorials_complete: this.csbApp.tutorialsCompleted}, function (returnData) {
                     console.log(returnData);
                 });
             }
@@ -286,7 +294,7 @@ function CsbApp(canvasElementName, isDebugging) {
     this.updateDisplayedImage = function (newImage) {
         var self = this;
         var canvas = this.canvas;
-        var outOfImagesSrc = "/csb-content/images/applications/out-of-images.png";
+        var outOfImagesSrc = "/csb/csb-content/images/applications/out-of-images.png";
 
         if (newImage == null) {
             var data = {image: {file_location: outOfImagesSrc, sun_angle: null}};
@@ -422,7 +430,8 @@ function CsbApp(canvasElementName, isDebugging) {
     this.setTutorialsCookie = function () {
         var date = new Date();
         date.setTime(date.getTime() + 30 * 24 * 60 * 60 * 1000);
-        document.cookie = "tutorials_complete=" + encodeURIComponent(this.tutorialsCompleted.join(',')) + "; expires=" + date.toUTCString() + "; path=/";
+        this.tutorialsClean=cleanArray(this.tutorialsCompleted);
+        document.cookie = "tutorials_complete=" + encodeURIComponent(this.tutorialsClean.join(',')) + "; expires=" + date.toUTCString() + "; path=/";
     };
 
     this.getTutorialsFromCookie = function () {

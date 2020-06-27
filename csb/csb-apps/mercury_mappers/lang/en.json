@@ -1,0 +1,42 @@
+{
+  "app_page": {
+    "title": "Mercury Mappers",
+    "text-boxes": {
+      "app-left": {
+        "title": "Quick Facts",
+        "fact1-title": "Our mission:",
+        "fact1-content": "To map Mercury",
+        "fact2-title": "Resolution:",
+        "fact2-content": "n/a",
+        "fact3-title": "Number of Views Required:",
+        "fact3-content": "15 per image",
+        "completed": "Completed Images:",
+        "remaining": "Remaining Images:",
+        "dueDate": "Due Date:",
+        "dueDateValue": "",
+        "examples": "Examples",
+        "footer": "Let's have some fun and map Mercury!"
+      },
+      "app-main": {
+        "greeting": "Hello,",
+        "profile": "View Profile",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "title": "Please login to the Mercury Mappers Project.",
+        "blurb": "Please register with an accurate email address so we can contact you with results! You will receive credit for your efforts using either your user name, or your actual name if you enter it on your profile page. Your email will not be shared outside of our science team and will only be used for science updates and any questions we may have related to giving you credit for your discoveries. For more information, please see our Privacy Policy.",
+        "app-button": "Launch Application",
+        "Links": "Helpful Links",
+        "link1": "FAQ",
+        "link2": "Science Case",
+        "link3": "",
+        "link4": ""
+      },
+      "app-right": {
+        "title": "Our Goals (& Yours)",
+        "blurb": "Let's map Mercury together!",
+        "footer": "Gotta find them all!s"
+      }
+    }
+  }
+}
