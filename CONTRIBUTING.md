@@ -13,7 +13,7 @@ For larger pull requests it might be better to contact us via Discord first to t
 
 Please make sure all of your commits are atomic (one feature or bugfix per commit).
 Always write a clear log message for your commits. One-line messages are fine for small changes, but bigger changes should include a description of how and why you changed things. 
-If if addresses an open issue, please include the issue number in the description of the commit.
+If if addresses an open issue, please include the issue number in the description of the commit and/or the pull request.
 
 Lastly, if you send a pull request, please include a description of what you are submitting in the pull request itself, summarizing what you have done (and please, don't just copy the messages of all the commits as a comment).
 
