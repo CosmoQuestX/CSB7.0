@@ -2,13 +2,13 @@
 
 If you are interested in contributing, feel free to fork and make pull reguests based on the currently open issues. 
 If you found a bug, please report an issue on that. Likewise, if you are missing a feature, please report an issue describing the feature you want. 
-Lastly, if you have found a security-related issue, please see the [security policy](/blob/master/SECURITY.md) on how to proceed 
+Lastly, if you have found a security-related issue, please see the [security policy](/SECURITY.md) on how to proceed 
 If you're unsure where to start, catch us on [Discord](https://discord.gg/X8rw4vv) in the channel "#volunteers-reporting-for-duty" 
 
 
 ## Submitting changes
 
-For small bugfixes, please send a [GitHub Pull Request against the master branch](/pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). 
+For small bugfixes, please send a [GitHub Pull Request against the master branch](../../pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). 
 For larger pull requests it might be better to contact us via Discord first to test it in a separate branch.
 
 Please make sure all of your commits are atomic (one feature or bugfix per commit).
