@@ -77,8 +77,6 @@ require_once($BASE_DIR . "/csb-content/template_functions.php");
 
 $page_title = $SITE_TITLE . "Rescue Password";
 
-//TODO Set error for if loading while logged in
-
 loadHeader($page_title);
 load3Col($menus, $main, $notes, 'rescue-template.php');
 loadFooter();
