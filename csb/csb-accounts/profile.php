@@ -47,9 +47,9 @@ elseif ($reg) {
    ---------------------------------------------------------------------- */
 
 else {
-    global $page_title;
-
-    $page_title = "Profile & Settings";
+    global $page_title, $header_title, $SITE_TITLE;
+    
+    $page_title = $SITE_TITLE . "Profile & Settings";
 
     require_once($BASE_DIR . "csb-content/template_functions.php");
     require_once($BASE_DIR . "csb-admin/admin-dashboards.php");
@@ -188,24 +188,12 @@ else {
     /* ----------------------------------------------------------------------
     Load the view
     ---------------------------------------------------------------------- */
-    global $page_title, $header_title, $SITE_TITLE;
 
-    require_once($BASE_DIR . "/csb-content/template_functions.php");
-
-    $page_title = $SITE_TITLE . "Registration";
-
-    //TODO Set error for if loading while logged in
-
-    loadHeader($page_title);
     load3Col($menus, $main, $notes);
     loadFooter();
     
 
 }
-
-
-
-
 
 
 $db->closeDB();
