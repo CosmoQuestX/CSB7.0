@@ -90,6 +90,6 @@ Execute the following command from the CSB directory:
 To stop docker and close the app, press Ctrl+C
 
 #### 3. Launch the installer
-Go to http://localhost:8080/csb-installer/ in your browser. 
+Go to http://localhost:8080/csb/csb-installer/ in your browser. 
   To use the docker MariaDB, use ```db``` as your database hostname
   Default docker username, password, and database are all ```csb```
