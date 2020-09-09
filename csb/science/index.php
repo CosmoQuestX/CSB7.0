@@ -38,8 +38,8 @@ if (filter_var($login, FILTER_VALIDATE_BOOLEAN) || $user === FALSE) { // NOT LOG
    Do they have the correct role?
    ---------------------------------------------------------------------- */
 
-elseif (!userHasRole($CQ_ROLES['SITE_SCIENTIST'],$CQ_ROLES['SITE_ADMIN'],$CQ_ROLES['SITE_SUPERADMIN'])) {
-    header("Location: $BASE_URL/error/error.php?error=403");
+elseif (!userHasRole($CQ_ROLES['SITE_SCIENTIST'],$CQ_ROLES['SITE_PROJECTLEAD'], $CQ_ROLES['SITE_ADMIN'],$CQ_ROLES['SITE_SUPERADMIN'])) {
+    header("Location: " . $BASE_URL . "error/error.php?error=403");
     exit();
 
 } /* ----------------------------------------------------------------------
