@@ -52,7 +52,6 @@ else {
     $page_title = $SITE_TITLE . "Profile & Settings";
 
     require_once($BASE_DIR . "csb-content/template_functions.php");
-    require_once($BASE_DIR . "csb-admin/admin-dashboards.php");
 
     loadHeader($page_title);
 
