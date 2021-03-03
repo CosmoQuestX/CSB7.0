@@ -1,3 +1,26 @@
+const APP_HOTKEYS = {
+    1: 'circle-button',
+    2: 'eraser-button',
+    3: 'ejecta-button',
+    4: 'crater-chain-button',
+    5: 'boulder-button',
+    6: 'rock-button',
+    ' ': 'show-marks-toggle',
+};
+document.addEventListener('keydown', (event) => {
+    const ignores = ['INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'A', 'BUTTON'];
+
+    if (ignores.includes(event.target.tagName)) {
+        return;
+    }
+    const id = APP_HOTKEYS[event.key];
+    const element = id && document.getElementById(id);
+    if (element) {
+        event.preventDefault();
+        element.click();
+    }
+})
+
 function AppInterface(csbApp) {
     this.csbApp = csbApp;
 
