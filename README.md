@@ -7,7 +7,7 @@ An open source implementation of CosmoQuest's Citizen Science Builder software.
 This is an open source image annotation platform suitable for citizen science, complete with native machine learning tools that can be trained through contributed data.
 
 ## License
-> Copyright © 2012-2020 CosmoQuest X Team is led by Pamela Gay with the Development team and maintained through community collaboration. **All rights reserved.**
+> Copyright © 2012-2021 CosmoQuest X Team is led by Pamela Gay with the Development team and maintained through community collaboration. **All rights reserved.**
 
 
 
