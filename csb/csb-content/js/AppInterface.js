@@ -420,20 +420,7 @@ function AppInterface(csbApp) {
                     self.showExample($("#app-example-" + $(this).attr('id')));
                     self.isHelpButtonEngaged = false;
                 } else {
-                    var tool = findToolFromButtonId($(this).attr('id'));
-                    if (tool.isActive) {
-                        if (tool.isToggleable) {
-                            tool.isToggledOn = !tool.isToggledOn;
-                            tool.onToggle(csbApp.appInterface);
-                            csbApp.needToRedrawCanvas = true;
-                        } else {
-                            self.selectedButton = $(this);
-                            self.selectedTool = tool;
-                            self.selectMark(null);
-                        }
-                        self.updateAllButtonAppearances();
-                    }
-                    self.displayExamples();
+                    self.clickTool($(this).attr('id'))
                 }
             }
         });
@@ -451,13 +438,54 @@ function AppInterface(csbApp) {
 
         this.updateAllButtonAppearances();
 
-        function findToolFromButtonId(htmlId) {
-            if (htmlId.indexOf("toggle") >= 0)
-                return csbApp.appInterface.tools[htmlId.slice(htmlId.indexOf("-") + 1)];
-            else
-                return csbApp.appInterface.tools[htmlId];
-        }
+        this.hotkeys = {
+            1: 'circle-button',
+            2: 'eraser-button',
+            3: 'ejecta-button',
+            4: 'crater-chain-button',
+            5: 'boulder-button',
+            6: 'rock-button',
+            ' ': 'show-marks-toggle',
+        };
+        document.addEventListener('keydown', this.keyPress.bind(this))
     };
+
+    this.keyPress = function(event) {
+        const ignores = ['INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'A', 'BUTTON'];
+
+        if (ignores.includes(event.target.tagName)) {
+          return;
+        }
+        const htmlId = this.hotkeys[event.key];
+        if (htmlId) {
+            event.preventDefault();
+            this.clickTool(htmlId);
+        }
+    }
+
+    this.findToolFromButtonId = function(htmlId) {
+        if (htmlId.indexOf("toggle") >= 0)
+            return csbApp.appInterface.tools[htmlId.slice(htmlId.indexOf("-") + 1)];
+        else
+            return csbApp.appInterface.tools[htmlId];
+    }
+
+    this.clickTool = function(htmlId) {
+        var tool = this.findToolFromButtonId(htmlId);
+        if (tool.isActive) {
+            if (tool.isToggleable) {
+                tool.isToggledOn = !tool.isToggledOn;
+                tool.onToggle(csbApp.appInterface);
+                csbApp.needToRedrawCanvas = true;
+            } else {
+                this.selectedButton = $('#'+htmlId);
+                this.selectedTool = tool;
+                this.selectMark(null);
+            }
+            this.updateAllButtonAppearances();
+        }
+        this.displayExamples();
+    }
 
     this.displayExamples = function () {
         var imageSet = null;
