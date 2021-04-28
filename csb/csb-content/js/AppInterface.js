@@ -22,9 +22,9 @@ function AppInterface(csbApp) {
     this.isHelpButtonEngaged = false;
     this.currentTextBubble = { x: 0, y: 0, text: "", delay: 0, showArrow: false, isTemporary: false };
     this.lastHintedMark = { x: 0, y: 0, diameter: 0 };
-    this.textBubbleQueue = [];
-    this.permTextBubbleQueue = [];
     this.tempTextBubbleQueue = [];
+    this.lastKownPermMsg = null;
+    this.isTempMsgStep = false;
     this.currentStartingExampleImageIndex = 0;
 
     this.initializeInterface = function () {
@@ -223,21 +223,17 @@ function AppInterface(csbApp) {
         $("#text-bubble-blob").bind("transitionend", function () {
             // Only trigger if the text bubble has completely disappeared
             if ($("#text-bubble-blob").css("opacity") == 0) {
-                console.log("should shown message")
-                console.log(self.permTextBubbleQueue.length)
-                if (self.tempTextBubbleQueue.length == 0 &&
-                    self.permTextBubbleQueue.length == 0) {
-                    $("#text-bubble-arrow").hide();
-                    $("#text-bubble-blob").hide();
-                } else {
-                    var nextTextBubble = null
-                    if (self.tempTextBubbleQueue.length > 0) {
-                        nextTextBubble = self.tempTextBubbleQueue.shift();
-                        console.log("temp message shown")
-                    } else if (self.permTextBubbleQueue.length > 0) {
-                        console.log("perm message shown")
-                        nextTextBubble = self.permTextBubbleQueue[0]
+                var nextTextBubble = null
+                var prev = self.currentTextBubble
+                if (self.tempTextBubbleQueue.length > 0) {
+                    nextTextBubble = self.tempTextBubbleQueue.shift();
+                } else if (self.lastKownPermMsg) {
+                    nextTextBubble = self.lastKownPermMsg
+                    if (!prev.isTemporary && !self.isTempMsgStep) {
+                        self.lastKownPermMsg = null
                     }
+                }
+                if (nextTextBubble) {
                     self.currentTextBubble = nextTextBubble;
                     self.makeBubbleAppear(self.currentTextBubble);
                 }
@@ -972,21 +968,21 @@ function AppInterface(csbApp) {
     };
 
     this.displayTextBubble = function (newBubble) {
-        console.log(JSON.stringify(newBubble))
-        console.log("new " + this.permTextBubbleQueue.length)
         if (this.tempTextBubbleQueue.length == 0 &&
             $("#text-bubble-blob").css("opacity") == 0) {
             this.currentTextBubble = newBubble;
             if (!newBubble.isTemporary) {
-                console.log("resetting")
-                this.permTextBubbleQueue = []
+                this.lastKownPermMsg = null
+                this.isTempMsgStep = false
             }
             this.makeBubbleAppear(this.currentTextBubble);
-            // this.permTextBubbleQueue = []
         }
-        newBubble.isTemporary ?
-            this.tempTextBubbleQueue.push(newBubble) :
-            this.permTextBubbleQueue[0] = (newBubble);
+        if (newBubble.isTemporary) {
+            this.isTempMsgStep = true
+            this.tempTextBubbleQueue.push(newBubble)
+        } else {
+            this.lastKownPermMsg = newBubble
+        }
 
     };
 
@@ -1031,7 +1027,6 @@ function AppInterface(csbApp) {
 
     this.displayTextBubbleOnElement = function (element, textBubble) {
         var self = this;
-        console.log("I am showing on Element")
         setTimeout(function () {
             var position = self.getAbsolutePositionOfElement(element);
             position.x += parseInt(element.css("width")) / 2;
@@ -1043,7 +1038,6 @@ function AppInterface(csbApp) {
     };
 
     this.displayTextBubbleOnMark = function (mark, textBubble) {
-        console.log("I am showing onMark")
         var position = this.csbApp.appInterface.getGlobalPositionOfMark(mark);
         position.y += mark.diameter / 2 + 10;
         textBubble.x = position.x;
