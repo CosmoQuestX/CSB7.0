@@ -22,9 +22,9 @@ function AppInterface(csbApp) {
     this.isHelpButtonEngaged = false;
     this.currentTextBubble = { x: 0, y: 0, text: "", delay: 0, showArrow: false, isTemporary: false };
     this.lastHintedMark = { x: 0, y: 0, diameter: 0 };
-    this.tempTextBubbleQueue = [];
-    this.lastKownPermMsg = null;
-    this.isTempMsgStep = false;
+    this.tempTextBubbleQueue = []; // queue holding temp messages
+    this.lastKownPermMsg = null; // last known permanent message
+    this.isTempMsgStep = false; // only certain tutorial steps support temp messages
     this.currentStartingExampleImageIndex = 0;
 
     this.initializeInterface = function () {
@@ -220,6 +220,13 @@ function AppInterface(csbApp) {
             }
         });
 
+        /**
+         * There are multiple combinations of temp and permanent messages we need to handle.
+         * 1. If the queue has multiple temp messages, drain the queue first and then set last know perm
+         * message bubble.
+         * 2. No temp message state, only perm message state
+         * 3. Multiple times draining for temp messages queue
+         */
         $("#text-bubble-blob").bind("transitionend", function () {
             // Only trigger if the text bubble has completely disappeared
             if ($("#text-bubble-blob").css("opacity") == 0) {
@@ -972,6 +979,7 @@ function AppInterface(csbApp) {
             $("#text-bubble-blob").css("opacity") == 0) {
             this.currentTextBubble = newBubble;
             if (!newBubble.isTemporary) {
+                // reset flags for a bubble from a new step
                 this.lastKownPermMsg = null
                 this.isTempMsgStep = false
             }
