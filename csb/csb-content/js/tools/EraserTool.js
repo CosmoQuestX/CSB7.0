@@ -42,7 +42,7 @@ function EraserTool(options) {
             var mousePosition = appInterface.getMouseOrTouchPosition(event);
             for (var key in appInterface.tools) {
                 var tool = appInterface.tools[key];
-                if (tool.constructor.name == "PaintingTool") {
+                if (tool.constructor.name == "PaintingTool" && tool.paintMark != null) {
                     tool.paintMark.drawCircle(mousePosition.x, mousePosition.y, tool.brushSize, {
                         r: 0,
                         g: 0,
