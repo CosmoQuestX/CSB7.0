@@ -495,7 +495,7 @@ function AppInterface(csbApp) {
             imageSet = this.csbApp.application.exampleImages["circle-button"];
         for (var i = 0; i < 3; i++) {
             var index = (this.currentStartingExampleImageIndex + i) % imageSet.length;
-            $(".example-image").eq(i).attr("src", imageSet[index]);
+            $("#example-images .example-image").eq(i).attr("src", imageSet[index]);
         }
     };
 
