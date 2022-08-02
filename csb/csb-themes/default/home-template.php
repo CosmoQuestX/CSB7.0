@@ -20,7 +20,7 @@
 
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
-            <h3 class="font-weight-bold">Bennu Mappers</h3>
+            <h3 class="font-weight-bold">Pardon the Dust</h3>
             <ul>
                 <li>View Leaderboard</li>
                 <li>Provide a name to use in publications</li>
