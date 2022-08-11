@@ -47,6 +47,7 @@
                 }
             ?>
 
+            <p></p>
 
             <p> Welcome to Cosmoquest's new and improved Community Science portal, home of all of our current projects.
             It's been a long time since we've done one of these (Can you believe Bennu Mappers was the summer of 2020?).
