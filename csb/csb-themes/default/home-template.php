@@ -31,12 +31,13 @@
             <?php
                 if ( $user === FALSE) {         // NOT LOGGED IN
             ?>
-            <h3 class="font-weight-bold">Welcome!</h3>
-                <div class="center">
+                <div class="right">
                     <a id="alert-button-home" data-toggle="modal" data-target="#loginModal" class="btn-default" href="#">
-                       <span class="btn-default">Login</span></a>
+                        <span class="btn-default">Login</span>
+                    </a>
                 </div>
-                <div style="clear:both;"></div>
+                    <h3 class="font-weight-bold">Welcome!</h3>
+
             <?php
                 }
                 else {                           // LOGGED IN
