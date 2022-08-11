@@ -21,16 +21,9 @@
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Pardon the Dust</h3>
-            <ul>
-                <li>View Leaderboard</li>
-                <li>Provide a name to use in publications</li>
-                <li>See who marked possible sample sites</li>
-                <li>Learn what's next</li>
-            </ul>
-            <h3 class="font-weight-bold">Other Projects</h3>
-            <ul>
-                <li>Stay tuned...</li>
-            </ul>
+            <p>As new tools come online, we will link to them here!</p><p>Have a feature you really want to see? Let us know
+               on <a href="https://discord.gg/6xVynhMqTZ">Discord</a> in the #suggestions channel. Want to help implement new features and refine the old? Pipe up in the
+               #volunteers-reporting-for-duty channel.</p>
         </div>
 
         <!-- main block --------------------------------------------------------------- -->
