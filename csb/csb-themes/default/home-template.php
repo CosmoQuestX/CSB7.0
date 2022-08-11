@@ -21,7 +21,7 @@
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Pardon the Dust</h3>
-            <div id="text-blk">
+            <div class="text-blk">
                 <p>As new tools come online, we will link to them here!</p><p>Have a feature you really want to see? Let us know
                    on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel. Want to help implement new features and refine the old? Pipe up in the
                    #volunteers-reporting-for-duty channel.</p>
@@ -49,7 +49,7 @@
                 }
             ?>
 
-            <div id="text-blk">
+            <div class="text-blk">
                 <p> Welcome to Cosmoquest's new and improved Community Science portal, home of all of our current projects.
                 It's been a long time since we've done one of these (Can you believe Bennu Mappers was the summer of 2020?).
                 We are excited to bring it back for all of you, old and new. Before you can get started you will need to
@@ -71,7 +71,7 @@
 
         <div id="app-right" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Why the update?</h3>
-            <div id="text-blk">
+            <div class="text-blk">
             <p>Our Citizen Science Builder software previously utilized a software framework called $name. Overtime, we realized we were limited in what
                we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this open-source platform, they
                were going to have to deal with our sphagetti code and framework... and that was a lot. At the end of Bennu Mappers, we started to
