@@ -22,7 +22,7 @@
         <div id="app-left" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Pardon the Dust</h3>
             <p>As new tools come online, we will link to them here!</p><p>Have a feature you really want to see? Let us know
-               on <a href="https://discord.gg/6xVynhMqTZ">Discord</a> in the #suggestions channel. Want to help implement new features and refine the old? Pipe up in the
+               on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel. Want to help implement new features and refine the old? Pipe up in the
                #volunteers-reporting-for-duty channel.</p>
         </div>
 
@@ -48,7 +48,18 @@
             ?>
 
 
-            <p> Intro Texxt</p>
+            <p> Welcome to Cosmoquest's new and improved Community Science portal, home of all of our current projects.
+            It's been a long time since we've done one of these (Can you believe Bennu Mappers was the summer of 2020?).
+            We are excited to bring it back for all of you, old and new. Before you can get started you will need to
+            log in by clicking the login link in the top right corner of this page.
+            If you had an account during our Bennu Mappers project or earlier, you will need to make a new one as
+            unfortunately the old user list did not survive the database transfer. </p>
+
+            <p> Please note that this software is still in beta and you may occasionally lose data such as marked images
+            or other progress. Know that your contributions are valuable. We are sorry if (when) this happens and will
+            try to fix it as soon as possible. </p>
+
+            <p> Our current project is another version of Moon Mappers. Join us? </p>
 
         </div>
 
@@ -57,12 +68,14 @@
 
         <div id="app-right" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Why the update?</h3>
-            <p>Our Citizen Science Builder software used to utilize a software framework. Overtime, we realized we were limited in what
-               we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this opensource plateform, they
-               were going to have to deal with our code and framework... and that was a lot. At the end of Bennu Mappers, we started
-               rewrite of our plateform that should make it easier to contribute to, easier to maintain, and hopefully better for doing
-               science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/6xVynhMqTZ">Join us on
-               Discord to chat about changes.</a></p>
+            <p>Our Citizen Science Builder software previously utilized a software framework called $name. Overtime, we realized we were limited in what
+               we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this open-source platform, they
+               were going to have to deal with our sphagetti code and framework... and that was a lot. At the end of Bennu Mappers, we started to
+               rewrite of our platform. It will make it easier to contribute to and maintain. Also, it will be hopefully better for doing
+               science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud">Join us on
+               Discord to chat about changes. After joining go to #volunteers-reporting-for-duty and @ mention the mods role.
+               Some lovely human will give you the @coders role.
+               You will now have access to the  #coders-den channel, the hub for all discussion on this project. </a></p>
         </div>
 
 
