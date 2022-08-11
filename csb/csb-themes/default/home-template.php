@@ -31,7 +31,7 @@
             <?php
                 if ( $user === FALSE) {         // NOT LOGGED IN
             ?>
-                <div class="right">
+                <div class="right" style="margin-top: 10px;">
                     <a id="alert-button-home" data-toggle="modal" data-target="#loginModal" class="btn-default" href="#">
                         <span class="btn-default">Login</span>
                     </a>
