@@ -61,7 +61,12 @@
 
         <div id="app-right" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Why the update?</h3>
-            <p>right blurb</p>
+            <p>Our Citizen Science Builder software used to utilize a software framework. Overtime, we realized we were limited in what</p>
+               we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this opensource plateform, they
+               were going to have to deal with our code and framework... and that was a lot. At the end of Bennu Mappers, we started
+               rewrite of our plateform that should make it easier to contribute to, easier to maintain, and hopefully better for doing
+               science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/6xVynhMqTZ">Join us on
+               Discord to chat about changes.</a>
         </div>
 
 
