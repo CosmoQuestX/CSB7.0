@@ -29,15 +29,15 @@ label {
   margin-top: 0.6em;
 }
 
-.btn-cq {
+.btn-default {
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  z-index: 1;
   background: #9f2321 !important;
   color: #ffffff;
 }
-
-#alert-button-home {
-  background: red;
-}
-
 
 #loginModal {
   color: black;
