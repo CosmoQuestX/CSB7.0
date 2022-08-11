@@ -1,8 +1,8 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: starstryder
- * Date: 6/4/19
+ * User: starstryder/EMadaus
+ * Date: 8/11/22
  * Time: 1:18 PM
  */
 
@@ -21,9 +21,11 @@
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Pardon the Dust</h3>
-            <p>As new tools come online, we will link to them here!</p><p>Have a feature you really want to see? Let us know
+            <p>As new community science tools come online, we will link to them here!</p><p>Have a feature you really want to see? Let us know
                on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel. Want to help implement new features and refine the old? Pipe up in the
                #volunteers-reporting-for-duty channel.</p>
+            <p> If you just want to hang out with other science minded people, we have that too. Our Discord community plays several online multiplayer
+            games which you can join too.
         </div>
 
         <!-- main block --------------------------------------------------------------- -->
@@ -72,8 +74,8 @@
                we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this open-source platform, they
                were going to have to deal with our sphagetti code and framework... and that was a lot. At the end of Bennu Mappers, we started to
                rewrite of our platform. It will make it easier to contribute to and maintain. Also, it will be hopefully better for doing
-               science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud">Join us on
-               Discord to chat about changes. After joining go to #volunteers-reporting-for-duty and @ mention the mods role.
+               science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
+               Discord </a> to chat about changes. After joining go to #volunteers-reporting-for-duty and @ mention the mods role.
                Some lovely human will give you the @coders role.
                You will now have access to the  #coders-den channel, the hub for all discussion on this project. </a></p>
         </div>
