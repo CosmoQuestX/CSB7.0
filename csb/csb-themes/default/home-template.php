@@ -34,7 +34,7 @@
             <h3 class="font-weight-bold">Welcome!</h3>
                 <div class="center">
                     <a id="alert-button-home" data-toggle="modal" data-target="#loginModal" class="btn-default" href="#">
-                       <span class="btn-default"></span>Login</a>
+                       <span class="btn-default">Login</span></a>
                 </div>
             <?php
                 }
