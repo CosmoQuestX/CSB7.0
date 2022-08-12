@@ -22,10 +22,13 @@
         <div id="app-left" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Pardon the Dust</h3>
             <p>As new community science tools come online, we will link to them here!</p><p> This page will be updated frequently, check back soon for more. Have a feature you really want to see? Let us know
-               on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel. Want to help implement new features and refine the old? Let us know in the
-               #volunteers-reporting-for-duty channel. Need inspiration? Catch us live on twitch.tv/Cosmoquestx. Astronomy Cast is on Mondays and and the rest of the week is Daily Space. If we're not live you can check out twitch.tv/cosmoquestx/videos to watch our past broadcasts. </p>
-            <p> If you just want to hang out with other science minded people, we have that too. Our Discord community plays several online multiplayer
-            games which you can join too.</p>
+               on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel.
+               Want to help implement new features and refine the old? Let us know in the
+               #volunteers-reporting-for-duty channel. Need inspiration? Catch us live on twitch.tv/Cosmoquestx.
+               Astronomy Cast is on Mondays and and the rest of the week is Daily Space.
+               If we're not live you can check out twitch.tv/cosmoquestx/videos to watch our past broadcasts. </p>
+            <p> If you just want to hang out with other science minded people, we have that too.
+            Our Discord community plays several online multiplayer games which you can join too.</p>
             </div>
 
         <!-- main block --------------------------------------------------------------- -->
