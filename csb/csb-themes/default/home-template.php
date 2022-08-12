@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: starstryder/EMadaus
  * Date: 8/11/22
- * Time: 1:18 PM
+ * Time:
  */
 
 /** Get the setup files for the app dynamically TODO make this a function */
@@ -21,9 +21,9 @@
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Pardon the Dust</h3>
-            <p>As new community science tools come online, we will link to them here!</p><p>Have a feature you really want to see? Let us know
-               on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel. Want to help implement new features and refine the old? Pipe up in the
-               #volunteers-reporting-for-duty channel.</p>
+            <p>As new community science tools come online, we will link to them here!</p><p> This page will be updated frequently, check back soon for more. Have a feature you really want to see? Let us know
+               on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel. Want to help implement new features and refine the old? Let us know in the
+               #volunteers-reporting-for-duty channel. Need inspiration? Catch us live on twitch.tv/Cosmoquestx. Astronomy Cast is on Mondays and and the rest of the week is Daily Space. If we're not live you can check out twitch.tv/cosmoquestx/videos to watch our past broadcasts. </p>
             <p> If you just want to hang out with other science minded people, we have that too. Our Discord community plays several online multiplayer
             games which you can join too.</p>
             </div>
@@ -51,9 +51,9 @@
 
             <div class="text-blk">
                 <p> Welcome to Cosmoquest's new and improved Community Science portal, home of all of our current projects.
-                It's been a long time since we've done one of these (Can you believe Bennu Mappers was the summer of 2020?).
+                It's been a long time since we've done one of these (Can you believe that Bennu Mappers was the summer of 2020?).
                 We are excited to bring it back for all of you, old and new. Before you can get started you will need to
-                log in by clicking the login link in the top right corner of this page.
+                log in by clicking the login link in the top right corner of this page; or the big red login button right above this paragraph.
                 If you had an account during our Bennu Mappers project or earlier, you will need to make a new one as
                 unfortunately the old user list did not survive the database transfer. </p>
 
@@ -77,9 +77,7 @@
                were going to have to deal with our sphagetti code and framework... and that was a lot. At the end of Bennu Mappers, we started to
                rewrite of our platform. It will make it easier to contribute to and maintain. Also, it will be hopefully better for doing
                science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
-               Discord </a> to chat about changes. After joining go to #volunteers-reporting-for-duty and @ mention the mods role.
-               Some lovely human will give you the @coders role.
-               You will now have access to the  #coders-den channel, the hub for all discussion on this project. </a></p>
+               Discord </a> to chat about changes. </a></p>
             </div>
         </div>
 
