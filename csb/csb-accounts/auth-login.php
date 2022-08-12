@@ -337,12 +337,23 @@ function rescueUser ($db, $using, $value) {
 
     $email = new EMAIL($emailSettings);
 
+    // Put the rescue link in a variable so we only have to calculate it once.
+    $rescue_link = $ACC_URL."rescue.php?go=".$to."&token=".$token.;
 
+// TODO Add better INSTRUCTIONS_TO_CHANGE_MANUALLY
+// TODO Add a signature for the email. Is there a variable with this that we can use?
 
     $msg['subject'] = "CosmoQuest Password Reset";
-    $msg['body'] =  "Someone has requested a password reset for your account. If you made
-                    this request and would like to reset your password, please follow
-                    this link: ".$ACC_URL."rescue.php?go=".$to."&token=".$token;
+    $msg['body'] =  "Hello,
+
+    Someone has requested a password reset for your account.
+
+    If you made this request and would like to reset your password, please <a href='".$rescue_link."'>click here</a> or paste the link below into your browser.
+        ".$rescue_link."
+
+    If you did not make this request, you may want to change your password by logging in with your username and password and INSTRUCTIONS_TO_CHANGE_MANUALLY.
+
+    Sincerely,";
 
     $email->sendMail($to, $msg);
 
@@ -351,7 +362,8 @@ function rescueUser ($db, $using, $value) {
         die("email settings aren't working. Contact the system administrator.");
     }
 
-    // Everything worked so remove error msg
+    // Everything worked so remove error msg and the rescue link
+    unset($rescue_link);
     unset($_SESSION['errMsg']);
     header("Location: ".$ACC_URL."rescue.php?go=submitted");
     exit();
