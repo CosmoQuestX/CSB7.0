@@ -342,9 +342,7 @@ function rescueUser ($db, $using, $value) {
 
 
     $msg['subject'] = "CosmoQuest Password Reset";
-    $msg['body'] =  "Someone has requested a password reset for your account, ". $name .". If you made
-                    this request and would like to reset your password, please follow
-                    this link: ".$ACC_URL."rescue.php?go=".$to."&token=".$token;
+    $msg['body'] =  "Someone has requested a password reset for your account, ". $name .". If you made this request and would like to reset your password, please follow this link: ".$ACC_URL."rescue.php?go=".$to."&token=".$token;
 
     $email->sendMail($to, $msg);
 
