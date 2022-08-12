@@ -3,7 +3,7 @@
     Orange:   #F05B36
     Yellow:   #F3C749
     Green:
-    Blue:
+    Blue:     #74B0A8
     Purple:
     Pinkle:
 
@@ -29,14 +29,24 @@ label {
   margin-top: 0.6em;
 }
 
-.btn-cq {
+.btn-default {
+  width: 100%;
+  height: 100%;
+  top:0;
+  left:0;
+  z-index: 1;
   background: #9f2321 !important;
   color: #ffffff;
+  padding:20px;
+  border-radius: 10px;
 }
-
 
 #loginModal {
   color: black;
+}
+
+.text-blk {
+  margin-top: 30px;
 }
 
 /* --------------------------------------------------------------------------------
