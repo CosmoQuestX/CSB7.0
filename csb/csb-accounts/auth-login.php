@@ -338,7 +338,7 @@ function rescueUser ($db, $using, $value) {
     $email = new EMAIL($emailSettings);
 
     // Put the rescue link in a variable so we only have to calculate it once.
-    $rescue_link = $ACC_URL."rescue.php?go=".$to."&token=".$token.;
+    $rescue_link = $ACC_URL."rescue.php?go=".$to."&token=".$token;
 
 // TODO Add better INSTRUCTIONS_TO_CHANGE_MANUALLY
 // TODO Add a signature for the email. Is there a variable with this that we can use?
