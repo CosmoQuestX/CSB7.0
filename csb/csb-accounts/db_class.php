@@ -328,7 +328,7 @@ class DB
         {
             $query = "SELECT id from users WHERE email = ?";
             $sql = $this->conn->prepare($query);
-            $param_value_array = array($name);
+            $param_value_array = array($email);
             $param_type = "s";
             $this->bindQueryParams($sql, $param_type, $param_value_array);
 

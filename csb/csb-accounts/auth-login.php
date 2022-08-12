@@ -319,6 +319,7 @@ function rescueUser ($db, $using, $value) {
 // Get the email to send information to
     if(strcmp($using, "email")==0) {
         $to = $value;
+        $id = $db->getUserIdByEmail($value);
         $name = $db->getUser($id)['name'];
     } else {
         $id = $db->getUserIdByName($value);
