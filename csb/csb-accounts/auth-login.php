@@ -41,9 +41,9 @@ if (isset($_GET['go'])) {
         $user=array();
         foreach ($_POST as $postkey=>$postvalue) {
             // We shouldn't need to except password, since you shouldn't be able
-            // to sneak a password with a special char past the input filter. 
+            // to sneak a password with a special char past the input filter.
             // But better err on the side of caution. The password is hashed
-            // anyway.             
+            // anyway.
             if ($postkey == 'password') {
                 $user[$postkey]=$_POST[$postkey];
             }
@@ -133,7 +133,7 @@ function login($db, $user)
     global $BASE_URL;
     $query = "SELECT * FROM users WHERE name = ? ";
     $chkuser = $db->runQueryWhere($query, "s", array($user['username']))[0];
-    
+
     if ($chkuser !== false ) {
 
         // Verify the password, set the cookie and session variable
@@ -168,13 +168,13 @@ function login($db, $user)
             if ($result !== false) {
                 foreach ($result as $role) {
                     $roles[]= $role['role_id'];
-                    
+
                 }
             }
 
             // Insert the users' session information into the database
             insertUserSession($db, $chkuser['id']);
-                                
+
             // Get the person's tutorials completed
             $tcquery = "SELECT tutorials_completed FROM users WHERE id = ?";
             $tcparams = array($chkuser['id']);
@@ -183,19 +183,19 @@ function login($db, $user)
             if($tcresult === false){
                 error_log("Query failed for tutorials_completed; SQL was: $tcquery with params=" . print_r($tcparams));
             }
-            
+
             // Set sessions and cookie
             $_SESSION['user_id'] = $chkuser['id'];
             setcookie('name', $user['username'], $timeout, "/");
             setcookie('tutorials_complete', $tcresult['tutorials_completed'],$timeout,"/");
             $_SESSION['roles'] = $roles;
-            
+
             // Send them where they belong
             header("Location: " . $user['referringURL']);
             exit();
         }
     }
-    
+
     // If we've reached here, there's been an error
 
     $db->closeDB();
@@ -277,10 +277,10 @@ function regUser($db, $user, $pwhash)
     }
 
     // create sessions / cookies TODO Make this a function
-    
+
     // Insert the users' session information into the database
     insertUserSession($db, $user['id']);
-    
+
     // Set timeout variable & token for cookies based on remember checkbox
     if (isset($user['remember']) && !strcmp($user['remember'], 'on')) {
 
@@ -319,10 +319,11 @@ function rescueUser ($db, $using, $value) {
 // Get the email to send information to
     if(strcmp($using, "email")==0) {
         $to = $value;
+        $name = $db->getUser($id)['name'];
     } else {
         $id = $db->getUserIdByName($value);
         $to = $db->getUser($id)['email'];
-
+        $name = $value;
     }
 
     // Set up the hash value to store
@@ -340,7 +341,7 @@ function rescueUser ($db, $using, $value) {
 
 
     $msg['subject'] = "CosmoQuest Password Reset";
-    $msg['body'] =  "Someone has requested a password reset for your account. If you made
+    $msg['body'] =  "Someone has requested a password reset for your account, ". $name .". If you made
                     this request and would like to reset your password, please follow
                     this link: ".$ACC_URL."rescue.php?go=".$to."&token=".$token;
 
@@ -365,7 +366,7 @@ function rescueUser ($db, $using, $value) {
  */
 
 function insertUserSession($db, $user) {
- 
+
     /*
      * Since it can happen that a users' session gets garbage collected we need to have
      * an alternative way to determine which user tried to save something. So let's take
@@ -380,17 +381,17 @@ function insertUserSession($db, $user) {
      * what it is good for, though. Since it does not accept null values, store the base64
      * encoded request string.
      */
-    
+
     $ret = true;
     // Let's get this out of the way, we will use it anyway.
     $payload = base64_encode('http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-    
-    // First, check if there is arlready a session for the session id 
+
+    // First, check if there is arlready a session for the session id
     // If there is, insert the session information into the table
     if ($db->runQuery("SELECT id FROM sessions WHERE id = '" . $_COOKIE[ini_get('session.name')]. "'") === false) {
-    
+
         $session_query= "INSERT INTO sessions (id, user_id, ip_address, user_agent, payload, last_activity) " .
-            "VALUES (?, ?, ?, ?, ?, ?);";  
+            "VALUES (?, ?, ?, ?, ?, ?);";
         $session_param = array($_COOKIE[ini_get('session.name')], $user, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'], $payload, time());
         $session_result = $db->insert($session_query, "sisssi", $session_param);
         if ($session_result === false) {

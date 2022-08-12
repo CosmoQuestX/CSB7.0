@@ -77,9 +77,7 @@
                were going to have to deal with our sphagetti code and framework... and that was a lot. At the end of Bennu Mappers, we started to
                rewrite of our platform. It will make it easier to contribute to and maintain. Also, it will be hopefully better for doing
                science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
-               Discord </a> to chat about changes. After joining go to #volunteers-reporting-for-duty and @ mention the mods role.
-               Some lovely human will give you the @coders role.
-               You will now have access to the  #coders-den channel, the hub for all discussion on this project. </a></p>
+               Discord </a> to chat about changes.</p>
             </div>
         </div>
 
