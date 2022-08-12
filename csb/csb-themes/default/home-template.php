@@ -27,6 +27,7 @@
             <p>Need inspiration? Catch us live on twitch.tv/Cosmoquestx. Astronomy Cast is on Mondays at 1800 UTC.
                The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out twitch.tv/cosmoquestx/videos
                to watch our past broadcasts.</p>
+               <img src="CSB7.0/csb/csb-content/images/icon(1).pmg" alt="All black illustration of a hammer" width="512" height="512">
             </div>
 
         <!-- main block --------------------------------------------------------------- -->
