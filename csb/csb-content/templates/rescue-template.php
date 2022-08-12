@@ -18,7 +18,9 @@ if (isset($_GET['go'])) {
     if ($_GET['go'] == 'submitted') {
         ?>
         <h1>Rescue is coming</h1>
-        <p>We've emailed you a link you can use to reset your password.</p>
+        <p>We've emailed you a link you can use to reset your password. If you entered what you thought was your username
+           and don't receive an email, please try again by entering your email address just incase you misremembered
+           your username. Still stuck? Sure you had an account? Ask for help over on Discord.</p>
         <?php
     } elseif ($_GET['go'] == 'success') {
         echo "Thanks! You should now be able to login.";

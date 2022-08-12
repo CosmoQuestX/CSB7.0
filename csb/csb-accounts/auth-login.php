@@ -319,10 +319,12 @@ function rescueUser ($db, $using, $value) {
 // Get the email to send information to
     if(strcmp($using, "email")==0) {
         $to = $value;
+        $id = $db->getUserIdByEmail($value);
+        $name = $db->getUser($id)['name'];
     } else {
         $id = $db->getUserIdByName($value);
         $to = $db->getUser($id)['email'];
-
+        $name = $value;
     }
 
     // Set up the hash value to store
@@ -344,6 +346,7 @@ function rescueUser ($db, $using, $value) {
 // TODO Add a signature for the email. Is there a variable with this that we can use?
 
     $msg['subject'] = "CosmoQuest Password Reset";
+
     $msg['body'] =  "Hello,
 
     Someone has requested a password reset for your account.
@@ -354,6 +357,7 @@ function rescueUser ($db, $using, $value) {
     If you did not make this request, you may want to change your password by logging in with your username and password and INSTRUCTIONS_TO_CHANGE_MANUALLY.
 
     Sincerely,";
+
 
     $email->sendMail($to, $msg);
 
