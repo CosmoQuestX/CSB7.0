@@ -25,10 +25,8 @@
                on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel.
                Want to help implement new features and refine the old? Let us know in the
                #volunteers-reporting-for-duty channel. Need inspiration? Catch us live on twitch.tv/Cosmoquestx.
-               Astronomy Cast is on Mondays and and the rest of the week is Daily Space.
-               If we're not live you can check out twitch.tv/cosmoquestx/videos to watch our past broadcasts. </p>
-            <p> If you just want to hang out with other science minded people, we have that too.
-            Our Discord community plays several online multiplayer games which you can join too.</p>
+               Astronomy Cast is on Mondays at 1800 UTC and and the rest of the week is Daily Space at 1600 UTC.
+               If we're not live you can check out twitch.tv/cosmoquestx/videos to watch our past broadcasts.</p>
             </div>
 
         <!-- main block --------------------------------------------------------------- -->
@@ -64,7 +62,7 @@
                 or other progress. Know that your contributions are valuable. We are sorry if (when) this happens and will
                 try to fix it as soon as possible. </p>
 
-                <p> Our current project is another version of Moon Mappers. Join us? </p>
+                <p> Our current Community Science project is another version of Moon Mappers. Join us? </p>
             </div>
 
         </div>
