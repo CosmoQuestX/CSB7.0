@@ -15,14 +15,16 @@ function AppInterface(csbApp) {
     this.cameraX = 0;
     this.cameraY = 0;
     this.cameraZoom = 1;
-    this.savedMousePosition = {x: 0, y: 0};
+    this.savedMousePosition = { x: 0, y: 0 };
     this.areMarksVisible = true;
     this.canSubmit = false;
     this.isPaintingToolEnabled = false;
     this.isHelpButtonEngaged = false;
-    this.currentTextBubble = {x: 0, y: 0, text: "", delay: 0, showArrow: false, isTemporary: false};
-    this.lastHintedMark = {x: 0, y: 0, diameter: 0};
-    this.textBubbleQueue = [];
+    this.currentTextBubble = { x: 0, y: 0, text: "", delay: 0, showArrow: false, isTemporary: false };
+    this.lastHintedMark = { x: 0, y: 0, diameter: 0 };
+    this.tempTextBubbleQueue = []; // queue holding temp messages
+    this.lastKownPermMsg = null; // last known permanent message
+    this.isTempMsgStep = false; // only certain tutorial steps support temp messages
     this.currentStartingExampleImageIndex = 0;
 
     this.initializeInterface = function () {
@@ -218,16 +220,27 @@ function AppInterface(csbApp) {
             }
         });
 
+        /**
+         * There are multiple combinations of temp and permanent messages we need to handle.
+         * 1. If the queue has multiple temp messages, drain the queue first and then set last know perm
+         * message bubble.
+         * 2. No temp message state, only perm message state
+         * 3. Multiple times draining for temp messages queue
+         */
         $("#text-bubble-blob").bind("transitionend", function () {
             // Only trigger if the text bubble has completely disappeared
             if ($("#text-bubble-blob").css("opacity") == 0) {
-                if (self.textBubbleQueue.length == 0) {
-                    $("#text-bubble-arrow").hide();
-                    $("#text-bubble-blob").hide();
-                } else {
-                    var nextTextBubble = self.textBubbleQueue.shift();
-                    if (nextTextBubble.isTemporary)
-                        self.textBubbleQueue.unshift(self.currentTextBubble);
+                var nextTextBubble = null
+                var prev = self.currentTextBubble
+                if (self.tempTextBubbleQueue.length > 0) {
+                    nextTextBubble = self.tempTextBubbleQueue.shift();
+                } else if (self.lastKownPermMsg) {
+                    nextTextBubble = self.lastKownPermMsg
+                    if (!prev.isTemporary && !self.isTempMsgStep) {
+                        self.lastKownPermMsg = null
+                    }
+                }
+                if (nextTextBubble) {
                     self.currentTextBubble = nextTextBubble;
                     self.makeBubbleAppear(self.currentTextBubble);
                 }
@@ -450,11 +463,11 @@ function AppInterface(csbApp) {
         document.addEventListener('keydown', this.keyPress.bind(this))
     };
 
-    this.keyPress = function(event) {
+    this.keyPress = function (event) {
         const ignores = ['INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'A', 'BUTTON'];
 
         if (ignores.includes(event.target.tagName)) {
-          return;
+            return;
         }
         const htmlId = this.hotkeys[event.key];
         if (htmlId) {
@@ -463,14 +476,14 @@ function AppInterface(csbApp) {
         }
     }
 
-    this.findToolFromButtonId = function(htmlId) {
+    this.findToolFromButtonId = function (htmlId) {
         if (htmlId.indexOf("toggle") >= 0)
             return csbApp.appInterface.tools[htmlId.slice(htmlId.indexOf("-") + 1)];
         else
             return csbApp.appInterface.tools[htmlId];
     }
 
-    this.clickTool = function(htmlId) {
+    this.clickTool = function (htmlId) {
         var tool = this.findToolFromButtonId(htmlId);
         if (tool.isActive) {
             if (tool.isToggleable) {
@@ -478,7 +491,7 @@ function AppInterface(csbApp) {
                 tool.onToggle(csbApp.appInterface);
                 csbApp.needToRedrawCanvas = true;
             } else {
-                this.selectedButton = $('#'+htmlId);
+                this.selectedButton = $('#' + htmlId);
                 this.selectedTool = tool;
                 this.selectMark(null);
             }
@@ -495,7 +508,7 @@ function AppInterface(csbApp) {
             imageSet = this.csbApp.application.exampleImages["circle-button"];
         for (var i = 0; i < 3; i++) {
             var index = (this.currentStartingExampleImageIndex + i) % imageSet.length;
-            $(".example-image").eq(i).attr("src", imageSet[index]);
+            $("#example-images .example-image").eq(i).attr("src", imageSet[index]);
         }
     };
 
@@ -511,7 +524,7 @@ function AppInterface(csbApp) {
     };
 
     this.loginButtonPressed = function () {
-        var data = {"username": $("#app-login-username").val(), "password": $("#app-login-password").val()};
+        var data = { "username": $("#app-login-username").val(), "password": $("#app-login-password").val() };
         var self = this;
 
         $.post("/api/user/login", data, function (response) {
@@ -583,14 +596,14 @@ function AppInterface(csbApp) {
     };
 
     this.getGlobalMousePosition = function (e) {
-        return {x: e.clientX, y: e.clientY};
+        return { x: e.clientX, y: e.clientY };
 
     };
 
     this.getMousePosition = function (e) {
         var globalMousePosition = this.getGlobalMousePosition(e);
         var mainImage = document.getElementById("project_canvas").getBoundingClientRect();
-        var mousePosition = {x: globalMousePosition.x - mainImage.left, y: globalMousePosition.y - mainImage.top};
+        var mousePosition = { x: globalMousePosition.x - mainImage.left, y: globalMousePosition.y - mainImage.top };
 
 
         if (this.csbApp.applicationName == "simply_craters_verification") {
@@ -605,7 +618,7 @@ function AppInterface(csbApp) {
 
     this.getCanvasPosition = function () {
         var obj = this.csbApp.canvas;
-        var position = {x: 0, y: 0};
+        var position = { x: 0, y: 0 };
         while (obj.offsetParent) {
             position.x += obj.offsetLeft;
             position.y += obj.offsetTop;
@@ -646,7 +659,7 @@ function AppInterface(csbApp) {
                     y -= parent.offsetTop;
                 } while (parent = parent.offsetParent);
             }
-            resultTouches.push({x: x, y: y});
+            resultTouches.push({ x: x, y: y });
         }
 
         if (resultTouches.length > 0)
@@ -962,11 +975,23 @@ function AppInterface(csbApp) {
     };
 
     this.displayTextBubble = function (newBubble) {
-        if (this.textBubbleQueue.length == 0 && $("#text-bubble-blob").css("opacity") == 0) {
+        if (this.tempTextBubbleQueue.length == 0 &&
+            $("#text-bubble-blob").css("opacity") == 0) {
             this.currentTextBubble = newBubble;
+            if (!newBubble.isTemporary) {
+                // reset flags for a bubble from a new step
+                this.lastKownPermMsg = null
+                this.isTempMsgStep = false
+            }
             this.makeBubbleAppear(this.currentTextBubble);
-        } else
-            this.textBubbleQueue.push(newBubble);
+        }
+        if (newBubble.isTemporary) {
+            this.isTempMsgStep = true
+            this.tempTextBubbleQueue.push(newBubble)
+        } else {
+            this.lastKownPermMsg = newBubble
+        }
+
     };
 
     this.makeBubbleAppear = function (textBubble) {
@@ -1041,7 +1066,7 @@ function AppInterface(csbApp) {
 
     this.getAbsolutePositionOfElement = function (element) {
         element = element.get()[0];
-        var position = {x: element.offsetLeft, y: element.offsetTop};
+        var position = { x: element.offsetLeft, y: element.offsetTop };
         var parent = element;
         while (parent = parent.offsetParent) {
             position.x += parent.offsetLeft;
