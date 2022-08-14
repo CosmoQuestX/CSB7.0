@@ -79,7 +79,7 @@ if (isset($_GET['go'])) {
         // No errors? Kill the error
         else {
             // TODO Place-holder parameters for future 2FA
-            regUser($db, $_POST, $hashed, 0, "");
+            regUser($db, $_POST, $hashed, 0, NULL);
             // Send the newly registered user off to the main page instead of presenting a blank page.
             header("Location: " . $BASE_URL);
             exit();
