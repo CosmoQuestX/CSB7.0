@@ -18,6 +18,5 @@ ErrorDocument 404 /csb/error/error.php?error=404
 ErrorDocument 413 /csb/error/error.php
 ErrorDocument 414 /csb/error/error.php
 ErrorDocument 416 /csb/error/error.php
-ErrorDocument 418 "I'm a teapot!"
 ErrorDocument 500 /csb/error/error.php
 ErrorDocument 503 /csb/error/error.php
