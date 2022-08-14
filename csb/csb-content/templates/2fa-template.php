@@ -34,6 +34,7 @@ if (isset($_GET['go'])) {
 // something should be here
 ?>
 <?php
+// closing should something else be needed above
 // }
 ?>
 
