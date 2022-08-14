@@ -267,10 +267,10 @@ function regUser($db, $user, $pwhash)
     }
 
     // create their default role
-    $roles = $CQ_ROLES['SITE_USER'];
+    $default_role = $CQ_ROLES['SITE_USER'];
 
     $query = "INSERT INTO role_users (role_id, user_id) values (?, ?)";
-    $params = array($roles, $id);
+    $params = array($default_role, $id);
     $role_insert=$db->insert($query, "ii", $params);
     if ($role_insert !== true) {
         error_log("Error adding role $roles for user $id");
@@ -306,6 +306,13 @@ function regUser($db, $user, $pwhash)
     $params = array($user['id']);
     $result = $db->runQueryWhere($query, "s", $params);
 
+    if ($result !== false) {
+        foreach ($result as $role) {
+            $roles[]= $role['role_id'];
+            
+        }
+    }
+    
     // Set sessions and cookie
     $_SESSION['user_id'] = $user['id'];
     setcookie('name', $user['username'], $timeout, "/");
