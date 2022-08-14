@@ -7,7 +7,7 @@ An open source implementation of CosmoQuest's Citizen Science Builder software.
 This is an open source image annotation platform suitable for citizen science, complete with native machine learning tools that can be trained through contributed data.
 
 ## License
-> Copyright © 2012-2021 CosmoQuest X Team is led by Pamela Gay with the Development team and maintained through community collaboration. **All rights reserved.**
+> Copyright © 2012-2022 CosmoQuest X Team is led by Pamela Gay with the Development team and maintained through community collaboration. **All rights reserved.**
 
 
 
@@ -90,6 +90,6 @@ Execute the following command from the CSB directory:
 To stop docker and close the app, press Ctrl+C
 
 #### 3. Launch the installer
-Go to http://localhost:8080/csb/csb-installer/ in your browser. 
+Go to http://localhost:8080/csb/csb-installer/ in your browser.
   To use the docker MariaDB, use ```db``` as your database hostname
   Default docker username, password, and database are all ```csb```

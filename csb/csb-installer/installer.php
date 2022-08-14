@@ -132,6 +132,7 @@ $sql = "INSERT INTO role_users (role_id, user_id) VALUES (8, 1);";
 if (mysqli_query($conn, $sql) == FALSE) {
     $on_error([mysqli_errno($conn) . ": " . mysqli_error($conn)], ["Couldn't assign admin user to admin role"]);
 }
+// TODO Strongly encourage admin user to enable 2FA
 status_update("Admin user set up", "success");
 
 ?>
