@@ -48,7 +48,7 @@ elseif ($reg) {
 
 else {
     global $page_title, $header_title, $SITE_TITLE;
-    
+
     $page_title = $SITE_TITLE . "Profile & Settings";
 
     require_once($BASE_DIR . "csb-content/template_functions.php");
@@ -61,7 +61,7 @@ else {
        ---------------------------------------------------------------------- */
 
     if (isset($_POST) && !empty($_POST)) {
-        // Fetch old data to compare. 
+        // Fetch old data to compare.
         $curprofile = $db->getUser($_SESSION['user_id']);
 
         // Save email only when not empty, otherwise use the current one
@@ -94,6 +94,14 @@ else {
                 $query .= ", password = ?";
                 $params[] = $hashed;
                 $params_type .= "s";
+            }
+
+            // TODO Give user the opportunity to set/disable 2FA.
+            if (isset($_POST['two_factor_secret'])) {
+                $two_factor_enabled=!is_null($two_factor_secret);
+                $query .= ", two_factor_enabled = ?, two_factor_secret = ?";
+                $params[] = [$two_factor_enabled, $two_factor_secret];
+                $params_type .= "ss";
             }
 
             $query .= " where id = ?";
@@ -137,7 +145,7 @@ else {
     $main = "
         <h3 class='font-weight-bold'>Welcome, " . $user['name'] . "!</h3>
         <form id='profile-form' action='".$_SERVER['REQUEST_URI']."' method='POST' onSubmit='checkPasswd(this);'>
-            
+
             <div class='row'>
                 <div class='col'>
                     <label for='first-name'>First Name</label>
@@ -148,15 +156,15 @@ else {
                     <input type='text' id='last-name' name='last_name' class='form-control' value='".$thisUser['last_name']."'>
                 </div>
             </div>
-            
+
             <label for='email'>Email</label>
             <input type='text' id='email' name='email' class='form-control' value='".$thisUser['email']."'>
 
             <h3 class='font-weight-bold mt-4'>Change Password</h3>
-            
+
             <label for='new-pass'>New Password</label>
             <input type='password' id='new-pass' name='password' class='form-control'>
-            
+
             <label for='confirm-pass'>Confirm New Password</label>
             <input type='password' id='confirm-pass' name='confirm_password' class='form-control'>
 
@@ -178,8 +186,8 @@ else {
         $notes = "
         <h5 class='font-weight-bold'>How we use your information</h5>
         <p>
-        Your privacy matters! While our developers have access to your profile information, 
-        the only thing that can be publicly seen is your username. We will, with permission 
+        Your privacy matters! While our developers have access to your profile information,
+        the only thing that can be publicly seen is your username. We will, with permission
         only, use your first and last name to give you credit for things you accomplish.
         </p>
         ";
@@ -191,7 +199,7 @@ else {
 
     load3Col($menus, $main, $notes);
     loadFooter();
-    
+
 
 }
 
