@@ -78,7 +78,8 @@ if (isset($_GET['go'])) {
         }
         // No errors? Kill the error
         else {
-            regUser($db, $_POST, $hashed);
+            // TODO Place-holder parameters for future 2FA
+            regUser($db, $_POST, $hashed, 0, "");
             // Send the newly registered user off to the main page instead of presenting a blank page.
             header("Location: " . $BASE_URL);
             exit();
@@ -244,14 +245,26 @@ function logout($db)
  * @param resource $db - the current database connection
  * @param array $user - the user configuration for the registration attempt
  * @param string $pwhash - a hash of the password the new user entered
+ * @param string $two_factor_secret - the user's 2FA secret. NULL means two_factor_enabled='0'
  */
-function regUser($db, $user, $pwhash)
+
+function regUser($db, $user, $pwhash, $two_factor_secret)
 {
     global $CQ_ROLES;
 
+    // Determine if the user enabled 2FA
+    $two_factor_enabled=!is_null($two_factor_secret);
+
+/*    if (is_null($two_factor_secret)) {
+        $two_factor_enabled='0';
+    } else {
+        $two_factor_enabled='1';
+    }
+*/
+
     // Insert the user into the database
-    $query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-    $params = array(filter_var($user['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash);
+    $query = "INSERT INTO users (name, email, password, two_factor_enabled, two_factor_secret) VALUES (?, ?, ?, ?, ?)";
+    $params = array(filter_var($user['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash, $two_factor_enabled, $two_factor_secret);
     $db->insert($query, "sss", $params);
 
     // Get the id for the freshly created user

@@ -26,15 +26,16 @@ $referringURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 /* -----------------------------------------------------------------------
    Registration form
-        1) TODO Tell them if there is an error (check with JS) 
+        1) TODO Tell them if there is an error (check with JS)
         2) Get their info
         3) Send their info and the return to URL in the form
 
-        TODO Also include signin instead 
+        TODO Also include signin instead
 
    ---------------------------------------------------------------------- */
 GLOBAL $ACC_URL;
 
+// TODO Add hook for 2FA in the registration form
 ?>
 
 <h3 class="font-weight-bold">Register</h3>
@@ -65,7 +66,7 @@ GLOBAL $ACC_URL;
     <input name="confirm" id="confirm" class="form-control" type="password">
 
     <input type="checkbox" name="remember" class="mr-3" style="vertical-align:middle;" id="remember"><label for="remember">Remember me</label>
-    
+
     <input type="submit" name="register" value="Register" class="btn btn-cq btn-block mt-3">
 
 </form>
