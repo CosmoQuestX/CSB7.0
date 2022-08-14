@@ -16,7 +16,7 @@ if (stream_resolve_include_path("csb-settings.php") === false) {
    /**
     * This part finds the installer path regardless of what the original request URL was.
     * It does so by going up the request URI until reaching the root and testing whether
-    * the URL "csb-installer" exists.
+    * the URL "csb-installer/index.php" exists.
     */
    
    $test_path = $_SERVER['REQUEST_URI'];                    // The current relative request url, for example /csb/science/.
