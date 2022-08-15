@@ -352,7 +352,7 @@ function rescueUser ($db, $using, $value) {
 // TODO Add better INSTRUCTIONS_TO_CHANGE_MANUALLY
 // TODO Consider HTML formatting for the message body?
 
-    $msg['subject'] = $SITE_NAME." CosmoQuest Password Reset";
+    $msg['subject'] = $SITE_NAME." Password Reset";
 
     $msg['body'] =  "Hello,
 
