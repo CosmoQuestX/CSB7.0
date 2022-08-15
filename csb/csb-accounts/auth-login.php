@@ -350,9 +350,8 @@ function rescueUser ($db, $using, $value) {
     $rescue_link = $ACC_URL."rescue.php?go=".$to."&token=".$token;
 
 // TODO Add better INSTRUCTIONS_TO_CHANGE_MANUALLY
-// TODO Add a signature for the email. Is there a variable with this that we can use?
 
-    $msg['subject'] = "CosmoQuest Password Reset";
+    $msg['subject'] = $SITE_NAME." CosmoQuest Password Reset";
 
     $msg['body'] =  "Hello,
 
@@ -363,7 +362,9 @@ function rescueUser ($db, $using, $value) {
 
     If you did not make this request, you may want to change your password by logging in with your username and password and INSTRUCTIONS_TO_CHANGE_MANUALLY.
 
-    Sincerely,";
+    Sincerely,
+
+    ".$SITE_NAME;
 
 
     $email->sendMail($to, $msg);
