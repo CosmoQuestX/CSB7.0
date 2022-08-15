@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: starstryder/EMadaus
  * Date: 8/15/22
- * Time: 15:51
+ * Time: 17:45
  */
 
 /** Get the setup files for the app dynamically TODO make this a function */
@@ -25,7 +25,7 @@
                on our <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel.
                Want to help implement new features and refine the old ones? Let us know in the #volunteers-reporting-for-duty channel.</p>
 
-            <p>Need inspiration? Catch us live on <a href="https://twitch.tv/Cosmoquestx">Twitch</a>. Astronomy Cast is on Mondays at 1800 UTC.
+            <p>Need inspiration? Join our live studio audience on <a href="https://twitch.tv/Cosmoquestx">Twitch</a>. Astronomy Cast is on Mondays at 1800 UTC.
                The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out our <a href="https://twitch.tv/cosmoquestx/videos">past broadcasts</a> up to 30 days after the show.
                </p>
                <img src="/csb/csb-content/images/Pardon_Our_Dust.png" alt="All black clip art of a hammer" width="64" height="64">
