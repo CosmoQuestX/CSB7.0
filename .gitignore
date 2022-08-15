@@ -3,3 +3,4 @@ csb-settings.php
 *.DS_Store
 csb-themes/default/style.css
 csb-themes/default/style.css.map
+.idea
