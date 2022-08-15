@@ -84,7 +84,7 @@ function loadMeta()
  */
 function loadUser()
 {
-    global $BASE_URL, $ACC_URL, $user, $adminFlag, $IMAGES_URL;
+    global $BASE_URL, $ACC_URL, $user, $adminFlag, $IMAGES_URL,$CQ_ROLES;
 
     if ($user === FALSE) {         // NOT LOGGED IN
         if ($adminFlag === FALSE) {
@@ -115,6 +115,14 @@ function loadUser()
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="<?php echo $BASE_URL;?>csb-accounts/profile.php">My Profile</a>
+                <?php if (userHasRole($CQ_ROLES['SITE_SCIENTIST'],$CQ_ROLES['SITE_PROJECTLEAD'], $CQ_ROLES['SITE_ADMIN'],$CQ_ROLES['SITE_SUPERADMIN'])) {
+                    echo "<a class=\"dropdown-item\" href=\"" . $BASE_URL . "science/\">Science</a>";
+                }
+                ?>
+                <?php if (userhasRole($CQ_ROLES['SITE_PROJECTLEAD'], $CQ_ROLES['SITE_ADMIN'],$CQ_ROLES['SITE_SUPERADMIN'])) {
+                    echo "<a class=\"dropdown-item\" href=\"" . $BASE_URL . "csb-admin/\">Admin</a>";
+                }
+                ?>
                 <form action="<?php echo($BASE_URL); ?>csb-accounts/auth-login.php" method="get" id="form-logout">
                     <input type="submit" name="go" style="cursor:pointer;" class="dropdown-item" value="logout">
                 </form>
