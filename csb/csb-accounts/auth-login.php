@@ -309,10 +309,10 @@ function regUser($db, $user, $pwhash)
     if ($result !== false) {
         foreach ($result as $role) {
             $roles[]= $role['role_id'];
-            
+
         }
     }
-    
+
     // Set sessions and cookie
     $_SESSION['user_id'] = $user['id'];
     setcookie('name', $user['username'], $timeout, "/");
@@ -350,6 +350,7 @@ function rescueUser ($db, $using, $value) {
     $rescue_link = $ACC_URL."rescue.php?go=".$to."&token=".$token;
 
 // TODO Add better INSTRUCTIONS_TO_CHANGE_MANUALLY
+// TODO Consider HTML formatting for the message body?
 
     $msg['subject'] = $SITE_NAME." CosmoQuest Password Reset";
 
@@ -357,8 +358,7 @@ function rescueUser ($db, $using, $value) {
 
     Someone has requested a password reset for your account.
 
-    If you made this request and would like to reset your password, please <a href='".$rescue_link."'>click here</a> or paste the link below into your browser.
-        ".$rescue_link."
+    If you made this request and would like to reset your password, please go to this link: ".$rescue_link."
 
     If you did not make this request, you may want to change your password by logging in with your username and password and INSTRUCTIONS_TO_CHANGE_MANUALLY.
 
