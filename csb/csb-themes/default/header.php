@@ -10,6 +10,7 @@
 <html>
 <head>
     <?php loadMeta(); ?>
+    <link rel="icon" type="image/x-icon" href="<?php echo $BASE_URL ?>favicon.ico">
 </head>
 <body>
 
