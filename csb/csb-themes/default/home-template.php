@@ -76,7 +76,7 @@
             <div class="text-blk">
             <p>Our Citizen Science Builder software previously utilized a software framework called $name. Overtime, we realized we were limited in what
                we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this open-source platform, they
-               were going to have to deal with our spaghetti code and framework... and that was a lot. At the end of Bennu Mappers, we started to
+               were going to have to deal with our spaghetti code and framework... and that was a lot. At the end of Bennu Mappers, we started a
                rewrite of our platform. It will make it easier to contribute to and maintain. Also, it will be hopefully better for doing
                science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
                Discord </a> to chat about changes.</p>
