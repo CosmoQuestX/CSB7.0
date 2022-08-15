@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: starstryder/EMadaus
  * Date: 8/15/22
- * Time:
+ * Time: 15:51
  */
 
 /** Get the setup files for the app dynamically TODO make this a function */
@@ -26,7 +26,7 @@
                Want to help implement new features and refine the old ones? Let us know in the #volunteers-reporting-for-duty channel.</p>
 
             <p>Need inspiration? Catch us live on <a href="twitch.tv/Cosmoquestx">Twitch</a>. Astronomy Cast is on Mondays at 1800 UTC.
-               The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out our <a href="twitch.tv/cosmoquestx/videos">past broadcasts</a>
+               The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out our <a href="twitch.tv/cosmoquestx/videos">past broadcasts</a> up to 30 days after the show.
                </p>
                <img src="/csb/csb-content/images/Pardon_Our_Dust.png" alt="All black clip art of a hammer" width="64" height="64">
             </div>
@@ -55,8 +55,7 @@
             <div class="text-blk">
                 <p> Welcome to Cosmoquest's new and improved Community Science portal, home of all of our current projects. It will contain tools for both our own Community Science projects and tools to make your own.
                 It's been a long time since we've done one of these (Can you believe that Bennu Mappers was the summer of 2020?).
-                We are excited to bring it back for all of you, old and new. Before you can get started you will need to
-                create a new user account by clicking the login link at the top of this page.
+                We are excited to bring it back for all of you, old and new. Before you can get started you will need to create a new user account by clicking the login link at the top of this page.
                 You can also get to the login by clicking the big red button right above this paragraph and selecting register.
                </p>
                <p> If you had an account during the Bennu Mappers project or earlier, you will need to make a new one as
@@ -81,7 +80,7 @@
                we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this open-source platform, they
                were going to have to deal with our spaghetti code and framework... and that was a bit much. At the end of the Bennu Mappers project, we started a
                rewrite of our platform. Our goals are to make it easier for you to contribute and for us to maintain. Also, it will be hopefully better for doing
-               science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
+               science. This is still a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
                Discord </a> to chat about changes.</p>
 
             </div>
