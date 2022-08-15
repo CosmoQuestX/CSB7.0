@@ -238,7 +238,7 @@ class DB
     function submitDownload($user_id)
     {
         $sql = "INSERT INTO data_downloads
-                (created_at, updated_at, provider, user_id) 
+                (created_at, updated_at, provider, user_id)
                 VALUES (CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'web', $user_id)";
         mysqli_query($this->conn, $sql);
         return $this->conn->insert_id;
@@ -290,32 +290,60 @@ class DB
         }
     }
 
+
     /**
-     * Gets the user id from the database for a given user name
-     *
-     * @param string $name
-     * @return int|boolean The user id or false if not found
-     */
-    function getUserIdByName($name)
-    {
-        $query = "SELECT id from users WHERE name = ?";
-        $sql = $this->conn->prepare($query);
-        $param_value_array = array($name);
-        $param_type = "s";
-        $this->bindQueryParams($sql, $param_type, $param_value_array);
+         * Gets the user id from the database for a given user name
+         *
+         * @param string $name
+         * @return int|boolean The user id or false if not found
+         */
+        function getUserIdByName($name)
+        {
+            $query = "SELECT id from users WHERE name = ?";
+            $sql = $this->conn->prepare($query);
+            $param_value_array = array($name);
+            $param_type = "s";
+            $this->bindQueryParams($sql, $param_type, $param_value_array);
 
-        $sql->execute();
-        $result = $sql->get_result();
+            $sql->execute();
+            $result = $sql->get_result();
 
-        if ($result->num_rows == 1) {
-            while ($row = $result->fetch_assoc()) {
-                $resultSet[] = $row;
+            if ($result->num_rows == 1) {
+                while ($row = $result->fetch_assoc()) {
+                    $resultSet[] = $row;
+                }
+                return $resultSet[0]["id"];
+            } else {
+                return FALSE;
             }
-            return $resultSet[0]["id"];
-        } else {
-            return FALSE;
         }
-    }
+
+    /**
+         * Gets the user id from the database for a given user email
+         *
+         * @param string $email
+         * @return int|boolean The user id or false if not found
+         */
+        function getUserIdByEmail($email)
+        {
+            $query = "SELECT id from users WHERE email = ?";
+            $sql = $this->conn->prepare($query);
+            $param_value_array = array($email);
+            $param_type = "s";
+            $this->bindQueryParams($sql, $param_type, $param_value_array);
+
+            $sql->execute();
+            $result = $sql->get_result();
+
+            if ($result->num_rows == 1) {
+                while ($row = $result->fetch_assoc()) {
+                    $resultSet[] = $row;
+                }
+                return $resultSet[0]["id"];
+            } else {
+                return FALSE;
+            }
+        }
 
     /**
      * Checks if there is already a user present in the database for a

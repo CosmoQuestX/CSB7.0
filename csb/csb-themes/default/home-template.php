@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: starstryder/EMadaus
- * Date: 8/11/22
- * Time: 1:18 PM
+ * Date: 8/12/22
+ * Time:
  */
 
 /** Get the setup files for the app dynamically TODO make this a function */
@@ -20,12 +20,14 @@
 
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
-            <h3 class="font-weight-bold">Pardon the Dust</h3>
-            <p>As new community science tools come online, we will link to them here!</p><p>Have a feature you really want to see? Let us know
-               on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel. Want to help implement new features and refine the old? Pipe up in the
-               #volunteers-reporting-for-duty channel.</p>
-            <p> If you just want to hang out with other science minded people, we have that too. Our Discord community plays several online multiplayer
-            games which you can join too.</p>
+            <h3 class="font-weight-bold">Pardon our Dust</h3>
+            <p>As new Community Science tools come online, we will link to them here!</p><p> This page will be updated frequently, check back soon for more. Have a feature you really want to see? Let us know
+               on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel.
+               Want to help implement new features and refine the old ones? Let us know in the #volunteers-reporting-for-duty channel.</p>
+            <p>Need inspiration? Catch us live on twitch.tv/Cosmoquestx. Astronomy Cast is on Mondays at 1800 UTC.
+               The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out twitch.tv/cosmoquestx/videos
+               to watch our past broadcasts.</p>
+               <img src="CSB7.0/csb/csb-content/images/icon(1).pmg" alt="All black illustration of a hammer" width="512" height="512">
             </div>
 
         <!-- main block --------------------------------------------------------------- -->
@@ -51,17 +53,17 @@
 
             <div class="text-blk">
                 <p> Welcome to Cosmoquest's new and improved Community Science portal, home of all of our current projects.
-                It's been a long time since we've done one of these (Can you believe Bennu Mappers was the summer of 2020?).
+                It's been a long time since we've done one of these (Can you believe that Bennu Mappers was the summer of 2020?).
                 We are excited to bring it back for all of you, old and new. Before you can get started you will need to
-                log in by clicking the login link in the top right corner of this page.
+                create a new account by clicking the login link at the top of this page or the big red button right above this paragraph and selecting register.
                 If you had an account during our Bennu Mappers project or earlier, you will need to make a new one as
-                unfortunately the old user list did not survive the database transfer. </p>
+                unfortunately the old user list did not survive the database transfer. If you have already created a new account you can simply log in.</p>
 
                 <p> Please note that this software is still in beta and you may occasionally lose data such as marked images
                 or other progress. Know that your contributions are valuable. We are sorry if (when) this happens and will
                 try to fix it as soon as possible. </p>
 
-                <p> Our current project is another version of Moon Mappers. Join us? </p>
+                <p> Our current Community Science project is another version of Moon Mappers. Join us? </p>
             </div>
 
         </div>
@@ -74,12 +76,11 @@
             <div class="text-blk">
             <p>Our Citizen Science Builder software previously utilized a software framework called $name. Overtime, we realized we were limited in what
                we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this open-source platform, they
-               were going to have to deal with our sphagetti code and framework... and that was a lot. At the end of Bennu Mappers, we started to
+               were going to have to deal with our spaghetti code and framework... and that was a lot. At the end of Bennu Mappers, we started to
                rewrite of our platform. It will make it easier to contribute to and maintain. Also, it will be hopefully better for doing
                science. This is a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
-               Discord </a> to chat about changes. After joining go to #volunteers-reporting-for-duty and @ mention the mods role.
-               Some lovely human will give you the @coders role.
-               You will now have access to the  #coders-den channel, the hub for all discussion on this project. </a></p>
+               Discord </a> to chat about changes.</p>
+
             </div>
         </div>
 
