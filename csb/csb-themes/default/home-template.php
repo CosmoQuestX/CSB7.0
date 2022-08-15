@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: starstryder/EMadaus
  * Date: 8/15/22
- * Time: 17:45
+ * Time: 20:52
  */
 
 /** Get the setup files for the app dynamically TODO make this a function */
@@ -18,7 +18,7 @@
 <div class="container mt-3">
     <div class="row">
 
-        <!-- Left block --------------------------------------------------------------- -->
+        <!-- Left block -------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
             <h3 class="font-weight-bold">Pardon our Dust</h3>
             <p>As new Community Science tools come online, we will link to them here!</p><p> This page will be updated frequently, check back soon for more. Have a feature you really want to see? Let us know
