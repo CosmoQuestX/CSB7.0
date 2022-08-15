@@ -2,7 +2,7 @@
 /**
  * Created by PhpStorm.
  * User: starstryder/EMadaus
- * Date: 8/12/22
+ * Date: 8/15/22
  * Time:
  */
 
@@ -24,10 +24,10 @@
             <p>As new Community Science tools come online, we will link to them here!</p><p> This page will be updated frequently, check back soon for more. Have a feature you really want to see? Let us know
                on <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel.
                Want to help implement new features and refine the old ones? Let us know in the #volunteers-reporting-for-duty channel.</p>
-            <p>Need inspiration? Catch us live on twitch.tv/Cosmoquestx. Astronomy Cast is on Mondays at 1800 UTC.
-               The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out twitch.tv/cosmoquestx/videos
-               to watch our past broadcasts.</p>
-               <img src="CSB7.0/csb/csb-content/images/icon(1).pmg" alt="All black illustration of a hammer" width="512" height="512">
+            <p>Need inspiration? Catch us live on <a href="twitch.tv/Cosmoquestx">Twitch</a>. Astronomy Cast is on Mondays at 1800 UTC.
+               The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out our <a href="twitch.tv/cosmoquestx/videos">past broadcasts</a>
+               </p>
+               <img src="/csb/csb-content/images/Pardon_Our_Dust.png" alt="All black illustration of a hammer" width="64" height="64">
             </div>
 
         <!-- main block --------------------------------------------------------------- -->
