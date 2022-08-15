@@ -25,8 +25,8 @@
                on our <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel.
                Want to help implement new features and refine the old ones? Let us know in the #volunteers-reporting-for-duty channel.</p>
 
-            <p>Need inspiration? Catch us live on <a href="twitch.tv/Cosmoquestx">Twitch</a>. Astronomy Cast is on Mondays at 1800 UTC.
-               The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out our <a href="twitch.tv/cosmoquestx/videos">past broadcasts</a> up to 30 days after the show.
+            <p>Need inspiration? Catch us live on <a href="https://twitch.tv/Cosmoquestx">Twitch</a>. Astronomy Cast is on Mondays at 1800 UTC.
+               The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out our <a href="https://twitch.tv/cosmoquestx/videos">past broadcasts</a> up to 30 days after the show.
                </p>
                <img src="/csb/csb-content/images/Pardon_Our_Dust.png" alt="All black clip art of a hammer" width="64" height="64">
             </div>
@@ -89,3 +89,9 @@
 
     </div>
 </div>
+/**
+<p> Discord is the main forum where members of the Cosmoquest community come to do science and also hang out.
+If you dont know what Discord is, think of it as a modern version of Internet Relay Chat. You create one account on discord.gg, and can use that one account to join multiple servers.
+You have one username, but can make a nickname for each server. Each server is composed of many channels, some text channels like IRC but also voice channels where you can communicate in near real time with a microphone.
+The CqX Discord server has a lot of channels, but dont be intimidated. You can collapse channels you dont want to look at so you never see them.
+*\
