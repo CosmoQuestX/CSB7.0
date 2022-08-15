@@ -76,7 +76,7 @@ Go to http://yourhost/csb-installer/ in your browser.
   This will let you configure your installation and then install databases and setup an admin user using the settings in csb-settings.php
   
 ### Optional - Error Documents
-CSB defines Apache error documents. If you want them to extend to the whole server, move the .htaccess file to the server root. 
+CSB defines Apache error documents. If you want them to extend to the whole server, move the .htaccess file to the document root. 
 
 ### Optional - Using Docker
 
