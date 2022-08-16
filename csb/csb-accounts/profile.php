@@ -35,13 +35,23 @@ $user = isLoggedIn($db);
 
 
 if ($login || $user === FALSE) { // NOT LOGGED IN
-    require_once($BASE_DIR . "csb-content/templates/login.php");
+
+    /* it would probably good to output some error like, session timeout, do 
+     * you want to log in again, but if the session does time out, it is 
+     * likely a lot better to just send them to the login than to let them
+     * run into an error message...  
+     */
+    header('Location: ' . $BASE_URL . 'csb-accounts/login.php');
+    
 } /* ----------------------------------------------------------------------
     Are they trying to register?
    ---------------------------------------------------------------------- */
 
 elseif ($reg) {
-    require_once($BASE_DIR . "csb-content/templates/login.php");
+    
+    // I don't know how they got there, but send them to the registration page
+    header('Location: ' . $BASE_URL . 'csb-accounts/register.php');
+    
 } /* ----------------------------------------------------------------------
    load things
    ---------------------------------------------------------------------- */
