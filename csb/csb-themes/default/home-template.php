@@ -27,7 +27,7 @@
                Want to help implement new features and refine the old ones? Let us know in the #volunteers-reporting-for-duty channel.</p>
 
             <p>Need inspiration? Join our live studio audience on <a href="https://twitch.tv/Cosmoquestx">Twitch</a>. Astronomy Cast is on Mondays at 1800 UTC.
-               The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out our <a href="https://twitch.tv/cosmoquestx/videos">past broadcasts</a> up to 30 days after the show.
+               The rest of the week we have Daily Space at 1600 UTC. If we're not live you can check out our <a href="https://twitch.tv/cosmoquestx/videos">past broadcasts</a> up to 30 days after the show.
                </p>
 
             </div>
@@ -65,9 +65,9 @@
 
                 <p> Please note that this software is still in beta and you may occasionally lose data such as marked images
                 or other progress. Know that your contributions are valuable. We are sorry if (when) this happens and will
-                try to fix it as soon as possible. </p>
+                try to fix it as soon as possible to keep the science going. </p>
 
-                <p> Our current Community Science project is a new version of Moon Mappers. We have tutorials for zJoin us? </p>
+                <p> Our current Community Science project is a new version of Moon Mappers. We have a tutorial based on the old version of Mappers already. Join us? </p>
             </div>
 
         </div>
@@ -83,7 +83,7 @@
                were going to have to deal with our spaghetti code and framework... and that was a bit much. At the end of the Bennu Mappers project, we started a
                rewrite of our platform. Our goals are to make it easier for you to participate and for us to maintain into the future. Also, it will be hopefully better for doing
                science for the scientists we work with. This is still a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
-               Discord </a> to chat about changes and work on your own, or to test the current ones.</p>
+               Discord </a> to chat about changes and work on your own, or to test the current ones. Or just hang out, thats fine too.</p>
 
             </div>
         </div>
@@ -95,5 +95,5 @@
 <!-- p> Discord is the main forum where members of the Cosmoquest community come to do science and also hang out.
 If you dont know what Discord is, think of it as a modern version of Internet Relay Chat. You create one account on discord.gg, and can use that one account to join multiple servers.
 You have one username, but can make a nickname for each server. Each server is composed of many channels, some text channels like IRC but also voice channels where you can communicate in near real time with a microphone.
-The CqX Discord server has a lot of channels, but dont be intimidated. You can mute and collapse channels you dont want to look at so you never see them.</p -->
+/p -->
 
