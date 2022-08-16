@@ -89,9 +89,9 @@
 
     </div>
 </div>
-/**
-<p> Discord is the main forum where members of the Cosmoquest community come to do science and also hang out.
+
+<!-- p> Discord is the main forum where members of the Cosmoquest community come to do science and also hang out.
 If you dont know what Discord is, think of it as a modern version of Internet Relay Chat. You create one account on discord.gg, and can use that one account to join multiple servers.
 You have one username, but can make a nickname for each server. Each server is composed of many channels, some text channels like IRC but also voice channels where you can communicate in near real time with a microphone.
-The CqX Discord server has a lot of channels, but dont be intimidated. You can collapse channels you dont want to look at so you never see them.
-*\
+The CqX Discord server has a lot of channels, but dont be intimidated. You can collapse channels you dont want to look at so you never see them.</p -->
+
