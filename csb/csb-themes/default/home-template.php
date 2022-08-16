@@ -1,8 +1,8 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: starstryder/EMadaus
- * Date: 8/15/22
+ * User: starstryder/EMadaus/TheRealFakeAdmin
+ * Date: 8/16/22
  * Time: 17:45
  */
 
@@ -20,15 +20,16 @@
 
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
-            <h3 class="font-weight-bold">Pardon our Dust</h3>
+        <img src="/csb/csb-content/images/Pardon_Our_Dust.png" alt="All black clip art of a hammer" width="24" height="24">
+            <h3 class="font-weight-bold" style="display: inline;">Pardon our Dust</h3>
             <p>As new Community Science tools come online, we will link to them here!</p><p> This page will be updated frequently, check back soon for more. Have a feature you really want to see? Let us know
-               on our <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #suggestions channel.
+               on our <a href="https://discord.gg/pVGXJDUKud">Discord</a> in the #bugs-suggestions-ideas channel.
                Want to help implement new features and refine the old ones? Let us know in the #volunteers-reporting-for-duty channel.</p>
 
             <p>Need inspiration? Join our live studio audience on <a href="https://twitch.tv/Cosmoquestx">Twitch</a>. Astronomy Cast is on Mondays at 1800 UTC.
                The rest of the week is Daily Space at 1600 UTC. If we're not live you can check out our <a href="https://twitch.tv/cosmoquestx/videos">past broadcasts</a> up to 30 days after the show.
                </p>
-               <img src="/csb/csb-content/images/Pardon_Our_Dust.png" alt="All black clip art of a hammer" width="64" height="64">
+
             </div>
 
         <!-- main block --------------------------------------------------------------- -->
@@ -53,19 +54,20 @@
             ?>
 
             <div class="text-blk">
-                <p> Welcome to Cosmoquest's new and improved Community Science portal, home of all of our current projects. It will contain tools for both our own Community Science projects and tools to make your own.
+                <p> Welcome to Cosmoquest's new and improved Community Science portal, home of all of our current projects. It will contain our own Community Science projects and tools to make your own.
                 It's been a long time since we've done one of these (Can you believe that Bennu Mappers was the summer of 2020?).
                 We are excited to bring it back for all of you, old and new. Before you can get started you will need to create a new user account by clicking the login link at the top of this page.
                 You can also get to the login by clicking the big red button right above this paragraph and selecting register.
                </p>
                <p> If you had an account during the Bennu Mappers project or earlier, you will need to make a new one as
-                unfortunately the old user list did not survive the database transfer. If you have already created a new account you can simply log in.</p>
+                unfortunately the old user list did not survive the database transfer. If you have already created a new account you can simply log in. Check the remember me box if you want to log in easier next time. </p>
+                After logging in you will see the tabs for Moon Mappers, Mars Mappers and Mercury Mappers.
 
                 <p> Please note that this software is still in beta and you may occasionally lose data such as marked images
                 or other progress. Know that your contributions are valuable. We are sorry if (when) this happens and will
                 try to fix it as soon as possible. </p>
 
-                <p> Our current Community Science project is another version of Moon Mappers. Join us? </p>
+                <p> Our current Community Science project is a new version of Moon Mappers. We have tutorials for zJoin us? </p>
             </div>
 
         </div>
@@ -79,9 +81,9 @@
             <p>Our Citizen Science Builder software previously utilized a software framework called $Name. Overtime, we realized we were limited in what
                we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this open-source platform, they
                were going to have to deal with our spaghetti code and framework... and that was a bit much. At the end of the Bennu Mappers project, we started a
-               rewrite of our platform. Our goals are to make it easier for you to contribute and for us to maintain into the future. Also, it will be hopefully better for doing
-               science. This is still a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
-               Discord </a> to chat about changes.</p>
+               rewrite of our platform. Our goals are to make it easier for you to participate and for us to maintain into the future. Also, it will be hopefully better for doing
+               science for the scientists we work with. This is still a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
+               Discord </a> to chat about changes and work on your own, or to test the current ones.</p>
 
             </div>
         </div>
@@ -93,5 +95,5 @@
 <!-- p> Discord is the main forum where members of the Cosmoquest community come to do science and also hang out.
 If you dont know what Discord is, think of it as a modern version of Internet Relay Chat. You create one account on discord.gg, and can use that one account to join multiple servers.
 You have one username, but can make a nickname for each server. Each server is composed of many channels, some text channels like IRC but also voice channels where you can communicate in near real time with a microphone.
-The CqX Discord server has a lot of channels, but dont be intimidated. You can collapse channels you dont want to look at so you never see them.</p -->
+The CqX Discord server has a lot of channels, but dont be intimidated. You can mute and collapse channels you dont want to look at so you never see them.</p -->
 
