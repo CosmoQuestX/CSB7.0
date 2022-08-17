@@ -133,7 +133,7 @@ $sql = "INSERT INTO role_users (role_id, user_id) VALUES (8, 1);";
 if (mysqli_query($conn, $sql) == FALSE) {
     $on_error([mysqli_errno($conn) . ": " . mysqli_error($conn)], ["Couldn't assign admin user to admin role"]);
 }
-// TODO Strongly encourage admin user to enable 2FA
+
 status_update("Admin user set up", "success");
 
 ?>
@@ -147,6 +147,7 @@ status_update("Admin user set up", "success");
                         <p>Your admin username is: <code><?php echo $username ?></code></p>
                         <p>Your password is: <code><?php echo $password ?></code></p>
                         <p>Make sure you save this password in your password manager, it was randomly generated and won't be visible again!<p>
+                        <p>Protect your admin account! Set up two-factor authentication once you have finished the installation!</p>
                         <h3>Setup complete</h3>
                         <a href="<?php echo $BASE_URL; ?>" class="btn btn-primary">Get started</a>
                     </div>
