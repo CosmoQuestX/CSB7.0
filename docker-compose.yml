@@ -21,6 +21,5 @@ services:
     build:
       context: .
       dockerfile: .docker/node/Dockerfile
-    command: sass --watch /app/csb/csb-themes/default/sass/style.scss:/app/csb/csb-themes/default/style.css
     volumes:
       - .:/app
