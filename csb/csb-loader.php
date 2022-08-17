@@ -12,26 +12,28 @@
 global $BASE_DIR, $BASE_URL, $adminFlag;
 
 if (stream_resolve_include_path("csb-settings.php") === false) {
-   
+
    /**
     * This part finds the installer path regardless of what the original request URL was.
-    * It does so by comparing the relative URI to the root on the file system,
-    * checking if the directory exists there, and going up one level if not until reaching the root.
+    * It does so by going up the request URI until reaching the root and testing whether
+    * the URL "csb-installer/index.php" exists.
     */
-   
-   $CUR_REL_URI = $_SERVER['REQUEST_URI'];   // The current relative request url, for example /CSB7.0/csb/science/ if that's the relative url to the server root.
-   $ROOT = $_SERVER['DOCUMENT_ROOT'];        // The root of the server on the file system.
-   $arrReq = explode("/", $CUR_REL_URI);     // The relative url is now an array ["", "CSB7.0", "CSB", "science", ""]
-   while (count($arrReq) >= 2) {             // While the array is not empty
-      $TEST_PATH = join("/", $arrReq) . "csb-installer/";  // Test path is the relative path with "csb-installer/" tacked on in the end
-      if (is_dir($ROOT . $TEST_PATH)) {                    // If that exists
-         header ("Location: " . $TEST_PATH);               // Go to there
+
+   $test_path = $_SERVER['REQUEST_URI'];                    // The current relative request url, for example /csb/science/.
+   $proto = isset($_SERVER['HTTPS']) ? "https" : "http";
+   $BASE_URL = $proto . "://" . $_SERVER['SERVER_NAME'];
+   do {
+       error_log("Test path is $test_path");
+       $test_url = $BASE_URL . $test_path . "/csb-installer/index.php";
+       $headers = @get_headers($test_url);
+       if ($headers && strpos( $headers[0], '200')) {       // If that exists
+         header ("Location: " . $test_url);   // Go to there
          exit();
-      }  
-      echo $TEST_PATH . "<br>";                       // If the relative path doesn't exist, print it, then...
-      array_splice($arrReq, count($arrReq) - 2, 1);   // Remove the last part of the path by splicing the array
-   }                                                  // And try again
-   die("Failed to find installer in any of the tested paths above!");   // If you reached here, the array emptied out - meaning the path couldn't be found on the tree from the source address to the root.
+      }
+      error_log("Tested URL was $test_url");                                // If the relative path doesn't exist, print it, then...
+      $test_path = dirname($test_path);                                     // Go up one level
+   } while ($test_path != DIRECTORY_SEPARATOR);                             // And try again until you reach the top level
+   die("Failed to find installer in any of the tested paths above!");       // If you reached here, the array emptied out - meaning the path couldn't be found on the tree from the source address to the root.
 }
 
 require "csb-settings.php";
@@ -40,13 +42,13 @@ $loader = TRUE;
 /* ----------------------------------------------------------------------
    Define the theme
 
-       1. TODO Check if one is defined in the database  
-       2. TODO Check if it is configured correctly       
-       3. TODO If setup, use that theme, else use default    
+       1. TODO Check if one is defined in the database
+       2. TODO Check if it is configured correctly
+       3. TODO If setup, use that theme, else use default
    ---------------------------------------------------------------------- */
 
 // Default theme (if nothing set in database)
-global $THEME_URL, $THEME_DIR, $SITE_TITLE;
+global $THEME_URL, $THEME_DIR, $SITE_TITLE, $SITE_NAME;
 
 $SITE_TITLE = $SITE_NAME." | ";
 

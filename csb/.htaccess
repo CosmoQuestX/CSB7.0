@@ -10,3 +10,13 @@ RewriteRule     ^(.*)$          /csb/api/api.php
 
 RewriteCond     %{REQUEST_URI}  ^/$
 RewriteRule     ^(.*)$          /csb/$1             [L,R]
+
+ErrorDocument 400 /csb/error/error.php
+ErrorDocument 401 /csb/error/error.php
+ErrorDocument 403 /csb/error/error.php?error=403
+ErrorDocument 404 /csb/error/error.php?error=404
+ErrorDocument 413 /csb/error/error.php
+ErrorDocument 414 /csb/error/error.php
+ErrorDocument 416 /csb/error/error.php
+ErrorDocument 500 /csb/error/error.php
+ErrorDocument 503 /csb/error/error.php

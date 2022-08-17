@@ -95,6 +95,7 @@ foreach (glob($dir . "*.sql") as $table) {
     $sql = fread($fh,filesize($table));
     fclose($fh);
     // Prepare tables depending on configuration
+    $sql = str_replace("|BASE_URL|", $BASE_URL, $sql);
     //$sql = str_replace("|TABLE_PREFIX|", $table_prefix, $sql);
 
     if (create_table($conn,$sql)) {

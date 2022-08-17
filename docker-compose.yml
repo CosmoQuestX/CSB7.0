@@ -3,7 +3,7 @@ services:
   apache:
     build:
       context: .
-      dockerfile: .docker/Dockerfile
+      dockerfile: .docker/php/Dockerfile
     ports:
       - "8080:80"
     volumes:
@@ -17,3 +17,10 @@ services:
       MYSQL_USER: csb
       MYSQL_PASSWORD: csb
       MYSQL_ROOT_PASSWORD: root
+  style:
+    build:
+      context: .
+      dockerfile: .docker/node/Dockerfile
+    command: sass --watch /app/csb/csb-themes/default/sass/style.scss:/app/csb/csb-themes/default/style.css
+    volumes:
+      - .:/app

@@ -280,10 +280,10 @@ function regUser($db, $user, $pwhash, $two_factor_secret)
     }
 
     // create their default role
-    $roles = $CQ_ROLES['SITE_USER'];
+    $default_role = $CQ_ROLES['SITE_USER'];
 
     $query = "INSERT INTO role_users (role_id, user_id) values (?, ?)";
-    $params = array($roles, $id);
+    $params = array($default_role, $id);
     $role_insert=$db->insert($query, "ii", $params);
     if ($role_insert !== true) {
         error_log("Error adding role $roles for user $id");
@@ -318,6 +318,13 @@ function regUser($db, $user, $pwhash, $two_factor_secret)
     $query = "SELECT role_id, user_id FROM role_users WHERE user_id = ?";
     $params = array($user['id']);
     $result = $db->runQueryWhere($query, "s", $params);
+
+    if ($result !== false) {
+        foreach ($result as $role) {
+            $roles[]= $role['role_id'];
+
+        }
+    }
 
     // Set sessions and cookie
     $_SESSION['user_id'] = $user['id'];
@@ -356,20 +363,21 @@ function rescueUser ($db, $using, $value) {
     $rescue_link = $ACC_URL."rescue.php?go=".$to."&token=".$token;
 
 // TODO Add better INSTRUCTIONS_TO_CHANGE_MANUALLY
-// TODO Add a signature for the email. Is there a variable with this that we can use?
+// TODO Consider HTML formatting for the message body?
 
-    $msg['subject'] = "CosmoQuest Password Reset";
+    $msg['subject'] = $SITE_NAME." Password Reset";
 
     $msg['body'] =  "Hello,
 
     Someone has requested a password reset for your account.
 
-    If you made this request and would like to reset your password, please <a href='".$rescue_link."'>click here</a> or paste the link below into your browser.
-        ".$rescue_link."
+    If you made this request and would like to reset your password, please go to this link: ".$rescue_link."
 
     If you did not make this request, you may want to change your password by logging in with your username and password and INSTRUCTIONS_TO_CHANGE_MANUALLY.
 
-    Sincerely,";
+    Sincerely,
+
+    ".$SITE_NAME;
 
 
     $email->sendMail($to, $msg);
