@@ -99,6 +99,11 @@ function isLoggedIn($db)
  */
 function userHasRole(...$roles)
 {
+    // If it's called without roles, ensure that $roles is an array
+    if(!is_array($roles)) { $roles = array(); }
+    // If _SOMEHOW_ users end up without roles, make sure it's at least an array.
+    if(!is_array($_SESSION['roles'])) { $_SESSION['roles'] = array(); }
+    
     if (count(array_intersect($roles ,$_SESSION['roles'])) > 0) {
         return true;
     }
