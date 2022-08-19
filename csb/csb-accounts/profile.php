@@ -36,22 +36,22 @@ $user = isLoggedIn($db);
 
 if ($login || $user === FALSE) { // NOT LOGGED IN
 
-    /* it would probably good to output some error like, session timeout, do 
-     * you want to log in again, but if the session does time out, it is 
+    /* it would probably good to output some error like, session timeout, do
+     * you want to log in again, but if the session does time out, it is
      * likely a lot better to just send them to the login than to let them
-     * run into an error message...  
+     * run into an error message...
      */
     header('Location: ' . $BASE_URL . 'csb-accounts/login.php');
-    
+
 } /* ----------------------------------------------------------------------
     Are they trying to register?
    ---------------------------------------------------------------------- */
 
 elseif ($reg) {
-    
+
     // I don't know how they got there, but send them to the registration page
     header('Location: ' . $BASE_URL . 'csb-accounts/register.php');
-    
+
 } /* ----------------------------------------------------------------------
    load things
    ---------------------------------------------------------------------- */
@@ -105,7 +105,7 @@ else {
                 $params_type .= "s";
             }
 
-            // TODO Give user the opportunity to set/disable 2FA.
+            // TODO Hook for setting/disabling 2FA.
             if (isset($_POST['two_factor_secret'])) {
                 $two_factor_enabled=!is_null($two_factor_secret);
                 $query .= ", two_factor_enabled = ?, two_factor_secret = ?";
