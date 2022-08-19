@@ -265,7 +265,7 @@ function regUser($db, $user, $pwhash, $two_factor_secret)
     // Insert the user into the database
     $query = "INSERT INTO users (name, email, password, two_factor_enabled, two_factor_secret) VALUES (?, ?, ?, ?, ?)";
     $params = array(filter_var($user['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash, $two_factor_enabled, $two_factor_secret);
-    $db->insert($query, "sss", $params);
+    $db->insert($query, "sssss", $params);
 
     // Get the id for the freshly created user
     $query = "SELECT id FROM users WHERE name = '".$user['username']."'";
