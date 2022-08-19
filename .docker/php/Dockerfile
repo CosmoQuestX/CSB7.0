@@ -1,4 +1,4 @@
-FROM php:7.4.2-apache
+FROM php:8.1.2-apache
 
 # Copy config
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
@@ -13,5 +13,5 @@ RUN docker-php-source extract \
     && docker-php-source delete
 
 # Set permissions
-RUN chown -R www-data:www-data /app \
+RUN chown -R www-data.www-data /app \
     && a2enmod rewrite
