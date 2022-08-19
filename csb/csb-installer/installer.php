@@ -51,7 +51,7 @@ $on_error = function ($log_messages, $frontend_messages, $data_added=true) use (
             // Transaction rollback doesn't work here because MYSQL doesn't handle DDL in transactions consistently.
             status_update("An error occurred after the database was modified. You should drop and recreate the database before trying again.", "warning");
         }
-        mysqli_close($conn);
+        $conn->close();
     }
 
     unlink($BASE_DIR . "/csb-settings.php");
@@ -103,7 +103,7 @@ foreach (glob($dir . "*.sql") as $table) {
         $created_tables += 1;
     } else {
         $on_error(
-            [mysqli_errno($conn) . ": " . mysqli_error($conn)],
+            [$conn->errno . ": " . $conn->error],
             ["Couldn't create table " . $table_name, "Check your server logs for details."],
             $created_tables > 0
         );
@@ -124,14 +124,14 @@ $hashed = password_hash($password, PASSWORD_DEFAULT);
 
 // Create the user with email from settings
 $sql = "INSERT INTO users (id, name, email, password) VALUES (1, '" . $username . "', '" . $rescue_email . "', '" . $hashed . "');";
-if (mysqli_query($conn, $sql) == FALSE) {
-    $on_error([mysqli_errno($conn) . ": " . mysqli_error($conn)], ["Couldn't create admin user"]);
+if ($conn->query($sql) == FALSE) {
+    $on_error([$conn->errno . ": " . $conn->error], ["Couldn't create admin user"]);
 }
 
 // Create their admin role
 $sql = "INSERT INTO role_users (role_id, user_id) VALUES (8, 1);";
-if (mysqli_query($conn, $sql) == FALSE) {
-    $on_error([mysqli_errno($conn) . ": " . mysqli_error($conn)], ["Couldn't assign admin user to admin role"]);
+if ($conn->query($sql) == FALSE) {
+    $on_error([$conn->errno . ": " . $conn->error], ["Couldn't assign admin user to admin role"]);
 }
 
 status_update("Admin user set up", "success");
@@ -160,5 +160,5 @@ status_update("Admin user set up", "success");
 /* ----------------------------------------------------------------------
    End Session
    ---------------------------------------------------------------------- */
-mysqli_close($conn);
+$conn->close();
 ?>
