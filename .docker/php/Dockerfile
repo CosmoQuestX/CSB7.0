@@ -13,5 +13,5 @@ RUN docker-php-source extract \
     && docker-php-source delete
 
 # Set permissions
-RUN chown -R www-data.www-data /app \
+RUN chown -R www-data:www-data /app \
     && a2enmod rewrite
