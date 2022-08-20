@@ -7,8 +7,7 @@
  */
 
 // This file should be run from the commandline, so make sure it is 
-
-if (PHP_SAPI != "cli") {
+if (substr(PHP_SAPI, 0, 3) !== 'cli') {
     exit("Please run this from the command line");
 }
 
@@ -16,7 +15,7 @@ if (PHP_SAPI != "cli") {
 // Objectives:
 // - Download requested data into a file
 // - Email user a download link when the file is ready
-// TODO write a cron job to clear these out periodically
+// TODO write a database stored procedure to clear these out periodically
 
 
 /* ----------------------------------------------------------------------
@@ -60,7 +59,7 @@ require_once($email_class);
    Open the database because you're gonna need it
    ---------------------------------------------------------------------- */
 
-$db = new DB($db_servername, $db_username, $db_password, $db_name);
+$db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
 
 /* ----------------------------------------------------------------------
    Open the file

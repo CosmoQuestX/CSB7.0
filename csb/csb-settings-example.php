@@ -39,6 +39,7 @@ $rescue_email = "Email@rescue.me";   // The email address for the site admin
    ---------------------------------------------------------------------- */
 
 $db_servername = "localhost";
+$db_port = "3306";
 $db_username = "root";
 $db_password = "password";
 $db_name = "myDB";
@@ -47,11 +48,11 @@ $db_name = "myDB";
    Email Settings
    ---------------------------------------------------------------------- */
 
-$emailSettings['host'] = "smtp.yourprovider.net";
+$emailSettings['host'] = "smtp.yourprovider.example";
 $emailSettings['username'] = "username";
 $emailSettings['password'] = "password";
 $emailSettings['port'] = "587";  // ssl uses 465
-$emailSettings['from'] = "no-reply@yoursite.org";
+$emailSettings['from'] = "your@email.example";
 
 /* ----------------------------------------------------------------------
    Directories

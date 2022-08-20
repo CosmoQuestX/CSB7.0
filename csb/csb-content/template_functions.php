@@ -152,7 +152,7 @@ function loadNavLinks()
         $links=array(array('target'=>"",'desc'=>"Home"));
 
         // This pulls the apps to link from the database
-        $db_conn = new DB($db_servername, $db_username, $db_password, $db_name);
+        $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
         $app_sql="SELECT name,title FROM  applications WHERE active = 1";
         $app_res = $db_conn->runQuery($app_sql);
         if ($app_res !== false) {
