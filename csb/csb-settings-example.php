@@ -48,11 +48,11 @@ $db_name = "myDB";
    Email Settings
    ---------------------------------------------------------------------- */
 
-$emailSettings['host'] = "smtp.yourprovider.net";
+$emailSettings['host'] = "smtp.yourprovider.example";
 $emailSettings['username'] = "username";
 $emailSettings['password'] = "password";
 $emailSettings['port'] = "587";  // ssl uses 465
-$emailSettings['from'] = "no-reply@yoursite.org";
+$emailSettings['from'] = "your@email.example";
 
 /* ----------------------------------------------------------------------
    Directories
