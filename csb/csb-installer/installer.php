@@ -100,7 +100,8 @@ foreach (glob($dir . "*.sql") as $table) {
 
     if (create_table($conn,$sql)) {
         error_log("Created table " . $table_name);
-        $created_tables += 1;
+        // If we're inserting into a table, don't count it as a table.
+        If(strpos($table, "insert") === false) { $created_tables += 1; }
     } else {
         $on_error(
             [$conn->errno . ": " . $conn->error],

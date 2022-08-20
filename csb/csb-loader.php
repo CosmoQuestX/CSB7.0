@@ -71,12 +71,18 @@ $IMAGES_URL = $BASE_URL . "csb-content/images/";
 $TEMPLATES_URL = $BASE_URL . "csb-content/templates/";
 $TEMPLATES_DIR = $BASE_DIR . "csb-content/templates/";
 
+/*
+ * global the social
+ */
+
+global $social_discord, $social_youtube, $social_twitch, $social_twitter;
+
 /* ----------------------------------------------------------------------
    Setup User Roles - needed because of potential customizations
    ---------------------------------------------------------------------- */
 
 include($DB_class);
-$db = new DB($db_servername, $db_username, $db_password, $db_name);
+$db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
 $query = "SELECT * FROM roles";
 $result = $db->runQuery($query);
 

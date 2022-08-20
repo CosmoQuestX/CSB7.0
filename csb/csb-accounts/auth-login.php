@@ -24,7 +24,7 @@ require_once("db_class.php");
    ---------------------------------------------------------------------- */
 
 
-$db = new DB($db_servername, $db_username, $db_password, $db_name);
+$db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
 
 if (isset($_GET['go'])) {
 

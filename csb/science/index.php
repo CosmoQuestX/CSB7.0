@@ -19,7 +19,7 @@ require_once($ACC_DIR . "auth.php");
    Is the person logged in?
    ---------------------------------------------------------------------- */
 
-$db = new DB($db_servername, $db_username, $db_password, $db_name);
+$db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
 
 global $user;
 $user = isLoggedIn($db);

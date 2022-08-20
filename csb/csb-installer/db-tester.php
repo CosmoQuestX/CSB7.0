@@ -6,7 +6,7 @@ header("Content-Type: application/json");
 $v = json_decode(stripslashes(file_get_contents("php://input")));
 
 // Try connecting, @ will suppress warning / notice if the connection fails
-$link = @mysqli_connect($v->db_servername, $v->db_username, $v->db_password, $v->db_name);
+$link = @mysqli_connect($v->db_servername, $v->db_username, $v->db_password, $v->db_name, $v->db_port);
 
 // Check connection
 if (!$link) {

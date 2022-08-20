@@ -147,7 +147,7 @@ function finish_tutorial() {
     // Variable definitions
     global $db_servername, $db_username, $db_password, $db_name;
     // Set up database connection     
-    $db_conn=new DB($db_servername,$db_username,$db_password,$db_name);
+    $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
 
     if (isset($userdata['user_id'])) {
@@ -261,7 +261,7 @@ function getNextImageForUser($application_unsafe) {
     // Variable definitions
     global $db_servername, $db_username, $db_password, $db_name;
     
-    $db_conn=new DB($db_servername,$db_username,$db_password,$db_name);
+    $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
     
     // Get the active applications from the database:
@@ -424,7 +424,7 @@ function getImageById($id_unsafe, $attach_marks=false) {
     // Variable definitions
     global $db_servername, $db_username, $db_password, $db_name;
     // First, let's open a database connection
-    $db_conn=new DB($db_servername,$db_username,$db_password,$db_name);
+    $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
     // We got an image id, which is unique, so there can only be one result.
     $sql = "SELECT * from images WHERE id = " .$id;
@@ -465,7 +465,7 @@ function submit_data($application_unsafe) {
     // Variable definitions
     global $db_servername, $db_username, $db_password, $db_name;
     // First, let's open a database connection
-    $db_conn=new DB($db_servername,$db_username,$db_password,$db_name);
+    $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
 
 
@@ -608,7 +608,7 @@ function scistarter() {
     // Variable definitions
     global $db_servername, $db_username, $db_password, $db_name;
     // First, let's open a database connection
-    $db_conn=new DB($db_servername,$db_username,$db_password,$db_name);
+    $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
     
     // First, get the post data

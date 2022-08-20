@@ -35,12 +35,13 @@ class DB
      * @param string $password
      * @param string $database
      */
-    function __construct($host, $user, $password, $database)
+    function __construct($host, $user, $password, $database, $port=3306)
     {
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
         $this->database = $database;
+        $this->port=$port;
 
         $this->conn = $this->connectDB();
     }
@@ -53,7 +54,7 @@ class DB
     function connectDB()
     {
 
-        $conn = mysqli_connect($this->host, $this->user, $this->password, $this->database);
+        $conn = mysqli_connect($this->host, $this->user, $this->password, $this->database, $this->port);
 
         if (!$conn) {
             die("MySQL connection failed: " . mysqli_connect_error());

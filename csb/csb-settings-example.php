@@ -39,6 +39,7 @@ $rescue_email = "Email@rescue.me";   // The email address for the site admin
    ---------------------------------------------------------------------- */
 
 $db_servername = "localhost";
+$db_port = "3306";
 $db_username = "root";
 $db_password = "password";
 $db_name = "myDB";

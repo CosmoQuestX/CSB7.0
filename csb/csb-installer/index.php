@@ -20,8 +20,8 @@ if ((@include "../csb-settings.php") == TRUE) {
    ---------------------------------------------------------------------- */
 if (isset($_SERVER) && isset($_SERVER['SCRIPT_FILENAME']))
     $BASE_DIR = stristr($_SERVER['SCRIPT_FILENAME'], "csb-installer", TRUE);
+    $BASE_URL = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . str_replace("//", "/", stristr($_SERVER['REQUEST_URI'], "csb-installer", TRUE));
 
-$BASE_URL = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . stristr($_SERVER['REQUEST_URI'], "csb-installer", TRUE);
 require_once("installer-functions.php");
 
 /* ----------------------------------------------------------------------
@@ -60,17 +60,31 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
         // TODO Suggestion: rework the database layer to support table prefixes. Useful if CSB needs to be run on one shared database.
 
         foreach ($_POST as $key => $value) {
-            // print "Key: $key - Value: $value <br />\n";
             if ($key != "write_config" && $key != "submit") {
                 if (strpos($key, "email_") !== false) {
                     $index = str_replace("email_", "", $key);
                     $config_body .= "\$emailSettings['{$index}']=\"$value\";\n";
+                } else if (strpos($key, "social_") !== false) {
+                    $index = str_replace("social_", "", $key);
+                    switch ($index) {
+                        case "discord":
+                            $config_body .= "\${$key}=\"https://discord.gg/{$value}\";\n";
+                            break;
+                        case "youtube":
+                            $config_body .= "\${$key}=\"https://youtube.com/{$value}\";\n";
+                            break;
+                        case "twitch":    
+                            $config_body .= "\${$key}=\"https://twitch.tv/{$value}\";\n";
+                            break;
+                        case "twitter":
+                            $config_body .= "\${$key}=\"https://twitter.com/{$value}\";\n";
+                            break;
+                    }
                 } else {
                     $config_body .= "\${$key}=\"{$value}\";\n";
                 }
             }
         }
-
         // Time to actually write the config!
         $csbconfig = fopen($BASE_DIR . "csb-settings.php", 'c');
         fwrite($csbconfig, $config_head);
@@ -126,7 +140,8 @@ $rqe=array();
                 "db_servername": $("[name='db_servername']").val(),
                 "db_username": $("[name='db_username']").val(),
                 "db_password": $("[name='db_password']").val(), // Is this secure? Do we care at this point?
-                "db_name": $("[name='db_name']").val()
+                "db_name": $("[name='db_name']").val(),
+                "db_port": $("[name='db_port']").val()
             }
 
             /*
@@ -231,6 +246,9 @@ $rqe=array();
                         <li class="nav-item">
                             <a data-toggle="tab" class="nav-link" href="#smtp">SMTP</a>
                         </li>
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link" href="#socials">Socials</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -243,11 +261,11 @@ $rqe=array();
                                     <label>PHP Version greater <?php echo $min_version_readable; ?></label> 
                                     <?php 
                                     if (checkForPHP($min_version)) { 
-                                        echo "<span class=\"font-weight-bold text-success\">TRUE</span>"; 
+                                        echo '<span class="font-weight-bold text-success">TRUE</span>'; 
                                         $rq1 = true;
                                     }  
                                         else {
-                                            echo "<span class=\"font-weight-bold text-danger\">FALSE</span>";
+                                            echo '<span class="font-weight-bold text-danger">FALSE</span>';
                                         $rq1 = false;
                                     }
                                     ?>
@@ -258,11 +276,11 @@ $rqe=array();
                                     foreach ($extensions as $extension) {
                                         
                                         if (checkForExtension($extension)) { 
-                                            echo "<li>Extension $extension: <span class=\"font-weight-bold text-success\">TRUE</span></li>"; 
+                                            echo '<li>Extension ' . $extension . ': <span class="font-weight-bold text-success">TRUE</span></li>'; 
                                             $rqe[]=true;
                                         }  
                                             else {
-                                                echo "<li><span class=\"font-weight-bold text-danger\">FALSE</span></li>";
+                                                echo '<li><span class="font-weight-bold text-danger">FALSE</span></li>';
                                             $rqe[] = false;
                                         }
                                         if (in_array(false,$rqe)) { 
@@ -282,10 +300,10 @@ $rqe=array();
                                     foreach ($optionals as $optional) {
                                         
                                         if (checkForClass($optional)) { 
-                                            echo "<li>Class $optional: <span class=\"font-weight-bold text-success\">TRUE</span></li>"; 
+                                            echo '<li>Class ' . $optional .': <span class="font-weight-bold text-success">TRUE</span></li>'; 
                                         }  
                                             else {
-                                                echo "<li>Class $optional: <span class=\"font-weight-bold text-danger\">FALSE</span></li>";
+                                                echo '<li>Class ' . $optional . ': <span class="font-weight-bold text-danger">FALSE</span></li>';
                                         }
 
                                     }
@@ -307,14 +325,14 @@ $rqe=array();
                         <div id="directories" class="tab-pane fade in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
-                                    <label>Site Name</label>
-                                    <input type="text" class="form-control" name="SITE_NAME" placeholder="Do Science">
-                                    <label>Base Directory</label>
-                                    <input type="text" class="form-control" name="BASE_DIR" id="BASE_DIR" value="<?php echo $BASE_DIR; ?>">
-                                    <label>Base URL</label>
-                                    <input type="text" class="form-control" name="BASE_URL" id="BASE_URL" value="<?php echo $BASE_URL; ?>">
-                                    <label>Site Admin Email</label>
-                                    <input type="text" class="form-control" name="rescue_email" id="rescue_email" value="your@email.com">
+                                    <label for="site_name">Site Name</label>
+                                    <input type="text" class="form-control" required id="site_name" name="SITE_NAME" placeholder="Do Science">
+                                    <label for="base_dir">Base Directory</label>
+                                    <input type="text" class="form-control" required id="base_dir" name="BASE_DIR" id="BASE_DIR" value="<?php echo $BASE_DIR; ?>">
+                                    <label for="base_url">Base URL</label>
+                                    <input type="text" class="form-control" required id="base_url" name="BASE_URL" id="BASE_URL" value="<?php echo $BASE_URL; ?>">
+                                    <label for="rescue_email">Site Admin Email</label>
+                                    <input type="text" class="form-control" required id="rescue_email" name="rescue_email" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" placeholder="your@email.com">
                                 </div>
                                 <div class="col-md-6" id="directory-help">
                                     <h5>Directory Setup</h5>
@@ -330,20 +348,22 @@ $rqe=array();
                         <div id="database" class="tab-pane fade in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
-                                    <label>Database Server</label>
-                                    <input type="text" class="form-control" name="db_servername" id="db_servername" value="localhost">
-                                    <label>Username</label>
-                                    <input type="text" class="form-control" name="db_username" id="db_username" value="csb">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control" name="db_password">
-                                    <label>Database Name</label>
-                                    <input type="text" class="form-control" name="db_name" id="db_name" value="csb">
-                                    
+                                    <label for="db_servername">Database Server</label>
+                                    <input type="text" class="form-control" required id="db_servername" name="db_servername" value="localhost">
+                                    <label for="db_port">Database Port</label>
+                                    <input type="text" class="form-control" required id="db_port" name="db_port" max="65535" maxlength="5" pattern="[0-9]{1,5}" value="3306">
+                                    <label for="db_username">Username</label>
+                                    <input type="text" class="form-control" required id="db_username" name="db_username" value="csb">
+                                    <label for="db_password">Password</label>
+                                    <input type="password" class="form-control" required id="db_password" name="db_password">
+                                    <label for="db_name">Database Name</label>
+                                    <input type="text" class="form-control" required id="db_name" name="db_name" value="csb">
                                 </div>
                                 <div class="col-md-6" id="database-help">
                                     <h5>Database Setup</h5>
                                     <ul>
                                         <li>Database Server: Often localhost, 127.0.0.1, or a remote server IP</li>
+                                        <li>Database Port: default is 3306, but if your database runs on a different port you can change it here</li>
                                         <li>Username: this is your database user (security tip: create a program-specific db user)</li>
                                         <li>Database Name: This is where all CSB tables will go. Should be empty/new utf8 / utf8_bin DB schema.</li>
                                     </ul>
@@ -356,16 +376,16 @@ $rqe=array();
                         <div id="smtp" class="tab-pane fade in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
-                                    <label>Email Host</label>
-                                    <input type="text" class="form-control" name="email_host" placeholder="smtp.yourprovider.example">
-                                    <label>Username</label>
-                                    <input type="text" class="form-control" name="email_username" value="">
-                                    <label>Password</label>
-                                    <input type="password" class="form-control" name="email_password" value="">
-                                    <label>Port</label>
-                                    <input type="text" class="form-control" name="email_port" placeholder="587">
-                                    <label>Sending Address</label>
-                                    <input type="text" class="form-control" name="email_from" value="your@email.com">
+                                    <label for="email_host">Email Host</label>
+                                    <input type="text" class="form-control" id="email_host" name="email_host" placeholder="smtp.yourprovider.example">
+                                    <label for="email_username">Username</label>
+                                    <input type="text" class="form-control" id="email_username" name="email_username" value="">
+                                    <label for="email_password">Password</label>
+                                    <input type="password" class="form-control" id="email_password" name="email_password" value="">
+                                    <label for="email_port">Port</label>
+                                    <input type="text" class="form-control" id="email_port" name="email_port" max="65535" pattern="[0-9]{1,5}" value="587">
+                                    <label for="email_from">Sending Address</label>
+                                    <input type="text" class="form-control" id="email_from" name="email_from" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" placeholder="your@email.com">
                                 </div>
                                 <div class="col-md-6" id="smtp-help">
                                     <h5>SMTP Setup</h5>
@@ -375,20 +395,38 @@ $rqe=array();
                                 </div>
                             </div>
                         </div>
+                        <div id="socials" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label for="social_discord">Discord Invite ID:</label>
+                                    <input type="text" class="form-control" id="social_discord" name="social_discord" pattern="[0-9a-zA-Z]{10}" placeholder="aBcD5eF8gH">
+                                    <label for="social_youtube">YouTube channel</label>
+                                    <input type="text" class="form-control" id="social_youtube" name="social_youtube" pattern="[0-9a-zA-Z/]*" placeholder="/c/CosmoQuest">
+                                    <label for="social_twitch">Twitch channel name</label>
+                                    <input type="text" class="form-control" id="social_twitch" name="social_twitch" pattern="[0-9a-zA-Z]*" placeholder="cosmoquestx">
+                                    <label for=social_twitter>Twitter hande</label>
+                                    <input type="text" class="form-control" id="social_twitter" name="social_twitter" pattern="[0-9a-zA-Z]*" placeholder="cosmoquestx">
+                                </div>
+                                <div class="col-md-6" id="smtp-help">
+                                	<h5>Optional: Social Media and Community</h5>
+                                	<p>Here you can predefine some of your social media and community contacts
+                                	that you can later refer to in texts and descriptions on the site.</p>
+                                    <ul>
+                                        <li>Discord: Enter your invite ID here (https://discord.gg/&lt;invite_id&gt;</li>
+                                        <li>Youtube: Your channel (https://youtube.com/&lt;c/channelname&gt; or https://youtube.com/&lt;channel/channelid&gt;</li>
+                                        <li>Twitch: Your Twitch channel (https://twitch.tv/&lt;channel&gt;)</li>
+                                        <li>Twitter: Your Twitter handle (https://twitter.com/&lt;handle&gt;)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-
-
-
                     <div class="my-4 d-flex justify-content-center">
                         <input type="hidden" name="write_config" value="true">
                         <input type="submit" class="btn btn-cq" name="submit" value="Write Configuration" <?php if ($rq1 === false || $rq2 === false ) { echo "disabled"; } ?> >
                     </div>
                 </form>
-
-
             </div>
-
         </div>
     </div>
 </div>
