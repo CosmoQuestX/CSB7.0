@@ -8,7 +8,7 @@
 
 /* ----------------------------------------------------------------------
    We should make sure the installer is not called when the settings file
-   is already present. Just incase somebody tries.  
+   is already present. Just incase somebody tries.
    ---------------------------------------------------------------------- */
 if ((@include "../csb-settings.php") == TRUE) {
     header("Location: $BASE_URL");
@@ -145,14 +145,14 @@ $rqe=array();
                 {
                     $("#test-status").html("Looks good! 👍")
                         .attr("class", "alert alert-success col-12") //Style the message
-                        .css({ 
+                        .css({
                             "margin-top": "1rem",
                             "display": "block",
                             "width": "auto",
                             "height": "auto"
                         }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
                 }
-                else 
+                else
                 {
                     $("#test-status").html("Error: " + response.message)
                         .attr("class", "alert alert-danger col-12")  //Style the message
@@ -163,7 +163,7 @@ $rqe=array();
                                 "height": "auto"
                             }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
                 }
-            }).catch( err => { 
+            }).catch( err => {
                 $("#test-status").html("An unexpected error occurred!")
                     .attr("class", "alert alert-danger col-12")  //Style the message
                     .css({
@@ -215,8 +215,8 @@ $rqe=array();
                     </p>
                 </div>
 
-                
-                
+
+
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
@@ -240,12 +240,12 @@ $rqe=array();
                         <div id="requirements" class="tab-pane active in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
-                                    <label>PHP Version greater <?php echo $min_version_readable; ?></label> 
-                                    <?php 
-                                    if (checkForPHP($min_version)) { 
-                                        echo "<span class=\"font-weight-bold text-success\">TRUE</span>"; 
+                                    <label>PHP Version greater <?php echo $min_version_readable; ?></label>
+                                    <?php
+                                    if (checkForPHP($min_version)) {
+                                        echo "<span class=\"font-weight-bold text-success\">TRUE</span>";
                                         $rq1 = true;
-                                    }  
+                                    }
                                         else {
                                             echo "<span class=\"font-weight-bold text-danger\">FALSE</span>";
                                         $rq1 = false;
@@ -254,23 +254,23 @@ $rqe=array();
                                     <br />
                                     <label>Checking for required PHP Extensions: <br></label>
                                     <ul>
-                                    <?php 
+                                    <?php
                                     foreach ($extensions as $extension) {
-                                        
-                                        if (checkForExtension($extension)) { 
-                                            echo "<li>Extension $extension: <span class=\"font-weight-bold text-success\">TRUE</span></li>"; 
+
+                                        if (checkForExtension($extension)) {
+                                            echo "<li>Extension $extension: <span class=\"font-weight-bold text-success\">TRUE</span></li>";
                                             $rqe[]=true;
-                                        }  
+                                        }
                                             else {
                                                 echo "<li><span class=\"font-weight-bold text-danger\">FALSE</span></li>";
                                             $rqe[] = false;
                                         }
-                                        if (in_array(false,$rqe)) { 
-                                            $rq2 = false; 
-                                        } 
-                                        else 
-                                        { 
-                                            $rq2=true; 
+                                        if (in_array(false,$rqe)) {
+                                            $rq2 = false;
+                                        }
+                                        else
+                                        {
+                                            $rq2=true;
                                         }
                                     }
                                     ?>
@@ -278,12 +278,12 @@ $rqe=array();
 
                                     <label>Optional Components: </label>
                                    <ul>
-                                    <?php 
+                                    <?php
                                     foreach ($optionals as $optional) {
-                                        
-                                        if (checkForClass($optional)) { 
-                                            echo "<li>Class $optional: <span class=\"font-weight-bold text-success\">TRUE</span></li>"; 
-                                        }  
+
+                                        if (checkForClass($optional)) {
+                                            echo "<li>Class $optional: <span class=\"font-weight-bold text-success\">TRUE</span></li>";
+                                        }
                                             else {
                                                 echo "<li>Class $optional: <span class=\"font-weight-bold text-danger\">FALSE</span></li>";
                                         }
@@ -338,12 +338,12 @@ $rqe=array();
                                     <input type="password" class="form-control" name="db_password">
                                     <label>Database Name</label>
                                     <input type="text" class="form-control" name="db_name" id="db_name" value="csb">
-                                    
+
                                 </div>
                                 <div class="col-md-6" id="database-help">
                                     <h5>Database Setup</h5>
                                     <ul>
-                                        <li>Database Server: Often localhost, 127.0.0.1, or a remote server IP</li>
+                                        <li>Database Server: Often localhost, 127.0.0.1, or a remote server IP. If in our Docker container, use <b>db</b></li>
                                         <li>Username: this is your database user (security tip: create a program-specific db user)</li>
                                         <li>Database Name: This is where all CSB tables will go. Should be empty/new utf8 / utf8_bin DB schema.</li>
                                     </ul>

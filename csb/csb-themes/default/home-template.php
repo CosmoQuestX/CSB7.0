@@ -79,9 +79,9 @@
             <h3 class="font-weight-bold">Why the update?</h3>
             <div class="text-blk">
             <p>Our Citizen Science Builder software previously utilized a software framework called $Name. Overtime, we realized we were limited in what
-               we could do by the rate of that frameworks updates, and if anyone wanted to contribute to this open-source platform, they
+               we could do by the rate of that framework's updates, and if anyone wanted to contribute to this open-source platform, they
                were going to have to deal with our spaghetti code and framework... and that was a bit much. At the end of the Bennu Mappers project, we started a
-               rewrite of our platform. Our goals are to make it easier for you to participate and for us to maintain into the future. Also, it will be hopefully better for doing
+               rewrite of our platform. Our goals are to make it easier for you to participate and for us to maintain into the future. Also, it will hopefully be better for doing
                science for the scientists we work with. This is still a work in progress, so expect regular changes to pop up. <a href="https://discord.gg/pVGXJDUKud"> Join us on
                Discord </a> to chat about changes and work on your own, or to test the current ones. Or just hang out, thats fine too.</p>
 
