@@ -145,7 +145,7 @@ function finish_tutorial() {
     }
     
     // Variable definitions
-    global $db_servername, $db_username, $db_password, $db_name;
+    global $db_servername, $db_username, $db_password, $db_name, $db_port;
     // Set up database connection     
     $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
@@ -259,7 +259,7 @@ function getNextImageForUser($application_unsafe) {
     if (debug) { echo "Here's your next image for application " . $application . "<br />\n"; }
 
     // Variable definitions
-    global $db_servername, $db_username, $db_password, $db_name;
+    global $db_servername, $db_username, $db_password, $db_name, $db_port;
     
     $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
@@ -422,7 +422,7 @@ function getImageById($id_unsafe, $attach_marks=false) {
     $id = filter_var($id_unsafe,FILTER_SANITIZE_NUMBER_INT,0);
     if (debug) { echo "Here's the image with id " . $id . "<br />\n"; }
     // Variable definitions
-    global $db_servername, $db_username, $db_password, $db_name;
+    global $db_servername, $db_username, $db_password, $db_name, $db_port;
     // First, let's open a database connection
     $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
@@ -463,7 +463,7 @@ function submit_data($application_unsafe) {
      */
     
     // Variable definitions
-    global $db_servername, $db_username, $db_password, $db_name;
+    global $db_servername, $db_username, $db_password, $db_name, $db_port;
     // First, let's open a database connection
     $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
@@ -606,7 +606,7 @@ function scistarter() {
     if ( debug) { echo "Submitting data to scistarter<br />\n"; }
     
     // Variable definitions
-    global $db_servername, $db_username, $db_password, $db_name;
+    global $db_servername, $db_username, $db_password, $db_name, $db_port;
     // First, let's open a database connection
     $db_conn = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
     $db_conn->connectDB();
