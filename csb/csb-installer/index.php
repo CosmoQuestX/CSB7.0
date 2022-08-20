@@ -362,7 +362,7 @@ $rqe=array();
                                 <div class="col-md-6" id="database-help">
                                     <h5>Database Setup</h5>
                                     <ul>
-                                        <li>Database Server: Often localhost, 127.0.0.1, or a remote server IP</li>
+                                        <li>Database Server: Often localhost, 127.0.0.1, or a remote server IP. If in our Docker container, use <b>db</b></li>
                                         <li>Database Port: default is 3306, but if your database runs on a different port you can change it here</li>
                                         <li>Username: this is your database user (security tip: create a program-specific db user)</li>
                                         <li>Database Name: This is where all CSB tables will go. Should be empty/new utf8 / utf8_bin DB schema.</li>
