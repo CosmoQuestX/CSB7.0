@@ -42,10 +42,7 @@ This is an open source image annotation platform suitable for citizen science, c
 > Images, videos and other media belong to their respective owners.
 
 <!--  -->
-> Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-
-<!--  -->
-> <http://www.apache.org/licenses/LICENSE-2.0>
+> Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at [<http://www.apache.org/licenses/LICENSE-2.0>](http://www.apache.org/licenses/LICENSE-2.0).
 
 <!--  -->
 > Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
@@ -56,7 +53,9 @@ To get a production build of the software, go the [latest `master` CI run](https
 
 ### Minimum PHP requirements
 
-CSB 7.0 is built on PHP 8.1. There were changes from previous versions of PHP to PHP 8.1 that may cause some things to not work properly should you use a version prior to PHP 8.1.
+CSB 7.0 has been tested in our sandbox environment, which uses PHP 8.1. The [Docker configuration](#method-2---using-docker) is configured to use PHP 8.1, as well.
+
+If you have not yet updated to PHP 8.1 from PHP 7.4 or earlier, you may want to consider doing this, however there is no requirement to do this. You can find out more information about PHP's supported versions at [https://www.php.net/supported-versions.php](https://www.php.net/supported-versions.php).
 
 ### Add SASS support
 
