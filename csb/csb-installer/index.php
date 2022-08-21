@@ -316,7 +316,7 @@ $rqe=array();
                                     <h5>Requirements</h5>
                                     Currently, the requirements are as follows:
                                     <ul>
-                                        <li>PHP: Version <?php echo $min_version_readable; ?> and above</li>
+                                        <li>PHP: Version <?php echo $min_version_readable; ?> or newer (recommended)</li>
                                         <li>Extensions: mysqli</li>
                                         <li>Optional components: Mail (from PEAR)</li>
                                         <li>Optional components are, as the name suggests, optional, but they might provide useful functions that you are missing out on if you don't have them installed.</li>
