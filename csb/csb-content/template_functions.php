@@ -143,7 +143,7 @@ function loadUser()
 function loadNavLinks()
 {
 
-    global $BASE_URL, $ACC_URL, $user, $adminFlag, $db_servername, $db_username, $db_password, $db_name;
+    global $BASE_URL, $ACC_URL, $user, $adminFlag, $db_servername, $db_username, $db_password, $db_name, $db_port;
 
     if ($user == TRUE) {         // LOGGED IN
         
