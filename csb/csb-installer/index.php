@@ -267,7 +267,7 @@ $rqe=array();
                                     else
                                     {
                                     // Old versions of PHP will be warned but not prevented from proceeding with install
-                                        echo '<span class="font-weight-bold text-warning">FALSE: You are using '.phpversion().'. You may wish to consider upgrading to '.$min_version_readable.'.</span>';
+                                        echo '<span class="font-weight-bold text-warning">FALSE: You are using PHP'.phpversion().'. You may wish to consider upgrading to PHP'.$min_version_readable.'.</span>';
                                         $rq1 = true;
                                     }
                                     ?>
