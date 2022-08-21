@@ -264,9 +264,11 @@ $rqe=array();
                                         echo '<span class="font-weight-bold text-success">TRUE</span>';
                                         $rq1 = true;
                                     }
-                                        else {
-                                            echo '<span class="font-weight-bold text-danger">FALSE</span>';
-                                        $rq1 = false;
+                                    else
+                                    {
+                                    // Old versions of PHP will be warned but not prevented from proceeding with install
+                                        echo '<span class="font-weight-bold text-warning">FALSE: You are using '.phpversion().'. You may wish to consider upgrading to '.$min_version.'.</span>';
+                                        $rq1 = true;
                                     }
                                     ?>
                                     <br />
