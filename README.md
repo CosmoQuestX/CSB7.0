@@ -36,7 +36,7 @@ This is an open source image annotation platform suitable for citizen science, c
 
 ## License
 
-> Copyright © 2012-2021 CosmoQuest X Team is led by Pamela Gay with the Development team and maintained through community collaboration. **All rights reserved.**
+> Copyright © 2012-2022 CosmoQuest X Team is led by Pamela Gay with the Development team and maintained through community collaboration. **All rights reserved.**
 
 <!--  -->
 > Images, videos and other media belong to their respective owners.
