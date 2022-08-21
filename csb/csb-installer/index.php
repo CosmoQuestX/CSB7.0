@@ -258,7 +258,7 @@ $rqe=array();
                         <div id="requirements" class="tab-pane active in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
-                                    <label>PHP Version greater <?php echo $min_version_readable; ?></label>
+                                    <label>PHP Version at least <?php echo $min_version_readable; ?></label>
                                     <?php
                                     if (checkForPHP($min_version)) {
                                         echo '<span class="font-weight-bold text-success">TRUE</span>';
