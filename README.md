@@ -12,6 +12,7 @@ An open source implementation of CosmoQuest's Citizen Science Builder software.
 - [About](#about)
 - [License](#license)
 - [Compiling and Installing](#compiling-and-installing)
+  - [Minimum PHP requirements](#minimum-php-requirements)
   - [Add SASS support](#add-sass-support)
   - [Optional - Error Documents](#optional---error-documents)
   - [Method 1 - No Docker](#method-1---no-docker)
