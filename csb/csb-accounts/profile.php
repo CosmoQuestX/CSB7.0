@@ -81,13 +81,13 @@ else {
 
             if (isset($_POST['first_name'])) {
                 $query .= ", first_name = ?";
-                $params[] = preg_replace("/;/", "", filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING));
+                $params[] = preg_replace("/;/", "", filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_SPECIAL_CHARS));
                 $params_type .= "s";
             }
 
             if (isset($_POST['last_name'])) {
                 $query .= ", last_name = ?";
-                $params[] = preg_replace("/;/", "", filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING));
+                $params[] = preg_replace("/;/", "", filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_SPECIAL_CHARS));
                 $params_type .= "s";
             }
 
