@@ -8,7 +8,7 @@
 
 /* ----------------------------------------------------------------------
    We should make sure the installer is not called when the settings file
-   is already present. Just incase somebody tries.  
+   is already present. Just incase somebody tries.
    ---------------------------------------------------------------------- */
 if ((@include "../csb-settings.php") == TRUE) {
     header("Location: $BASE_URL");
@@ -73,7 +73,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
                         case "youtube":
                             $config_body .= "\${$key}=\"https://youtube.com/{$value}\";\n";
                             break;
-                        case "twitch":    
+                        case "twitch":
                             $config_body .= "\${$key}=\"https://twitch.tv/{$value}\";\n";
                             break;
                         case "twitter":
@@ -120,8 +120,8 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
    --------------------------------------------------------------------- */
 
 // Requirement definition
-$min_version = "70200";
-$min_version_readable = "7.2";
+$min_version = "80100";
+$min_version_readable = "8.1";
 $extensions = array("mysqli");
 $optionals = array("Mail");
 $rq1=false;
@@ -160,14 +160,14 @@ $rqe=array();
                 {
                     $("#test-status").html("Looks good! 👍")
                         .attr("class", "alert alert-success col-12") //Style the message
-                        .css({ 
+                        .css({
                             "margin-top": "1rem",
                             "display": "block",
                             "width": "auto",
                             "height": "auto"
                         }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
                 }
-                else 
+                else
                 {
                     $("#test-status").html("Error: " + response.message)
                         .attr("class", "alert alert-danger col-12")  //Style the message
@@ -178,7 +178,7 @@ $rqe=array();
                                 "height": "auto"
                             }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
                 }
-            }).catch( err => { 
+            }).catch( err => {
                 $("#test-status").html("An unexpected error occurred!")
                     .attr("class", "alert alert-danger col-12")  //Style the message
                     .css({
@@ -230,8 +230,8 @@ $rqe=array();
                     </p>
                 </div>
 
-                
-                
+
+
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
@@ -258,12 +258,12 @@ $rqe=array();
                         <div id="requirements" class="tab-pane active in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
-                                    <label>PHP Version greater <?php echo $min_version_readable; ?></label> 
-                                    <?php 
-                                    if (checkForPHP($min_version)) { 
-                                        echo '<span class="font-weight-bold text-success">TRUE</span>'; 
+                                    <label>PHP Version greater <?php echo $min_version_readable; ?></label>
+                                    <?php
+                                    if (checkForPHP($min_version)) {
+                                        echo '<span class="font-weight-bold text-success">TRUE</span>';
                                         $rq1 = true;
-                                    }  
+                                    }
                                         else {
                                             echo '<span class="font-weight-bold text-danger">FALSE</span>';
                                         $rq1 = false;
@@ -272,23 +272,23 @@ $rqe=array();
                                     <br />
                                     <label>Checking for required PHP Extensions: <br></label>
                                     <ul>
-                                    <?php 
+                                    <?php
                                     foreach ($extensions as $extension) {
-                                        
-                                        if (checkForExtension($extension)) { 
-                                            echo '<li>Extension ' . $extension . ': <span class="font-weight-bold text-success">TRUE</span></li>'; 
+
+                                        if (checkForExtension($extension)) {
+                                            echo '<li>Extension ' . $extension . ': <span class="font-weight-bold text-success">TRUE</span></li>';
                                             $rqe[]=true;
-                                        }  
+                                        }
                                             else {
                                                 echo '<li><span class="font-weight-bold text-danger">FALSE</span></li>';
                                             $rqe[] = false;
                                         }
-                                        if (in_array(false,$rqe)) { 
-                                            $rq2 = false; 
-                                        } 
-                                        else 
-                                        { 
-                                            $rq2=true; 
+                                        if (in_array(false,$rqe)) {
+                                            $rq2 = false;
+                                        }
+                                        else
+                                        {
+                                            $rq2=true;
                                         }
                                     }
                                     ?>
@@ -296,12 +296,12 @@ $rqe=array();
 
                                     <label>Optional Components: </label>
                                    <ul>
-                                    <?php 
+                                    <?php
                                     foreach ($optionals as $optional) {
-                                        
-                                        if (checkForClass($optional)) { 
-                                            echo '<li>Class ' . $optional .': <span class="font-weight-bold text-success">TRUE</span></li>'; 
-                                        }  
+
+                                        if (checkForClass($optional)) {
+                                            echo '<li>Class ' . $optional .': <span class="font-weight-bold text-success">TRUE</span></li>';
+                                        }
                                             else {
                                                 echo '<li>Class ' . $optional . ': <span class="font-weight-bold text-danger">FALSE</span></li>';
                                         }

@@ -53,6 +53,10 @@ This is an open source image annotation platform suitable for citizen science, c
 
 To get a production build of the software, go the [latest `master` CI run](https://github.com/CosmoQuestX/CSB7.0/actions?query=branch%3Amaster) and download the `csb-build` artifact.
 
+### Minimum PHP requirements
+
+CSB 7.0 is built on PHP 8.1. There were changes from previous versions of PHP to PHP 8.1 that may cause some things to not work properly should you use a version prior to PHP 8.1.
+
 ### Add SASS support
 
 To install SASS, follow instructions on <https://sass-lang.com/install>. Once things
