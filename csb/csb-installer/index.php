@@ -319,7 +319,7 @@ $rqe=array();
                                     <h5>Requirements</h5>
                                     Currently, the requirements are as follows:
                                     <ul>
-                                        <li>PHP: Version <?php echo $php_rec_version_readable; ?> and higher are tested</li>
+                                        <li>PHP: Version <?php echo $php_rec_version_readable; ?> is tested. Higher minor versions should work</li>
                                         <li>PHP: Version <?php echo $php_min_version_readable; ?> and higher might work but is untested</li>
                                         <li>Extensions: mysqli</li>
                                         <li>Optional components: Mail (from PEAR)</li>
