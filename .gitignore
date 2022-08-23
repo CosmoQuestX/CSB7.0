@@ -4,3 +4,5 @@ csb-settings.php
 csb/csb-themes/default/style.css
 csb/csb-themes/default/style.css.map
 **/.idea
+/.buildpath
+/.project
