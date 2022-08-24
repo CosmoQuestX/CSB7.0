@@ -260,7 +260,7 @@ $rqe=array();
                         <div id="requirements" class="tab-pane active in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
-                                    <label>PHP Version <?php $ver = checkForPHP($php_min_version, $php_rec_version); $ver == 1 ? $vn = $php_rec_version_readable : $vn = $php_min_version_readable; echo $vn; ?></label>
+                                    <label>PHP Version at least <?php echo $php_min_version; ?>? <?php $ver = checkForPHP($php_min_version, $php_rec_version); $ver == 1 ? $vn = $php_rec_version_readable : $vn = $php_min_version_readable; echo $vn; ?></label>
                                     <?php
                                     if ($ver == 1) {
                                         echo '<span class="font-weight-bold text-success">OK</span>';
@@ -319,8 +319,8 @@ $rqe=array();
                                     <h5>Requirements</h5>
                                     Currently, the requirements are as follows:
                                     <ul>
-                                        <li>PHP: Version <?php echo $php_rec_version_readable; ?> is tested. Higher minor versions should work</li>
-                                        <li>PHP: Version <?php echo $php_min_version_readable; ?> and higher might work but is untested</li>
+                                        <li>PHP: Version <?php echo $php_rec_version_readable; ?> is the version CSB was developed for. </li>
+                                        <li>PHP: Version <?php echo $php_min_version_readable; ?> is tested, but may not be supported in future versions.</li>
                                         <li>Extensions: mysqli</li>
                                         <li>Optional components: Mail (from PEAR)</li>
                                         <li>Optional components are, as the name suggests, optional, but they might provide useful functions that you are missing out on if you don't have them installed.</li>
