@@ -45,11 +45,11 @@ loadHeader();
 if (isset($_POST) && isset ($_POST['write_config'])) {
     if ($_POST['write_config'] == "true") {
         //Let's prepare the config we want to write
-        
+
         $config_head = "<?php \n";
         $config_body = "";
         $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";
-        
+
         $avar = array('SITE_NAME','BASE_DIR', 'BASE_URL', 'db_servername', 'db_username', 'db_password', 'email_host', 'email_username', 'email_password', 'email_port', 'email_from');
         foreach ($avar as $varname) {
             if (!isset($varname)) {
@@ -58,7 +58,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
             }
         }
         // TODO Suggestion: rework the database layer to support table prefixes. Useful if CSB needs to be run on one shared database.
-        
+
         foreach ($_POST as $key => $value) {
             if ($key != "write_config" && $key != "submit") {
                 if (strpos($key, "email_") !== false) {
@@ -91,8 +91,8 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
         fwrite($csbconfig, $config_body);
         fwrite($csbconfig, $config_foot);
         fclose($csbconfig);
-        
-        
+
+
         // If we produced a readable configuration, we can carry on to step 2.
         if (is_readable($BASE_DIR . "/csb-settings.php")) { ?>
             <div id="main">
@@ -162,14 +162,14 @@ $rqe=array();
                 {
                     $("#test-status").html("Looks good! 👍")
                         .attr("class", "alert alert-success col-12") //Style the message
-                        .css({ 
+                        .css({
                             "margin-top": "1rem",
                             "display": "block",
                             "width": "auto",
                             "height": "auto"
                         }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
                 }
-                else 
+                else
                 {
                     $("#test-status").html("Error: " + response.message)
                         .attr("class", "alert alert-danger col-12")  //Style the message
@@ -180,7 +180,7 @@ $rqe=array();
                                 "height": "auto"
                             }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
                 }
-            }).catch( err => { 
+            }).catch( err => {
                 $("#test-status").html("An unexpected error occurred!")
                     .attr("class", "alert alert-danger col-12")  //Style the message
                     .css({
@@ -232,8 +232,8 @@ $rqe=array();
                     </p>
                 </div>
 
-                
-                
+
+
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
@@ -260,12 +260,12 @@ $rqe=array();
                         <div id="requirements" class="tab-pane active in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
-                                    <label>PHP Version greater <?php $ver = checkForPHP($php_min_version, $php_rec_version); $ver == 1 ? $vn = $php_rec_version_readable : $vn = $php_min_version_readable; echo $vn; ?></label> 
+                                    <label>PHP Version at least <?php echo $php_min_version; ?>? Installed: <?php $ver = checkForPHP($php_min_version, $php_rec_version); $ver == 1 ? $vn = $php_rec_version_readable : $vn = $php_min_version_readable; echo phpversion(); ?></label>
                                     <?php
-                                    if ($ver == 1) { 
-                                        echo '<span class="font-weight-bold text-success">OK</span>'; 
+                                    if ($ver == 1) {
+                                        echo '<span class="font-weight-bold text-success">OK</span>';
                                         $rq1 = true;
-                                    }  
+                                    }
                                     elseif ($ver == 2) {
                                         echo '<span class="font-weight-bold text-warning">OUTDATED</span>';
                                         $rq1 = true;
@@ -278,23 +278,23 @@ $rqe=array();
                                     <br />
                                     <label>Checking for required PHP Extensions: <br></label>
                                     <ul>
-                                    <?php 
+                                    <?php
                                     foreach ($extensions as $extension) {
-                                        
-                                        if (checkForExtension($extension)) { 
-                                            echo '<li>Extension ' . $extension . ': <span class="font-weight-bold text-success">OK</span></li>'; 
+
+                                        if (checkForExtension($extension)) {
+                                            echo '<li>Extension ' . $extension . ': <span class="font-weight-bold text-success">OK</span></li>';
                                             $rqe[]=true;
-                                        }  
+                                        }
                                             else {
                                                 echo '<li><span class="font-weight-bold text-danger">ERROR</span></li>';
                                             $rqe[] = false;
                                         }
-                                        if (in_array(false,$rqe)) { 
-                                            $rq2 = false; 
-                                        } 
-                                        else 
-                                        { 
-                                            $rq2=true; 
+                                        if (in_array(false,$rqe)) {
+                                            $rq2 = false;
+                                        }
+                                        else
+                                        {
+                                            $rq2=true;
                                         }
                                     }
                                     ?>
@@ -302,12 +302,12 @@ $rqe=array();
 
                                     <label>Optional Components: </label>
                                    <ul>
-                                    <?php 
+                                    <?php
                                     foreach ($optionals as $optional) {
-                                        
-                                        if (checkForClass($optional)) { 
-                                            echo '<li>Class ' . $optional .': <span class="font-weight-bold text-success">OK</span></li>'; 
-                                        }  
+
+                                        if (checkForClass($optional)) {
+                                            echo '<li>Class ' . $optional .': <span class="font-weight-bold text-success">OK</span></li>';
+                                        }
                                             else {
                                                 echo '<li>Class ' . $optional . ': <span class="font-weight-bold text-danger">ERROR</span></li>';
                                         }
@@ -319,8 +319,8 @@ $rqe=array();
                                     <h5>Requirements</h5>
                                     Currently, the requirements are as follows:
                                     <ul>
-                                        <li>PHP: Version <?php echo $php_rec_version_readable; ?> and higher are tested</li>
-                                        <li>PHP: Version <?php echo $php_min_version_readable; ?> and higher might work but is untested</li>
+                                        <li>PHP: Version <?php echo $php_rec_version_readable; ?> is the version CSB was developed for. </li>
+                                        <li>PHP: Version <?php echo $php_min_version_readable; ?> is tested, but may not be supported in future versions.</li>
                                         <li>Extensions: mysqli</li>
                                         <li>Optional components: Mail (from PEAR)</li>
                                         <li>Optional components are, as the name suggests, optional, but they might provide useful functions that you are missing out on if you don't have them installed.</li>
