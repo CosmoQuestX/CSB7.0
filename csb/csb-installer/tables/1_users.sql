@@ -34,12 +34,3 @@ CREATE TABLE `users` (
               KEY `users_remember_token_index` (`remember_token`)
         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-delimiter //
-create trigger disable_TFA
-    before update on users
-    for each row
-    if new.two_factor_enabled = 0
-    then
-        set new.two_factor_secret=NULL;
-    end if; //
-delimiter ;
