@@ -60,8 +60,8 @@
                 You can also get to the login by clicking the big red button right above this paragraph and selecting register.
                </p>
                <p> If you had an account during the Bennu Mappers project or earlier, you will need to make a new one as
-                unfortunately the old user list did not survive the database transfer. If you have already created a new account you can simply log in. Check the remember me box if you want to log in easier next time. </p>
-                After logging in you will see the tabs for Moon Mappers, Mars Mappers and Mercury Mappers.
+                unfortunately the old user list did not survive the database transfer. If you have already created a new account you can simply log in. Check the remember me box if you want to log in easier next time.
+                   After logging in you will see the tabs for Moon Mappers, Mars Mappers and Mercury Mappers.</p>
 
                 <p> Please note that this software is still in beta and you may occasionally lose data such as marked images
                 or other progress. Know that your contributions are valuable. We are sorry if (when) this happens and will
