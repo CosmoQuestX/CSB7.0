@@ -260,7 +260,7 @@ $rqe=array();
                         <div id="requirements" class="tab-pane active in">
                             <div class="row">
                                 <div class="col-md-6 px-5">
-                                    <label>PHP Version at least <?php echo $php_min_version_readable; ?>? Installed: <?php $ver = checkForPHP($php_min_version, $php_rec_version); $ver == 1 ? $vn = $php_rec_version_readable : $vn = $php_min_version_readable; echo phpversion(); ?></label>
+                                    <label>Is PHP Version at least <?php echo $php_min_version_readable; ?>?<br>Installed: <?php $ver = checkForPHP($php_min_version, $php_rec_version); $ver == 1 ? $vn = $php_rec_version_readable : $vn = $php_min_version_readable; echo phpversion(); ?></label>
                                     <?php
                                     if ($ver == 1) {
                                         echo '<span class="font-weight-bold text-success">OK</span>';
