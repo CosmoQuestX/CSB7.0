@@ -107,13 +107,10 @@ else {
 
             // TODO Hook for setting/disabling 2FA.
             if (isset($_POST['two_factor_secret'])) {
-                if (is_null($two_factor_secret)) {
-                    $query .= ", two_factor_enabled = 0";
-                } else {
-                    $query .= ", two_factor_enabled = 1, two_factor_secret = ?";
-                    $params[] = [$two_factor_secret];
-                    $params_type .= "s";
-                }
+                $two_factor_enabled=!is_null($two_factor_secret);
+                $query .= ", two_factor_enabled = ?, two_factor_secret = ?";
+                $params[] = [$two_factor_enabled, $two_factor_secret];
+                $params_type .= "ss";
             }
 
             $query .= " where id = ?";
