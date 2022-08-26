@@ -25,7 +25,7 @@ CREATE TABLE `users` (
               `facebook_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
               `twitter_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
               `public_name` tinyint(1) NOT NULL DEFAULT '0',
-              `two_factor_enabled` tinyint(1) NOT NULL DEFAULT '0', # TODO add a triggered action when set to 0 to clear two_factor_secret
+              `two_factor_enabled` tinyint(1) NOT NULL DEFAULT '0',
               `two_factor_secret` varchar(255) DEFAULT NULL,
           PRIMARY KEY (`id`),
           UNIQUE KEY `users_name_unique` (`name`),
@@ -33,3 +33,13 @@ CREATE TABLE `users` (
               KEY `users_email_index` (`email`),
               KEY `users_remember_token_index` (`remember_token`)
         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+delimiter //
+create trigger disable_TFA
+    before update on users
+    for each row
+    if new.two_factor_enabled = 0
+    then
+        set new.two_factor_secret=NULL;
+    end if; //
+delimiter ;
