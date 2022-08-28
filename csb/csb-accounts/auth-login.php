@@ -248,24 +248,14 @@ function logout($db)
  * @param string $two_factor_secret - the user's 2FA secret. NULL means two_factor_enabled='0'
  */
 
-function regUser($db, $user, $pwhash, $two_factor_secret)
+function regUser($db, $user, $pwhash, $two_factor_enabled, $two_factor_secret)
 {
     global $CQ_ROLES;
-
-    // Determine if the user enabled 2FA
-    $two_factor_enabled=!is_null($two_factor_secret);
-
-/*    if (is_null($two_factor_secret)) {
-        $two_factor_enabled='0';
-    } else {
-        $two_factor_enabled='1';
-    }
-*/
 
     // Insert the user into the database
     $query = "INSERT INTO users (name, email, password, two_factor_enabled, two_factor_secret) VALUES (?, ?, ?, ?, ?)";
     $params = array(filter_var($user['username'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, 0), filter_var($user['email'], FILTER_SANITIZE_EMAIL), $pwhash, $two_factor_enabled, $two_factor_secret);
-    $db->insert($query, "sssss", $params);
+    $db->insert($query, "sssis", $params);
 
     // Get the id for the freshly created user
     $query = "SELECT id FROM users WHERE name = '".$user['username']."'";
