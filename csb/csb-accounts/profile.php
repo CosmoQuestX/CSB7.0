@@ -106,11 +106,11 @@ else {
             }
 
             // TODO Hook for setting/disabling 2FA.
-            if ((isset($_POST['two_factor_enabled'])) and (isset($_POST['two_factor_secret']))) {
+            if (isset($_POST['two_factor_enabled']) && isset($_POST['two_factor_secret'])) {
                 // Calculate two_factor_enabled based on what is actually in the secret to be safe
                 // 0 : secret is null (i.e. disabled)
                 // 1 : secret is not null (i.e. enabled)
-                $two_factor_enabled=!is_null($_POST['two_factor_secret']);
+                $two_factor_enabled=!is_null((preg_match("/^(?![0-9A-Z]{64})$/","",$_POST['two_factor_secret'])));
                 $query .= ", two_factor_enabled = ?, two_factor_secret = ?";
                 $params[] = [$two_factor_enabled, $_POST['two_factor_secret']];
                 $params_type .= "is";

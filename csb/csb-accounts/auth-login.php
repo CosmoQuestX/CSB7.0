@@ -79,7 +79,7 @@ if (isset($_GET['go'])) {
         // No errors? Kill the error
         else {
             // TODO Place-holder parameters for future 2FA
-            regUser($db, $_POST, $hashed, 0, NULL);
+            regUser($db, $_POST, $hashed);
             // Send the newly registered user off to the main page instead of presenting a blank page.
             header("Location: " . $BASE_URL);
             exit();
@@ -245,12 +245,25 @@ function logout($db)
  * @param resource $db - the current database connection
  * @param array $user - the user configuration for the registration attempt
  * @param string $pwhash - a hash of the password the new user entered
+ * @param bool $two_factor_enabled - whether the user has 2FA enabled
  * @param string $two_factor_secret - the user's 2FA secret. NULL means two_factor_enabled='0'
  */
 
-function regUser($db, $user, $pwhash, $two_factor_enabled, $two_factor_secret)
+function regUser($db, $user, $pwhash, $two_factor_enabled=0, $two_factor_secret=NULL)
 {
     global $CQ_ROLES;
+    
+    /*
+     *  Check whether 2FA is supposed to be enabled, and if it is, make sure a 
+     *  secret is set. 
+     */ 
+    if($two_factor_enabled == 1 ) {
+        if ($two_factor_secret == NULL) {
+            // If the user doesn't have a secret set, don't enable 2FA
+            $two_factor_enabled = 0;
+        }
+    }
+    
 
     // Insert the user into the database
     $query = "INSERT INTO users (name, email, password, two_factor_enabled, two_factor_secret) VALUES (?, ?, ?, ?, ?)";
