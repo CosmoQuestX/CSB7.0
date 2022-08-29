@@ -1,6 +1,6 @@
 alter table users
     add `two_factor_enabled` tinyint(1) NOT NULL DEFAULT '0',
-    add `two_factor_secret` varchar(255) DEFAULT NULL
+    add `two_factor_secret` varchar(64) DEFAULT NULL
 ;
 
 delimiter //

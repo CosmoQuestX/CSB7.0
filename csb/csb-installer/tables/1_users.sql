@@ -26,7 +26,7 @@ CREATE TABLE `users` (
               `twitter_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
               `public_name` tinyint(1) NOT NULL DEFAULT '0',
               `two_factor_enabled` tinyint(1) NOT NULL DEFAULT '0',
-              `two_factor_secret` varchar(255) DEFAULT NULL,
+              `two_factor_secret` varchar(64) DEFAULT NULL,
           PRIMARY KEY (`id`),
           UNIQUE KEY `users_name_unique` (`name`),
               KEY `emails_on_users` (`email`),
