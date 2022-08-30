@@ -100,7 +100,7 @@ $subimageext    =   strtolower($image_parts['extension']);
 
 // Check if the file we're opening is a format we can deal with. If not, bug out.
 if (!array_key_exists($baseimagetype, $allowed_formats)) {
-    die ("Not supported file type");
+    die ("Unsupported file type");
 }
 // Choose the function names for the format of the raw image.
 $imageload  = "imagecreatefrom" . $allowed_formats[$baseimagetype];
