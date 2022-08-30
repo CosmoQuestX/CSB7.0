@@ -186,7 +186,7 @@ for ($curheight=0; $curheight <= $baseimageheight-$imagesize; $curheight = $curh
         $imagesave($subimage, $subimagefqn);
         // store the filename in an array
         
-        $subimageurl  = $imagebaseurl . DIRECTORY_SEPARATOR . "CHOPPEDIMAGES" . DIRECTORY_SEPARATOR . $subimagename;
+        $subimageurl  = $imagebaseurl . "/" . "CHOPPEDIMAGES" . "/" . $subimagename;
         $subimagedetail_clear =array("x"=> $curheight, "y" => $curwidth);
         $subimagedetail = json_encode($subimagedetail_clear);
         //For each subimage in the imageset, write an entry into the images table
