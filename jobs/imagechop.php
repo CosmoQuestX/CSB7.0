@@ -87,9 +87,8 @@ $application_name = $app_res[0]['name'];
 if ($debug) { print "Chopping images for application $application_name \n"; };
 
 // Initialize variables for the raw images
-$imagepart      =  'csb-apps' . DIRECTORY_SEPARATOR . $application_name;
-$imagebasedir   =   $BASE_DIR . $imagepart;
-$imagebaseurl   =   $BASE_URL . $imagepart;
+$imagebasedir   =   $BASE_DIR . 'csb-apps' . DIRECTORY_SEPARATOR . $application_name;
+$imagebaseurl   =   $BASE_URL . 'csb-apps' . "/" . $application_name;
 $imagefolder    =   $imagebasedir . DIRECTORY_SEPARATOR . "raw_images";
 
 // Initialize variables for the subimages
