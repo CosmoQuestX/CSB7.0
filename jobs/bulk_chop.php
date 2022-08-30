@@ -25,7 +25,7 @@ $debug = false;
  * array key to correspond with the value of the IMAGETYPE constant of the
  * format. And if something breaks, this might have changed.
  */
-$allowed_formats    =   array(2 => 'jpg',3 => 'png');
+$allowed_formats    =   array(2 => 'jpeg',3 => 'png');
 
 // This is a cron job. Ensure it is only called from the command line
 if (substr(php_sapi_name(), 0, 3) !== 'cli') {

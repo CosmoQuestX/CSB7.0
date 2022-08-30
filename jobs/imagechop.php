@@ -55,7 +55,7 @@ $image_parts    =   pathinfo($imagesource);
  * array key to correspond with the value of the IMAGETYPE constant of the
  * format. And if something breaks, this might have changed.
  */
-$allowed_formats    =   array(2 => 'jpg',3 => 'png');
+$allowed_formats    =   array(2 => 'jpeg',3 => 'png');
 
 // Get image information. We only need the first three, which are all numeric.
 // The fourth is the "width" and "height" attributes that can be used in HTML.
