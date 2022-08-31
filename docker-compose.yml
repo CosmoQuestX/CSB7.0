@@ -1,4 +1,4 @@
-version: '3'
+version: '4'
 services:
   apache:
     build:
@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/app
   db:
-    image: mariadb:10.5.1
+    image: mariadb:10.5.17
     ports:
       - "13306:3306"
     environment:
