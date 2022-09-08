@@ -55,7 +55,7 @@ $image_parts    =   pathinfo($imagesource);
  * array key to correspond with the value of the IMAGETYPE constant of the
  * format. And if something breaks, this might have changed.
  */
-$allowed_formats    =   array(2 => 'jpg',3 => 'png');
+$allowed_formats    =   array(2 => 'jpeg',3 => 'png');
 
 // Get image information. We only need the first three, which are all numeric.
 // The fourth is the "width" and "height" attributes that can be used in HTML.
@@ -87,9 +87,8 @@ $application_name = $app_res[0]['name'];
 if ($debug) { print "Chopping images for application $application_name \n"; };
 
 // Initialize variables for the raw images
-$imagepart      =  'csb-apps' . DIRECTORY_SEPARATOR . $application_name;
-$imagebasedir   =   $BASE_DIR . $imagepart;
-$imagebaseurl   =   $BASE_URL . $imagepart;
+$imagebasedir   =   $BASE_DIR . 'csb-apps' . DIRECTORY_SEPARATOR . $application_name;
+$imagebaseurl   =   $BASE_URL . 'csb-apps' . "/" . $application_name;
 $imagefolder    =   $imagebasedir . DIRECTORY_SEPARATOR . "raw_images";
 
 // Initialize variables for the subimages
@@ -101,7 +100,7 @@ $subimageext    =   strtolower($image_parts['extension']);
 
 // Check if the file we're opening is a format we can deal with. If not, bug out.
 if (!array_key_exists($baseimagetype, $allowed_formats)) {
-    die ("Not supported file type");
+    die ("Unsupported file type");
 }
 // Choose the function names for the format of the raw image.
 $imageload  = "imagecreatefrom" . $allowed_formats[$baseimagetype];
@@ -175,19 +174,20 @@ for ($curheight=0; $curheight <= $baseimageheight-$imagesize; $curheight = $curh
         $subimagename = $subimagebase. "_" . $subimagenumber .  "." . $subimageext;
         // crop the image to the right format
         $subimage     = imagecrop($baseimage,array(
-            'x' => $curwidth,
-            'y' => $curheight,
-            'width' => $imagesize,
-            'height' => $imagesize
-        ));
+                    'x' => $curwidth,
+                    'y' => $curheight,
+                'width' => $imagesize,
+               'height' => $imagesize
+                        ));
         $subimagefqn  = $subimagefolder . DIRECTORY_SEPARATOR . $subimagename;
         print "Calling $imagesave to save $subimagefqn \n";
         // Write the image to the filesystem
         $imagesave($subimage, $subimagefqn);
         // store the filename in an array
         
-        $subimageurl  = $imagebaseurl . DIRECTORY_SEPARATOR . "CHOPPEDIMAGES" . DIRECTORY_SEPARATOR . $subimagename;
-        $subimagedetail='{"x":' . $curheight .', "y":'.$curwidth.'}';
+        $subimageurl  = $imagebaseurl . "/" . "CHOPPEDIMAGES" . "/" . $subimagename;
+        $subimagedetail_clear =array("x"=> $curheight, "y" => $curwidth);
+        $subimagedetail = json_encode($subimagedetail_clear);
         //For each subimage in the imageset, write an entry into the images table
         $image_sql    = 'INSERT INTO images (image_set_id, application_id, name, file_location, details) VALUES (?,?,?,?,?)';
         $image_params = array(
@@ -200,9 +200,8 @@ for ($curheight=0; $curheight <= $baseimageheight-$imagesize; $curheight = $curh
         $image_res    = $db_conn->insert($image_sql, "iisss", $image_params);
         // Bug out if that fails
         if ($image_res===false) {
-            print "Could not write image to db!";
             $db_conn->closeDB();
-            exit();
+            die("Could not write image to db!");
         }
         
         //Finally, increment the counter
