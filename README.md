@@ -85,7 +85,7 @@ CSB defines Apache error documents. If you want them to extend to the whole serv
 
 ##### 1.1 Setup LAMP Server
 
-- Setup an Apache 2 / MySQL 8 / PHP 7 environment. If we don't have specific instructions you need below, look for instructions for Wordpress. Our setup should be the same.
+- Setup an Apache 2 / MySQL 8 / PHP 8 environment. If we don't have specific instructions you need below, look for instructions for Wordpress. Our setup should be the same.
   - OSX
     - Enable Apache `apachectl start`
     - In `/etc/apache2/httpd.conf`
