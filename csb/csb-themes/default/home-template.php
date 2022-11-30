@@ -27,7 +27,9 @@
                Want to help implement new features and refine the old ones? Let us know in the #volunteers-reporting-for-duty channel.</p>
 
             <p>Need inspiration? Join our live studio audience on <a href="https://twitch.tv/Cosmoquestx">Twitch</a>. Astronomy Cast is on Mondays at 1900 UTC.
-                <a href="https://patreon.com/cosmoquestx">Patreon</a> supporters can join us on <a href="https://crowdcast.io/cosmoquestx">Crowdcast</a> for the live recording of Daily Space.
+                <a href="https://patreon.com/cosmoquestx">Patreon</a> supporters can join us on <a href="https://crowdcast.io/cosmoquestx">Crowdcast</a> for the live recording of Escape Velocity.
+                Daily Space has returned to <a href="https://twitch.tv/Cosmoquestx">Twitch</a> on Tuesdays through Fridays. Join Pamela and some of the other CosmoQuest team members to review
+                the day's press releases and stories, and ask your questions.
                 And we hold launch watch parties on <a href="https://twitch.tv/cosmoquestx">Twitch</a>, often without much notice because launches can be like that.
                 If we're not live you can check out our <a href="https://twitch.tv/cosmoquestx/videos">past broadcasts</a> up to 30 days after the show.
                </p>
