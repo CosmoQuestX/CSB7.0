@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/app
   db:
-    image: mariadb:10.5.17
+    image: mariadb:latest
     ports:
       - "13306:3306"
     environment:
