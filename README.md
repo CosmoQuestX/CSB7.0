@@ -79,6 +79,17 @@ CSB defines Apache error documents. If you want them to extend to the whole serv
 
 ---------------------------------------------
 
+Note: You'll need the repo accessible to apache. This means either
+clone it into a directory Apache sees, or sim link it there.
+
+### Clone repo
+
+```bash
+cd <directory for apache>
+git clone https://github.com/CosmoQuestX/CSB7.0.git
+
+```
+
 ### Method 1 - No Docker
 
 #### Step 1: Setup the Server
