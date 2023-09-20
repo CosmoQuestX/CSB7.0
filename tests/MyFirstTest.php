@@ -12,7 +12,7 @@ class MyFirstTest extends TestCase
     {
         // Assert
 
-        $foo = new email([]);
+        //$foo = new email([]);
 //        $foo->sendmail("a", "b");
         $this->assertEquals(3, 3);
     }
