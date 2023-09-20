@@ -5,15 +5,12 @@ namespace CosmoQuestX\Tests;
 
 use CosmoQuestX\Tests\email;
 use PHPUnit\Framework\TestCase;
-class MyFirstTest extends TestCase
+class BuildTests extends TestCase
 {
     /** @test */
-    public function navigation_compiles()
+    public function testingTest()
     {
-        // Assert
 
-        //$foo = new email([]);
-//        $foo->sendmail("a", "b");
         $this->assertEquals(3, 3);
     }
 
