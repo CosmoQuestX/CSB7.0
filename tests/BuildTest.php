@@ -5,7 +5,7 @@ namespace CosmoQuestX\Tests;
 
 use CosmoQuestX\Tests\email;
 use PHPUnit\Framework\TestCase;
-class BuildTests extends TestCase
+class BuildTest extends TestCase
 {
     /** @test */
     public function testingTest()
