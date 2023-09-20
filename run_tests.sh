@@ -2,4 +2,4 @@
 
 # brew install composer
 composer install --no-interaction
-vendor/bin/phpunit
+vendor/bin/phpunit --no-coverage
