@@ -1,0 +1,37 @@
+name: "build"
+
+on: [ push, pull_request, workflow_dispatch ]
+
+jobs:
+    build:
+        name: "PHP"
+        runs-on: ubuntu-latest
+        steps:
+            - name: "Checkout"
+              uses: actions/checkout@v4
+
+            - name: "Build environment"
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: "8.2"
+
+            - name: "Tests"
+              run:  |
+                  ./run_tests.sh
+#    auto-merge:
+#        needs: build
+#        runs-on: ubuntu-latest
+#        steps:
+#            - name: Check out repo
+#              uses: actions/checkout@v4
+#            - name: auto-merge
+#              if: |
+#                  github.actor == 'dependabot[bot]' &&
+#                  github.event_name == 'pull_request'
+#              run: |
+#                  ./merge_dependabot.sh
+#              env:
+#                  PR_URL: ${{github.event.pull_request.html_url}}
+#                  # this secret needs to be in the settings.secrets.dependabot
+#                  GITHUB_TOKEN: ${{secrets.GH_ACTION_TOKEN}}
+#
