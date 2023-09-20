@@ -1,4 +1,4 @@
-name: "build"
+name: "run-tests"
 
 on: [ push, pull_request, workflow_dispatch ]
 
@@ -19,7 +19,7 @@ jobs:
               run:  |
                   ./run_tests.sh
 #    auto-merge:
-#        needs: build
+#        needs: run-tests
 #        runs-on: ubuntu-latest
 #        steps:
 #            - name: Check out repo

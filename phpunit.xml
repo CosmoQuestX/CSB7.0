@@ -1,20 +1,22 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-    <coverage>
-        <include>
-            <directory>src</directory>
-        </include>
-        <report>
-            <clover outputFile="test-reports/php-clover.xml"/>
-            <html outputDirectory="test-reports/html"/>
-        </report>
-    </coverage>
-    <testsuites>
-        <testsuite name="Duplication Kata">
-            <directory>tests/</directory>
-        </testsuite>
-    </testsuites>
-    <logging>
-        <junit outputFile="test-reports/phpunit-report.xml"/>
-    </logging>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="vendor/autoload.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd">
+  <coverage>
+    <report>
+      <clover outputFile="test-reports/php-clover.xml"/>
+      <html outputDirectory="test-reports/html"/>
+    </report>
+  </coverage>
+  <testsuites>
+    <testsuite name="Duplication Kata">
+      <directory>tests/</directory>
+    </testsuite>
+  </testsuites>
+  <logging>
+    <junit outputFile="test-reports/phpunit-report.xml"/>
+  </logging>
+  <source>
+    <include>
+      <directory>src</directory>
+    </include>
+  </source>
 </phpunit>
