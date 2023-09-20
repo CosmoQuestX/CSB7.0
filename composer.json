@@ -1,0 +1,23 @@
+{
+    "name": "cosmoquestx/csb",
+    "description": "Kata",
+    "type": "project",
+    "license": "apache2",
+    "scripts" : {
+        "test": "phpunit"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "CosmoQuestX\\" : "csb/"
+        }
+    },
+    "autoload-dev" : {
+        "psr-4" : {
+            "CosmoQuestX\\Tests\\" : "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=5.4.0",
+        "approvals/approval-tests": "dev-Main"
+    }
+}
