@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/CosmoQuestX/CSB7.0/workflows/CI/badge.svg) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 
-An open source implementation of CosmoQuest's Citizen Science Builder software.
+An opensource implementation of CosmoQuest's Citizen Science Builder software.
 
 <details open>
 <summary>Table of Contents</summary>
@@ -79,13 +79,24 @@ CSB defines Apache error documents. If you want them to extend to the whole serv
 
 ---------------------------------------------
 
+Note: You'll need the repo accessible to apache. This means either
+clone it into a directory Apache sees, or sim link it there.
+
+### Clone repo
+
+```bash
+cd <directory for apache>
+git clone https://github.com/CosmoQuestX/CSB7.0.git
+
+```
+
 ### Method 1 - No Docker
 
 #### Step 1: Setup the Server
 
 ##### 1.1 Setup LAMP Server
 
-- Setup an Apache 2 / MySQL 8 / PHP 7 environment. If we don't have specific instructions you need below, look for instructions for Wordpress. Our setup should be the same.
+- Setup an Apache 2 / MySQL 8 / PHP 8 environment. If we don't have specific instructions you need below, look for instructions for Wordpress. Our setup should be the same.
   - OSX
     - Enable Apache `apachectl start`
     - In `/etc/apache2/httpd.conf`
