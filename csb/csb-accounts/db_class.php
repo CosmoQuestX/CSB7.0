@@ -26,6 +26,14 @@ class DB
     private $user;
     private $password;
     private $database;
+    /**
+     * @var int|mixed
+     */
+    private $port;
+    /**
+     * @var resource
+     */
+    private $conn;
 
     /**
      * Constructor set up basic variables
