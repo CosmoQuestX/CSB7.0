@@ -21,13 +21,13 @@ session_start();
  * @return boolean
  */
 
-function chk_UserId($db, $id, $name)
+function chk_UserId($db, $id, $name) : bool
 {
 
     $query = "SELECT id, name FROM users WHERE id = ?";
     $params = array($id);
     $result = $db->runQueryWhere($query, "s", $params)[0];
-    
+
     // strip out any white space and make everything lower case because typing
     $comp = strtolower(trim($result['name'], "\t\n\r\0\x0B"));
     $name = strtolower(trim($name, " \t\n\r\0\x0B"));
@@ -103,12 +103,12 @@ function userHasRole(...$roles)
     if(!is_array($roles)) { $roles = array(); }
     // If _SOMEHOW_ users end up without roles, make sure it's at least an array.
     if(!is_array($_SESSION['roles'])) { $_SESSION['roles'] = array(); }
-    
+
     if (count(array_intersect($roles ,$_SESSION['roles'])) > 0) {
         return true;
     }
     else {
         return false;
     }
-    
+
 }

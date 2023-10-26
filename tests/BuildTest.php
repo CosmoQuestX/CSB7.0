@@ -15,5 +15,14 @@ class BuildTest extends TestCase
         $this->assertEquals(3, $applesauce->TheWordThree());
     }
 
+    public function testLogin()
+    {
+        include("../csb/csb-accounts/auth.php");
+        $db = NULL;
+        $toCheck = chk_UserId($db,"id","name");
+        $this->assertEquals(TRUE, $toCheck);
+    }
+
+
 
 }
