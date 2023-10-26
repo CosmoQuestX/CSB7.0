@@ -19,9 +19,9 @@ $adminFlag = 1;
 /* ----------------------------------------------------------------------
    Check for post variables
    ---------------------------------------------------------------------- */
+$login = FALSE;
+$reg = FALSE;
 if (isset($_POST) && !empty($_POST)) {
-    $login = FALSE;
-    $reg = FALSE;
     if ($_POST['go'] == 'login') $login = TRUE;
     elseif ($_POST['go'] == 'reg') $reg = TRUE;
 }
