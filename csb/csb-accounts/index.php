@@ -11,8 +11,10 @@
    ---------------------------------------------------------------------- */
 require_once("../csb-loader.php");
 require_once($DB_class);
-require_once($BASE_DIR . "csb-account/auth.php");
+require_once($BASE_DIR . "csb-accounts/auth.php");
 $adminFlag = 1;
+
+
 
 /* ----------------------------------------------------------------------
    Check for post variables
