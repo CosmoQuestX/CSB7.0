@@ -36,6 +36,20 @@ if (stream_resolve_include_path("csb-settings.php") === false) {
    die("Failed to find installer in any of the tested paths above!");       // If you reached here, the array emptied out - meaning the path couldn't be found on the tree from the source address to the root.
 }
 
+// Define directory paths
+define('CSB_PATH', __DIR__);
+define('SRC_PATH', dirname(__DIR__) . '/src');
+
+// Autoload function to load classes from the src directory under the Cosmo\QuestX namespace
+spl_autoload_register(function ($class_name) {
+    if (strpos($class_name, 'CosmoQuestX') === 0) {
+        $file = SRC_PATH . '/' . str_replace('\\', '/', substr($class_name, 11)) . '.php';
+        if (file_exists($file)) {
+            require_once $file;
+        }
+    }
+});
+
 require "csb-settings.php";
 $loader = TRUE;
 
