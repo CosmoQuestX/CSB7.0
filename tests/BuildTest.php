@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace CosmoQuestX\Tests;
 
+use CosmoQuestX\Authorization;
 use CosmoQuestX\Applesauce;
 use PHPUnit\Framework\TestCase;
 
@@ -17,14 +18,13 @@ class BuildTest extends TestCase
 
     public function testLogin()
     {
-        include(__DIR__."/../csb/csb-accounts/auth.php");
         $db = new class {
             public function runQueryWhere()
             {
                 return [["name" => "name"]];
             }
         };
-        $toCheck = \Authorization::chk_UserId($db, "id", "name");
+        $toCheck = \CosmoQuestX\Authorization::chk_UserId($db, "id", "name");
         $this->assertEquals(TRUE, $toCheck);
     }
 
