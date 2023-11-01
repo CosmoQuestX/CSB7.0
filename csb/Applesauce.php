@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace CosmoQuestX;
+namespace unnamed;
 class Applesauce
 {
     public function TheWordThree(): int
