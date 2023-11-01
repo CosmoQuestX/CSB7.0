@@ -24,7 +24,7 @@ class BuildTest extends TestCase
                 return [["name" => "name"]];
             }
         };
-        $toCheck = chk_UserId($db, "id", "name");
+        $toCheck = \Authorization::chk_UserId($db, "id", "name");
         $this->assertEquals(TRUE, $toCheck);
     }
 
