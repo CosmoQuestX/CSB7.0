@@ -10,7 +10,9 @@
    Start / renew the session
    ---------------------------------------------------------------------- */
 session_start();
+class Authorization{
 
+}
 
 /**
  * Compare the user name against the database for a given id
