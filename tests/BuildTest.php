@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace CosmoQuestX\Tests;
 
-use unnamed\Applesauce;
+use CosmoQuestX\Applesauce;
 use PHPUnit\Framework\TestCase;
 
 class BuildTest extends TestCase
