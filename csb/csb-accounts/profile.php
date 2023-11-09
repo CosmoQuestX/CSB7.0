@@ -36,29 +36,29 @@ $user = isLoggedIn($db);
 
 if ($login || $user === FALSE) { // NOT LOGGED IN
 
-    /* it would probably good to output some error like, session timeout, do 
-     * you want to log in again, but if the session does time out, it is 
+    /* it would probably good to output some error like, session timeout, do
+     * you want to log in again, but if the session does time out, it is
      * likely a lot better to just send them to the login than to let them
-     * run into an error message...  
+     * run into an error message...
      */
     header('Location: ' . $BASE_URL . 'csb-accounts/login.php');
-    
+
 } /* ----------------------------------------------------------------------
     Are they trying to register?
    ---------------------------------------------------------------------- */
 
 elseif ($reg) {
-    
+
     // I don't know how they got there, but send them to the registration page
     header('Location: ' . $BASE_URL . 'csb-accounts/register.php');
-    
+
 } /* ----------------------------------------------------------------------
    load things
    ---------------------------------------------------------------------- */
 
 else {
     global $page_title, $header_title, $SITE_TITLE;
-    
+
     $page_title = $SITE_TITLE . "Profile & Settings";
 
     require_once($BASE_DIR . "csb-content/template_functions.php");
@@ -70,7 +70,7 @@ else {
        ---------------------------------------------------------------------- */
 
     if (isset($_POST) && !empty($_POST)) {
-        // Fetch old data to compare. 
+        // Fetch old data to compare.
         $curprofile = $db->getUser($_SESSION['user_id']);
 
         // Save email only when not empty, otherwise use the current one
@@ -88,6 +88,12 @@ else {
             if (isset($_POST['last_name'])) {
                 $query .= ", last_name = ?";
                 $params[] = preg_replace("/;/", "", filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_SPECIAL_CHARS));
+                $params_type .= "s";
+            }
+
+            if (isset($_POST['gravatar_url'])) {
+                $query .= ", gravatar_url = ?";
+                $params[] = preg_replace("/;/", "", filter_input(INPUT_POST, 'gravatar_url', FILTER_SANITIZE_URL));
                 $params_type .= "s";
             }
 
@@ -146,7 +152,7 @@ else {
     $main = "
         <h3 class='font-weight-bold'>Welcome, " . $user['name'] . "!</h3>
         <form id='profile-form' action='".$_SERVER['REQUEST_URI']."' method='POST' onSubmit='checkPasswd(this);'>
-            
+
             <div class='row'>
                 <div class='col'>
                     <label for='first-name'>First Name</label>
@@ -157,15 +163,18 @@ else {
                     <input type='text' id='last-name' name='last_name' class='form-control' value='".$thisUser['last_name']."'>
                 </div>
             </div>
-            
+
             <label for='email'>Email</label>
             <input type='text' id='email' name='email' class='form-control' value='".$thisUser['email']."'>
 
+            <label for='gravatar-url'>Gravatar URL</label>
+            <input type='text' id='gravatar-url' name='gravatar_url' class='form-control' value='".$thisUser['gravatar_url']."'>
+
             <h3 class='font-weight-bold mt-4'>Change Password</h3>
-            
+
             <label for='new-pass'>New Password</label>
             <input type='password' id='new-pass' name='password' class='form-control'>
-            
+
             <label for='confirm-pass'>Confirm New Password</label>
             <input type='password' id='confirm-pass' name='confirm_password' class='form-control'>
 
@@ -187,8 +196,8 @@ else {
         $notes = "
         <h5 class='font-weight-bold'>How we use your information</h5>
         <p>
-        Your privacy matters! While our developers have access to your profile information, 
-        the only thing that can be publicly seen is your username. We will, with permission 
+        Your privacy matters! While our developers have access to your profile information,
+        the only thing that can be publicly seen is your username. We will, with permission
         only, use your first and last name to give you credit for things you accomplish.
         </p>
         ";
@@ -200,7 +209,7 @@ else {
 
     load3Col($menus, $main, $notes);
     loadFooter();
-    
+
 
 }
 
