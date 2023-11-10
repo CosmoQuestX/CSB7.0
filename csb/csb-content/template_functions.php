@@ -107,9 +107,9 @@ function loadUser()
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Hello, <?php echo $user['name'];
-            if (empty($user['gravatar_url'])) {
+            if (empty($user['gravatar_url'])) { // TODO : Remove this or change Gravatar to 404 on error
                 echo " <img src='" . $IMAGES_URL . "profile/Default_Avatar.png' alt='avatar' style='width:2em; height: 2em; margin: 0 auto;'>";
-            } else {
+            } else { // FIXME : Needs extra reload to update Avatar. Order of operations issue?
                 echo " <img src='".$user['gravatar_url']."' alt='avatar' style='width:2em; height: 2em; margin: 0 auto;'>";
             } ?>
             </a>
@@ -128,7 +128,7 @@ function loadUser()
                 </form>
             </div>
         </li>
-        
+
         <?php
     }
 }
@@ -136,7 +136,7 @@ function loadUser()
 
 /**
  * Creates navigation links depending on login state
- * 
+ *
  *
  * @return void
  */
@@ -146,7 +146,7 @@ function loadNavLinks()
     global $BASE_URL, $ACC_URL, $user, $adminFlag, $db_servername, $db_username, $db_password, $db_name, $db_port;
 
     if ($user == TRUE) {         // LOGGED IN
-        
+
 
         // Initialize the array with the links
         $links=array(array('target'=>"",'desc'=>"Home"));
@@ -161,15 +161,15 @@ function loadNavLinks()
             }
         }
         $db_conn->closeDB();
-        
-        
+
+
         foreach ($links as $link) {
                     // "Home" is a special case and needs special matching. But there is probably a much better way.
                     ?>
 		<li class="nav-item <?php if (($link['target']!="" && strstr($_SERVER['REQUEST_URI'],$link['target']) !== false) || ($_SERVER['REQUEST_URI'] == "/csb/" && $link['target']=="")) { echo "active"; }?>">
         	<a class="nav-link" href="<?php echo $BASE_URL . $link['target']; ?>"><?php echo $link['desc'] ?></a>
         </li>
-                    <?php 
+                    <?php
 
         }
     }
@@ -291,4 +291,3 @@ function loadLoginBox()
     <?php
 
 }
-        
