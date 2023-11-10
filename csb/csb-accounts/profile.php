@@ -12,6 +12,7 @@
 require_once("../csb-loader.php");
 require_once($DB_class);
 require_once($BASE_DIR . "csb-accounts/auth.php");
+require("profile-functions.php");
 $adminFlag = 1;
 
 /* ----------------------------------------------------------------------
@@ -91,12 +92,6 @@ else {
                 $params_type .= "s";
             }
 
-            if (isset($_POST['gravatar_url'])) {
-                $query .= ", gravatar_url = ?";
-                $params[] = preg_replace("/;/", "", filter_input(INPUT_POST, 'gravatar_url', FILTER_SANITIZE_URL));
-                $params_type .= "s";
-            }
-
             if (isset($_POST['public_name'])) {
                 $query .= ", public_name = 1";
             } else {
@@ -110,6 +105,10 @@ else {
                 $params[] = $hashed;
                 $params_type .= "s";
             }
+
+            $query .= ", gravatar_url = ?";
+            $params[] = preg_replace("/;/", "", get_gravatar($_POST['email']));
+            $params_type .= "s";
 
             $query .= " where id = ?";
             $params[] = filter_var($_SESSION['user_id'], FILTER_SANITIZE_NUMBER_INT);
@@ -167,8 +166,9 @@ else {
             <label for='email'>Email</label>
             <input type='text' id='email' name='email' class='form-control' value='".$thisUser['email']."'>
 
-            <label for='gravatar-url'>Gravatar URL</label>
-            <input type='text' id='gravatar-url' name='gravatar_url' class='form-control' value='".$thisUser['gravatar_url']."'>
+            <label for='gravatar-url'>Gravatar</label><br>
+            <img src='".$thisUser['gravatar_url']."' alt='User Avatar'>
+            <input type='text' id='gravatar-url' name='gravatar_url' class='form-control' value='".$thisUser['gravatar_url']."' readonly>
 
             <h3 class='font-weight-bold mt-4'>Change Password</h3>
 
