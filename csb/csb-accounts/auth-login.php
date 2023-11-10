@@ -103,6 +103,7 @@ if (isset($_GET['go'])) {
             exit();
         }
     } elseif ($_POST['go'] == 'passwordReset') {
+        die('Not Available'); // FIXME : See Trello for more info
         $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
         $query = "UPDATE users SET password ='".$hashed."'  WHERE email = '".$_POST['email']."'";
