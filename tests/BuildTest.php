@@ -28,5 +28,11 @@ class BuildTest extends TestCase
         $this->assertEquals(TRUE, $toCheck);
     }
 
+    public function ptestingEmail()
+    {
+        $toCheck = \CosmoQuestX\Email::sendEmail("cosmoquestx@gmail.com", "subject", "body");
+        $this->assertEquals(TRUE, $toCheck);
+    }
+
 
 }
