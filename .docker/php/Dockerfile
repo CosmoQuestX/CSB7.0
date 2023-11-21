@@ -1,3 +1,12 @@
+# Composer Install
+
+FROM composer:lts as builder
+WORKDIR /app/
+COPY composer.* ./
+RUN composer install
+
+# Main Stuff
+
 FROM php:8.2.12-apache
 
 # Copy config
