@@ -138,7 +138,7 @@ $rqe=array();
 <script type="text/javascript" language="JavaScript">
     $(document).ready(function(){
         $("#db-tester").click(function() {
-            data = {
+            const data = {
                 "db_servername": $("[name='db_servername']").val(),
                 "db_username": $("[name='db_username']").val(),
                 "db_password": $("[name='db_password']").val(), // Is this secure? Do we care at this point?
@@ -160,7 +160,7 @@ $rqe=array();
             postData("db-tester.php", data).then( response => {
                 if (response.result)
                 {
-                    $("#test-status").html("Looks good! 👍")
+                    $("#db-test-status").html("Looks good! 👍")
                         .attr("class", "alert alert-success col-12") //Style the message
                         .css({
                             "margin-top": "1rem",
@@ -171,7 +171,7 @@ $rqe=array();
                 }
                 else
                 {
-                    $("#test-status").html("Error: " + response.message)
+                    $("#db-test-status").html("Error: " + response.message)
                         .attr("class", "alert alert-danger col-12")  //Style the message
                         .css({
                                 "margin-top": "1rem",
@@ -181,7 +181,7 @@ $rqe=array();
                             }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
                 }
             }).catch( err => {
-                $("#test-status").html("An unexpected error occurred!")
+                $("#db-test-status").html("An unexpected error occurred!")
                     .attr("class", "alert alert-danger col-12")  //Style the message
                     .css({
                             "margin-top": "1rem",
@@ -189,6 +189,117 @@ $rqe=array();
                             "width": "auto",
                             "height": "auto"
                         }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+            });
+        });
+
+        $("#email-tester").click(function() {
+            const data = {
+                "email_host": $("[name='email_host']").val(),
+                "email_username": $("[name='email_username']").val(),
+                "email_password": $("[name='email_password']").val() // Is this secure? Do we care at this point?
+            }
+
+            /*
+             The response will always be with a 200 status.
+             It will look like this for success: { result: true }
+             And like this for failures:
+             {
+                 result: false,
+                 code: <code>,
+                 message: <error message>
+             }
+             */
+
+            postData("email-tester.php", data).then( response => {
+                if (response.result)
+                {
+                    $("#email-test-status").html("Email Auth: Looks good! 👍")
+                        .attr("class", "alert alert-success col-12") //Style the message
+                        .css({
+                            "margin-top": "1rem",
+                            "display": "block",
+                            "width": "auto",
+                            "height": "auto"
+                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+                }
+                else
+                {
+                    $("#email-test-status").html(response.message)
+                        .attr("class", "alert alert-danger col-12")  //Style the message
+                        .css({
+                            "margin-top": "1rem",
+                            "display": "block",
+                            "width": "auto",
+                            "height": "auto"
+                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+                }
+            }).catch( err => {console.debug(err);
+                $("#email-test-status").html("Email Auth: An unexpected error occurred!")
+                    .attr("class", "alert alert-danger col-12")  //Style the message
+                    .css({
+                        "margin-top": "1rem",
+                        "display": "block",
+                        "width": "auto",
+                        "height": "auto"
+                    }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+            });
+        });
+
+        $("#example-email").click(function() {
+            const data = {
+                "email_host": $("[name='email_host']").val(),
+                "email_port": $("[name='email_port']").val(),
+                "email_encryption": $("[name='email_encryption']:checked").val(),
+                "email_username": $("[name='email_username']").val(),
+                "email_password": $("[name='email_password']").val(), // Is this secure? Do we care at this point?
+                "email_from": $("[name='email_from']").val(),
+                "email_name": $("[name='email_name']").val(),
+                "rescue_email": $("[name='rescue_email']").val() // TODO : If rescue_email is not filled, change to that tab [Directories] and show error
+            }
+
+            /*
+             The response will always be with a 200 status.
+             It will look like this for success: { result: true }
+             And like this for failures:
+             {
+                 result: false,
+                 code: <code>,
+                 message: <error message>
+             }
+             */
+
+            postData("example-email.php", data).then( response => {
+                if (response.result)
+                {
+                    $("#email-test-status").html("Test Email: Looks good! 👍")
+                        .attr("class", "alert alert-success col-12") //Style the message
+                        .css({
+                            "margin-top": "1rem",
+                            "display": "block",
+                            "width": "auto",
+                            "height": "auto"
+                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+                }
+                else
+                {
+                    $("#email-test-status").html(response.message)
+                        .attr("class", "alert alert-danger col-12")  //Style the message
+                        .css({
+                            "margin-top": "1rem",
+                            "display": "block",
+                            "width": "auto",
+                            "height": "auto"
+                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
+                }
+            }).catch( err => {console.debug(err);
+                $("#email-test-status").html("Test Email: An unexpected error occurred!")
+                    .attr("class", "alert alert-danger col-12")  //Style the message
+                    .css({
+                        "margin-top": "1rem",
+                        "display": "block",
+                        "width": "auto",
+                        "height": "auto"
+                    }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
             });
         });
     });
@@ -376,7 +487,7 @@ $rqe=array();
                                     <br />
                                     <input type="button" class="btn btn-cq" name="db_tester" id="db-tester" value="Test Connection">
                                 </div>
-                                <div id="test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</div>
+                                <div id="db-test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</div>
                             </div>
                         </div>
                         <div id="smtp" class="tab-pane fade in">
@@ -390,6 +501,14 @@ $rqe=array();
                                     <input type="password" class="form-control" id="email_password" name="email_password" value="">
                                     <label for="email_port">Port</label>
                                     <input type="text" class="form-control" id="email_port" name="email_port" max="65535" pattern="[0-9]{1,5}" value="587">
+                                    <br />
+                                    <p>Email Encryption</p>
+                                    <input id="email_tls" type="radio" name="email_encryption" value="TLS" checked>
+                                    <label for="email_tls">TLS</label>
+                                    <br />
+                                    <input id="email_ssl" type="radio" name="email_encryption" value="SSL">
+                                    <label for="email_ssl">SSL</label>
+                                    <br />
                                     <label for="email_from">Sending Address</label>
                                     <input type="text" class="form-control" id="email_from" name="email_from" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" placeholder="your@email.example">
                                 </div>
@@ -398,7 +517,12 @@ $rqe=array();
                                     <p>These settings are specific to your email provider. For production installations
                                     please use an email provider without rate caps. Some Google Business accounts have
                                     no rate cap, and services like Sendgrid work well.</p>
+                                    <br />
+                                    <input type="button" class="btn btn-cq" name="email_tester" id="email-tester" value="Test Connection">
+                                    <br />
+                                    <input type="button" class="btn btn-cq" name="example_email" id="example-email" value="Send Test Email">
                                 </div>
+                                <div id="email-test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</div>
                             </div>
                         </div>
                         <div id="socials" class="tab-pane fade in">
