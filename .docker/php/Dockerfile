@@ -1,4 +1,4 @@
-# Composer Install
+# Composer Install (Src : https://stackoverflow.com/a/61015273/8589728 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
 
 FROM composer:lts as builder
 WORKDIR /app/
