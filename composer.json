@@ -6,6 +6,10 @@
     "scripts" : {
         "test": "phpunit"
     },
+    "require": {
+        "phpmailer/phpmailer": "^6.8",
+        "ext-json": "*"
+    },
     "autoload" : {
         "psr-4" : {
             "unnamed\\" : "csb/",
