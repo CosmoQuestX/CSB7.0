@@ -504,7 +504,7 @@ $rqe=array();
                                     <br />
                                     <p>Email Encryption</p>
                                     <input id="email_tls" type="radio" name="email_encryption" value="TLS" checked>
-                                    <label for="email_tls">TLS</label>
+                                    <label for="email_tls">TLS <span style="color: #6c757d;">(recommended)</span></label>
                                     <br />
                                     <input id="email_ssl" type="radio" name="email_encryption" value="SSL">
                                     <label for="email_ssl">SSL</label>
@@ -517,9 +517,9 @@ $rqe=array();
                                     <p>These settings are specific to your email provider. For production installations
                                     please use an email provider without rate caps. Some Google Business accounts have
                                     no rate cap, and services like Sendgrid work well.</p>
+                                    <p><b>Note</b>: If <code>Test Connection</code> fails but <code>Send Test Email</code> successfully sends (make sure to check your inbox), it is ok to proceed. Some ISPs block the port used for testing.</p>
                                     <br />
                                     <input type="button" class="btn btn-cq" name="email_tester" id="email-tester" value="Test Connection">
-                                    <br />
                                     <input type="button" class="btn btn-cq" name="example_email" id="example-email" value="Send Test Email">
                                 </div>
                                 <div id="email-test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</div>
