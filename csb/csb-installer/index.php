@@ -257,6 +257,17 @@ $rqe=array();
                 "rescue_email": $("[name='rescue_email']").val() // TODO : If rescue_email is not filled, change to that tab [Directories] and show error
             }
 
+            // Check if rescue_email matches email pattern
+            if (!RegExp($("[name='rescue_email']")[0].pattern).test(data['rescue_email'])) {
+                const
+                    directoriesTab = $('a.nav-link[href="#directories"]'),
+                    rescueEmail = $('#rescue_email');
+                directoriesTab.click(); // Switch to Directories tab
+                rescueEmail.focus(); // Show Rescue Email error
+                rescueEmail.focus();
+                return;
+            }
+
             /*
              The response will always be with a 200 status.
              It will look like this for success: { result: true }
