@@ -49,7 +49,7 @@ This is an open source image annotation platform suitable for citizen science, c
 
 ## Compiling and Installing
 
-To get a production build of the software, go the [latest `master` CI run](https://github.com/CosmoQuestX/CSB7.0/actions?query=branch%3Amaster) and download the `csb-build` artifact.
+To get a production build of the software, go the [latest `main` CI run](https://github.com/CosmoQuestX/CSB7.0/actions?query=branch%3Amain) and download the `csb-build` artifact.
 
 ### Minimum PHP requirements
 
