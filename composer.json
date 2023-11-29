@@ -6,6 +6,10 @@
     "scripts" : {
         "test": "phpunit"
     },
+    "require": {
+        "phpmailer/phpmailer": "^6.8",
+        "ext-json": "*"
+    },
     "autoload" : {
         "psr-4" : {
             "unnamed\\" : "csb/",
@@ -16,9 +20,6 @@
         "psr-4" : {
             "CosmoQuestX\\Tests\\" : "tests/"
         }
-    },
-    "require": {
-        "phpmailer/phpmailer": "^6.8"
     },
     "require-dev": {
         "phpunit/phpunit": ">=5.4.0",

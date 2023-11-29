@@ -1,5 +1,11 @@
 version: '3.8'
 services:
+#  composer_installation:
+#    container_name: composer_installation
+#    image: composer:lts
+#    volumes:
+#      - .:/app
+#    command: composer install
   apache:
     build:
       context: .

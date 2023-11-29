@@ -56,9 +56,13 @@ function isLoggedIn($db)
         $flag = chk_Token($db, $_COOKIE["token"], $_COOKIE["name"]);
     }
 
-
     if ($flag !== FALSE) {
-        return array("name" => $_COOKIE["name"], "id" => session_id());
+        // Get Gravatar URL from DB
+        $query = "SELECT gravatar_url FROM users WHERE id = ?";
+        $params = array($_SESSION['user_id']);
+        $gravatar_url = $db->runQueryWhere($query, "s", $params)[0]['gravatar_url'];
+
+        return array("name" => $_COOKIE["name"], "id" => session_id(), "gravatar_url" => $gravatar_url);
     } else
         return FALSE;
 }
