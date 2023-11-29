@@ -6,3 +6,6 @@ csb/csb-themes/default/style.css.map
 ***/.idea
 /.buildpath
 /.project
+/vendor
+*.cache
+test-reports/

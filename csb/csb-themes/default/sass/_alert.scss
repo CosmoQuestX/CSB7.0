@@ -8,6 +8,7 @@
   margin-bottom: $alert-margin-bottom;
   border: $alert-border-width solid transparent;
   @include border-radius($alert-border-radius);
+  display: inline;
 }
 
 // Headings for larger alerts

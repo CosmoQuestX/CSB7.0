@@ -11,15 +11,17 @@
    ---------------------------------------------------------------------- */
 require_once("../csb-loader.php");
 require_once($DB_class);
-require_once($BASE_DIR . "csb-account/auth.php");
+require_once($BASE_DIR . "csb-accounts/auth.php");
 $adminFlag = 1;
+
+
 
 /* ----------------------------------------------------------------------
    Check for post variables
    ---------------------------------------------------------------------- */
+$login = FALSE;
+$reg = FALSE;
 if (isset($_POST) && !empty($_POST)) {
-    $login = FALSE;
-    $reg = FALSE;
     if ($_POST['go'] == 'login') $login = TRUE;
     elseif ($_POST['go'] == 'reg') $reg = TRUE;
 }

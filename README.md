@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/CosmoQuestX/CSB7.0/workflows/CI/badge.svg) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
 
-An open source implementation of CosmoQuest's Citizen Science Builder software.
+An opensource implementation of CosmoQuest's Citizen Science Builder software.
 
 <details open>
 <summary>Table of Contents</summary>
@@ -36,7 +36,7 @@ This is an open source image annotation platform suitable for citizen science, c
 
 ## License
 
-> Copyright © 2012-2022 CosmoQuest X Team is led by Pamela Gay with the Development team and maintained through community collaboration. **All rights reserved.**
+> Copyright © 2012-2023 CosmoQuest X Team is led by Pamela Gay with the Development team and maintained through community collaboration. **All rights reserved.**
 
 <!--  -->
 > Images, videos and other media belong to their respective owners.
@@ -78,6 +78,17 @@ Instructions on compiling SASS in ubuntu are here: <https://webdesign.tutsplus.c
 CSB defines Apache error documents. If you want them to extend to the whole server, move the .htaccess file to the document root.
 
 ---------------------------------------------
+
+Note: You'll need the repo accessible to apache. This means either
+clone it into a directory Apache sees, or sim link it there.
+
+### Clone repo
+
+```bash
+cd <directory for apache>
+git clone https://github.com/CosmoQuestX/CSB7.0.git
+
+```
 
 ### Method 1 - No Docker
 

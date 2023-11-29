@@ -15,7 +15,7 @@
 function table_exists($conn, $table)
 {
     $val = mysqli_query($conn, "select 1 from '" . $table . "'");
-    
+
     if ($val !== false) {
         return true;
     } else {
@@ -102,14 +102,23 @@ function checkForClass($class)
     /* Optional classes are hard defined in the installer
      * TODO Maybe it would be nice to not hard-code requirements
      */
-    @include "$class.php";
-    
-    if (class_exists($class)) {
-        $rt = true;
-    }
-    else {
-        $rt = false;
-    }
-    return $rt;
-}
 
+    if ($class == "Mail") {
+        require_once 'System.php';
+        if(class_exists('System', false)) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        @include "$class.php";
+
+        if (class_exists($class)) {
+            $classInstance = new $class();
+            return $classInstance->isValid();
+        } else {
+            $rt = false;
+        }
+        return $rt;
+    }
+}

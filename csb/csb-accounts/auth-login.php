@@ -321,7 +321,7 @@ function regUser($db, $user, $pwhash)
 }
 
 function rescueUser ($db, $using, $value) {
-    GLOBAL $emailSettings, $ACC_URL, $BASE_URL;
+    GLOBAL $emailSettings, $ACC_URL, $BASE_URL, $SITE_NAME;
 
 // Get the email to send information to
     if(strcmp($using, "email")==0) {

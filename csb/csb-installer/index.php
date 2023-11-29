@@ -63,25 +63,25 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
             if ($key != "write_config" && $key != "submit") {
                 if (strpos($key, "email_") !== false) {
                     $index = str_replace("email_", "", $key);
-                    $config_body .= "\$emailSettings['{$index}']=\"$value\";\n";
+                    $config_body .= "\$emailSettings['{$index}']='$value';\n";
                 } else if (strpos($key, "social_") !== false) {
                     $index = str_replace("social_", "", $key);
                     switch ($index) {
                         case "discord":
-                            $config_body .= "\${$key}=\"https://discord.gg/{$value}\";\n";
+                            $config_body .= "\${$key}='https://discord.gg/{$value}';\n";
                             break;
                         case "youtube":
-                            $config_body .= "\${$key}=\"https://youtube.com/{$value}\";\n";
+                            $config_body .= "\${$key}='https://youtube.com/{$value}';\n";
                             break;
                         case "twitch":
-                            $config_body .= "\${$key}=\"https://twitch.tv/{$value}\";\n";
+                            $config_body .= "\${$key}='https://twitch.tv/{$value}';\n";
                             break;
                         case "twitter":
-                            $config_body .= "\${$key}=\"https://twitter.com/{$value}\";\n";
+                            $config_body .= "\${$key}='https://twitter.com/{$value}';\n";
                             break;
                     }
                 } else {
-                    $config_body .= "\${$key}=\"{$value}\";\n";
+                    $config_body .= "\${$key}='{$value}';\n";
                 }
             }
         }
