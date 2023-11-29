@@ -8,7 +8,7 @@ If you're unsure where to start, catch us on [Discord](https://discord.gg/X8rw4v
 
 ## Submitting changes
 
-For small bugfixes, please send a [GitHub Pull Request against the master branch](../../pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). 
+For small bugfixes, please send a [GitHub Pull Request against the main branch](../../pull/new/main) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). 
 For larger pull requests it might be better to contact us via Discord first to test it in a separate branch.
 
 Please make sure all of your commits are atomic (one feature or bugfix per commit).
