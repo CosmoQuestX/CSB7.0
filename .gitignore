@@ -3,7 +3,7 @@ csb-settings.php
 *.DS_Store
 csb/csb-themes/default/style.css
 csb/csb-themes/default/style.css.map
-**/.idea
+***/.idea
 /.buildpath
 /.project
 /vendor
