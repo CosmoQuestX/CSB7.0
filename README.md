@@ -53,9 +53,9 @@ To get a production build of the software, go the [latest `master` CI run](https
 
 ### Minimum PHP requirements
 
-CSB 7.0 has been tested in our sandbox environment, which uses PHP 8.1. The [Docker configuration](#method-2---using-docker) is configured to use PHP 8.1, as well.
+CSB 7.0 has been tested in our sandbox environment, which uses PHP 8.2. The [Docker configuration](#method-2---using-docker) is configured to use PHP 8.2, as well.
 
-If you have not yet updated to PHP 8.1 from PHP 7.4 or earlier, you may want to consider doing this, however there is no requirement to do this. You can find out more information about PHP's supported versions at [https://www.php.net/supported-versions.php](https://www.php.net/supported-versions.php).
+If you have not yet updated to PHP 8.2 from PHP 7.4 or earlier, you may want to consider doing this, however there is no requirement to do this. You can find out more information about PHP's supported versions at [https://www.php.net/supported-versions.php](https://www.php.net/supported-versions.php).
 
 ### Add SASS support
 
