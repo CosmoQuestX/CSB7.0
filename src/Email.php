@@ -7,33 +7,60 @@ use PHPMailer\PHPMailer\SMTP;
 class Email
 {
 
+
+    /**
+     * @var string
+     */
+    private $to="";
+    /**
+     * @var string
+     */
+    private $subject;
+    /**
+     * @var string
+     */
+    private $body;
+
+    public function __construct(string $to, string $subject, string $body)
+    {
+        $this->to = $to;
+        $this->subject = $subject;
+        $this->body = $body;
+    }
+
+    public function sendMail()
+    {
+        return self::sendEmail($this->to, $this->subject, $this->body);
+    }
+
     public static function sendEmail(string $to, string $subject, string $body): bool
     {
+        require_once "vendor/autoload.php";
 
-        $emailSettings = EmailSettings::getEmailSettings();
-
+        //Create an instance; passing `true` enables exceptions
         $mail = new PHPMailer(true);
+
         try {
-            include
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                                       // Enable verbose debug output
-            $mail->isSMTP();                                            // Set mailer to use SMTP
-            $mail->Host       = $emailSettings['host'];                 // Specify main and backup SMTP servers
-            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-            $mail->Username   = $emailSettings['username'];             // SMTP username
-            $mail->Password   = $emailSettings['password'];             // SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption, `ssl` also accepted
-            $mail->Port       = $emailSettings['port'];                 // TCP port to connect to
-            $mail->addAddress($to);                                     // Add a recipient
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->Host       = $emailSettings['host'];
+            $mail->SMTPAuth   = true;
+            $mail->Username   = $emailSettings['username'];
+            $mail->Password   = $emailSettings['password'];
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = $emailSettings['port'];
+            $mail->addAddress($to);
             $mail->setFrom($emailSettings['from'], 'Mailer');
-            $mail->isHTML(true);                                        // Set email format to HTML
+
+            //Content
+            $mail->isHTML(true);
             $mail->Subject = $subject;
-            $mail->Body    = $body;
+            $mail->Body = $body;
+
             $mail->send();
             return TRUE;
-        }
-        catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        } catch (Exception $e) {
             return FALSE;
         }
     }
