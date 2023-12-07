@@ -63,13 +63,13 @@ function loadMeta()
 
     // Load libraries
     $csb_headers .=  "<script src='".$THEME_URL."js/jquery-3.4.1.slim.min.js'
-            integrity='sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n'
+            integrity='sha384-pkoRnrXNgdq2HZ+4rl5xWYyNF60aFp2DgiMpMlWoa+NyC4XXJEhjXEVKM2gTkBW6'
             crossorigin='anonymous'></script>";
     $csb_headers .=  "<script src='".$THEME_URL."js/popper.min.js'
-            integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo'
+            integrity='sha384-LsC345MdEcKqeNkjUm1MZY2zfeALf4Iqn+DbI/5gdhCoWMoTVQvkd/0n+yOSie0F'
             crossorigin='anonymous'></script>";
     $csb_headers .=  "<script src='".$THEME_URL."js/bootstrap.min.js'
-            integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6'
+            integrity='sha384-GQt+azJYTXdZSGjGyhmO+xX875BtpqCQkaEYDeJwkpi2L7UqEky8qS08BUVla9dc'
             crossorigin='anonymous'></script>";
     $csb_headers .= "<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>";
 
