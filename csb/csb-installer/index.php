@@ -246,22 +246,22 @@ $rqe=array();
         });
 
         $("#example-email").click(function() {
-            const data = {
-                "email_host": $("[name='email_host']").val(),
-                "email_port": $("[name='email_port']").val(),
-                "email_encryption": $("[name='email_encryption']:checked").val(),
-                "email_username": $("[name='email_username']").val(),
-                "email_password": $("[name='email_password']").val(), // Is this secure? Do we care at this point?
-                "email_from": $("[name='email_from']").val(),
-                "email_name": $("[name='email_name']").val(),
-                "rescue_email": $("[name='rescue_email']").val() // TODO : If rescue_email is not filled, change to that tab [Directories] and show error
-            }
+            const
+                rescueEmail = $("[name='rescue_email']"),
+                data = {
+                    "email_host": $("[name='email_host']").val(),
+                    "email_port": $("[name='email_port']").val(),
+                    "email_encryption": $("[name='email_encryption']:checked").val(),
+                    "email_username": $("[name='email_username']").val(),
+                    "email_password": $("[name='email_password']").val(), // Is this secure? Do we care at this point?
+                    "email_from": $("[name='email_from']").val(),
+                    "email_name": $("[name='email_name']").val(),
+                    "rescue_email": rescueEmail.val() // TODO : If rescue_email is not filled, change to that tab [Directories] and show error
+                }
 
             // Check if rescue_email matches email pattern
-            if (!RegExp($("[name='rescue_email']")[0].pattern).test(data['rescue_email'])) {
-                const
-                    directoriesTab = $('a.nav-link[href="#directories"]'),
-                    rescueEmail = $('#rescue_email');
+            if (!RegExp(rescueEmail[0].pattern).test(data['rescue_email'])) {
+                const directoriesTab = $('a.nav-link[href="#directories"]');
                 directoriesTab.click(); // Switch to Directories tab
                 rescueEmail.focus(); // Show Rescue Email error
                 rescueEmail.focus();
