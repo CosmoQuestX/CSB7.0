@@ -114,11 +114,3 @@ foreach ($result as $row) {
 $db->closeDB();
 
 $adminFlag = FALSE;
-
-
-
-
-
-
-
-

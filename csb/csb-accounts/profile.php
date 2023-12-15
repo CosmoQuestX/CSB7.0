@@ -105,10 +105,19 @@ else {
                 $params[] = $hashed;
                 $params_type .= "s";
             }
+            if (isset($_POST['avatar_service']) && $_POST['avatar_service'] !== "") {
+                $query .= ", avatar_service = ?";
+                $params[] = preg_replace("/;/", "", filter_var($_POST['avatar_service'], FILTER_VALIDATE_INT));
+                $params_type .= "s";
 
-            $query .= ", gravatar_url = ?";
-            $params[] = preg_replace("/;/", "", get_gravatar($_POST['email']));
-            $params_type .= "s";
+                $query .= ", gravatar_url = ?";
+                if ($_POST['avatar_service'] == '1') { // if Gravatar selected, generate avatar, else use default
+                    $params[] = preg_replace("/;/", "", get_gravatar($_POST['email']));
+                } else {
+                    $params[] = preg_replace("/;/", "", $BASE_URL."csb-content/images/profile/Default_Avatar.png"); // FIXME : The Base URL should not need to be defined, what if CodeHerder wants to change their domain?
+                }
+                $params_type .= "s";
+            }
 
             $query .= " where id = ?";
             $params[] = filter_var($_SESSION['user_id'], FILTER_SANITIZE_NUMBER_INT);
@@ -141,10 +150,10 @@ else {
     $thisUser = $db->getUser(filter_var($_SESSION['user_id'], FILTER_SANITIZE_NUMBER_INT));
 
     if ($thisUser['public_name'] == 1) {
-        $checked = "checked";
+        $publicNameChecked = "checked";
     }
     else {
-        $checked = "";
+        $publicNameChecked = "";
     }
 
     // Create Registration Form
@@ -169,6 +178,11 @@ else {
             <label for='gravatar-url'>Gravatar</label><br>
             <img src='".$thisUser['gravatar_url']."' alt='User Avatar'>
             <input type='text' id='gravatar-url' name='gravatar_url' class='form-control' value='".$thisUser['gravatar_url']."' readonly>
+            Avatar Service:<br>
+            <select id='avatar-service' name='avatar_service'>
+                <option value='0' ".($thisUser['avatar_service'] == 0 ? 'selected="selected"' : '').">Default</option>
+                <option value='1'".($thisUser['avatar_service'] == 1 ? 'selected="selected"' : '').">Gravatar</option>
+            </select>
 
             <h3 class='font-weight-bold mt-4'>Change Password</h3>
 
@@ -178,7 +192,7 @@ else {
             <label for='confirm-pass'>Confirm New Password</label>
             <input type='password' id='confirm-pass' name='confirm_password' class='form-control'>
 
-            <input type='checkbox' name='public_name' class='mt-4' $checked> Do we have permission to publish your name with science results?
+            <input type='checkbox' name='public_name' class='mt-4' $publicNameChecked> Do we have permission to publish your name with science results?
 
             <input type='submit' value='Save Settings' class='btn btn-cq mt-4 right'>
         </form>

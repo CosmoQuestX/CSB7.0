@@ -14,6 +14,7 @@ CREATE TABLE `users` (
               `reset_password` tinyint(1) NOT NULL DEFAULT '0',
               `public_profile` tinyint(1) NOT NULL DEFAULT '1',
               `wp_id` int(11) NOT NULL DEFAULT '1',
+              `avatar_service` tinyint(4) unsigned NOT NULL DEFAULT 0 COMMENT 'Holds the id for the avatar service',
               `gravatar_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '|BASE_URL|csb-content/images/profile/Default_Avatar.png',
               `first_name` text COLLATE utf8_unicode_ci,
               `last_name` text COLLATE utf8_unicode_ci,
