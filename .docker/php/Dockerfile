@@ -7,7 +7,7 @@ RUN composer install
 
 # Main Stuff
 
-FROM php:8.2.13-apache
+FROM php:8.2.14-apache
 
 # Copy config
 COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
