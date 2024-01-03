@@ -179,7 +179,7 @@ else {
             <img src='".$thisUser['gravatar_url']."' alt='User Avatar'>
             <input type='text' id='gravatar-url' name='gravatar_url' class='form-control' value='".$thisUser['gravatar_url']."' readonly>
             Avatar Service:<br>
-            <select id='avatar-service' name='avatar_service'>
+            <select id='avatar-service' class='form-control' name='avatar_service'>
                 <option value='0' ".($thisUser['avatar_service'] == 0 ? 'selected="selected"' : '').">Default</option>
                 <option value='1'".($thisUser['avatar_service'] == 1 ? 'selected="selected"' : '').">Gravatar</option>
             </select>

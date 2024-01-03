@@ -5,7 +5,7 @@
 ?>
 
 
-    <form id="GetImageId" action="<?php echo $BASE_URL; ?>/science/">
+    <form id="GetImageId" action="<?php echo $BASE_URL; ?>science/">
         <input type="hidden" name="task" value="get-image-details">
         Enter Master Image Name: <input type="text" name="image_set_name" size="32"><input type="submit">
     </form>
@@ -40,7 +40,7 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
 
         // Get username and email of people who mapped this image
         echo "<p><strong>This master image was marked by: </strong></p>";
-        $query = "SELECT distinct(users.name), users.email 
+        $query = "SELECT distinct(users.name), users.email
                   FROM users, image_users
                   WHERE (image_users.image_id = ";
         foreach ($images as $image) {
@@ -62,4 +62,3 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
     </div>
     <?php
 }
-

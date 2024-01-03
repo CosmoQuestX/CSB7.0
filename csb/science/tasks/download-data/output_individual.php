@@ -6,7 +6,7 @@
  * Time: 1:49 PM
  */
 
-// This file should be run from the commandline, so make sure it is 
+// This file should be run from the commandline, so make sure it is
 if (substr(PHP_SAPI, 0, 3) !== 'cli') {
     exit("Please run this from the command line");
 }
@@ -77,8 +77,8 @@ $fileURL = $BASE_URL . "temp/" . $filename;
 // Open the file & save name to db for downloads
 if ($file = fopen($filepath, 'a')) {
     $output = "mark_id\timage_name\tx\ty\tdiameter\ttype\tdetails\tdate\tuser\n";
-    $query = "UPDATE data_downloads 
-                  SET link = '$fileURL', name = '$filename' 
+    $query = "UPDATE data_downloads
+                  SET link = '$fileURL', name = '$filename'
                   WHERE id = $download_id";
     $db->runQuery($query);
 } // throw an error if just won't open
@@ -92,9 +92,9 @@ if ($hero) {
     // get user_ids for users with more than 500 images marked
     // get marks from those folks that have 500 images
 
-    $where = "WHERE user_id in 
-                  (SELECT user_id 
-                  FROM image_users WHERE image_id > 41228380 
+    $where = "WHERE user_id in
+                  (SELECT user_id
+                  FROM image_users WHERE image_id > 41228380
                   GROUP BY user_id having count(distinct image_id) >= 500)";
 
 } else {
@@ -118,8 +118,8 @@ if (($numRows % 10000) != 0) $lastPage++; // round up to get the last page
 if ($hero) {
 
     // Get the Heros
-    $query = "SELECT image_users.user_id, users.name 
-                  FROM image_users, users 
+    $query = "SELECT image_users.user_id, users.name
+                  FROM image_users, users
                   WHERE image_users.image_id > 41228380 AND image_users.user_id = users.id
                   GROUP BY image_users.user_id having count(distinct image_users.image_id) >= 1000";
     $heroes = $db->runQuery($query);
@@ -127,16 +127,16 @@ if ($hero) {
     foreach ($heroes as $hero) {
         echo $hero['name'];
         $start = 0;
-        $query = "SELECT marks.id, 
-                 image_sets.name as image_name, 
-                 marks.x, marks.y, marks.diameter, marks.type, marks.details, 
-                 images.details as origin, 
-                 users.name, marks.created_at 
+        $query = "SELECT marks.id,
+                 image_sets.name as image_name,
+                 marks.x, marks.y, marks.diameter, marks.type, marks.details,
+                 images.details as origin,
+                 users.name, marks.created_at
                 FROM marks, images, image_sets, users
-                WHERE marks.user_id = " . $hero['user_id'] . " AND 
-                 marks.image_id = images.id AND 
-                 images.image_set_id = image_sets.id AND 
-                 marks.user_id = users.id 
+                WHERE marks.user_id = " . $hero['user_id'] . " AND
+                 marks.image_id = images.id AND
+                 images.image_set_id = image_sets.id AND
+                 marks.user_id = users.id
                 LIMIT $start, 10000";
         $results = $db->runQuery($query);
 
@@ -181,16 +181,16 @@ if ($hero) {
             $output = "";
 
             $start += 10000;
-            $query = "SELECT marks.id, 
-                 image_sets.name as image_name, 
-                 marks.x, marks.y, marks.diameter, marks.type, marks.details, 
-                 images.details as origin, 
-                 users.name, marks.created_at 
+            $query = "SELECT marks.id,
+                 image_sets.name as image_name,
+                 marks.x, marks.y, marks.diameter, marks.type, marks.details,
+                 images.details as origin,
+                 users.name, marks.created_at
                 FROM marks, images, image_sets, users
-                WHERE marks.user_id = " . $hero['user_id'] . " AND 
-                 marks.image_id = images.id AND 
-                 images.image_set_id = image_sets.id AND 
-                 marks.user_id = users.id 
+                WHERE marks.user_id = " . $hero['user_id'] . " AND
+                 marks.image_id = images.id AND
+                 images.image_set_id = image_sets.id AND
+                 marks.user_id = users.id
                 LIMIT $start, 10000";
             $results = $db->runQuery($query);
         }
@@ -212,16 +212,16 @@ else {
         echo ".";
 
         $start = $page * 10000;
-        $query = "SELECT marks.id, 
-                 image_sets.name as image_name, 
-                 marks.x, marks.y, marks.diameter, marks.type, marks.details, 
-                 images.details as origin, 
-                 users.name, marks.created_at 
+        $query = "SELECT marks.id,
+                 image_sets.name as image_name,
+                 marks.x, marks.y, marks.diameter, marks.type, marks.details,
+                 images.details as origin,
+                 users.name, marks.created_at
           FROM marks, images, image_sets, users
-          WHERE marks.created_at >= '$dateStart' AND 
+          WHERE marks.created_at >= '$dateStart' AND
                 marks.created_at < '$dateEnd' AND
-                marks.image_id = images.id AND 
-                images.image_set_id = image_sets.id AND 
+                marks.image_id = images.id AND
+                images.image_set_id = image_sets.id AND
                 marks.user_id = users.id
           LIMIT " . $start . ",10000";
 
@@ -288,5 +288,5 @@ $db->closeDB();
 // email the user
 $mailAlert = new email($emailSettings);
 $msg['subject'] = "[CosmoQuestX] Output Ready";
-$msg['body'] = "Your download is ready. Please return to " . $BASE_URL . "/science/task=download-data to get your file.";
+$msg['body'] = "Your download is ready. Please return to " . $BASE_URL . "science/task=download-data to get your file.";
 $mailAlert->sendMail($email_to, $msg);

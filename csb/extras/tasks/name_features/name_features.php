@@ -35,7 +35,7 @@ if (isset($_GET['markX'])) {
 
 if (!isset($_GET['image_set_name']) || $_GET['image_set_name'] == "") {
     ?>
-    <form id="GetImageToName" action="<?php echo $BASE_URL; ?>/extras/">
+    <form id="GetImageToName" action="<?php echo $BASE_URL; ?>extras/">
         <input type="hidden" name="task" value="name_features">
         Enter Master Image Name: <input type="text" name="image_set_name" size="32"><input type="submit">
     </form>
@@ -149,7 +149,7 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
 
         // Get username of people who mapped this image
         echo "<p><strong>Marked by: </strong>";
-        $query = "SELECT distinct(users.name) 
+        $query = "SELECT distinct(users.name)
             FROM users, image_users
             WHERE (image_users.image_id = ";
         foreach ($images as $image) {
@@ -172,7 +172,7 @@ if (isset($_GET['image_set_name']) && $_GET['image_set_name'] !== "") {
         <p class="instructions">Place the X on the feature you want to propose a name for, and then
             enter the name you want to propose. Please do not use adult language of any kind. Proposed names will be
             reviewed by the mission team and put forward for discussion in the community.</p>
-        <form id="SubmitNames" action="<?php echo $BASE_URL; ?>/extras/">
+        <form id="SubmitNames" action="<?php echo $BASE_URL; ?>extras/">
             <input type="hidden" name="task" value="name_features">
             <div id="proposed_names">
                 <p>Names will appear here</p>

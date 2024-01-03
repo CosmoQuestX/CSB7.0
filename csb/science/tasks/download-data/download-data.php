@@ -44,7 +44,7 @@ $user = $db->getUser($_SESSION['user_id']);
     ?>
 </p>
 
-<form id="DataFormat" method="GET" action="<?php echo $BASE_URL; ?>/science/index.php?task=download-data">
+<form id="DataFormat" method="GET" action="<?php echo $BASE_URL; ?>science/index.php?task=download-data">
     <input type="hidden" name="task" value="download-data">
     <input type="hidden" name="request" value="start">
     <h3>Select Data Download Options</h3>
@@ -125,4 +125,3 @@ $user = $db->getUser($_SESSION['user_id']);
         document.getElementById('results').innerHTML = "<p>Thank you! We'll email you as soon as your download is ready</p>"
     }
 </script>
-
