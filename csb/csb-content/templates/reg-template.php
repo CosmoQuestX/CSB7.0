@@ -26,11 +26,11 @@ $referringURL = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 /* -----------------------------------------------------------------------
    Registration form
-        1) TODO Tell them if there is an error (check with JS) 
+        1) TODO Tell them if there is an error (check with JS)
         2) Get their info
         3) Send their info and the return to URL in the form
 
-        TODO Also include signin instead 
+        TODO Also include signin instead
 
    ---------------------------------------------------------------------- */
 GLOBAL $ACC_URL;
@@ -58,14 +58,14 @@ GLOBAL $ACC_URL;
     <label for="email">Email</label>
     <input name="email" id="email" class="form-control" type="email">
 
-    <label for="password">Enter Password</label>
+    <label for="registerPassword">Enter Password</label>
     <input name="password" id="registerPassword" class="form-control" type="password">
 
     <label for="confirm">Confirm Password</label>
     <input name="confirm" id="confirm" class="form-control" type="password">
 
     <input type="checkbox" name="remember" class="mr-3" style="vertical-align:middle;" id="remember"><label for="remember">Remember me</label>
-    
+
     <input type="submit" name="register" value="Register" class="btn btn-cq btn-block mt-3">
 
 </form>
@@ -78,4 +78,3 @@ GLOBAL $ACC_URL;
     registration.requireEmail("email", 4, 99, [], []);
     registration.registerPassword("registerPassword", 6, 50, [], [], "confirm");
 </script>
-
