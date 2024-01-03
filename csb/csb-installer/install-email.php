@@ -29,7 +29,7 @@ try {
     $mail->Body = "<a href='$BASE_URL'>Here</a> is your new site!<br><br>".
         "<b>Admin Username:</b> <code>$username</code><br>".
         "<b>Admin Password</b>: <code>$password</code>";
-    $mail->AltBody = 'Here is your new site!\r\n\r\nURL: $BASE_URL\r\nUsername: $username\r\nPassword: $password';
+    $mail->AltBody = "Here is your new site!\r\n\r\nURL: $BASE_URL\r\nUsername: $username\r\nPassword: $password";
 
     $mail->send();
 } catch (Exception $e) {
