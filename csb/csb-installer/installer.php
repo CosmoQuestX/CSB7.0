@@ -134,6 +134,9 @@ $sql = "INSERT INTO role_users (role_id, user_id) VALUES (8, 1);";
 if ($conn->query($sql) == FALSE) {
     $on_error([$conn->errno . ": " . $conn->error], ["Couldn't assign admin user to admin role"]);
 }
+
+include "./install-email.php";
+
 status_update("Admin user set up", "success");
 
 ?>

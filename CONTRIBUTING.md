@@ -27,7 +27,7 @@ If your IDE or Editor does not support Editorconfig, here's a quick rundown:
   * An exception to that are the SASS/SCSS files, which are indented using two spaces
   * If you can, please set your Editor to use "lf" as an EOL character and use UTF-8
 
-Besides of that, here's some dos and donts
+Besides that, here are some dos and don'ts:
 
   * Do try to make your code as readable as you can, and try to avoid long lines especially in comments.
   * Do comment, rather comment more than less.
