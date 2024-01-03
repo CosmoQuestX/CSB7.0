@@ -64,15 +64,15 @@ if (isset($_GET['go'])) {
 
         $error = "";
         // Check if name or email are in use, throw an error if it is
-        if ($db->checkUser('name', filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS))) {
-            $error .= "Username " . filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS) . " already exists. ";
+        if ($db->checkUser('name', filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS))) {
+            $error .= "The username or email is taken. Try another.";
         }
         if ($db->checkUser('email', filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL))) {
-            $error .= "Email " . filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL) . " already in use!";
+            $error .= "The username or email is taken. Try another.";
         }
 
         if(!empty($error)) {
-            $_SESSION['errMsg'] = "Error:" . $error;
+            $_SESSION['errMsg'] = "Error: " . $error;
             header("Location: " . $ACC_URL . "register.php");
             exit();
         }
