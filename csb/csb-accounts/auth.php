@@ -42,7 +42,6 @@ function chk_Token($db, $token, $name)
  *    or false if the user isn't currently logged in
  *
  */
-
 function isLoggedIn($db)
 {
 
@@ -69,6 +68,11 @@ function isLoggedIn($db)
 
 /**
  * Checks if the user is assigned to one of the roles supplied as an argument
+ * ```
+ * // Example: Checks if user is an Admin
+ * userHasRole($CQ_ROLES['SITE_ADMIN'], $CQ_ROLES['SITE_SUPERADMIN']);
+ * ```
+ *
  * @param string ...$roles Any number of roles to check
  * @return boolean true if at least one match is found, false if not
  */
