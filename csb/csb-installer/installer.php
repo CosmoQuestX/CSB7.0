@@ -115,6 +115,19 @@ status_update("Created " . $created_tables . " tables successfully!", "success")
 
 
 /* ----------------------------------------------------------------------
+   Generate default settings in options table
+   ---------------------------------------------------------------------- */
+
+$sql = "INSERT INTO options (option_name, option_value) VALUES ('debug_mode', 'off');";
+if($conn->query($sql) == FALSE) {
+    $on_error([$conn->errno . ": " . $conn->error], ["Couldn't populate default settings"]);
+}
+
+status_update("Default settings populated", "success");
+
+
+
+/* ----------------------------------------------------------------------
    Generate Admin = CodeHerder account
    ---------------------------------------------------------------------- */
 
