@@ -63,13 +63,13 @@ function loadMeta()
 
     // Load libraries
     $csb_headers .=  "<script src='".$THEME_URL."js/jquery-3.4.1.slim.min.js'
-            integrity='sha384-pkoRnrXNgdq2HZ+4rl5xWYyNF60aFp2DgiMpMlWoa+NyC4XXJEhjXEVKM2gTkBW6'
+
             crossorigin='anonymous'></script>";
     $csb_headers .=  "<script src='".$THEME_URL."js/popper.min.js'
-            integrity='sha384-LsC345MdEcKqeNkjUm1MZY2zfeALf4Iqn+DbI/5gdhCoWMoTVQvkd/0n+yOSie0F'
+
             crossorigin='anonymous'></script>";
     $csb_headers .=  "<script src='".$THEME_URL."js/bootstrap.min.js'
-            integrity='sha384-GQt+azJYTXdZSGjGyhmO+xX875BtpqCQkaEYDeJwkpi2L7UqEky8qS08BUVla9dc'
+
             crossorigin='anonymous'></script>";
     $csb_headers .= "<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>";
 
