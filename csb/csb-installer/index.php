@@ -482,7 +482,7 @@ $rqe=array();
                                     <input type="text" class="form-control" required id="db_port" name="db_port" max="65535" maxlength="5" pattern="[0-9]{1,5}" value="3306">
                                     <label for="db_username">Username</label>
                                     <input type="text" class="form-control" required id="db_username" name="db_username" value="csb">
-                                    <label for="db_password">Password</label>
+                                    <label for="db_password">Password (cannot be empty)</label>
                                     <input type="password" class="form-control" required id="db_password" name="db_password">
                                     <label for="db_name">Database Name</label>
                                     <input type="text" class="form-control" required id="db_name" name="db_name" value="csb">
