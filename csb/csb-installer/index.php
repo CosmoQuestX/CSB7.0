@@ -1,4 +1,6 @@
 <?php
+
+global $BASE_URL;
 /**
  * Simple installer to set up the settings file.
  * User: dpi209

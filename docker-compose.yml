@@ -20,9 +20,9 @@ services:
       - "13306:3306"
     environment:
       MYSQL_DATABASE: csb
-      MYSQL_USER: csb
-      MYSQL_PASSWORD: csb
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: csb_user
+      MYSQL_PASSWORD: Ch4ngeM3
+      MYSQL_ROOT_PASSWORD: Ch4ngeM32,plz.
   style:
     build:
       context: .

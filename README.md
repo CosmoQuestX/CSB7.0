@@ -135,13 +135,15 @@ git clone https://github.com/CosmoQuestX/CSB7.0.git
 
 - For Windows - open either Command Console or Powershell. For Mac or Linux - open your command shell.
 
-- Execute the following command from the CSB directory:
+- Open Docker & execute the following command from the CSB directory:
 ```docker-compose up```
 
-- To stop docker and close the app, press Ctrl+C
+- To stop docker and close the app, press Ctrl+C or type at a commandline ```docker-compose stop```
 
 #### Step 3: Launch the installer
 
 - Go to <http://localhost:8080/csb/csb-installer/> in your browser.
-  - To use the docker MariaDB, use ```db``` as your database hostname
-  - Default docker username, password, and database are all ```csb```
+    - To get the IP address of your docker container, run `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' csb-db-1` in your terminal.
+    - All other settings are in docker-compose.yml (and change the passwords,
+      especially in production)
+
