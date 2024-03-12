@@ -62,13 +62,13 @@ function loadMeta()
     $csb_headers .= "<title>".$page_title."</title>\r\n";
 
     // Load libraries
-    $csb_headers .=  "<script src='".$THEME_URL."js/jquery-3.4.1.slim.min.js'
+    $csb_headers .=  "<script src='".$BASE_URL . "csb-content/js/jquery-3.4.1.slim.min.js'
 
             crossorigin='anonymous'></script>";
-    $csb_headers .=  "<script src='".$THEME_URL."js/popper.min.js'
+    $csb_headers .=  "<script src='".$BASE_URL . "csb-content/js/popper.min.js'
 
             crossorigin='anonymous'></script>";
-    $csb_headers .=  "<script src='".$THEME_URL."js/bootstrap.min.js'
+    $csb_headers .=  "<script src='".$BASE_URL . "csb-content/js/bootstrap.min.js'
 
             crossorigin='anonymous'></script>";
     $csb_headers .= "<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>";

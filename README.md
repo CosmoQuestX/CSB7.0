@@ -32,11 +32,11 @@ An opensource implementation of CosmoQuest's Citizen Science Builder software.
 
 ## About
 
-This is an open source image annotation platform suitable for citizen science, complete with native machine learning tools that can be trained through contributed data.
+This is an open source image annotation platform suitable for citizen science.
 
 ## License
 
-> Copyright © 2012-2023 CosmoQuest X Team is led by Pamela Gay with the Development team and maintained through community collaboration. **All rights reserved.**
+> This is a project from CosmoQuest, and is led by Pamela Gay and maintained through community collaboration.
 
 <!--  -->
 > Images, videos and other media belong to their respective owners.
@@ -47,15 +47,11 @@ This is an open source image annotation platform suitable for citizen science, c
 <!--  -->
 > Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-## Compiling and Installing
-
-To get a production build of the software, go the [latest `main` CI run](https://github.com/CosmoQuestX/CSB7.0/actions?query=branch%3Amain) and download the `csb-build` artifact.
-
+## Dependencies
 ### Minimum PHP requirements
 
 CSB 7.0 has been tested in our sandbox environment, which uses PHP 8.2. The [Docker configuration](#method-2---using-docker) is configured to use PHP 8.2, as well.
-
-If you have not yet updated to PHP 8.2 from PHP 7.4 or earlier, you may want to consider doing this, however there is no requirement to do this. You can find out more information about PHP's supported versions at [https://www.php.net/supported-versions.php](https://www.php.net/supported-versions.php).
+You can find out more information about PHP's supported versions at [https://www.php.net/supported-versions.php](https://www.php.net/supported-versions.php).
 
 ### Add SASS support
 
@@ -66,58 +62,50 @@ the sass is edited.
 To watch and compile sass on the command line run:
 
 ```shell
-sass --watch csb-themes/default/sass/style.scss:csb-themes/default/style.css
+sass --watch csb-themes/default/sass/style.scss:csb-themes/default/style.css &
 ```
 
 PHPstorm can watch and compile sass (see <https://www.jetbrains.com/help/phpstorm/transpiling-sass-less-and-scss-to-css.html>).
 
 Instructions on compiling SASS in ubuntu are here: <https://webdesign.tutsplus.com/tutorials/watch-and-compile-sass-in-five-quick-steps--cms-28275>
 
-### Optional - Error Documents
+### Email setup
+Going to email folks? You'll need an SMTP-relay
+Most email software caps the number of emails you can send per day.
+Services like SendGrid or Google's SMTP-Relay can help you get around this.
+You're going to need the following information: Username, Password,
+SMTP-Relay Server, and encryption method.
 
-CSB defines Apache error documents. If you want them to extend to the whole server, move the .htaccess file to the document root.
-
----------------------------------------------
-
-Note: You'll need the repo accessible to apache. This means either
-clone it into a directory Apache sees, or sim link it there.
-
+## Installation
 ### Clone repo
 
 ```bash
-cd <directory for apache>
+cd <directory for apache or Docker>
 git clone https://github.com/CosmoQuestX/CSB7.0.git
 
 ```
 
-### Method 1 - No Docker
+### Method 1 - Server Installation
 
 #### Step 1: Setup the Server
 
 ##### 1.1 Setup LAMP Server
 
-- Setup an Apache 2 / MySQL 8 / PHP 8 environment. If we don't have specific instructions you need below, look for instructions for Wordpress. Our setup should be the same.
-  - OSX
-    - Enable Apache `apachectl start`
-    - In `/etc/apache2/httpd.conf`
-      - Uncomment `LoadModule` statements for php7 and mod_rewrite _Use Legacy Password Encryption_
-      - Set `AllowOverride All`
-    - Restart Apache `sudo apachectl restart`
-    - [Install MySQL](https://dev.mysql.com/downloads/mysql)
-    - Add mysql to your `.bash_profile` by adding `export PATH="/usr/local/mysql/bin:$PATH"`
-  - Ubuntu: find the Digital Ocean Tutorial for your version of Ubuntu
-  - Windows: _to be determined_
+- Setup a standard Apache 2 / MySQL 8 / PHP 8 environment.
 
-> If you don't have a LAMP (or Win AMP) setup, find instructions to install Wordpress. This software requires the same kind of server configuration! For ubuntu, the Digital Ocean tutorials are among the best.
+> If you don't have a LAMP (or Win AMP) setup and are new to this kind of an
+> environment, find instructions to install Wordpress. CSB7.0 requires the
+> same kind of server configuration! For Ubuntu, the Digital Ocean tutorials are among the best.
 
 ##### 1.2 If you can, add a security certificate
 
 - You should always use a certificate. If you don't have one, try using the free [Let's Encrypt: CertBot](https://letsencrypt.org/getting-started/).
 
-##### 1.3 Going to email folks? Add PEAR
+##### 1.3 Going to email folks? You'll need an SMTP-relay
 
-- MacOS Mojave use: <https://tobschall.de/2018/08/07/pear-on-mojave/>
-- General installation use: <https://pear.php.net/manual/en/installation.getting.php>
+- Most email software caps the number of emails you can send per day.
+Services like SendGrid or Google's SMTP-Relay can help you get around this.
+- You're going to need the
 
 #### Step 2: Launch the installer
 
