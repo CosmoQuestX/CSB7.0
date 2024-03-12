@@ -40,10 +40,10 @@ loadLoginBox();
                 ?>
             </ul>
             <ul class="navbar-nav">
-                
+
 
             <?php
-                // Check if this is the registration page. If it is, don't show this
+                // Check if this is the registration or installer page. If it is, don't show this
                 if (strcmp(basename($_SERVER['PHP_SELF']), "register.php") != 0 &&
                     strcmp(substr($_SERVER['PHP_SELF'], -19), "installer/index.php") != 0 ) {
                     loadUser();

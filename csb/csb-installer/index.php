@@ -1,6 +1,5 @@
 <?php
 
-global $BASE_URL;
 /**
  * Simple installer to set up the settings file.
  * User: dpi209
@@ -13,6 +12,8 @@ global $BASE_URL;
  is already present. Just incase somebody tries.
  ---------------------------------------------------------------------- */
 if ((@include "../csb-settings.php") == TRUE) {
+
+    global $BASE_URL, $THEME_URL;
     header("Location: $BASE_URL");
     exit();
 }
@@ -20,10 +21,13 @@ if ((@include "../csb-settings.php") == TRUE) {
 /* ----------------------------------------------------------------------
  First, we should guesstimate our BASE_DIR and BASE_URL
  ---------------------------------------------------------------------- */
+
+
 if (isset($_SERVER) && isset($_SERVER['SCRIPT_FILENAME'])) {
     $BASE_DIR = stristr($_SERVER['SCRIPT_FILENAME'], "csb-installer", TRUE);
     $BASE_URL = "http" . (($_SERVER['SERVER_PORT'] == 443) ? "s" : "") . "://" . $_SERVER['HTTP_HOST'] . str_replace("//", "/", stristr($_SERVER['REQUEST_URI'], "csb-installer", TRUE));
 }
+
 require_once("installer-functions.php");
 
 /* ----------------------------------------------------------------------
@@ -35,23 +39,21 @@ $page_title = "CSB Installer";
 $THEME_DIR = $BASE_DIR . "csb-themes/default/";
 $THEME_URL = $BASE_URL . "csb-themes/default/";
 
-global $THEME_URL, $THEME_DIR;
-
 require_once($BASE_DIR . "csb-content/template_functions.php");
 
-loadHeader();
 
+loadHeader();
 /* ----------------------------------------------------------------------
  If we called ourselves, we should try to write the config
  ---------------------------------------------------------------------- */
 if (isset($_POST) && isset ($_POST['write_config'])) {
-    if ($_POST['write_config'] == "true") {
-        //Let's prepare the config we want to write
 
+    if ($_POST['write_config'] == "true") {
+
+        //Let's prepare the config we want to write
         $config_head = "<?php \n";
         $config_body = "";
-        $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";
-
+/*        $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";*/
         $avar = array('SITE_NAME','BASE_DIR', 'BASE_URL', 'db_servername', 'db_username', 'db_password', 'email_host', 'email_username', 'email_password', 'email_port', 'email_from');
         foreach ($avar as $varname) {
             if (!isset($varname)) {
@@ -135,190 +137,10 @@ $rqe=array();
 ?>
 
 
-<!-- DB Connection Tester -->
+
 <script type="text/javascript" src="../csb-content/js/network.js"></script>
-<script type="text/javascript" language="JavaScript">
-    $(document).ready(function(){
-        $("#db-tester").click(function() {
-            const data = {
-                "db_servername": $("[name='db_servername']").val(),
-                "db_username": $("[name='db_username']").val(),
-                "db_password": $("[name='db_password']").val(), // Is this secure? Do we care at this point?
-                "db_name": $("[name='db_name']").val(),
-                "db_port": $("[name='db_port']").val()
-            }
+<script type="text/javascript" src="js/installer.js"></script>
 
-            /*
-             The response will always be with a 200 status.
-             It will look like this for success: { result: true }
-             And like this for failures:
-             {
-                 result: false,
-                 code: <code>,
-                 message: <error message>
-             }
-             */
-
-            postData("db-tester.php", data).then( response => {
-                if (response.result)
-                {
-                    $("#db-test-status").html("Looks good! 👍")
-                        .attr("class", "alert alert-success col-12") //Style the message
-                        .css({
-                            "margin-top": "1rem",
-                            "display": "block",
-                            "width": "auto",
-                            "height": "auto"
-                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-                }
-                else
-                {
-                    $("#db-test-status").html("Error: " + response.message)
-                        .attr("class", "alert alert-danger col-12")  //Style the message
-                        .css({
-                                "margin-top": "1rem",
-                                "display": "block",
-                                "width": "auto",
-                                "height": "auto"
-                            }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-                }
-            }).catch( err => {
-                $("#db-test-status").html("An unexpected error occurred!")
-                    .attr("class", "alert alert-danger col-12")  //Style the message
-                    .css({
-                            "margin-top": "1rem",
-                            "display": "block",
-                            "width": "auto",
-                            "height": "auto"
-                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-            });
-        });
-
-        $("#email-tester").click(function() {
-            const data = {
-                "email_host": $("[name='email_host']").val(),
-                "email_username": $("[name='email_username']").val(),
-                "email_password": $("[name='email_password']").val() // Is this secure? Do we care at this point?
-            }
-
-            /*
-             The response will always be with a 200 status.
-             It will look like this for success: { result: true }
-             And like this for failures:
-             {
-                 result: false,
-                 code: <code>,
-                 message: <error message>
-             }
-             */
-
-            postData("email-tester.php", data).then( response => {
-                if (response.result)
-                {
-                    $("#email-test-status").html("Email Auth: Looks good! 👍")
-                        .attr("class", "alert alert-success col-12") //Style the message
-                        .css({
-                            "margin-top": "1rem",
-                            "display": "block",
-                            "width": "auto",
-                            "height": "auto"
-                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-                }
-                else
-                {
-                    $("#email-test-status").html(response.message)
-                        .attr("class", "alert alert-danger col-12")  //Style the message
-                        .css({
-                            "margin-top": "1rem",
-                            "display": "block",
-                            "width": "auto",
-                            "height": "auto"
-                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-                }
-            }).catch( err => {console.debug(err);
-                $("#email-test-status").html("Email Auth: An unexpected error occurred!")
-                    .attr("class", "alert alert-danger col-12")  //Style the message
-                    .css({
-                        "margin-top": "1rem",
-                        "display": "block",
-                        "width": "auto",
-                        "height": "auto"
-                    }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-            });
-        });
-
-        $("#example-email").click(function() {
-            const
-                rescueEmail = $("[name='rescue_email']"),
-                data = {
-                    "email_host": $("[name='email_host']").val(),
-                    "email_port": $("[name='email_port']").val(),
-                    "email_encryption": $("[name='email_encryption']:checked").val(),
-                    "email_username": $("[name='email_username']").val(),
-                    "email_password": $("[name='email_password']").val(), // Is this secure? Do we care at this point?
-                    "email_from": $("[name='email_from']").val(),
-                    "email_name": $("[name='email_name']").val(),
-                    "rescue_email": rescueEmail.val() // TODO : If rescue_email is not filled, change to that tab [Directories] and show error
-                }
-
-            // Check if rescue_email matches email pattern
-            if (!RegExp(rescueEmail[0].pattern).test(data['rescue_email'])) {
-                const directoriesTab = $('a.nav-link[href="#directories"]');
-                directoriesTab.click(); // Switch to Directories tab
-                rescueEmail.focus(); // Show Rescue Email error
-                rescueEmail.focus();
-                return;
-            }
-
-            /*
-             The response will always be with a 200 status.
-             It will look like this for success: { result: true }
-             And like this for failures:
-             {
-                 result: false,
-                 code: <code>,
-                 message: <error message>
-             }
-             */
-
-            postData("example-email.php", data).then( response => {
-                if (response.result)
-                {
-                    $("#email-test-status").html("Test Email: Looks good! 👍")
-                        .attr("class", "alert alert-success col-12") //Style the message
-                        .css({
-                            "margin-top": "1rem",
-                            "display": "block",
-                            "width": "auto",
-                            "height": "auto"
-                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-                }
-                else
-                {
-                    $("#email-test-status").html(response.message)
-                        .attr("class", "alert alert-danger col-12")  //Style the message
-                        .css({
-                            "margin-top": "1rem",
-                            "display": "block",
-                            "width": "auto",
-                            "height": "auto"
-                        }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-                }
-            }).catch( err => {console.debug(err);
-                $("#email-test-status").html("Test Email: An unexpected error occurred!")
-                    .attr("class", "alert alert-danger col-12")  //Style the message
-                    .css({
-                        "margin-top": "1rem",
-                        "display": "block",
-                        "width": "auto",
-                        "height": "auto"
-                    }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-            });
-        });
-    });
-</script>
-
-<!-- end DB Connection Tester -->
 
 <div class="container text-dark">
     <div class="row">

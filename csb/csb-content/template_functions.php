@@ -62,15 +62,11 @@ function loadMeta()
     $csb_headers .= "<title>".$page_title."</title>\r\n";
 
     // Load libraries
-    $csb_headers .=  "<script src='".$BASE_URL . "csb-content/js/jquery-3.4.1.slim.min.js'
 
-            crossorigin='anonymous'></script>";
-    $csb_headers .=  "<script src='".$BASE_URL . "csb-content/js/popper.min.js'
+    $csb_headers .=  '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>';
+    $csb_headers .=  '<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>';
+    $csb_headers .=  '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>';
 
-            crossorigin='anonymous'></script>";
-    $csb_headers .=  "<script src='".$BASE_URL . "csb-content/js/bootstrap.min.js'
-
-            crossorigin='anonymous'></script>";
     $csb_headers .= "<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>";
 
     echo $csb_headers;
