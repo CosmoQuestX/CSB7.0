@@ -138,7 +138,7 @@ $rqe=array();
 
 
 
-<script type="text/javascript" src="../csb-content/js/network.js"></script>
+<script type="text/javascript" src="<?php echo $BASE_URL ?>csb-content/js/network.js"></script>
 <script type="text/javascript" src="js/installer.js"></script>
 
 
