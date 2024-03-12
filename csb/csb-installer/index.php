@@ -53,7 +53,7 @@ if (isset($_POST) && isset ($_POST['write_config'])) {
         //Let's prepare the config we want to write
         $config_head = "<?php \n";
         $config_body = "";
-/*        $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";*/
+        $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";
         $avar = array('SITE_NAME','BASE_DIR', 'BASE_URL', 'db_servername', 'db_username', 'db_password', 'email_host', 'email_username', 'email_password', 'email_port', 'email_from');
         foreach ($avar as $varname) {
             if (!isset($varname)) {
@@ -399,18 +399,18 @@ $rqe=array();
 
 </div>
 
-
-<!-- Validation -->
-<script src="<?php echo $BASE_URL; ?>csb-themes/default/js/bs4-form-validation.min.js"></script>
-<script>
-    let install = new Validation("installation");
-    install.requireText("BASE_DIR", 0, 999, [], []);
-    install.requireText("BASE_URL", 0, 999, [], []);
-    install.requireEmail("rescue_email", 4, 999, [], []);
-    install.requireText("db_servername", 0, 999, [], []);
-    install.requireText("db_username", 0, 999, [], []);
-    install.requireText("db_name", 0, 999, [], []);
-</script>
+<!---->
+<!--<!-- Validation -->-->
+<!--<script src="--><?php //echo $BASE_URL; ?><!--csb-themes/default/js/bs4-form-validation.min.js"></script>-->
+<!--<script>-->
+<!--    let install = new Validation("installation");-->
+<!--    install.requireText("BASE_DIR", 0, 999, [], []);-->
+<!--    install.requireText("BASE_URL", 0, 999, [], []);-->
+<!--    install.requireEmail("rescue_email", 4, 999, [], []);-->
+<!--    install.requireText("db_servername", 0, 999, [], []);-->
+<!--    install.requireText("db_username", 0, 999, [], []);-->
+<!--    install.requireText("db_name", 0, 999, [], []);-->
+<!--</script>-->
 
 <?php
 loadFooter();
