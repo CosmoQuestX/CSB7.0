@@ -397,8 +397,6 @@ $rqe=array();
 </div>
 
 
-</div>
-
 <!---->
 <!--<!-- Validation -->-->
 <!--<script src="--><?php //echo $BASE_URL; ?><!--csb-themes/default/js/bs4-form-validation.min.js"></script>-->
