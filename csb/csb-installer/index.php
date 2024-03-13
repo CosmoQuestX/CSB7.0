@@ -119,5 +119,6 @@ if (empty($_POST)) {
 
 $scripts = '<script type="text/javascript" src="'. $BASE_URL .'csb-content/js/network.js"></script>';
 $scripts .= '<script type="text/javascript" src="js/installer.js"></script>';
-$scripts .= '<script src="'.$BASE_URL.'csb-themes/default/js/bs4-form-validation.min.js"></script>';
+$scripts .= '<script type="text/javascript" src="'.$BASE_URL.'csb-themes/default/js/bs4-form-validation.min.js"></script>';
+$scripts .= '<script type="text/javascript" src="js/installer-validator.js"></script>';
 loadFooter($scripts);

@@ -138,9 +138,9 @@
                                     <label for="site_name">Site Name</label>
                                     <input type="text" class="form-control" required id="site_name" name="SITE_NAME" placeholder="Do Science">
                                     <label for="base_dir">Base Directory</label>
-                                    <input type="text" class="form-control" required id="base_dir" name="BASE_DIR" id="BASE_DIR" value="<?php echo $BASE_DIR; ?>">
+                                    <input type="text" class="form-control" required id="base_dir" name="BASE_DIR" value="<?php echo $BASE_DIR; ?>">
                                     <label for="base_url">Base URL</label>
-                                    <input type="text" class="form-control" required id="base_url" name="BASE_URL" id="BASE_URL" value="<?php echo $BASE_URL; ?>">
+                                    <input type="text" class="form-control" required id="base_url" name="BASE_URL" value="<?php echo $BASE_URL; ?>">
                                     <label for="rescue_email">Site Admin Email</label>
                                     <input type="text" class="form-control" required id="rescue_email" name="rescue_email" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" placeholder="your@email.example">
                                 </div>
@@ -261,15 +261,6 @@
                         <input type="submit" class="btn btn-cq" name="submit" value="Write Configuration" <?php if ($rq1 === false || $rq2 === false ) { echo "disabled"; } ?> >
                     </div>
                 </form>
-                <script>
-                    let install = new Validation("installation");
-                    install.requireText("BASE_DIR", 0, 999, [], []);
-                    install.requireText("BASE_URL", 0, 999, [], []);
-                    install.requireEmail("rescue_email", 4, 999, [], []);
-                    install.requireText("db_servername", 0, 999, [], []);
-                    install.requireText("db_username", 0, 999, [], []);
-                    install.requireText("db_name", 0, 999, [], []);
-                </script>
             </div>
         </div>
     </div>
