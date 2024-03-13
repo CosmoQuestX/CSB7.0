@@ -1,3 +1,24 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: starstryder
+ * Date: 6/11/19
+ * Time: 9:46 PM
+ */
+
+// Start by defining what the minimum versions are
+
+    $php_min_version = "70200";
+    $php_min_version_readable = "7.2";
+    $php_rec_version = "80100";
+    $php_rec_version_readable = "8.2";
+    $extensions = array("mysqli");
+    $rq1=false;
+    $rq2=false;
+    $rqe=array();
+?>
+
+
 <div class="container text-dark">
     <div class="row">
         <div class="col">
@@ -49,6 +70,69 @@
                         </li>
                     </ul>
                 </div>
+
+                <!-- open the form -->
+                <form name="installation" id="installation" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
+                    <div class="card-body tab-content">
+
+                        <!-- Requirements Tab -->
+                        <div id="requirements" class="tab-pane active in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label>Is PHP Version at least <?php echo $php_min_version_readable; ?>?<ul><li>Installed: <?php $ver = checkForPHP($php_min_version, $php_rec_version); $ver == 1 ? $vn = $php_rec_version_readable : $vn = $php_min_version_readable; echo phpversion(); ?></li></ul></label>
+                                    <?php
+                                    if ($ver == 1) {
+                                        echo '<span class="font-weight-bold text-success">OK</span>';
+                                        $rq1 = true;
+                                    }
+                                    elseif ($ver == 2) {
+                                        echo '<span class="font-weight-bold text-warning">OUTDATED</span>';
+                                        $rq1 = true;
+                                    }
+                                    else {
+                                        echo '<span class="font-weight-bold text-danger">ERROR</span>';
+                                        $rq1 = false;
+                                    }
+                                    ?>
+                                    <br />
+                                    <label>Checking for required PHP Extensions: <br></label>
+                                    <ul>
+                                        <?php
+                                        foreach ($extensions as $extension) {
+
+                                            if (checkForExtension($extension)) {
+                                                echo '<li>Extension ' . $extension . ': <span class="font-weight-bold text-success">OK</span></li>';
+                                                $rqe[]=true;
+                                            }
+                                            else {
+                                                echo '<li><span class="font-weight-bold text-danger">ERROR</span></li>';
+                                                $rqe[] = false;
+                                            }
+                                            if (in_array(false,$rqe)) {
+                                                $rq2 = false;
+                                            }
+                                            else
+                                            {
+                                                $rq2=true;
+                                            }
+                                        }
+                                        ?>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6" id="requirements-help">
+                                    <h5>Requirements</h5>
+                                    Currently, the requirements are as follows:
+                                    <ul>
+                                        <li>PHP: Version <?php echo $php_rec_version_readable; ?> is the version CSB was developed for. </li>
+                                        <li>PHP: Version <?php echo $php_min_version_readable; ?> is tested, but may not be supported in future versions.</li>
+                                        <li>Extensions: mysqli</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
