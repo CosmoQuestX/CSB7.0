@@ -398,18 +398,18 @@ $rqe=array();
 </div>
 
 
-<!---->
-<!--<!-- Validation -->-->
-<!--<script src="--><?php //echo $BASE_URL; ?><!--csb-themes/default/js/bs4-form-validation.min.js"></script>-->
-<!--<script>-->
-<!--    let install = new Validation("installation");-->
-<!--    install.requireText("BASE_DIR", 0, 999, [], []);-->
-<!--    install.requireText("BASE_URL", 0, 999, [], []);-->
-<!--    install.requireEmail("rescue_email", 4, 999, [], []);-->
-<!--    install.requireText("db_servername", 0, 999, [], []);-->
-<!--    install.requireText("db_username", 0, 999, [], []);-->
-<!--    install.requireText("db_name", 0, 999, [], []);-->
-<!--</script>-->
+
+<!-- Validation -->
+<script src="<?php echo $BASE_URL; ?>csb-themes/default/js/bs4-form-validation.min.js"></script>
+<script>
+    let install = new Validation("installation");
+    install.requireText("BASE_DIR", 0, 999, [], []);
+    install.requireText("BASE_URL", 0, 999, [], []);
+    install.requireEmail("rescue_email", 4, 999, [], []);
+    install.requireText("db_servername", 0, 999, [], []);
+    install.requireText("db_username", 0, 999, [], []);
+    install.requireText("db_name", 0, 999, [], []);
+</script>
 
 <?php
 loadFooter();

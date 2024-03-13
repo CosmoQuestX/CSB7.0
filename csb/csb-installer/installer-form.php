@@ -186,9 +186,90 @@
                             </div>
                         </div>
 
+                        <!-- SMTP Tab -->
+                        <div id="smtp" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label for="email_host">Email Host</label>
+                                    <input type="text" class="form-control" id="email_host" name="email_host" placeholder="smtp.yourprovider.example">
+                                    <label for="email_username">Username</label>
+                                    <input type="text" class="form-control" id="email_username" name="email_username" value="">
+                                    <label for="email_password">Password</label>
+                                    <input type="password" class="form-control" id="email_password" name="email_password" value="">
+                                    <label for="email_port">Port</label>
+                                    <input type="text" class="form-control" id="email_port" name="email_port" max="65535" pattern="[0-9]{1,5}" value="587">
+                                    <br />
+                                    <p>Email Encryption</p>
+                                    <input id="email_tls" type="radio" name="email_encryption" value="TLS" checked>
+                                    <label for="email_tls">TLS <span style="color: #6c757d;">(recommended)</span></label>
+                                    <br />
+                                    <input id="email_ssl" type="radio" name="email_encryption" value="SSL">
+                                    <label for="email_ssl">SSL</label>
+                                    <br />
+                                    <label for="email_from">Sending Address</label>
+                                    <input type="text" class="form-control" id="email_from" name="email_from" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" placeholder="your@email.example">
+                                </div>
+                                <div class="col-md-6" id="smtp-help">
+                                    <h5>SMTP Setup</h5>
+                                    <p>These settings are specific to your email provider. For production installations
+                                        please use an email provider without rate caps. Some Google Business accounts have
+                                        no rate cap, and services like Sendgrid work well.</p>
+                                    <p><b>Note</b>: If <code>Test Connection</code> fails but <code>Send Test Email</code> successfully sends (make sure to check your inbox), it is ok to proceed. Some ISPs block the port used for testing.</p>
+                                    <br />
+                                    <input type="button" class="btn btn-cq" name="email_tester" id="email-tester" value="Test Connection">
+                                    <input type="button" class="btn btn-cq" name="example_email" id="example-email" value="Send Test Email">
+                                </div>
+                                <div id="email-test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</div>
+                            </div>
+                        </div>
 
+                        <!-- Socials Tab -->
+                        <div id="socials" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label for="social_discord">Discord Invite ID:</label>
+                                    <input type="text" class="form-control" id="social_discord" name="social_discord" pattern="[0-9a-zA-Z]{10}" placeholder="aBcD5eF8gH">
+                                    <label for="social_youtube">YouTube channel</label>
+                                    <input type="text" class="form-control" id="social_youtube" name="social_youtube" pattern="[0-9a-zA-Z/]*" placeholder="/c/CosmoQuest">
+                                    <label for="social_twitch">Twitch channel name</label>
+                                    <input type="text" class="form-control" id="social_twitch" name="social_twitch" pattern="[0-9a-zA-Z]*" placeholder="cosmoquestx">
+                                    <label for=social_twitter>Twitter hande</label>
+                                    <input type="text" class="form-control" id="social_twitter" name="social_twitter" pattern="[0-9a-zA-Z]*" placeholder="cosmoquestx">
+                                </div>
+                                <div class="col-md-6" id="smtp-help">
+                                    <h5>Optional: Social Media and Community</h5>
+                                    <p>Here you can predefine some of your social media and community contacts
+                                        that you can later refer to in texts and descriptions on the site.</p>
+                                    <ul>
+                                        <li>Discord: Enter your invite ID here (https://discord.gg/&lt;invite_id&gt;</li>
+                                        <li>Youtube: Your channel (https://youtube.com/&lt;c/channelname&gt; or https://youtube.com/&lt;channel/channelid&gt;</li>
+                                        <li>Twitch: Your Twitch channel (https://twitch.tv/&lt;channel&gt;)</li>
+                                        <li>Twitter: Your Twitter handle (https://twitter.com/&lt;handle&gt;)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div> <!-- end of card-body -->
+
+                    <!-- submission buttons -->
+                    <div class="my-4 d-flex justify-content-center">
+                        <input type="hidden" name="write_config" value="true">
+                        <input type="submit" class="btn btn-cq" name="submit" value="Write Configuration" <?php if ($rq1 === false || $rq2 === false ) { echo "disabled"; } ?> >
                     </div>
                 </form>
+                <script>
+                    let install = new Validation("installation");
+                    install.requireText("BASE_DIR", 0, 999, [], []);
+                    install.requireText("BASE_URL", 0, 999, [], []);
+                    install.requireEmail("rescue_email", 4, 999, [], []);
+                    install.requireText("db_servername", 0, 999, [], []);
+                    install.requireText("db_username", 0, 999, [], []);
+                    install.requireText("db_name", 0, 999, [], []);
+                </script>
             </div>
         </div>
     </div>
