@@ -34,7 +34,7 @@ function load3Col($menus="", $main="", $notes="", $template="") {
  *
  * @return void
  */
-function loadFooter($scripts = "")
+function loadFooter($scripts = "Fred was here.")
 {
     global $THEME_URL, $THEME_DIR, $BASE_URL, $csb_headers, $page_title;
 

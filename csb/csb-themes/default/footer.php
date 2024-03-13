@@ -13,7 +13,7 @@
         This is a product of the Planetary Science Institute.
     </div>
 </div>
-</body>
+
 
 <?php
 
@@ -27,7 +27,10 @@ if (isset($_SESSION['errmsg'])) {
     unset($_SESSION['errmsg']);
 
 }
+
+// Echo out any scripts that need run
+echo $scripts;
 ?>
 
-
+</body>
 </html>
