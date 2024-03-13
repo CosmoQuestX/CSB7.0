@@ -13,11 +13,7 @@
         This is a product of the Planetary Science Institute.
     </div>
 </div>
-
 </body>
-
-
-<script src="<?php echo $BASE_URL; ?>csb-content/js/csb.js"></script>
 
 <?php
 
