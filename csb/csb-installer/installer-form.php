@@ -156,6 +156,36 @@
                             </div>
                         </div>
 
+                        <!-- Database Tab -->
+                        <div id="database" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label for="db_servername">Database Server</label>
+                                    <input type="text" class="form-control" required id="db_servername" name="db_servername" value="localhost">
+                                    <label for="db_port">Database Port</label>
+                                    <input type="text" class="form-control" required id="db_port" name="db_port" max="65535" maxlength="5" pattern="[0-9]{1,5}" value="3306">
+                                    <label for="db_username">Username</label>
+                                    <input type="text" class="form-control" required id="db_username" name="db_username" value="csb">
+                                    <label for="db_password">Password (cannot be empty)</label>
+                                    <input type="password" class="form-control" required id="db_password" name="db_password">
+                                    <label for="db_name">Database Name</label>
+                                    <input type="text" class="form-control" required id="db_name" name="db_name" value="csb">
+                                </div>
+                                <div class="col-md-6" id="database-help">
+                                    <h5>Database Setup</h5>
+                                    <ul>
+                                        <li>Database Server: Often localhost, 127.0.0.1, or a remote server IP. If in our Docker container, use <b>db</b></li>
+                                        <li>Database Port: default is 3306, but if your database runs on a different port you can change it here</li>
+                                        <li>Username: this is your database user (security tip: create a program-specific db user)</li>
+                                        <li>Database Name: This is where all CSB tables will go. Should be empty/new utf8 / utf8_bin DB schema.</li>
+                                    </ul>
+                                    <br />
+                                    <input type="button" class="btn btn-cq" name="db_tester" id="db-tester" value="Test Connection">
+                                </div>
+                                <div id="db-test-status" class="alert alert-light col-12" style="margin-top: 1rem; display:block; width:auto; height:auto;" >&nbsp;</div>
+                            </div>
+                        </div>
+
 
                     </div>
                 </form>
