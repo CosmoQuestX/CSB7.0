@@ -82,6 +82,8 @@ SMTP-Relay Server, and encryption method.
 ```bash
 cd <directory for apache or Docker>
 git clone https://github.com/CosmoQuestX/CSB7.0.git
+cd CSB7.0
+composer up
 
 ```
 

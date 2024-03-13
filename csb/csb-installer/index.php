@@ -103,10 +103,7 @@ if (empty($_POST)) {
             <div id="main">
             <div id="" class="container">
                 <div id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;">
-
-                    <p><?php
-                        require_once("installer.php");
-                        ?></p>
+                    What goes here.
                 </div>
             </div>
             <?php

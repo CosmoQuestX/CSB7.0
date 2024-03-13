@@ -139,6 +139,8 @@ $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*
 $password = substr(str_shuffle($chars), 0, 12);
 $hashed = password_hash($password, PASSWORD_DEFAULT);
 
+status_update("New Place", "success");
+
 // Create the user with email from settings
 $sql = "INSERT INTO users (id, name, email, password) VALUES (1, '" . $username . "', '" . $rescue_email . "', '" . $hashed . "');";
 if ($conn->query($sql) == FALSE) {
