@@ -44,6 +44,7 @@ loadHeader();
 
 if (empty($_POST)) {
     echo "starting";
+    require_once("installer-form.php");
 
 /* ----------------------------------------------------------------------
  If this is a form response, setup the settings file
