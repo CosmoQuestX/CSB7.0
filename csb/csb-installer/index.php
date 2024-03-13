@@ -37,5 +37,27 @@ require_once($BASE_DIR . "csb-content/template_functions.php");
 
 
 loadHeader();
-$scripts = "Fred";
+
+/* ----------------------------------------------------------------------
+ Check if this is a POST request or just starting the install
+ ---------------------------------------------------------------------- */
+
+if (empty($_POST)) {
+    echo "starting";
+
+/* ----------------------------------------------------------------------
+ If this is a form response, setup the settings file
+ ---------------------------------------------------------------------- */
+
+} else {
+    echo "post";
+    if (isset($_POST['write_config']) && $_POST['write_config'] == "true") {
+        echo "write";
+    } else {
+        echo "How did you get here?";
+    }
+}
+
+$scripts = '<script type="text/javascript" src="'. $BASE_URL .'csb-content/js/network.js"></script>';
+$scripts .= '<script type="text/javascript" src="js/installer.js"></script>';
 loadFooter($scripts);
