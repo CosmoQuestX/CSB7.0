@@ -20,7 +20,7 @@
                             </p><p class="text-danger">Make sure the directory <br /><code><?php echo $BASE_DIR; ?></code><br /> is writeable for the webserver user. (for Ubuntu: sudo chown -R www-data <?php echo $BASE_DIR; ?>)</p>
                             Aborting the installer.</div></div></div></div></div>
                             <?php
-                            require_once($BASE_DIR . "csb-themes/footer.php");
+                            require_once($BASE_DIR . "csb-themes/default/footer.php");
                             die ("");
                             exit();
                         } ?>
