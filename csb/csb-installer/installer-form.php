@@ -129,8 +129,34 @@
                                     </ul>
                                 </div>
                             </div>
-
                         </div>
+
+                        <!-- Directories Tab -->
+                        <div id="directories" class="tab-pane fade in">
+                            <div class="row">
+                                <div class="col-md-6 px-5">
+                                    <label for="site_name">Site Name</label>
+                                    <input type="text" class="form-control" required id="site_name" name="SITE_NAME" placeholder="Do Science">
+                                    <label for="base_dir">Base Directory</label>
+                                    <input type="text" class="form-control" required id="base_dir" name="BASE_DIR" id="BASE_DIR" value="<?php echo $BASE_DIR; ?>">
+                                    <label for="base_url">Base URL</label>
+                                    <input type="text" class="form-control" required id="base_url" name="BASE_URL" id="BASE_URL" value="<?php echo $BASE_URL; ?>">
+                                    <label for="rescue_email">Site Admin Email</label>
+                                    <input type="text" class="form-control" required id="rescue_email" name="rescue_email" pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*)@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])" placeholder="your@email.example">
+                                </div>
+                                <div class="col-md-6" id="directory-help">
+                                    <h5>Directory Setup</h5>
+                                    <ul>
+                                        <li>Site name: This is displayed in page titles and in headers</li>
+                                        <li>Base Directory: Complete installation directory (e.g. from pwd)</li>
+                                        <li>Base URL: What is the URL to get to CSB's root directory</li>
+                                        <li>Site Admin Email: This is used to rescue your admin user</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </form>
             </div>
