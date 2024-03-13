@@ -6,13 +6,6 @@
  * Time: 1:18 PM
  */
 
-/* ----------------------------------------------------------------------
-   Turn on Debugger - TEMPORARY
-   ---------------------------------------------------------------------- */
-error_reporting(E_ALL);
-ini_set('display_errors', 'On');
-ini_set('html_errors', 'On');
-
 
 /* ----------------------------------------------------------------------
    Load things needed always
@@ -100,10 +93,41 @@ $TEMPLATES_DIR = $BASE_DIR . "csb-content/templates/";
 global $social_discord, $social_youtube, $social_twitch, $social_twitter;
 
 /* ----------------------------------------------------------------------
+   Turn on Debugger - TEMPORARY TODO : Sanity check, does this work?
+   ---------------------------------------------------------------------- */
+//error_reporting(E_ALL);
+//ini_set('display_errors', 'On');
+//ini_set('html_errors', 'On');
+
+global $DEBUG_MODE;
+
+include($DB_class);
+$db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
+
+// Assuming you have a database connection $db
+$query = "SELECT option_value FROM options WHERE option_name = 'debug_mode'";
+$result = $db->runQuery($query);
+
+if ($result[0]["option_value"] === "1") {
+    // Turn on error reporting
+    $DEBUG_MODE = TRUE;
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('html_errors', 1);
+} else {
+    // Turn off error reporting
+    $DEBUG_MODE = FALSE;
+    error_reporting(0);
+    ini_set('display_errors', 0);
+    ini_set('html_errors', 0);
+}
+
+$db->closeDB();
+
+/* ----------------------------------------------------------------------
    Setup User Roles - needed because of potential customizations
    ---------------------------------------------------------------------- */
 
-include($DB_class);
 $db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
 $query = "SELECT * FROM roles";
 $result = $db->runQuery($query);
