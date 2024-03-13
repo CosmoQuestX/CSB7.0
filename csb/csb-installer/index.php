@@ -37,5 +37,5 @@ require_once($BASE_DIR . "csb-content/template_functions.php");
 
 
 loadHeader();
-echo "here";
-loadFooter();
+$scripts = "Fred";
+loadFooter($scripts);
