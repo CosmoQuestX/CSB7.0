@@ -1,6 +1,9 @@
 <div class="container text-dark">
     <div class="row">
         <div class="col">
+
+
+            // Requirements Tab for installer
             <div class="card">
                 <h4 class="card-header">Citizen Science Builder Installer</h4>
                 <div class="card-body">
@@ -24,6 +27,27 @@
                             die ("");
                             exit();
                         } ?>
+                </div>
+
+                <!-- Setup the tabs to go between menus -->
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link active" href="#requirements">Requirements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link" href="#directories">Directories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link" href="#database">Database</a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link" href="#smtp">SMTP</a>
+                        </li>
+                        <li class="nav-item">
+                            <a data-toggle="tab" class="nav-link" href="#socials">Socials</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
