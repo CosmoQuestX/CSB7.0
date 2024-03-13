@@ -50,9 +50,71 @@ if (empty($_POST)) {
  ---------------------------------------------------------------------- */
 
 } else {
-    echo "post";
     if (isset($_POST['write_config']) && $_POST['write_config'] == "true") {
-        echo "write";
+        //Let's prepare the config we want to write
+        $config_head = "<?php \n";
+        $config_body = "";
+        $config_foot = "ini_set(\"log_errors\", 1);\nini_set(\"error_log\", \$BASE_DIR.\"logs/error.log\");\n?>";
+        $avar = array('SITE_NAME','BASE_DIR', 'BASE_URL', 'db_servername', 'db_username', 'db_password', 'email_host', 'email_username', 'email_password', 'email_port', 'email_from');
+        foreach ($avar as $varname) {
+            if (!isset($varname)) {
+                // TODO We should probably exit more gracefully.
+                die("This should not happen, but {$varname} is not set");
+            }
+        }
+        // TODO Suggestion: rework the database layer to support table prefixes. Useful if CSB needs to be run on one shared database.
+
+        foreach ($_POST as $key => $value) {
+            if ($key != "write_config" && $key != "submit") {
+                if (strpos($key, "email_") !== false) {
+                    $index = str_replace("email_", "", $key);
+                    $config_body .= "\$emailSettings['{$index}']='$value';\n";
+                } else if (strpos($key, "social_") !== false) {
+                    $index = str_replace("social_", "", $key);
+                    switch ($index) {
+                        case "discord":
+                            $config_body .= "\${$key}='https://discord.gg/{$value}';\n";
+                            break;
+                        case "youtube":
+                            $config_body .= "\${$key}='https://youtube.com/{$value}';\n";
+                            break;
+                        case "twitch":
+                            $config_body .= "\${$key}='https://twitch.tv/{$value}';\n";
+                            break;
+                        case "twitter":
+                            $config_body .= "\${$key}='https://twitter.com/{$value}';\n";
+                            break;
+                    }
+                } else {
+                    $config_body .= "\${$key}='{$value}';\n";
+                }
+            }
+        }
+        // Time to actually write the config!
+        $csbconfig = fopen($BASE_DIR . "csb-settings.php", 'c');
+        fwrite($csbconfig, $config_head);
+        fwrite($csbconfig, $config_body);
+        fwrite($csbconfig, $config_foot);
+        fclose($csbconfig);
+
+
+        // If we produced a readable configuration, we can carry on to step 2.
+        if (is_readable($BASE_DIR . "/csb-settings.php")) { ?>
+            <div id="main">
+            <div id="" class="container">
+                <div id="app" style="padding: 10px; background-color: #ffffff; color: #1d1d1d; border-radius: 10px;">
+
+                    <p><?php
+                        require_once("installer.php");
+                        ?></p>
+                </div>
+            </div>
+            <?php
+            die();
+        } else {
+            // Else, better not continue.
+            die ("Failed reading the configuration, please check your configuration manually.");
+        }
     } else {
         echo "How did you get here?";
     }
