@@ -65,26 +65,25 @@ if (isset($_GET['go'])) {
         $error = "";
         // Check if name or email are in use, throw an error if it is
         if ($db->checkUser('name', filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS))) {
-            $error .= "The username or email is taken. Try another.";
+            $error .= "That username is taken. Try another.";
         }
         if ($db->checkUser('email', filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL))) {
-            $error .= "The username or email is taken. Try another.";
+            $error .= "That email is taken. Try another.";
         }
 
-        if(!empty($error)) {
+        if (!empty($error)) {
             $_SESSION['errMsg'] = "Error: " . $error;
             header("Location: " . $ACC_URL . "register.php");
-            exit();
         }
         // No errors? Kill the error
         else {
             regUser($db, $_POST, $hashed);
             // Send the newly registered user off to the main page instead of presenting a blank page.
             header("Location: " . $BASE_URL);
-            exit();
         }
+        exit();
 
-    /* Rescuing a Password ---------------------------------------------- */
+        /* Rescuing a Password ---------------------------------------------- */
     } elseif ($_POST['go'] == 'rescueForm') {
         $flag = TRUE;
 
