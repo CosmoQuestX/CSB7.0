@@ -121,7 +121,7 @@ function loadUser()
                 }
                 ?>
                 <form action="<?php echo($BASE_URL); ?>csb-accounts/auth-login.php" method="get" id="form-logout">
-                    <input type="submit" name="go" style="cursor:pointer;" class="dropdown-item" value="logout">
+                    <button type="submit" name="go" style="cursor:pointer;" class="dropdown-item" value="logout">Logout</button>
                 </form>
             </div>
         </li>
