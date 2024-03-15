@@ -41,7 +41,7 @@
                 }
                 else {                           // LOGGED IN
                     ?>
-                    <h3 class="font-weight-bold">Hello, <?php echo $user['name'];?> !</h3>
+                    <h3 class="font-weight-bold">Hello, <?php echo $user['name'];?>!</h3>
                     <?php
                 }
             ?>
