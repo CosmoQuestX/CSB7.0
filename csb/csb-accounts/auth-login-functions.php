@@ -37,7 +37,7 @@ function login($db, $user)
                 // update token in database to compare with later
                 $token_hash = password_hash($token, PASSWORD_DEFAULT);
                 $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
-                $params = array($user['id']);
+                $params = array($chkuser['id']);
                 $db->update($query, "s", $params);
 
             } else {
