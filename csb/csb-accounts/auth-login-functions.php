@@ -24,26 +24,7 @@ function login($db, $user)
         // Verify the password, set the cookie and session variable
         if (password_verify($user['password'], $chkuser['password'])) {
 
-            // Set timeout variable & token for cookies based on remember checkbox
-            if (isset($user['remember']) && !strcmp($user['remember'], 'on')) {
-
-                // How long will cookies last: 30 Days
-                $timeout = time() + 60 * 60 * 24 * 30;
-
-                $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
-                $token = substr(str_shuffle($chars), 0, 36);
-                setcookie("token", $token, $timeout, "/");
-
-                // update token in database to compare with later
-                $token_hash = password_hash($token, PASSWORD_DEFAULT);
-                $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
-                $params = array($chkuser['id']);
-                $db->update($query, "s", $params);
-
-            } else {
-                // How long will cookies last: 24min like sessions (set in php.ini)
-                $timeout = time() + 60 * 24;
-            }
+           $timeout = generateToken($db, $user, $chkuser['id']);
 
             // Get the person's roles
             $query = "SELECT role_id FROM role_users WHERE user_id = ?";
@@ -166,25 +147,7 @@ function regUser($db, $user, $pwhash)
     // Insert the users' session information into the database
     insertUserSession($db, $user['id']);
 
-    // Set timeout variable & token for cookies based on remember checkbox
-    if (isset($user['remember']) && !strcmp($user['remember'], 'on')) {
-
-        // How long will cookies last: 30 Days
-        $timeout = time() + 60 * 60 * 24 * 30;
-
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
-        $token = substr(str_shuffle($chars), 0, 36);
-        setcookie("token", $token, $timeout, "/");
-
-        // update token in database to compare with later
-        $token_hash = password_hash($token, PASSWORD_DEFAULT);
-        $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
-        $params = array($user['id']);
-        $db->update($query, "s", $params);
-    } else {
-        // How long will cookies last: 24min like sessions (set in php.ini)
-        $timeout = time() + 60 * 24;
-    }
+    $timeout = generateToken($db, $user, $user['id']);
 
     // Get the person's roles
     $query = "SELECT role_id, user_id FROM role_users WHERE user_id = ?";
@@ -203,6 +166,36 @@ function regUser($db, $user, $pwhash)
     setcookie('name', $user['username'], $timeout, "/");
     $_SESSION['roles'] = $roles;
 
+}
+
+/**
+ * Set timeout variable & token for cookies based on remember checkbox
+ * @param $db - The current database connection
+ * @param $user - The user configuration for the registration attempt
+ * @param $id - The user id from the database
+ * @return int
+ */
+function generateToken ($db, $user, $id) {
+    if (isset($user['remember']) && !strcmp($user['remember'], 'on')) {
+
+        // How long will cookies last: 30 Days
+        $timeout = time() + 60 * 60 * 24 * 30;
+
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
+        $token = substr(str_shuffle($chars), 0, 36);
+        setcookie("token", $token, $timeout, "/");
+
+        // update token in database to compare with later
+        $token_hash = password_hash($token, PASSWORD_DEFAULT);
+        $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
+        $params = array($id);
+        $db->update($query, "s", $params);
+    } else {
+        // How long will cookies last: 24min like sessions (set in php.ini)
+        $timeout = time() + 60 * 24;
+    }
+
+    return $timeout;
 }
 
 function rescueUser ($db, $using, $value) {
