@@ -67,7 +67,7 @@ else {
     loadHeader($page_title);
 
     /* ----------------------------------------------------------------------
-        are they trying to save something they input?
+        are they trying to save something they input? TODO : Add custom error messages like "No old password provided"
        ---------------------------------------------------------------------- */
 
     if (isset($_POST) && !empty($_POST)) {
@@ -97,9 +97,11 @@ else {
             } else {
                 $query .= ", public_name = 0";
             }
+
             // Give the user the possibility to change the password, but don't overwrite with an empty password
+            // Verify that old_password matches password currently in the database
             // Also, Javascript should prevent it, but make sure the password confirmation matches.
-            if (isset($_POST['password']) && $_POST['password'] != "" && isset($_POST['confirm_password']) && $_POST['password'] == $_POST['confirm_password']) {
+            if (isset($_POST['old_password']) && password_verify($_POST['old_password'], $curprofile['password']) && isset($_POST['password']) && $_POST['password'] != "" && isset($_POST['confirm_password']) && $_POST['password'] == $_POST['confirm_password']) {
                 $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
                 $query .= ", password = ?";
                 $params[] = $hashed;
@@ -175,6 +177,9 @@ else {
             <label for='email'>Email</label>
             <input type='text' id='email' name='email' class='form-control' value='".$thisUser['email']."'>
 
+            <label for='username'>Username</label>
+            <input type='text' id='username' name='username' class='form-control' value='".$thisUser['name']."' disabled>
+
             <h3 class='font-weight-bold mt-4'>User Avatar</h3>
 
             <img src='".$thisUser['gravatar_url']."' height='100' width='100' alt='User Avatar'><br>" .
@@ -186,6 +191,9 @@ else {
             </select>
 
             <h3 class='font-weight-bold mt-4'>Change Password</h3>
+
+            <label for='old-pass'>Old Password</label>
+            <input type='password' id='old-pass' name='old_password' class='form-control'>
 
             <label for='new-pass'>New Password</label>
             <input type='password' id='new-pass' name='password' class='form-control'>
