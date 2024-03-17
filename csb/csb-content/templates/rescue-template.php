@@ -30,11 +30,16 @@ if (isset($_GET['go'])) {
         $query  = "SELECT * from password_resets WHERE email='". $_GET['go'] ."' ORDER BY created_at DESC LIMIT 1";
         $result = $db->runQuery($query)[0];
         if(password_verify($_GET['token'], $result['token'])) {
+            $userEmail = filter_input(INPUT_GET, 'go', FILTER_SANITIZE_EMAIL);
+            $userId = $db->getUserIdByEmail($userEmail);
+            $user = $db->getUser(filter_var($userId, FILTER_SANITIZE_NUMBER_INT));
             ?>
             <h1>Please enter your password</h1>
             <form action="<?php echo($ACC_URL."auth-login.php"); ?>" method="post">
                 <input type="hidden" name="go" value="passwordReset">
                 <input type="hidden" name="email" value="<?php echo $_GET['go']; ?>">
+                <input type="hidden" name="token" value="<?php echo $_GET['token'] ?>">
+
                 <div class="error-msg"><?php if (isset($_SESSION['errMsg'])) {
                         echo "<span style=\"color: red;\">" . $_SESSION['errMsg'] . "</span>";
                         unset($_SESSION['errMsg']);
@@ -43,18 +48,25 @@ if (isset($_GET['go'])) {
 
                 <div class="clear"></div>
                 <div class="form-input-row">
+                    <div class="form-input-left"><label for="username">Username</label></div>
+                    <div class="form-input-right"><input type="text" id="username" name="username"
+                                                         value="<?php echo $user['name'] ?>"
+                                                         class="form-control" disabled></div>
+                </div>
+                <div class="clear"></div>
+                <div class="form-input-row">
                     <div class="form-input-left"><label for="password">Enter Password</label></div>
-                    <div class="form-input-right"><input name="password" type="password"></div>
+                    <div class="form-input-right"><input name="password" type="password" class="form-control"></div>
                 </div>
                 <div class="clear"></div>
                 <div class="form-input-row">
                     <div class="form-input-left"><label for="confirm">Confirm Password</label></div>
-                    <div class="form-input-right"><input name="confirm" type="password"></div>
+                    <div class="form-input-right"><input name="confirm" type="password" class="form-control"></div>
                 </div>
                 <div class="clear"></div>
                 <div class="field-submit">
                     <input type="submit" name="rescue" value="Rescue me!"
-                           class="form-submit-button">
+                           class="form-submit-button btn btn-cq mt-4 right">
                 </div>
             </form>
             <?php
@@ -100,13 +112,13 @@ if (isset($_GET['go'])) {
 
             <div class="form-input-row">
                 <div class="form-input-left"><label for="name">Username or Email</label></div>
-                <div class="form-input-right"><input name="nameORemail" type="text"></div>
+                <div class="form-input-right"><input name="nameORemail" type="text" class="form-control"></div>
             </div>
 
             <div class="clear"></div>
             <div class="field-submit">
                 <input type="submit" name="rescue" value="Reset Password"
-                       class="form-submit-button">
+                       class="form-submit-button btn btn-cq mt-4 right">
             </div>
         </form>
     </div>

@@ -232,23 +232,31 @@ function rescueUser ($db, $using, $value) {
 
     $msg['subject'] = $SITE_NAME." Password Reset";
 
-    $msg['body'] =  "Hello,
+    $msg['body'] =  "Hello,<br><br>".
+        "Someone has requested a password reset for your account.<br><br>".
+        "If you made this request and would like to reset your password, please go to <a href='$rescue_link'>this</a> link ($rescue_link).<br><br>".
+        "If you did not make this request, you may want to change your password by logging in with your current ".
+        "username and password, and going to <a href='".$ACC_URL."profile.php'>My Profile</a>.<br><br>".
+        "Sincerely,<br>".
+        $SITE_NAME;
+
+    $msg['alt-body'] = "Hello,
 
     Someone has requested a password reset for your account.
 
-    If you made this request and would like to reset your password, please go to this link: ".$rescue_link."
+    If you made this request and would like to reset your password, please go to this link: $rescue_link
 
-    If you did not make this request, you may want to change your password by logging in with your username and password and INSTRUCTIONS_TO_CHANGE_MANUALLY.
+    If you did not make this request, you may want to change your password by logging in with your ".
+        "username and password, and going to My Profile (".$ACC_URL."profile.php).
 
     Sincerely,
+    $SITE_NAME";
 
-    ".$SITE_NAME;
 
+    $result = $email->sendMail($to, $msg);
 
-    $email->sendMail($to, $msg);
-
-    if (PEAR::isError($mail)) {
-        error_log($mail->getMessage() . "/n");
+    if (!$result['result']) {
+        error_log($result['message'] . "/n");
         die("email settings aren't working. Contact the system administrator.");
     }
 

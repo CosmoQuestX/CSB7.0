@@ -99,17 +99,24 @@ if (isset($_GET['go'])) {
             rescueUser($db, "email", $email);
         } else {
             $_SESSION['errMsg'] = "No username or email matched: $name";
-            header("Location: " . $ACC_URL."/rescue.php");
+            header("Location: " . $ACC_URL."/rescue.php"); // FIXME : This might be a double slash (/)
             exit();
         }
     } elseif ($_POST['go'] == 'passwordReset') {
-        die('Not Available'); // FIXME : See Trello for more info
-        $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $userEmail = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        $query  = "SELECT * from password_resets WHERE email='". $userEmail ."' ORDER BY created_at DESC LIMIT 1";
+        $result = $db->runQuery($query)[0];
 
-        $query = "UPDATE users SET password ='".$hashed."'  WHERE email = '".$_POST['email']."'";
-        $db->runQuery($query);
-        header("Location: " . $ACC_URL."/rescue.php?go=success");
-        exit();
+        if (password_verify($_POST['token'], $result['token'])) { // Does the token provided match the one in the database?
+            $hashed = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+            $query = "UPDATE users SET password ='" . $hashed . "'  WHERE email = '" . $userEmail . "'";
+            $db->runQuery($query);
+            header("Location: " . $ACC_URL . "/rescue.php?go=success");
+            exit();
+        } else {
+            die("You don't belong here. Run away. Run away from the error.");
+        }
     } else { // Javascript checks should prevent this from happening
         die("You don't belong here. Run away. Run away from the error.");
     }
