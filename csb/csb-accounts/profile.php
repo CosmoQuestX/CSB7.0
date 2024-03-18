@@ -174,16 +174,16 @@ else {
                 </div>
             </div>
 
-            <label for='email'>Email</label>
-            <input type='text' id='email' name='email' class='form-control' value='".$thisUser['email']."'>
-
             <label for='username'>Username</label>
             <input type='text' id='username' name='username' class='form-control' value='".$thisUser['name']."' disabled>
+
+            <label for='email'>Email</label>
+            <input type='text' id='email' name='email' class='form-control' value='".$thisUser['email']."'>
 
             <h3 class='font-weight-bold mt-4'>User Avatar</h3>
 
             <img src='".$thisUser['gravatar_url']."' height='100' width='100' alt='User Avatar'><br>" .
-            ($DEBUG_MODE ? "<input type='text' id='gravatar-url' name='gravatar_url' class='form-control' value='".$thisUser['gravatar_url']."' readonly>" : "") .
+            ($DEBUG_MODE ? "<label for='gravatar-url'>Avatar URL [Debug]</label><input type='text' id='gravatar-url' name='gravatar_url' class='form-control' value='".$thisUser['gravatar_url']."' readonly>" : "") .
             "<label for='avatar-service'>Avatar Service</label>
             <select id='avatar-service' class='form-control' name='avatar_service'>
                 <option value='0' ".($thisUser['avatar_service'] == 0 ? 'selected="selected"' : '').">Default</option>
