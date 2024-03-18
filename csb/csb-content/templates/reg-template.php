@@ -69,12 +69,3 @@ GLOBAL $ACC_URL;
     <input type="submit" name="register" value="Register" class="btn btn-cq btn-block mt-3">
 
 </form>
-
-<!-- Validation -->
-<script src="<?php echo $BASE_URL; ?>csb-themes/default/js/bs4-form-validation.min.js"></script>
-<script>
-    let registration = new Validation("registration");
-    registration.requireText("name", 0, 50, [], []);
-    registration.requireEmail("email", 4, 99, [], []);
-    registration.registerPassword("registerPassword", 6, 50, [], [], "confirm");
-</script>
