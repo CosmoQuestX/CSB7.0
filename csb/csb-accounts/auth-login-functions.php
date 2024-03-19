@@ -320,3 +320,30 @@ function insertUserSession($db, $user) {
     }
     return $ret;
 }
+
+/**
+ * Checks password strength
+ */
+function validate_password(string $password, string $confirm_password) {
+    if(!empty($password) && ($password == $confirm_password)) {
+        $password = test_input($password);
+        $confirm_password = test_input($confirm_password);
+        if (strlen($password) <= '8') {
+            $passwordErr = "Your Password Must Contain At Least 8 Characters!";
+        }
+        elseif(!preg_match("#[0-9]+#",$password)) {
+            $passwordErr = "Your Password Must Contain At Least 1 Number!";
+        }
+        elseif(!preg_match("#[A-Z]+#",$password)) {
+            $passwordErr = "Your Password Must Contain At Least 1 Capital Letter!";
+        }
+        elseif(!preg_match("#[a-z]+#",$password)) {
+            $passwordErr = "Your Password Must Contain At Least 1 Lowercase Letter!";
+        }
+    }
+    elseif(!empty($password)) {
+        $cpasswordErr = "Please Check You've Entered Or Confirmed Your Password!";
+    } else {
+        $passwordErr = "Please enter password   ";
+    }
+}
