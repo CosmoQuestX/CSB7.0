@@ -99,7 +99,7 @@ if (isset($_GET['go'])) {
             rescueUser($db, "email", $email);
         } else {
             $_SESSION['errMsg'] = "No username or email matched: $name";
-            header("Location: " . $ACC_URL."/rescue.php"); // FIXME : This might be a double slash (/)
+            header("Location: " . $ACC_URL . "rescue.php");
             exit();
         }
     } elseif ($_POST['go'] == 'passwordReset') {
@@ -112,7 +112,7 @@ if (isset($_GET['go'])) {
 
             $query = "UPDATE users SET password ='" . $hashed . "'  WHERE email = '" . $userEmail . "'";
             $db->runQuery($query);
-            header("Location: " . $ACC_URL . "/rescue.php?go=success");
+            header("Location: " . $ACC_URL . "rescue.php?go=success");
             exit();
         } else {
             die("You don't belong here. Run away. Run away from the error.");
