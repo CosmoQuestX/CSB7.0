@@ -177,7 +177,7 @@ else {
             </div>
 
             <label for='username'>Username</label>
-            <input type='text' id='username' name='username' class='form-control' value='".$thisUser['name']."' disabled>
+            <input type='text' id='username' name='username' class='form-control' value='".$thisUser['name']."' readonly>
 
             <label for='email'>Email</label>
             <input type='text' id='email' name='email' class='form-control' value='".$thisUser['email']."'>
