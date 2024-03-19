@@ -113,11 +113,13 @@ else {
                 $params_type .= "s";
 
                 $query .= ", gravatar_url = ?";
-                if ($_POST['avatar_service'] == '1') { // if Gravatar selected, generate avatar, else use default
-                    $params[] = preg_replace("/;/", "", get_gravatar($_POST['email']));
-                } else {
-                    $params[] = preg_replace("/;/", "", $BASE_URL."csb-content/images/profile/Default_Avatar.png"); // FIXME : The Base URL should not need to be defined, what if CodeHerder wants to change their domain?
-                }
+
+                print_r($_POST['avatar_service']);
+                $params[] = match ($_POST['avatar_service']) {// '0': Default; '1': Gravatar;
+                    '1' => preg_replace("/;/", "", get_gravatar(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL))),
+                    default => preg_replace("/;/", "", $BASE_URL . "csb-content/images/profile/Default_Avatar.png"),
+                };
+
                 $params_type .= "s";
             }
 
