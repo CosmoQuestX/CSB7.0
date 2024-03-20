@@ -9,7 +9,7 @@ require_once "../../vendor/autoload.php";
 $mail = new PHPMailer(true);
 
 if (isset($_POST) && !empty($_POST)) {
-    try {
+    try {echo file_get_contents('https://api.ipify.org/?format=plain');echo " ";
         //Server settings
         $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
