@@ -13,6 +13,8 @@ if (isset($_POST) && !empty($_POST)) {
         //Server settings
 //    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                          //Enable verbose debug output - Echos to output & causes SyntaxError, only use if viewing network log
         $mail->isSMTP();                                                //Send using SMTP
+        $mail->Helo = 'csb';                                        // gmail blacklisted localhost
+
         $mail->Host = $_POST['email_host'];                                   //Set the SMTP server to send through
         $mail->SMTPAuth = true;                                         //Enable SMTP authentication
         $mail->Username = $_POST['email_username'];                           //SMTP username
@@ -24,9 +26,6 @@ if (isset($_POST) && !empty($_POST)) {
         //Recipients
         $mail->setFrom($_POST['email_from'], 'CSB7.0 Server');
         $mail->addAddress($_POST['rescue_email']);                            //Name is optional
-        $mail->addReplyTo('info@example.com', 'Information');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
 
         //Content
         $mail->isHTML(true);                                      //Set email format to HTML
@@ -39,10 +38,8 @@ if (isset($_POST) && !empty($_POST)) {
         } else {
             echo json_encode(array('result' => true));
         }
-//    echo 'Message has been sent';
     } catch (Exception $e) {
         echo json_encode(array('result' => false, 'debug' => $e, 'message' => "Test Email failed: " . $mail->ErrorInfo));
-//    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 } else {
     echo json_encode(array('result' => false, 'message' => "Test Email failed: Empty request."));
