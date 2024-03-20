@@ -23,7 +23,7 @@ $(document).ready(function(){
         postData("db-tester.php", data).then( response => {
             if (response.result)
             {
-                $("#db-test-status").html("Looks good! 👍")
+                $("#db-test-status").html(getTimestamp() + "DB Test: Looks good! 👍")
                     .attr("class", "alert alert-success col-12") //Style the message
                     .css({
                         "margin-top": "1rem",
@@ -34,7 +34,7 @@ $(document).ready(function(){
             }
             else
             {
-                $("#db-test-status").html("Error: " + response.message)
+                $("#db-test-status").html(getTimestamp() + "DB Test Error: " + response.message)
                     .attr("class", "alert alert-danger col-12")  //Style the message
                     .css({
                         "margin-top": "1rem",
@@ -44,7 +44,7 @@ $(document).ready(function(){
                     }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
             }
         }).catch( err => {
-            $("#db-test-status").html("An unexpected error occurred!")
+            $("#db-test-status").html(getTimestamp() + "DB Test Error: An unexpected error occurred!")
                 .attr("class", "alert alert-danger col-12")  //Style the message
                 .css({
                     "margin-top": "1rem",
@@ -76,7 +76,7 @@ $(document).ready(function(){
         postData("email-tester.php", data).then( response => {
             if (response.result)
             {
-                $("#email-test-status").html("Email Auth: Looks good! 👍")
+                $("#email-test-status").html(getTimestamp() + "Email Auth: Looks good! 👍")
                     .attr("class", "alert alert-success col-12") //Style the message
                     .css({
                         "margin-top": "1rem",
@@ -87,7 +87,7 @@ $(document).ready(function(){
             }
             else
             {
-                $("#email-test-status").html(response.message)
+                $("#email-test-status").html(getTimestamp() + response.message)
                     .attr("class", "alert alert-danger col-12")  //Style the message
                     .css({
                         "margin-top": "1rem",
@@ -97,7 +97,7 @@ $(document).ready(function(){
                     }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
             }
         }).catch( err => {console.debug(err);
-            $("#email-test-status").html("Email Auth: An unexpected error occurred!")
+            $("#email-test-status").html(getTimestamp() + "Email Auth: An unexpected error occurred!")
                 .attr("class", "alert alert-danger col-12")  //Style the message
                 .css({
                     "margin-top": "1rem",
@@ -145,7 +145,7 @@ $(document).ready(function(){
         postData("example-email.php", data).then( response => {
             if (response.result)
             {
-                $("#email-test-status").html("Test Email: Looks good! 👍")
+                $("#email-test-status").html(getTimestamp() + "Test Email: Looks good! 👍")
                     .attr("class", "alert alert-success col-12") //Style the message
                     .css({
                         "margin-top": "1rem",
@@ -156,7 +156,7 @@ $(document).ready(function(){
             }
             else
             {
-                $("#email-test-status").html(response.message)
+                $("#email-test-status").html(getTimestamp() + response.message)
                     .attr("class", "alert alert-danger col-12")  //Style the message
                     .css({
                         "margin-top": "1rem",
@@ -166,7 +166,7 @@ $(document).ready(function(){
                     }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
             }
         }).catch( err => {console.debug(err);
-            $("#email-test-status").html("Test Email: An unexpected error occurred!")
+            $("#email-test-status").html(getTimestamp() + "Test Email: An unexpected error occurred!")
                 .attr("class", "alert alert-danger col-12")  //Style the message
                 .css({
                     "margin-top": "1rem",

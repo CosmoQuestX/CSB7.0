@@ -26,7 +26,7 @@ async function getData(url, options) {
         referrerPolicy: 'no-referrer', // no-referrer, *client
     };
     const response = await fetch(url, { ...defaultOptions, ...options }).then(handleErrors);
-    return await response.json(); // parses JSON response into native JavaScript objects 
+    return await response.json(); // parses JSON response into native JavaScript objects
 }
 
 function handleErrors(response) {
@@ -34,4 +34,10 @@ function handleErrors(response) {
         throw Error(response.statusText);
     }
     return response;
+}
+
+function getTimestamp() {
+    let dt = new Date(),
+        str = `${dt.getFullYear()}-${String(dt.getMonth()).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")} ${String(dt.getHours()).padStart(2, "0")}:${String(dt.getMinutes()).padStart(2, "0")}:${String(dt.getSeconds()).padStart(2, "0")}.${String(dt.getMilliseconds()).padStart(3, "0")}`; // [YYYY-MM-DD hh:mm:ss.msc]
+    return `[${str}] `;
 }
