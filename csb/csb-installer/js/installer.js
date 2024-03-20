@@ -44,6 +44,7 @@ $(document).ready(function(){
                     }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
             }
         }).catch( err => {
+            console.debug(err);
             $("#db-test-status").html(getTimestamp() + "DB Test Error: An unexpected error occurred!")
                 .attr("class", "alert alert-danger col-12")  //Style the message
                 .css({
@@ -96,7 +97,8 @@ $(document).ready(function(){
                         "height": "auto"
                     }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
             }
-        }).catch( err => {console.debug(err);
+        }).catch( err => {
+            console.debug(err);
             $("#email-test-status").html(getTimestamp() + "Email Auth: An unexpected error occurred!")
                 .attr("class", "alert alert-danger col-12")  //Style the message
                 .css({
@@ -165,7 +167,8 @@ $(document).ready(function(){
                         "height": "auto"
                     }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
             }
-        }).catch( err => {console.debug(err);
+        }).catch( err => {
+            console.debug(err);
             $("#email-test-status").html(getTimestamp() + "Test Email: An unexpected error occurred!")
                 .attr("class", "alert alert-danger col-12")  //Style the message
                 .css({
