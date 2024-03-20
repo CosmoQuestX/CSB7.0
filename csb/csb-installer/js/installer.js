@@ -158,6 +158,7 @@ $(document).ready(function(){
             }
             else
             {
+                console.debug(response.debug);
                 $("#email-test-status").html(getTimestamp() + response.message)
                     .attr("class", "alert alert-danger col-12")  //Style the message
                     .css({

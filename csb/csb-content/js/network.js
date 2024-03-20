@@ -1,19 +1,30 @@
-async function postData(url, data, options) {
-    // Default options are marked with *
-    let defaultOptions = {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        redirect: 'follow', // manual, *follow, error
-        referrerPolicy: 'no-referrer', // no-referrer, *client
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    };
-    const response = await fetch(url, { ...defaultOptions, ...options }).then(handleErrors);
-    return await response.json(); // parses JSON response into native JavaScript objects
+// async function postData(url, data, options) {
+//     // Default options are marked with *
+//     let defaultOptions = {
+//         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+//         mode: 'cors', // no-cors, *cors, same-origin
+//         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+//         credentials: 'same-origin', // include, *same-origin, omit
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         redirect: 'follow', // manual, *follow, error
+//         referrerPolicy: 'no-referrer', // no-referrer, *client
+//         body: JSON.stringify(data) // body data type must match "Content-Type" header
+//     };
+//     const response = await fetch(url, { ...defaultOptions, ...options }).then(handleErrors);
+//     return await response.json(); // parses JSON response into native JavaScript objects
+// }
+// import "../../csb-themes/default/js/jquery-3.4.1.slim.min";
+
+async function postData (url, data) {
+    return $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        dataType: "json",
+        encode: true,
+    })
 }
 
 async function getData(url, options) {
