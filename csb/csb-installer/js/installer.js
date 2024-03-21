@@ -90,7 +90,7 @@ $(document).ready(function(){
          }
          */
 
-        postData("example-email.php", data).then( response => {
+        postData("email-tester.php", data).then( response => {
             if (response.result)
             {
                 $("#email-test-status").html(getTimestamp() + "Test Email: Looks good! 👍")
