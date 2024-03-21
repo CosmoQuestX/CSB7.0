@@ -49,11 +49,17 @@ else {
 
     loadHeader($page_title);
 
+    // Set variables to populate the template
+    $menus = "<h4>Menus</h4>";
+    $main = "<h4>Admin Settings</h4>";
+    $notes = "<h4>Instructions</h4>";
+
     /* ----------------------------------------------------------------------
         are they trying to save something they input?
        ---------------------------------------------------------------------- */
     if (isset($_POST) && !empty($_POST)) {
-
+        $main .= "<p>a form was submitted</p>";
+/*
         // Fetch old data to compare.
         $query = "SELECT * FROM options";
         $result = $db->runQuery($query);
@@ -82,7 +88,11 @@ else {
             } else {
                 $saved = FALSE;
             }
-        }
+        }*/
+
+    } else {
+        // Display Key Information
+        $main .= "<p>No Form Submitted</p>";
 
     }
 
@@ -155,9 +165,9 @@ else {
 //        }
 //    }
 
-    /* ----------------------------------------------------------------------
-       Setup Menus
-       ---------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------
+   Setup Menus
+   ---------------------------------------------------------------------- */
 
     $menus = "<h4>Menus</h4>";
     //get the names of the directories in the dashboards folder
@@ -173,15 +183,19 @@ else {
         }
     }
 
-    /* ----------------------------------------------------------------------
-        Create the page
-       ---------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------
+    Create the page
+   ---------------------------------------------------------------------- */
 
-    $menus = $menus;
-    $main = "main";
-    $notes = "Put Instructions Here";
+    load3Col($menus, $main, $notes);
+    loadFooter();
 
-    // Keep the duplicated code to check for form changes made above
+
+}
+
+$db->closeDB();
+
+/*    // Keep the duplicated code to check for form changes made above
     // Request options table
     $query = "SELECT * FROM options";
     $result = $db->runQuery($query);
@@ -225,17 +239,7 @@ else {
         <p>
         This should contain important info at some point.
         </p>
-        ";
+        ";*/
 
 
-    /* ----------------------------------------------------------------------
-    Load the view
-    ---------------------------------------------------------------------- */
 
-    load3Col($menus, $main, $notes);
-    loadFooter();
-
-
-}
-
-$db->closeDB();
