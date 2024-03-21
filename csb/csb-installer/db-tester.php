@@ -2,11 +2,8 @@
 
 header("Content-Type: application/json");
 
-// Build a PHP variable from JSON sent using POST method
-$v = json_decode(stripslashes(file_get_contents("php://input")));
-
 // Try connecting, @ will suppress warning / notice if the connection fails
-$link = @mysqli_connect($v->db_servername, $v->db_username, $v->db_password, $v->db_name, $v->db_port);
+$link = @mysqli_connect($_POST['db_servername'], $_POST['db_username'], $_POST['db_password'], $_POST['db_name'], $_POST['db_port']);
 
 // Check connection
 if (!$link) {
