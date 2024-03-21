@@ -56,60 +56,6 @@ $(document).ready(function(){
         });
     });
 
-    $("#email-tester").click(function() {
-        const data = {
-            "email_host": $("[name='email_host']").val(),
-            "email_username": $("[name='email_username']").val(),
-            "email_password": $("[name='email_password']").val() // Is this secure? Do we care at this point?
-        }
-
-        /*
-         The response will always be with a 200 status.
-         It will look like this for success: { result: true }
-         And like this for failures:
-         {
-             result: false,
-             code: <code>,
-             message: <error message>
-         }
-         */
-
-        postData("email-tester.php", data).then( response => {
-            if (response.result)
-            {
-                $("#email-test-status").html(getTimestamp() + "Email Auth: Looks good! 👍")
-                    .attr("class", "alert alert-success col-12") //Style the message
-                    .css({
-                        "margin-top": "1rem",
-                        "display": "block",
-                        "width": "auto",
-                        "height": "auto"
-                    }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-            }
-            else
-            {
-                $("#email-test-status").html(getTimestamp() + response.message)
-                    .attr("class", "alert alert-danger col-12")  //Style the message
-                    .css({
-                        "margin-top": "1rem",
-                        "display": "block",
-                        "width": "auto",
-                        "height": "auto"
-                    }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-            }
-        }).catch( err => {
-            console.debug(err);
-            $("#email-test-status").html(getTimestamp() + "Email Auth: An unexpected error occurred!")
-                .attr("class", "alert alert-danger col-12")  //Style the message
-                .css({
-                    "margin-top": "1rem",
-                    "display": "block",
-                    "width": "auto",
-                    "height": "auto"
-                }) //Bootstrap alerts seem to be overridden to be hidden by something, gotta restore them
-        });
-    });
-
     $("#example-email").click(function() {
         const
             rescueEmail = $("[name='rescue_email']"),
