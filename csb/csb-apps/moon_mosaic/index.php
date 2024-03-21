@@ -5,7 +5,7 @@
 Get the settings and check if the person is logged in
 ---------------------------------------------------------------------- */
 
-require_once("./csb-loader.php");
+require_once("../../csb-loader.php");
 require_once($DB_class);
 require_once($BASE_DIR . "csb-accounts/auth.php");
 
@@ -24,8 +24,6 @@ Load the view
 global $page_title, $header_title, $SITE_TITLE;
 
 $page_title = "Moon Mosaic1";
-$header_title = "Moon Mosaic2";
-$SITE_TITLE = "Moon Mosaic2";
 
 // Make sure the page title is set
 if (!isset($page_title)) { $page_title = $SITE_TITLE; };

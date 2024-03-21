@@ -6,17 +6,9 @@
 require_once("../csb-loader.php");
 require_once($DB_class);
 require_once($BASE_DIR . "csb-accounts/auth.php");
-$adminFlag = 1; // TODO : Does this do anything?
+$adminFlag = 1; // This is an admin page, so set the flag to 1
 
-/* ----------------------------------------------------------------------
-   Check for post variables
-   ---------------------------------------------------------------------- */
-$login = FALSE;
-$reg = FALSE;
-if (isset($_POST) && !empty($_POST)) {
-    if (isset($_POST['go']) && $_POST['go'] == 'login') $login = TRUE;
-    elseif (isset($_POST['go']) && $_POST['go'] == 'reg') $reg = TRUE;
-}
+global $user, $BASE_URL, $CQ_ROLES;
 
 /* ----------------------------------------------------------------------
    Is the person logged in?
@@ -24,7 +16,7 @@ if (isset($_POST) && !empty($_POST)) {
 
 $db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
 
-global $user;
+
 $user = isLoggedIn($db);
 $admin = userHasRole($CQ_ROLES['SITE_ADMIN'], $CQ_ROLES['SITE_SUPERADMIN']);
 
@@ -37,19 +29,13 @@ if ($login || $user === FALSE) { // NOT LOGGED IN
      */
     header('Location: ' . $BASE_URL . 'csb-accounts/login.php');
 
-} /* ----------------------------------------------------------------------
-    Are they trying to register?
-   ---------------------------------------------------------------------- */
 
-elseif ($reg) {
-    // I don't know how they got there, but send them to the registration page
-    header('Location: ' . $BASE_URL . 'csb-accounts/register.php');
 } /* ----------------------------------------------------------------------
     Are they an Admin?
     --------------------------------------------------------------------- */
 
 elseif (!$admin) {
-    header('Location: ' . $BASE_URL); // TODO : Make 403 Forbidden show up
+    header('Location: ' . $BASE_URL); // If they are not an admin, send them to the home page
 }  /* ----------------------------------------------------------------------
    load things
    ---------------------------------------------------------------------- */
@@ -169,12 +155,29 @@ else {
 //        }
 //    }
 
+    /* ----------------------------------------------------------------------
+       Setup Menus
+       ---------------------------------------------------------------------- */
+
+    $menus = "<h4>Menus</h4>";
+    //get the names of the directories in the dashboards folder
+    $dashboards = scandir($BASE_DIR . "csb-admin/dashboards");
+
+    foreach ($dashboards as $dashboard) {
+        if ($dashboard != "." && $dashboard != "..") {
+            //Format the dashboard name to be human readable
+            $dashboardName = str_replace("-", " ", $dashboard);
+            //Make the first element of the dashboard name uppercase
+            $dashboardName = ucfirst($dashboardName);
+            $menus .= "<a href='" . $BASE_URL . "csb-admin/dashboards/" . $dashboard . "/" . $dashboard . ".php'>" . $dashboardName . "</a><br>";
+        }
+    }
 
     /* ----------------------------------------------------------------------
         Create the page
        ---------------------------------------------------------------------- */
 
-    $menus = "Put Menus Here";
+    $menus = $menus;
     $main = "main";
     $notes = "Put Instructions Here";
 
