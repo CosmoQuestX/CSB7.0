@@ -3,6 +3,7 @@
 /* ----------------------------------------------------------------------
    Load all needed includes
    ---------------------------------------------------------------------- */
+global $login;
 require_once("../csb-loader.php");
 require_once($DB_class);
 require_once($BASE_DIR . "csb-accounts/auth.php");
@@ -51,14 +52,27 @@ else {
 
     // Set variables to populate the template
     $menus = "<h4>Menus</h4>";
-    $main = "<h4>Admin Settings</h4>";
+    $main = "<h4>Dashboard: ";
     $notes = "<h4>Instructions</h4>";
 
     /* ----------------------------------------------------------------------
         are they trying to save something they input?
        ---------------------------------------------------------------------- */
-    if (isset($_POST) && !empty($_POST)) {
-        $main .= "<p>a form was submitted</p>";
+    if (isset($_GET) && !empty($_GET)) {
+        if(isset($_GET['option'])) {
+            $option = $_GET['option'];
+            $main .= ucfirst($option)."</H4>";
+            require_once($BASE_DIR . "csb-admin/dashboards/$option/$option.php");
+            if (isset($_POST['action']) && !empty($_POST['action'])) {
+               $text = doSwitch($db, $_POST['action']);
+            } else {
+                $text = landing($db);
+            }
+            $main .= $text['main'];
+            $notes .= $text['notes'];
+        } else {
+            $main .= "<p>ERROR: No Option Selected. Did you try URL hacking?</p>";
+        }
 
     } else {
         // Display Key Information
@@ -86,7 +100,7 @@ else {
             $dashboardName = str_replace("-", " ", $dashboard);
             //Make the first element of the dashboard name uppercase
             $dashboardName = ucfirst($dashboardName);
-            $menus .= "<a href='" . $BASE_URL . "csb-admin/dashboards/" . $dashboard . "/" . $dashboard . ".php'>" . $dashboardName . "</a><br>";
+            $menus .= "<a href='./index.php?option=$dashboard'>$dashboardName </a><br>";
         }
     }
 

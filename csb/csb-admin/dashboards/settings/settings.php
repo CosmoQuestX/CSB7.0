@@ -1,7 +1,22 @@
 <?php
+function doSwitch($db, $option) {
+    switch ($option) {
+        case "update":
+            $text =  update($db);
+            break;
+        default:
+            $text['main'] = "<p>ERROR: No Option Selected. Did you try URL hacking?</p>";
+            $text['notes'] = "";
+    }
+    return array("main" => $text['main'], "notes" => $text['notes']);
+}
 
-function Main () {
-    // Keep the duplicated code to check for form changes made above
+function landing ($db, $msg="") {
+
+    global $BASE_URL;
+    $main = "";
+    $notes = "";
+
     // Request options table
     $query = "SELECT * FROM options";
     $result = $db->runQuery($query);
@@ -10,6 +25,7 @@ function Main () {
     foreach ($result as $row) {
         $options[$row['option_name']] = $row['option_value'];
     }
+
 
     // Check whether to check the debug mode checkbox
     if ($options['debug_mode'] == 1) {
@@ -21,36 +37,22 @@ function Main () {
 
     // Create Registration Form
     $main = "
-        <h3 class='font-weight-bold'>Admin Settings</h3>
-        <form id='profile-form' action='".$_SERVER['REQUEST_URI']."' method='POST'>
+        <form id='profile-form' action='$BASE_URL/csb-admin/index.php?option=settings' method='POST'>
+            <input type='hidden' name='action' value='update'>
             <input type='hidden' name='debug_mode' value='0'>
             <label for='debug_mode'>Debug Mode:</label>
             <input type='checkbox' name='debug_mode' id='debug_mode' class='mt-4' $debugModeChecked>
 
             <input type='submit' value='Save Settings' class='btn btn-cq mt-4 right'>
         </form>
-        ";
-
-    if (isset($saved) && $saved) {
-        $main .= "<div class='text-success'>Settings saved!</div>";
-        unset($saved);
-    }
-    elseif (isset($saved) && !$saved) {
-        $main .= "<div class='text-danger'>Error saving settings!</div>";
-        unset($saved);
-    }
-
-    $notes = "
-        <h5 class='font-weight-bold'>Some Title Here</h5>
-        <p>
-        This should contain important info at some point.
-        </p>
+        $msg
         ";
 
     return array("main" => $main, "notes" => $notes);
 }
 
-function Update () {
+function update ($db) {
+
     // Fetch old data to compare.
     $query = "SELECT * FROM options";
     $result = $db->runQuery($query);
@@ -63,6 +65,7 @@ function Update () {
     }
 
     $query = "";
+    $msg = "";
 
     $tempDebugMode = $_POST['debug_mode'] == "on" ? "1" : "0";
 
@@ -73,13 +76,16 @@ function Update () {
         $params[] = $tempDebugMode;
     }
 
+    $msg = "<div class='clearfix' style='margin-bottom: 1em'></div>";
     if ($changed) {
         if ($db->update($query, $params_type, $params)) {
-            $saved = TRUE;
+            $msg .= "<div class='alert-success text-center align-content-center'>Settings saved.</div>";
         } else {
-            $saved = FALSE;
+            $msg .= "<div class='alert-danger text-center align-content-center'>Error saving settings.<div>";
         }
-        return $saved;
+    } else {
+        $msg .= "<div class='alert-info text-center align-content-center'>No changes made.</div>";
     }
-    return null; // How did you get here?
+      $text =  landing($db, $msg);
+      return array("main" => $text['main'], "notes" => $text['notes']);
 }
