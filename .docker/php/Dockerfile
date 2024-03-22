@@ -15,12 +15,20 @@ COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 RUN mkdir /app
 
 # Install pre-requisits
+RUN apt-get update && apt-get install -y \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev
+
 RUN docker-php-source extract \
     && pecl install xdebug \
     && docker-php-ext-install mysqli \
     && docker-php-ext-enable xdebug mysqli \
     && docker-php-source delete
 
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-png
+RUN docker-php-ext-install -j$(nproc) gd
+RUN php -i | grep gd
 # Set permissions
 RUN chown -R www-data:www-data /app \
     && a2enmod rewrite

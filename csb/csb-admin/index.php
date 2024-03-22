@@ -71,12 +71,12 @@ else {
             $main .= $text['main'];
             $notes .= $text['notes'];
         } else {
-            $main .= "<p>ERROR: No Option Selected. Did you try URL hacking?</p>";
+            $main .= "NONE!</h4><p>ERROR: No Option Selected. Did you try URL hacking?</p>";
         }
 
     } else {
         // Display Key Information
-        $main .= "<p>No Form Submitted</p>";
+        $main .= "Overview</h4><p>Need to add stuff</p>";
 
     }
 
