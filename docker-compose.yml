@@ -1,4 +1,3 @@
-version: '3.8'
 services:
 #  composer_installation:
 #    container_name: composer_installation

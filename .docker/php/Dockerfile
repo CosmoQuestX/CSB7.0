@@ -1,5 +1,8 @@
 # Composer Install (Src : https://stackoverflow.com/a/61015273/8589728 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
 
+# Node
+FROM node:lts as node_base  
+
 FROM composer:lts as builder
 WORKDIR /app/
 COPY composer.* ./
@@ -26,19 +29,16 @@ RUN docker-php-source extract \
     && docker-php-ext-enable xdebug mysqli \
     && docker-php-source delete
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-png
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install -j$(nproc) gd
 RUN php -i | grep gd
 
-# Install NPM
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-ENV NVM_DIR=/root/.nvm
-RUN . "$NVM_DIR/nvm.sh" && nvm install --lts
+
+# Install NPM packages
+COPY --from=node_base / /
+COPY package.json /app
+RUN npm install --prefix=/app
 
 # Set permissions
 RUN chown -R www-data:www-data /app \
     && a2enmod rewrite
-
-# Install NPM packages
-WORKDIR /app
-RUN npm install

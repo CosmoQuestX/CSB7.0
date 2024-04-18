@@ -63,8 +63,8 @@ function loadMeta()
 
     // Load libraries
 
-    $csb_headers .=  '<script src="'.$BASE_URL.'csb-content/node_modules/jquery/dist/jquery.min.js"></script>';
-    $csb_headers .=  '<script src="'.$BASE_URL.'node_modules/@popperjs/core/dist/cjs/popper.js"></script>';
+    $csb_headers .=  '<script src="'.$BASE_URL.'node_modules/jquery/dist/jquery.min.js"></script>';
+    $csb_headers .=  '<script src="'.$BASE_URL.'node_modules/@popperjs/core/dist/umd/popper.min.js"></script>';
     $csb_headers .=  '<script src="'.$BASE_URL.'node_modules/bootstrap/dist/js/bootstrap.min.js"></script>';
     $csb_headers .=  '<script src="'.$BASE_URL.'csb-content/js/csb.js"></script>';
 

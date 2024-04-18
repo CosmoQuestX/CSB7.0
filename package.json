@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "postinstall": "mv node_modules ./csb/"
+  },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^4.6.2",
