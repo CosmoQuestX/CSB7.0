@@ -29,6 +29,16 @@ RUN docker-php-source extract \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-png
 RUN docker-php-ext-install -j$(nproc) gd
 RUN php -i | grep gd
+
+# Install NPM
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+ENV NVM_DIR=/root/.nvm
+RUN . "$NVM_DIR/nvm.sh" && nvm install --lts
+
 # Set permissions
 RUN chown -R www-data:www-data /app \
     && a2enmod rewrite
+
+# Install NPM packages
+WORKDIR /app
+RUN npm install
