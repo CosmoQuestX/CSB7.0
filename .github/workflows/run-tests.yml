@@ -20,7 +20,7 @@ jobs:
 
             - name: "Tests"
               run:  |
-                  ./run_tests.sh
+                  ./scripts/run_tests.sh
 #    auto-merge:
 #        needs: run-tests
 #        runs-on: ubuntu-latest

@@ -50,7 +50,7 @@ function loadFooter($scripts = "")
  */
 function loadMeta()
 {
-    global $page_title, $BASE_URL, $THEME_URL;
+    global $page_title, $BASE_URL, $THEME_URL, $NODE_MODULES_URL;
 
     $csb_headers = "";
 
@@ -63,9 +63,9 @@ function loadMeta()
 
     // Load libraries
 
-    $csb_headers .=  '<script src="'.$BASE_URL.'node_modules/jquery/dist/jquery.min.js"></script>';
-    $csb_headers .=  '<script src="'.$BASE_URL.'node_modules/@popperjs/core/dist/umd/popper.min.js"></script>';
-    $csb_headers .=  '<script src="'.$BASE_URL.'node_modules/bootstrap/dist/js/bootstrap.min.js"></script>';
+    $csb_headers .=  '<script src="'.$NODE_MODULES_URL.'jquery/dist/jquery.min.js"></script>';
+    $csb_headers .=  '<script src="'.$NODE_MODULES_URL.'@popperjs/core/dist/umd/popper.min.js"></script>';
+    $csb_headers .=  '<script src="'.$NODE_MODULES_URL.'bootstrap/dist/js/bootstrap.min.js"></script>';
     $csb_headers .=  '<script src="'.$BASE_URL.'csb-content/js/csb.js"></script>';
 
     $csb_headers .= "<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>";

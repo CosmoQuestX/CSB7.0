@@ -1,8 +1,5 @@
 # Composer Install (Src : https://stackoverflow.com/a/61015273/8589728 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/))
 
-# Node
-FROM node:lts as node_base  
-
 FROM composer:lts as builder
 WORKDIR /app/
 COPY composer.* ./
@@ -34,8 +31,10 @@ RUN docker-php-ext-install -j$(nproc) gd
 RUN php -i | grep gd
 
 
-# Install NPM packages
-COPY --from=node_base / /
+# Install Node+NPM+packages
+COPY --from=node:lts /usr/local/bin/ /usr/local/bin/
+COPY --from=node:lts /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/npm
+COPY /scripts /app/scripts
 COPY package.json /app
 RUN npm install --prefix=/app
 
