@@ -9,3 +9,5 @@ csb/csb-themes/default/style.css.map
 /vendor
 *.cache
 test-reports/
+node_modules/
+package-lock.json

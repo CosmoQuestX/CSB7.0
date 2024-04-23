@@ -1,0 +1,15 @@
+{
+  "type": "module",
+  "scripts": {
+    "postinstall": "node ./scripts/npm_postinstall.cjs"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^4.6.2",
+    "jquery": "^3.7.1"
+  },
+  "devDependencies": {
+    "find-package-json": "^1.2.0",
+    "fs-extra": "^11.2.0"
+  }
+}
