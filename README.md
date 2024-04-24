@@ -126,9 +126,9 @@ Services like SendGrid or Google's SMTP-Relay can help you get around this.
 - For Windows - open either Command Console or Powershell. For Mac or Linux - open your command shell.
 
 - Open Docker & execute the following command from the CSB directory:
-```docker-compose up```
+```docker compose up```
 
-- To stop docker and close the app, press Ctrl+C or type at a commandline ```docker-compose stop```
+- To stop docker and close the app, press Ctrl+C or type at a commandline ```docker compose stop```
 
 #### Step 3: Launch the installer
 
