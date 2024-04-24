@@ -33,8 +33,8 @@ $page_title = "CSB Installer";
 $THEME_DIR = $BASE_DIR . "csb-themes/default/";
 $THEME_URL = $BASE_URL . "csb-themes/default/";
 
-$NODE_MODULES_DIR = $THEME_DIR . "js/node_modules/";
-$NODE_MODULES_URL = $THEME_URL . "js/node_modules/";
+$NODE_MODULES_DIR = $BASE_DIR . "node_modules/";
+$NODE_MODULES_URL = $BASE_DIR . "node_modules/";
 
 require_once($BASE_DIR . "csb-content/template_functions.php");
 

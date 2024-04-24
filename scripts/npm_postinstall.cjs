@@ -11,6 +11,6 @@ const finder = require('find-package-json');
 const ROOT = path.dirname(finder(module).next().filename);
 
 const sourcePath = path.join(ROOT, "node_modules");
-const targetPath = path.join(ROOT, "csb", "csb-themes", "default", "js", "node_modules");
+const targetPath = path.join(ROOT, "csb", "node_modules");
 
 fs.moveSync(sourcePath, targetPath, { overwrite: true });
