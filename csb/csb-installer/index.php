@@ -34,7 +34,7 @@ $THEME_DIR = $BASE_DIR . "csb-themes/default/";
 $THEME_URL = $BASE_URL . "csb-themes/default/";
 
 $NODE_MODULES_DIR = $BASE_DIR . "node_modules/";
-$NODE_MODULES_URL = $BASE_DIR . "node_modules/";
+$NODE_MODULES_URL = $BASE_URL . "node_modules/";
 
 require_once($BASE_DIR . "csb-content/template_functions.php");
 
