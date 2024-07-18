@@ -85,6 +85,7 @@ $email_class = $ACC_DIR . "email_class.php";
 $IMAGES_URL = $BASE_URL . "csb-content/images/";
 $TEMPLATES_URL = $BASE_URL . "csb-content/templates/";
 $TEMPLATES_DIR = $BASE_DIR . "csb-content/templates/";
+$NODE_MODULES_URL = $BASE_URL . "node_modules/";
 
 /*
  * global the social
