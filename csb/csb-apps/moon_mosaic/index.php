@@ -23,7 +23,7 @@ Load the view
 ---------------------------------------------------------------------- */
 global $page_title, $header_title, $SITE_TITLE;
 
-$page_title = "Moon Mosaic1";
+$page_title = "Moon Mosaic";
 
 // Make sure the page title is set
 if (!isset($page_title)) { $page_title = $SITE_TITLE; };

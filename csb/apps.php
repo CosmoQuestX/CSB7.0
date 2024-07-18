@@ -93,10 +93,10 @@ require_once($THEME_DIR . "/app-template.php");
 <script src="/csb/csb-content/js/CsbApp.js"></script>
 
 <!-- Application definitions -->
-<script src="/csb/csb-apps/bennu_mappers/js/bennu_mappers.js"></script>
-<script src="/csb/csb-apps/moon_mappers/js/moon_mappers.js"></script>
-<script src="/csb/csb-apps/mars_mappers/js/mars_mappers.js"></script>
-<script src="/csb/csb-apps/mercury_mappers/js/mercury_mappers.js"></script>
+<script src="/csb/csb-apps/deprecated/bennu_mappers/js/bennu_mappers.js"></script>
+<script src="/csb/csb-apps/deprecated/moon_mappers/js/moon_mappers.js"></script>
+<script src="/csb/csb-apps/deprecated/mars_mappers/js/mars_mappers.js"></script>
+<script src="/csb/csb-apps/deprecated/mercury_mappers/js/mercury_mappers.js"></script>
 
 <!-- Following is the code to launch -->
 <script type="text/javascript">
