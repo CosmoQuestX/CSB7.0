@@ -15,7 +15,7 @@ function doSwitch($db, $option) {
 function landing()
 {
     global $db_servername, $db_username, $db_password, $db_name, $db_port, $BASE_URL;
-    $main = "Turn apps on and off";
+    $main = "Current Applications: <br>";
     $notes = "Instructions will go here";
 
     // Connect to Databass
@@ -27,14 +27,16 @@ function landing()
 
     // if there are no results, add the phrase "none" to $main
     if (!$result) {
-        $main .= "No Apps are available<br>";
+        $main .= "ERROR No Apps are available<br>";
     }
     else
     {
+        $main .="<ul>";
         // list the names in the result
         foreach ($result as $row) {
-            $main .= $row['name'] . " - ";
+            $main .= "<li>" . $row['name'] . "</li>";
         }
+        $main .="</ul>";
     }
 
     // add form to create new application with all data in the database
