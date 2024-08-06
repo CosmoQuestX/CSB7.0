@@ -75,11 +75,9 @@ function addImages()
     $main .= "Reading in images from: " . $_FILES["fileToUpload"]["name"] . "<br>";
 
     // Get the uploaded file's name and open it to read
-
     if ($_FILES["fileToUpload"]['error'] > 0) {
         die("Error: " . $_FILES["fileToUpload"]["error"]);
     }
-
     $target_file = $_FILES["fileToUpload"]["tmp_name"];
     $file = fopen($target_file, "r") or die("Unable to open file!");
 
@@ -186,17 +184,20 @@ function addImages()
     // Loop through the rest of the file and add the images to the database
     while (!feof($file)) {
         $line = fgets($file);
-        if (isset($_POST['sun_angle']) && !empty($_POST['sun_angle'])) {
-            $query = "INSERT INTO images (image_set_id, application_id, name, file_location, sun_angle) VALUES (?, ?, ?, ?, ?)";
-            $params = array($imageSetId, $application, $line, $fileLocation."/".$line, $sun_angle);
-            $result = $db->runQueryWhere($query, "iissd", $params);
-        } else {
-            $query = "INSERT INTO images (image_set_id, application_id, name, file_location) VALUES (?, ?, ?, ?)";
-            $params = array($imageSetId, $application, $line, $fileLocation."/".$line);
-            $result = $db->runQueryWhere($query, "iiss", $params);
+        if (!empty($line)) {
+            $main .= "Adding image: $temp</br>";
+            if (isset($_POST['sun_angle']) && !empty($_POST['sun_angle'])) {
+                $query = "INSERT INTO images (image_set_id, application_id, name, file_location, sun_angle) VALUES (?, ?, ?, ?, ?)";
+                $params = array($imageSetId, $application, $line, $temp, $sun_angle);
+                $result = $db->runQueryWhere($query, "iissd", $params);
+            } else {
+                $query = "INSERT INTO images (image_set_id, application_id, name, file_location) VALUES (?, ?, ?, ?)";
+                $params = array($imageSetId, $application, $line, $temp);
+                $result = $db->runQueryWhere($query, "iiss", $params);
+            }
         }
     }
-    $main .= "Sub-Images added to database</br>";
+    $main .= "Sub-Images added to database: $temp</br>";
 
     return $main;
 }
