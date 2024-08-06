@@ -87,6 +87,7 @@ function addImages()
     $query = "INSERT INTO image_sets (";
     $format = "";
     $params = array();
+    $end = "";
 
     // get the first line of the file and echo it to the screen
     $line = fgets($file);
@@ -94,8 +95,7 @@ function addImages()
     $query .= "name";
     $format .= "s";
     $end .= "?";
-    $temp = trim($line.time());
-    array_push($params, "'".$temp."'");
+    array_push($params, $line);
 
     // Get the rest of the values from the form and put them in variables. If they are empty, set them to NULL
     if (isset($_POST['application']) && !empty($_POST['application']) ) {
@@ -178,7 +178,6 @@ function addImages()
     foreach ($params as $param) {
         $main .= $param . "<br>";
     }
-
 
     $result = $db->runQueryWhere($query, $format, $params);
     $main .= "Master Image added to database</p>";
