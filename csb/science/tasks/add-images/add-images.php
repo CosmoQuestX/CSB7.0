@@ -76,7 +76,7 @@ function addImages()
 
     // Get the uploaded file's name and open it to read
 
-    if($_FILES["fileToUpload"]['error'] > 0) {
+    if ($_FILES["fileToUpload"]['error'] > 0) {
         die("Error: " . $_FILES["fileToUpload"]["error"]);
     }
 
@@ -91,14 +91,13 @@ function addImages()
 
     // get the first line of the file and echo it to the screen
     $line = fgets($file);
-    $main .= "<p>$line</p>";
     $query .= "name";
     $format .= "s";
     $end .= "?";
     array_push($params, $line);
 
     // Get the rest of the values from the form and put them in variables. If they are empty, set them to NULL
-    if (isset($_POST['application']) && !empty($_POST['application']) ) {
+    if (isset($_POST['application']) && !empty($_POST['application'])) {
         $application = $_POST['application'];
         $query .= ", application_id";
         array_push($params, $application);
@@ -108,7 +107,7 @@ function addImages()
         die("No application selected");
     }
 
-    if (isset($_POST['priority']) && !empty($_POST['priority']) ) {
+    if (isset($_POST['priority']) && !empty($_POST['priority'])) {
         $priority = $_POST['priority'];
         $query .= ", priority";
         array_push($params, $priority);
@@ -116,56 +115,56 @@ function addImages()
         $end .= ", ?";
     }
 
-    if (isset($_POST['sun_angle']) && !empty($_POST['sun_angle']) ) {
+    if (isset($_POST['sun_angle']) && !empty($_POST['sun_angle'])) {
         $sun_angle = $_POST['sun_angle'];
         $query .= ", sun_angle";
         $format .= "d";
         $end .= ", ?";
     }
 
-    if (isset($_POST['maxLat']) && !empty($_POST['maxLat']) ) {
+    if (isset($_POST['maxLat']) && !empty($_POST['maxLat'])) {
         $maxLat = $_POST['maxLat'];
         $query .= ", maximum_latitude";
         $format .= "d";
         $end .= ", ?";
     }
 
-    if (isset($_POST['minLat']) && !empty($_POST['minLat']) ) {
+    if (isset($_POST['minLat']) && !empty($_POST['minLat'])) {
         $minLat = $_POST['minLat'];
         $query .= ", minimum_latitude";
         $format .= "d";
         $end .= ", ?";
     }
 
-    if (isset($_POST['maxLon']) && !empty($_POST['maxLon']) ) {
+    if (isset($_POST['maxLon']) && !empty($_POST['maxLon'])) {
         $maxLon = $_POST['maxLon'];
         $query .= ", maximum_longitude";
         $format .= "d";
         $end .= ", ?";
     }
 
-    if (isset($_POST['minLon']) && !empty($_POST['minLon']) ) {
+    if (isset($_POST['minLon']) && !empty($_POST['minLon'])) {
         $minLon = $_POST['minLon'];
         $query .= ", minimum_longitude";
         $format .= "d";
         $end .= ", ?";
     }
 
-    if (isset($_POST['pixSize']) && !empty($_POST['pixSize']) ) {
+    if (isset($_POST['pixSize']) && !empty($_POST['pixSize'])) {
         $pixSize = $_POST['pixSize'];
         $query .= ", pixel_resolution";
         $format .= "d";
         $end .= ", ?";
     }
 
-    if (isset($_POST['description']) && !empty($_POST['description']) ) {
+    if (isset($_POST['description']) && !empty($_POST['description'])) {
         $description = $_POST['description'];
         $query .= ", description";
         $format .= "s";
         $end .= ", ?";
     }
 
-    if (isset($_POST['details']) && !empty($_POST['details']) ) {
+    if (isset($_POST['details']) && !empty($_POST['details'])) {
         $details = $_POST['details'];
         $query .= ", details";
         $format .= "s";
@@ -173,24 +172,35 @@ function addImages()
     }
     $query .= ") VALUES (" . $end . ")";
 
-    // Create Query to insert values into image_sets
-    $main .= $query . " ". $format . "</p>";
-    foreach ($params as $param) {
-        $main .= $param . "<br>";
-    }
-
     $result = $db->runQueryWhere($query, $format, $params);
     $main .= "Master Image added to database</p>";
 
     //Get the master images id
-    $query = "SELECT id FROM image_sets WHERE name = '$temp'";
+    $query = "SELECT id FROM image_sets WHERE name = '$line'";
     $main .= "<p>$query</p>";
     $result = $db->runQuery($query);
     $imageSetId = $result[0]['id'];
 
     $main .= "<p>Master Image ID: $imageSetId</p>";
 
+    // Get the file location from the form
+    $fileLocation = $_POST['fileLocation'];
 
+    // Loop through the rest of the file and add the images to the database
+    while (!feof($file)) {
+        $line = fgets($file);
+        if (isset($_POST['sun_angle']) && !empty($_POST['sun_angle'])) {
+            $query = "INSERT INTO images (image_set_id, application_id, name, file_location, sun_angle) VALUES (?, ?, ?, ?, ?)";
+            $params = array($imageSetId, $application, $line, $fileLocation, $sun_angle);
+            $result = $db->runQueryWhere($query, "iissd", $params);
+        } else {
+            $query = "INSERT INTO images (image_set_id, application_id, name, file_location) VALUES (?, ?, ?, ?)";
+            $params = array($imageSetId, $application, $line, $fileLocation);
+            $result = $db->runQueryWhere($query, "iiss", $params);
+        }
+    }
+
+    $main .= "<p>Sub-Images added to database</p>";
 
     return $main;
 }
