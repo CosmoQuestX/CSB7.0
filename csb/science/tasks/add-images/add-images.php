@@ -188,11 +188,11 @@ function addImages()
         $line = fgets($file);
         if (isset($_POST['sun_angle']) && !empty($_POST['sun_angle'])) {
             $query = "INSERT INTO images (image_set_id, application_id, name, file_location, sun_angle) VALUES (?, ?, ?, ?, ?)";
-            $params = array($imageSetId, $application, $line, $fileLocation, $sun_angle);
+            $params = array($imageSetId, $application, $line, $fileLocation."/".$line, $sun_angle);
             $result = $db->runQueryWhere($query, "iissd", $params);
         } else {
             $query = "INSERT INTO images (image_set_id, application_id, name, file_location) VALUES (?, ?, ?, ?)";
-            $params = array($imageSetId, $application, $line, $fileLocation);
+            $params = array($imageSetId, $application, $line, $fileLocation."/".$line);
             $result = $db->runQueryWhere($query, "iiss", $params);
         }
     }
