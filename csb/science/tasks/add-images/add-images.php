@@ -173,15 +173,12 @@ function addImages()
     $query .= ") VALUES (" . $end . ")";
 
     $result = $db->runQueryWhere($query, $format, $params);
-    $main .= "Master Image added to database</p>";
+    $main .= "Master Image added to database</br>";
 
     //Get the master images id
     $query = "SELECT id FROM image_sets WHERE name = '$line'";
-    $main .= "<p>$query</p>";
     $result = $db->runQuery($query);
     $imageSetId = $result[0]['id'];
-
-    $main .= "<p>Master Image ID: $imageSetId</p>";
 
     // Get the file location from the form
     $fileLocation = $_POST['fileLocation'];
@@ -199,8 +196,7 @@ function addImages()
             $result = $db->runQueryWhere($query, "iiss", $params);
         }
     }
-
-    $main .= "<p>Sub-Images added to database</p>";
+    $main .= "Sub-Images added to database</br>";
 
     return $main;
 }
