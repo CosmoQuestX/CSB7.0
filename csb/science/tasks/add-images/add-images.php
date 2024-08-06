@@ -181,6 +181,7 @@ function addImages()
 
     // Get the file location from the form
     $fileLocation = $_POST['fileLocation'];
+    $temp = $fileLocation."/".$line;
 
     // Loop through the rest of the file and add the images to the database
     while (!feof($file)) {
