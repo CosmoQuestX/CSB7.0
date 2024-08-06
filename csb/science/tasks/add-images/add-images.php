@@ -89,6 +89,7 @@ function addImages()
 
     // get the first line of the file and echo it to the screen
     $line = fgets($file);
+    $line = trim($line);
     $query .= "name";
     $format .= "s";
     $end .= "?";
