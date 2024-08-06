@@ -94,7 +94,7 @@ function addImages()
     $query .= "name";
     $format .= "s";
     $end .= "?";
-    $temp = $line.time();
+    $temp = trim($line.time());
     array_push($params, "'".$temp."'");
 
     // Get the rest of the values from the form and put them in variables. If they are empty, set them to NULL

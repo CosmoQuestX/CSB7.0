@@ -53,6 +53,11 @@ This is an open source image annotation platform suitable for citizen science.
 CSB 7.0 has been tested in our sandbox environment, which uses PHP 8.2. The [Docker configuration](#method-2---using-docker) is configured to use PHP 8.2, as well.
 You can find out more information about PHP's supported versions at [https://www.php.net/supported-versions.php](https://www.php.net/supported-versions.php).
 
+### Add image manipulation support (GD)
+You will need to install GD for PHP. On Ubuntu, you can do this with:
+
+```sudo apt-get install -y php-gd ```
+
 ### Add SASS support
 
 To install SASS, follow instructions on <https://sass-lang.com/install>. Once things
