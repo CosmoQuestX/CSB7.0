@@ -75,6 +75,11 @@ function addImages()
     $main .= "Reading in images from: " . $_FILES["fileToUpload"]["name"] . "<br>";
 
     // Get the uploaded file's name and open it to read
+
+    if($_FILES["fileToUpload"]['error'] > 0) {
+        die("Error: " . $_FILES["fileToUpload"]["error"]);
+    }
+
     $target_file = $_FILES["fileToUpload"]["tmp_name"];
     $file = fopen($target_file, "r") or die("Unable to open file!");
 
