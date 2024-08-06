@@ -104,20 +104,38 @@ function chopFile($stampSize, $overlap)
     list($width, $height) = getimagesize($BASE_DIR . "uploads/" . basename($_FILES["fileToUpload"]["name"]));
 
     // cycle through the image in width
-    for ($x = 0; $x < $width; $x += $stampSize - $overlap) {
+    for ($x = 0; $x < $width - $overlap; $x += $stampSize - $overlap) {
         // cycle through the image in height
-        for ($y = 0; $y < $height; $y += $stampSize - $overlap) {
+        for ($y = 0; $y < $height - $overlap; $y += $stampSize - $overlap) {
+
+            // sort image width if it doesn't fit the full width
+            if ($x + $stampSize > $width) {
+                $delX = $width - $x;
+            } else {
+                $delX = $stampSize;
+            }
+            // sort image height if it doesn't fit the full height
+            if ($y + $stampSize > $height) {
+                $delY = $height - $y;
+            } else {
+                $delY = $stampSize;
+            }
+
             // copy pixels x,y to x+450,y+450 into a new image
             $im = imagecreatefrompng($BASE_DIR . "uploads/" . basename($_FILES["fileToUpload"]["name"]));
             $im1 = imagecreatetruecolor($stampSize, $stampSize);
-            imagecopy($im1, $im, 0, 0, $x, $y, $stampSize, $stampSize);
+            imagecopy($im1, $im, 0, 0, $x, $y, $delX, $delY);
             imagepng($im1, $BASE_DIR . "uploads/" . $rootFilename . "_$x-$y.png");
             imagedestroy($im1);
+            imagedestroy($im);
+
             // write each sub-image to the file
             fwrite($file, $rootFilename . "_$x-$y.png\n");
         }
     }
     fclose($file);
     // return a link to the text file
-    return "<a href='$BASE_URL/uploads/$rootFilename.txt'>Download Chopped Images</a><br/>>";
+    $main .= "<a href='$BASE_URL/uploads/$rootFilename.txt'>Download Chopped Images</a><br/>>";
+
+    return $main;
 }
