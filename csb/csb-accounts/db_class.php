@@ -138,7 +138,6 @@ class DB
      */
     function runQueryWhere($query, $param_type, $param_value_array)
     {
-
         if ($sql = $this->conn->prepare($query)) {
             $this->bindQueryParams($sql, $param_type, $param_value_array);
             $sql->execute();
@@ -156,7 +155,7 @@ class DB
                 return $resultSet;
             }
         } else
-            die("SQL error on " . $this->database);
+            return("SQL error on " . $this->database);
     }
 
     /**

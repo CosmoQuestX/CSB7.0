@@ -3,7 +3,10 @@
 function doSwitch($db, $option) {
     switch ($option) {
         case "create":
-            $text =  create($db);
+            $text =  create();
+            break;
+        case "show":
+            $text =  showApp();
             break;
         default:
             $text['main'] = "<p>ERROR: No Option Selected. Did you try URL hacking?</p>";
@@ -15,14 +18,14 @@ function doSwitch($db, $option) {
 function landing()
 {
     global $db_servername, $db_username, $db_password, $db_name, $db_port, $BASE_URL;
-    $main = "Current Applications: <br>";
+    $main = "<span class='font-weight-bold'>Current Applications: </span><br>";
     $notes = "Instructions will go here";
 
     // Connect to Databass
     $db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
 
     // Get names of all applications in the database
-    $query = "SELECT name FROM applications";
+    $query = "SELECT name, active FROM applications";
     $result = $db->runQuery($query);
 
     // if there are no results, add the phrase "none" to $main
@@ -34,23 +37,39 @@ function landing()
         $main .="<ul>";
         // list the names in the result
         foreach ($result as $row) {
-            $main .= "<li>" . $row['name'] . "</li>";
+            $url = $BASE_URL . "/csb-admin/index.php?option=admin-apps&name=" . $row['name'];
+            if ($row['active'] == 1) {
+                $status = "Active";
+            }
+            else {
+                $status = "Inactive";
+            }
+            $main .= "<li><a href='$url'>" . $row['name'] . "</a> ($status)</li>";
         }
         $main .="</ul>";
     }
 
+    // if Name value is in the URL, call showApp function
+    if (isset($_GET['name'])) {
+        $text = showApp();
+        $main .= $text['main'];
+    }
+
     // add form to create new application with all data in the database
+    $main .= "<span class='font-weight-bold'>Create or Update Applications: </span><br>";
     $main .= "
         <form id='profile-form' action='$BASE_URL/csb-admin/index.php?option=admin-apps' method='POST'>
             <input type='hidden' name='action' value='create'>
-            <label for='name'>Name:</label>
-            <input type='text' name='name' id='name' class='mt-4'>
-            <label for='description'>Description:</label>
-            <input type='text' name='description' id='description' class='mt-4'>
-            <label for='url'>URL:</label>
-            <input type='text' name='url' id='url' class='mt-4'>
-            <label for='status'>Status:</label>
-            <input type='text' name='status' id='status' class='mt-4'>
+            <label for='name' class='mt-4'>Name:</label>
+            <input type='text' name='name' id='name' class='mt-4'><br/>
+            <label for='title' class='mt-4'>Title:</label>
+            <input type='text' name='title' id='title' class='mt-4'><br/>
+            <label for='background_url' class='mt-4'>URL:</label>
+            <input type='text' name='background_url' id='background_url' class='mt-4'><br/>
+            <label for='project-id' class='mt-4'>Project ID:</label>
+            <input type='text' name='project-id' id='project-id' class='mt-4'><br/>
+            <label for='status' class='mt-4'>Status:</label>
+            <input type='text' name='status' id='status' class='mt-4'><br/>
             <input type='submit' value='Create Application' class='btn btn-cq mt-4 right'>
         </form>
         ";
@@ -58,7 +77,7 @@ function landing()
 
 }
 
-function create($db)
+function create()
 {
     global $db_servername, $db_username, $db_password, $db_name, $db_port, $BASE_URL;
 
@@ -71,11 +90,12 @@ function create($db)
 
     $changed = FALSE;
 
-  // Get the data from the form
+  // Take information from form and put it in variables
     $name = $_POST['name'];
-    $description = $_POST['description'];
-    $url = $_POST['url'];
-    $status = $_POST['status'];
+    $title = $_POST['title'];
+    $url = $_POST['background_url'];
+    $project_id = $_POST['project-id'];
+    $active = $_POST['status'];
 
     // Check if the name is already in the database
     foreach ($result as $row) {
@@ -86,21 +106,46 @@ function create($db)
 
     // If the name is not in the database, add it
     if (!$changed) {
-        $query = "INSERT INTO applications (name, description, url, status) VALUES (?, ?, ?, ?)";
-        $params = array($name, $description, $url, $status);
-        //$result = $db->runQueryWhere($query, "ssss", $params);
-        $status = "created";
+        $query = "INSERT INTO applications (name, title, background_url, project_id, active) VALUES (?, ?, ?, ?, ?)";
+        $params = array($name, $title, $url, $project_id, $active);
+        $result = $db->runQueryWhere($query, "sssii", $params);
     }
-
-    // If the name is in the database, update it
     else {
-        $query = "UPDATE applications SET description = ?, url = ?, status = ? WHERE name = ?";
-        $params = array($description, $url, $status, $name);
-        //$result = $db->runQueryWhere($query, "ssss", $params);
-        $status = "updated";
+        $query = "UPDATE applications SET title = ?, background_url = ?, project_id = ?, active = ? WHERE name = ?";
+        $params = array($title, $url, $project_id, $active, $name);
+        $result = $db->runQueryWhere($query, "ssiis", $params);
     }
 
     // Return the main text
-    $main = "Application " . $_POST['name'] . " $status";
+    $main = "Application " . $_POST['name'] . " has been created or updated";
+    return array("main" => $main, "notes" => "");
+}
+
+function showApp()
+{
+    global $db_servername, $db_username, $db_password, $db_name, $db_port, $BASE_URL;
+
+    // Connect to Database
+    $db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
+
+    // Get the name of the application from the URL
+    $name = $_GET['name'];
+
+    $query = "SELECT * FROM applications WHERE name = ?";
+    $params = array($name);
+    $result = $db->runQueryWhere($query, "s", $params);
+
+    if (!$result) {
+        $main = "ERROR: No application found with name $name";
+    }
+    else {
+        $main = "<span class='font-weight-bold'>Details for Application <span class='font-italic'>" . $result[0]['name'] . ":</span></span></br>";
+        $main .= "<p>Title: " . $result[0]['title'] . "</br>";
+        $main .= "Project ID: " . $result[0]['project_id'] . "</br>";
+        $main .= "Status: " . $result[0]['active'] . "</br>";
+        $main .= "Description: " . $result[0]['description'] . "</br>";
+        $main .= "Background URL: " . $result[0]['background_url'] . "</br>";
+        $main .= "<img style='width: 300px;' src='" . $result[0]['background_url'] . "' alt='background image'></p>";
+    }
     return array("main" => $main, "notes" => "");
 }

@@ -38,10 +38,10 @@ $user = isLoggedIn($db);
 /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
-global $page_title, $header_title, $SITE_TITLE; 
+global $page_title, $header_title, $SITE_TITLE;
 
 // Make sure the page title is set
-if (!isset($page_title)) { $page_title = $SITE_TITLE; }; 
+if (!isset($page_title)) { $page_title = $SITE_TITLE; };
 
 require_once($BASE_DIR . "/csb-content/template_functions.php");
 
