@@ -56,7 +56,7 @@ function uploadForm() {
     $form .= "<label for='pixSize' class='mt-4'>Pixel Size: </label><br/>";
     $form .= "<input type='text' name='pixSize' id='pixSize'><br/>";
     $form .= "<label for='description' class='mt-4'>Description: </label><br/>";
-    $form .= "<input type='text' name='description' id='description'></input><br/>";
+    $form .= "<input type='text' name='description' id='description'><br/>";
     $form .= "<label for='details' class='mt-4'>Details: </label><br/>";
     $form .= "<input type='text' name='details' id='details'><br/><br/>";
 
@@ -117,6 +117,7 @@ function addImages()
     if (isset($_POST['sun_angle']) && !empty($_POST['sun_angle'])) {
         $sun_angle = $_POST['sun_angle'];
         $query .= ", sun_angle";
+        array_push($params, $sun_angle);
         $format .= "d";
         $end .= ", ?";
     }
@@ -124,13 +125,15 @@ function addImages()
     if (isset($_POST['maxLat']) && !empty($_POST['maxLat'])) {
         $maxLat = $_POST['maxLat'];
         $query .= ", maximum_latitude";
-        $format .= "d";
+        array_push($params, $maxLat);
+            $format .= "d";
         $end .= ", ?";
     }
 
     if (isset($_POST['minLat']) && !empty($_POST['minLat'])) {
         $minLat = $_POST['minLat'];
         $query .= ", minimum_latitude";
+        array_push($params, $minLat);
         $format .= "d";
         $end .= ", ?";
     }
@@ -138,6 +141,7 @@ function addImages()
     if (isset($_POST['maxLon']) && !empty($_POST['maxLon'])) {
         $maxLon = $_POST['maxLon'];
         $query .= ", maximum_longitude";
+        array_push($params, $maxLon);
         $format .= "d";
         $end .= ", ?";
     }
@@ -145,6 +149,7 @@ function addImages()
     if (isset($_POST['minLon']) && !empty($_POST['minLon'])) {
         $minLon = $_POST['minLon'];
         $query .= ", minimum_longitude";
+        array_push($params, $minLon);
         $format .= "d";
         $end .= ", ?";
     }
@@ -152,6 +157,7 @@ function addImages()
     if (isset($_POST['pixSize']) && !empty($_POST['pixSize'])) {
         $pixSize = $_POST['pixSize'];
         $query .= ", pixel_resolution";
+        array_push($params, $pixSize);
         $format .= "d";
         $end .= ", ?";
     }
@@ -159,6 +165,7 @@ function addImages()
     if (isset($_POST['description']) && !empty($_POST['description'])) {
         $description = $_POST['description'];
         $query .= ", description";
+        array_push($params, $description);
         $format .= "s";
         $end .= ", ?";
     }
@@ -166,6 +173,7 @@ function addImages()
     if (isset($_POST['details']) && !empty($_POST['details'])) {
         $details = $_POST['details'];
         $query .= ", details";
+        array_push($params, $details);
         $format .= "s";
         $end .= ", ?";
     }
