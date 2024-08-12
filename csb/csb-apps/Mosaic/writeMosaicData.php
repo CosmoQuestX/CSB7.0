@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $result = $db->runQueryWhere($query, "iii", $params);
 
     // Insert Data into the Database
-    $query = "INSERT INTO imagePoll (image_id, user_id, poll) VALUES (?, ?, ?)";
+    $query = "INSERT INTO image_poll (image_id, user_id, poll) VALUES (?, ?, ?)";
     $params = array($imageID, $userID, $buttonValue);
     $result = $db->runQueryWhere($query, "iis", $params);
 }
