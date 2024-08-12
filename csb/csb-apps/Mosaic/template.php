@@ -14,7 +14,6 @@ $image = $result[0]['file_location'];
 $id = $result[0]['id'];
 ?>
 
-<div id="test">Barney</div>
 <div class="container px-0">
     <div class="row">
         <div class="col-6">
@@ -25,13 +24,13 @@ $id = $result[0]['id'];
         <div class="col-6">
             <div class="row">
                 <div class="col-12">
-                    <h2>Options</h2>
+                    <h2>How do things look?</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-primary" value="perfect">Perfect Image</button>
-                    <button class="btn btn-primary" value="flawed">Flawed Mosaic</button>
+                    <button class="btn btn-primary" value="perfect">Perfect Image</button><br/><br/>
+                    <button class="btn btn-primary" value="flawed">Flawed Mosaic</button><br/><br/>
                     <button class="btn btn-primary" value="black">Just Black</button>
                 </div>
             </div>

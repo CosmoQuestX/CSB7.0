@@ -83,7 +83,7 @@ load3Col($menus, $main, $notes, 'reg-template.php');
 
 // Validation
 $scripts = '<script src="'. $THEME_URL .'js/bs4-form-validation.min.js"></script>';
-$scripts .= '<script>let registration = new Validation("registration"); registration.requireText("username", 0, 50, [], []); registration.requireEmail("email", 4, 99, [], []); registration.registerPassword("registerPassword", 6, 50, [], [], "confirm");</script>';
+//$scripts .= '<script>let registration = new Validation("registration"); registration.requireText("username", 0, 50, [], []); registration.requireEmail("email", 4, 99, [], []); registration.registerPassword("registerPassword", 6, 50, [], [], "confirm");</script>';
 
 loadFooter($scripts);
 
