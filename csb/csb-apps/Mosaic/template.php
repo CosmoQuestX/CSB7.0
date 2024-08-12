@@ -46,35 +46,34 @@ $id = $result[0]['id'];
     // Function to Load Image
     function loadImage() {
         fetch('csb-apps/Mosaic/writeMosaicData.php') // Make the request to your PHP file
-        // put the response from the php file into the div testDiv
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('currentImage').src = data.imageUrl;
-            document.getElementById('currentImage').setAttribute('data-image-id', data.imageId);
-            document.getElementById('test').innerHTML = data.imageId;
-        });
-
-        // Add event listener to listen for clicks on a button
-        const buttons = document.querySelectorAll('.btn-primary');
-        buttons.forEach(button => {
-            button.addEventListener('click', function() {
-                const buttonValue = button.value;
-                const imageId = document.getElementById('currentImage').getAttribute('data-image-id');
-                const userId = <?php echo $_SESSION['user_id']; ?>;
-
-                // send the data to the php file as variables
-                fetch('csb-apps/Mosaic/writeMosaicData.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: 'buttonvalue=' + buttonValue + '&imageId=' + imageId + '&userId=' + userId
-                });
-
-                // load the next image
-                loadImage();
-
+            // put the response from the php file into the div testDiv
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('currentImage').src = data.imageUrl;
+                document.getElementById('currentImage').setAttribute('data-image-id', data.imageId);
+                document.getElementById('test').innerHTML = data.imageId;
             });
-        });
     }
+    // Add event listener to listen for clicks on a button
+    const buttons = document.querySelectorAll('.btn-primary');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const buttonValue = button.value;
+            const imageId = document.getElementById('currentImage').getAttribute('data-image-id');
+            const userId = <?php echo $_SESSION['user_id']; ?>;
+
+            // send the data to the php file as variables
+            fetch('csb-apps/Mosaic/writeMosaicData.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'buttonvalue=' + buttonValue + '&imageId=' + imageId + '&userId=' + userId
+            });
+
+            // load the next image
+            loadImage();
+
+        });
+    });
 </script>
