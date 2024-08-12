@@ -44,19 +44,19 @@ function uploadForm() {
     $form .= "<label for='priority' class='mt-4'>Priority: </label><br/>";
     $form .= "<input type='number' name='priority' id='priority' value='1'><br/>";
     $form .= "<label for='sun_angle' class='mt-4'>Sun Angle: </label><br/>";
-    $form .= "<input type='number' name='sun_angle' id='sun_angle'><br/>";
+    $form .= "<input type='text' name='sun_angle' id='sun_angle'><br/>";
     $form .= "<label for='maxLat' class='mt-4'>Max Latitude: </label><br/>";
-    $form .= "<input type='number' name='maxLat' id='maxLat'><br/>";
+    $form .= "<input type='text' name='maxLat' id='maxLat'><br/>";
     $form .= "<label for='minLat' class='mt-4'>Min Latitude: </label><br/>";
-    $form .= "<input type='number' name='minLat' id='minLat'><br/>";
+    $form .= "<input type='textr' name='minLat' id='minLat'><br/>";
     $form .= "<label for='maxLon' class='mt-4'>Max Longitude: </label><br/>";
-    $form .= "<input type='number' name='maxLon' id='maxLon'><br/>";
+    $form .= "<input type='text' name='maxLon' id='maxLon'><br/>";
     $form .= "<label for='minLon' class='mt-4'>Min Longitude: </label><br/>";
-    $form .= "<input type='number' name='minLon' id='minLon'><br/>";
+    $form .= "<input type='text' name='minLon' id='minLon'><br/>";
     $form .= "<label for='pixSize' class='mt-4'>Pixel Size: </label><br/>";
-    $form .= "<input type='number' name='pixSize' id='pixSize'><br/>";
+    $form .= "<input type='text' name='pixSize' id='pixSize'><br/>";
     $form .= "<label for='description' class='mt-4'>Description: </label><br/>";
-    $form .= "<input type='text' name='description' id='description'><br/>";
+    $form .= "<textarea name='description' id='description' rows='4' cols='50'><br/>";
     $form .= "<label for='details' class='mt-4'>Details: </label><br/>";
     $form .= "<input type='text' name='details' id='details'><br/><br/>";
 
@@ -187,7 +187,6 @@ function addImages()
     while (!feof($file)) {
         $line = fgets($file);
         if (!empty($line)) {
-            $main .= "Adding image: $temp</br>";
             if (isset($_POST['sun_angle']) && !empty($_POST['sun_angle'])) {
                 $query = "INSERT INTO images (image_set_id, application_id, name, file_location, sun_angle) VALUES (?, ?, ?, ?, ?)";
                 $params = array($imageSetId, $application, $line, $temp, $sun_angle);
