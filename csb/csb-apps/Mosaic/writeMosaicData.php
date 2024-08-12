@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     // submit data to table marks
     $imageID = $_GET['imageId'];
-    $buttonValue = $_GET['buttonValue'];
+    $buttonValue = $_GET['buttonvalue'];
     $userID = $_GET['userId'];
 
     // Insert Data into image_user table
