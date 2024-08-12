@@ -116,7 +116,7 @@ $(document).ready(function(){
             }
         }).catch( err => {
             console.debug(err);
-            $("#email-test-status").html(getTimestamp() + "Test Email: An unexpected error occurred!")
+            $("#email-test-status").html(getTimestamp() + "-- Test Email: An unexpected error occurred!")
                 .attr("class", "alert alert-danger col-12")  //Style the message
                 .css({
                     "margin-top": "1rem",
