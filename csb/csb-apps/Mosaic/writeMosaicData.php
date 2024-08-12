@@ -19,12 +19,12 @@ if ($db->connect_error) {
 }
 
 // Handle Button Click
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // submit data to table marks
-    $imageID = $_GET['imageId'];
-    $buttonValue = $_GET['buttonvalue'];
-    $userID = $_GET['userId'];
+    $imageID = $_POST['imageId'];
+    $buttonValue = $_POST['buttonvalue'];
+    $userID = $_POST['userId'];
 
     // Insert Data into image_user table
     $query = "INSERT INTO image_users (image_id, user_id, application_id) VALUES (?, ?, ?)";

@@ -51,7 +51,7 @@ $id = $result[0]['id'];
         .then(data => {
             document.getElementById('currentImage').src = data.imageUrl;
             document.getElementById('currentImage').setAttribute('data-image-id', data.imageId);
-            document.getElementById('test').innerHTML = data.notes;
+            document.getElementById('test').innerHTML = data.imageId;
         });
 
         // Add event listener to listen for clicks on a button
@@ -68,7 +68,7 @@ $id = $result[0]['id'];
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: 'buttonValue=' + buttonValue + '&imageId=' + imageId + '&userId=' + userId
+                    body: 'buttonvalue=' + buttonValue + '&imageId=' + imageId + '&userId=' + userId
                 });
 
                 // load the next image
