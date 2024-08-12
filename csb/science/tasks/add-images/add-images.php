@@ -56,7 +56,7 @@ function uploadForm() {
     $form .= "<label for='pixSize' class='mt-4'>Pixel Size: </label><br/>";
     $form .= "<input type='text' name='pixSize' id='pixSize'><br/>";
     $form .= "<label for='description' class='mt-4'>Description: </label><br/>";
-    $form .= "<textarea name='description' id='description' rows='4' cols='50'></textarea><br/>";
+    $form .= "<input type='text' name='description' id='description'></input><br/>";
     $form .= "<label for='details' class='mt-4'>Details: </label><br/>";
     $form .= "<input type='text' name='details' id='details'><br/><br/>";
 
