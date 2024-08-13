@@ -32,9 +32,7 @@ function sendNewEmail($subject, $msg, $to, $emailSettings) {
         $mail->Body = $msg;
 
         $mail->send();
-        echo "good $to ".$emailSettings['from'];
     } catch (Exception $e) {
-        echo json_encode(array('result' => false, 'message' => "Test Email failed: Malformed Statement"));
+        // ahhhhh
     }
-    die();
 }
