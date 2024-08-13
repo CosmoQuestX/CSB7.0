@@ -233,8 +233,6 @@ function rescueUser ($db, $using, $value) {
     require_once($BASE_DIR."csb-accounts/email_class.php");
     sendNewEmail($subject, $msg, $to, $emailSettings);
 
-    die("here3");
-
     // Everything worked so remove error msg and the rescue link
     unset($rescue_link);
     unset($_SESSION['errMsg']);
