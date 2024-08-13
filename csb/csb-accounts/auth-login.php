@@ -24,7 +24,6 @@ require("auth-login-functions.php");
    Logging out? Asking to register? Rescuing Password?
    ---------------------------------------------------------------------- */
 
-
 $db = new DB($db_servername, $db_username, $db_password, $db_name, $db_port);
 
 if (isset($_GET['go'])) {

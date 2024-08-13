@@ -199,7 +199,7 @@ function generateToken ($db, $user, $id) {
 }
 
 function rescueUser ($db, $using, $value) {
-    GLOBAL $emailSettings, $ACC_URL, $BASE_URL, $SITE_NAME;
+    GLOBAL $emailSettings, $ACC_URL, $BASE_URL, $SITE_NAME, $BASE_DIR;
 
 // Get the email to send information to
     if(strcmp($using, "email")==0) {
@@ -220,45 +220,20 @@ function rescueUser ($db, $using, $value) {
     $query = "INSERT INTO password_resets (email, token) VALUES ('$to', '$hashedToken')";
     $db->runQuery($query);
 
-    require_once("email_class.php");
-
-    $email = new EMAIL($emailSettings);
-
     // Put the rescue link in a variable so we only have to calculate it once.
     $rescue_link = $ACC_URL."rescue.php?go=".$to."&token=".$token;
 
-// TODO Add better INSTRUCTIONS_TO_CHANGE_MANUALLY
-// TODO Consider HTML formatting for the message body?
+    $subject = $SITE_NAME." Password Reset";
 
-    $msg['subject'] = $SITE_NAME." Password Reset";
-
-    $msg['body'] =  "Hello,<br><br>".
+    $msg =  "Hello, $name<br><br>".
         "Someone has requested a password reset for your account.<br><br>".
         "If you made this request and would like to reset your password, please go to <a href='$rescue_link'>this</a> link ($rescue_link).<br><br>".
-        "If you did not make this request, you may want to change your password by logging in with your current ".
-        "username and password, and going to <a href='".$ACC_URL."profile.php'>My Profile</a>.<br><br>".
-        "Sincerely,<br>".
-        $SITE_NAME;
+        "Happy Science-ing! $SITE_NAME";
 
-    $msg['alt-body'] = "Hello,
+    require_once($BASE_DIR."csb-accounts/email_class.php");
+    sendNewEmail($subject, $msg, $to, $emailSettings);
 
-    Someone has requested a password reset for your account.
-
-    If you made this request and would like to reset your password, please go to this link: $rescue_link
-
-    If you did not make this request, you may want to change your password by logging in with your ".
-        "username and password, and going to My Profile (".$ACC_URL."profile.php).
-
-    Sincerely,
-    $SITE_NAME";
-
-
-    $result = $email->sendMail($to, $msg);
-
-    if (!$result['result']) {
-        error_log($result['message'] . "/n");
-        die("email settings aren't working. Contact the system administrator.");
-    }
+    die("here3");
 
     // Everything worked so remove error msg and the rescue link
     unset($rescue_link);
