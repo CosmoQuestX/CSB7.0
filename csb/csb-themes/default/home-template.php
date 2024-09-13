@@ -12,6 +12,7 @@
 //$lang = file_get_contents($lang);
 //$lang = json_decode($lang, true);
 
+
 ?>
 
 
@@ -54,8 +55,8 @@
 
             <div class="text-blk">
                 <p>Want to do science? We got science! Everything submitted through this interface should (bugs withstanding) be used for science.</p>
-                <p>Logged in? You should see an option called "Mosaic" at the top of the screen. Click that and you'll be taken to a super simple
-                    project to see if science images have been correctly mosaiced together.</p>
+                <p>Logged in? You should see an option called "Verify Mosaics" at the top of the screen. Click that and you'll be taken to a super simple
+                    project to see if science images have been correctly mosaic'd together.</p>
 
 
             </div>
@@ -70,7 +71,7 @@
             <div class="text-blk">
                 <p>Report bugs on <a href="https://discord.gg/yrfTgajCzT">Discord</a> or <a href="mailto:cosmoquestx@gmail.com">email us</a>.</p>
                 <ul>
-                    <li>Fix dynamic resizing</li>
+                    <li>Make it mobile friendly</li>
                     <li>Make UI pretty</li>
                 </ul>
 

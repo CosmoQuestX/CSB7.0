@@ -181,19 +181,20 @@ function generateToken ($db, $user, $id) {
         // How long will cookies last: 30 Days
         $timeout = time() + 60 * 60 * 24 * 30;
 
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
-        $token = substr(str_shuffle($chars), 0, 36);
-        setcookie("token", $token, $timeout, "/");
-
-        // update token in database to compare with later
-        $token_hash = password_hash($token, PASSWORD_DEFAULT);
-        $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
-        $params = array($id);
-        $db->update($query, "s", $params);
     } else {
         // How long will cookies last: 24min like sessions (set in php.ini)
-        $timeout = time() + 60 * 24;
+        $timeout = time() + 60 * 60 * 24;
     }
+
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-=+;:,.?";
+    $token = substr(str_shuffle($chars), 0, 36);
+    setcookie("token", $token, $timeout, "/");
+
+    // update token in database to compare with later
+    $token_hash = password_hash($token, PASSWORD_DEFAULT);
+    $query = "UPDATE users SET remember_token = '" . $token_hash . "' WHERE id = ?";
+    $params = array($id);
+    $db->update($query, "s", $params);
 
     return $timeout;
 }

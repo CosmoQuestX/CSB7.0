@@ -31,7 +31,9 @@ $id = $result[0]['id'];
                 <div class="col-12">
                     <button class="btn btn-primary" value="perfect">Perfect Image</button><br/><br/>
                     <button class="btn btn-primary" value="flawed">Flawed Mosaic</button><br/><br/>
-                    <button class="btn btn-primary" value="black">Just Black</button>
+                    <button class="btn btn-primary" value="black">Just Black</button><br/><br/>
+                    <p><strong>Problem:</strong> Images from spacecraft have to be processed in a variety of ways before they can be used for science, but sometimes this process can break and it won't get noticed until a lot of time has been wasted processing those mistakes.</p>
+                    <p><strong>Goal:</strong> Your job is to look at stunning images and find those where the software made mistakes and flag them before they cause any problems.</p>
                 </div>
             </div>
         </div>
