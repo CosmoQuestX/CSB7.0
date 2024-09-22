@@ -20,6 +20,7 @@ $id = $result[0]['id'];
             <div id="project_canvas" width="450" height="450">
                 <img id="currentImage" src="" data-image-id="0">
             </div>
+        <div id="test">Image Name will go here</div>
         </div>
         <div class="col-6">
             <div class="row">
