@@ -44,7 +44,7 @@ function mercury_mappers(csbApp) {
             {
                 "type": "dropdown",
                 "title": "Tutorial",
-                "text": "Welcome to Mercury Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/csb/csb-apps/mercury_mappers/images/tutorial/eraser.png' /> Erase a mistake</li><li><img src='/csb/csb-apps/mercury_mappers/images/tutorial/crater.png' /> Find a crater</li><li><img src='/csb/csb-apps/mercury_mappers/images/tutorial/easy.png' /> Complete an easy image</li><li><img src='/csb/csb-apps/mercury_mappers/images/tutorial/hard.png' /> Complete a hard image</li>",
+                "text": "Welcome to Mercury Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/csb/csb-apps/deprecated/mercury_mappers/images/tutorial/eraser.png' /> Erase a mistake</li><li><img src='/csb/csb-apps/deprecated/mercury_mappers/images/tutorial/crater.png' /> Find a crater</li><li><img src='/csb/csb-apps/deprecated/mercury_mappers/images/tutorial/easy.png' /> Complete an easy image</li><li><img src='/csb/csb-apps/deprecated/mercury_mappers/images/tutorial/hard.png' /> Complete a hard image</li>",
                 "ok-button": {}, // Should have text like "Okay, let's start!",
                 "goal": "GOAL: Learn About Craters"
             },

@@ -42,7 +42,7 @@ function mars_mappers(csbApp) {
             {
                 "type": "dropdown",
                 "title": "Tutorial",
-                "text": "Welcome to Mars Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/csb/csb-apps/mars_mappers/images/tutorial/eraser.png' /> Erase a mistake</li><li><img src='/csb/csb-apps/mars_mappers/images/tutorial/crater.png' /> Find a crater</li><li><img src='/csb/csb-apps/mars_mappers/images/tutorial/light-image.png' /> Complete an image</li><li><img src='/csb/csb-apps/mars_mappers/images/tutorial/ejecta.png' /> Find crater ejecta</li>",
+                "text": "Welcome to Mars Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/csb/csb-apps/deprecated/mars_mappers/images/tutorial/eraser.png' /> Erase a mistake</li><li><img src='/csb/csb-apps/deprecated/mars_mappers/images/tutorial/crater.png' /> Find a crater</li><li><img src='/csb/csb-apps/deprecated/mars_mappers/images/tutorial/light-image.png' /> Complete an image</li><li><img src='/csb/csb-apps/deprecated/mars_mappers/images/tutorial/ejecta.png' /> Find crater ejecta</li>",
                 "ok-button": {}, // Should have text like "Okay, let's start!",
                 "goal": "GOAL: Learn About Craters"
             },

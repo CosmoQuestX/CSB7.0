@@ -12,6 +12,7 @@
 //$lang = file_get_contents($lang);
 //$lang = json_decode($lang, true);
 
+
 ?>
 
 
@@ -20,8 +21,14 @@
 
         <!-- Left block --------------------------------------------------------------- -->
         <div id="app-left" class="col-md-3 p-4">
-            <h3 class="font-weight-bold" style="display: inline;">Title Left (needs set in backend)</h3>
-            <p>Content Left (needs set in backend) </p>
+            <h3 class="font-weight-bold" style="display: inline;">It's Beta time</h3>
+            <p>Welcome to our new version of CosmoQuest's Citizen Science Builder. We will be releasing new science projects regularly.</p>
+            <p><strong>FAQs:</strong></p>
+            <ul>
+                <li><strong>Do I need a new login?</strong><br>Yes (although we hope to merge accounts in the future)</li>
+                <li><strong>What happened to my old projects?</strong><br>They are still there, but they are being updated. Stay tuned.</li>
+                <li><strong>What's new?</strong><br>Everything! We have a new interface, new tools, and new projects ... and new bugs.</li>
+            </ul>
 
             </div>
 
@@ -47,7 +54,11 @@
             ?>
 
             <div class="text-blk">
-                <p>Content Welcome (needs set in Backend)</p>
+                <p>Want to do science? We got science! Everything submitted through this interface should (bugs withstanding) be used for science.</p>
+                <p>Logged in? You should see an option called "Verify Mosaics" at the top of the screen. Click that and you'll be taken to a super simple
+                    project to see if science images have been correctly mosaic'd together.</p>
+
+
             </div>
 
         </div>
@@ -56,9 +67,13 @@
         <?php //$txt = $lang['app_page']['text-boxes']['app-right']; ?>
 
         <div id="app-right" class="col-md-3 p-4">
-            <h3 class="font-weight-bold">Title Right (needs set in backend)</h3>
+            <h3 class="font-weight-bold">Bugs in Progress</h3>
             <div class="text-blk">
-            <p>Content Right (needs set in backend)</p>
+                <p>Report bugs on <a href="https://discord.gg/yrfTgajCzT">Discord</a> or <a href="mailto:cosmoquestx@gmail.com">email us</a>.</p>
+                <ul>
+                    <li>Make it mobile friendly</li>
+                    <li>Make UI pretty</li>
+                </ul>
 
             </div>
         </div>

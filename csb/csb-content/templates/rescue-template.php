@@ -51,7 +51,7 @@ if (isset($_GET['go'])) {
                     <div class="form-input-left"><label for="username">Username</label></div>
                     <div class="form-input-right"><input type="text" id="username" name="username"
                                                          value="<?php echo $user['name'] ?>"
-                                                         class="form-control" disabled></div>
+                                                         class="form-control" ></div>
                 </div>
                 <div class="clear"></div>
                 <div class="form-input-row">

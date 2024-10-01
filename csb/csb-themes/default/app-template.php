@@ -135,7 +135,7 @@ global $app;
                 <div class="app-sidebar-title">Examples</div>
                 <img id="app-example-up-arrow" src="/csb/csb-content/images/applications/buttons/up-arrow.png" />
                 <div id="example-images">
-                
+
                     <img class="example-image" src="/csb/csb-apps/<?php  echo $app; ?>/images/examples/crater/crater1.png" />
                     <img class="example-image" src="/csb/csb-apps/<?php  echo $app; ?>/images/examples/crater/crater2.png" />
                     <img class="example-image" src="/csb/csb-apps/<?php  echo $app; ?>/images/examples/crater/crater3.png" />
@@ -204,9 +204,9 @@ global $app;
                         </ul>
                     </li>
                 </ul>
-                <?php if ($app == "mercury_mappers") { 
+                <?php if ($app == "mercury_mappers") {
 
-                echo "<video controls preload='metadata' id='mercury-crater-video' class='example-video'><source src='/csb/csb-apps/mercury_mappers/images/tutorial/crater-video.mp4' type='video/mp4'>You need to update your browser to view animations. </video>";
+                echo "<video controls preload='metadata' id='mercury-crater-video' class='example-video'><source src='/csb/csb-apps/deprecated/mercury_mappers/images/tutorial/crater-video.mp4' type='video/mp4'>You need to update your browser to view animations. </video>";
                 }
                 ?>
                 <div class="app-button okay-button">Got it</div>

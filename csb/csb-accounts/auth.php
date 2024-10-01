@@ -50,7 +50,7 @@ function isLoggedIn($db)
     // look for the session id to be valid
     if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id']) && !empty($_COOKIE["name"])) {
         $flag = CosmoQuestX\Authorization::chk_UserId($db, $_SESSION['user_id'], $_COOKIE["name"]);
-    } // see if the cookie - WHICH CAN BE TAMPERED WITH - matches the DB
+    } // see if the cookie matches the DB
     elseif (!empty($_COOKIE["name"]) && !empty($_COOKIE["token"])) {
         $flag = chk_Token($db, $_COOKIE["token"], $_COOKIE["name"]);
     }

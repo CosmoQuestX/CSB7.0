@@ -60,9 +60,9 @@ GLOBAL $ACC_URL;
 
     <label for="registerPassword">Enter Password</label>
     <input name="password" id="registerPassword" class="form-control" type="password">
-
-    <label for="confirm">Confirm Password</label>
-    <input name="confirm" id="confirm" class="form-control" type="password">
+<!---->
+<!--    <label for="confirm">Confirm Password</label>-->
+<!--    <input name="confirm" id="confirm" class="form-control" type="password">-->
 
     <input type="checkbox" name="remember" class="mr-3" style="vertical-align:middle;" id="remember"><label for="remember">Remember me</label>
 

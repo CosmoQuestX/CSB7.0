@@ -35,7 +35,7 @@ function moon_mappers(csbApp) {
             {
                 "type": "dropdown",
                 "title": "Tutorial",
-                "text": "Welcome to Moon Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/csb/csb-apps/moon_mappers/images/tutorial/eraser.png' /> Erase a mistake</li><li><img src='/csb/csb-apps/moon_mappers/images/tutorial/crater.png' /> Find a crater</li><li><img src='/csb/csb-apps/moon_mappers/images/tutorial/light-image.png' /> Complete a light image</li><li><img src='/csb/csb-apps/moon_mappers/images/tutorial/dark-image.png' /> Complete a dark image</li>",
+                "text": "Welcome to Moon Mappers! To start,<br />  we'll quickly explain how to do the following: <ol><li><img src='/csb/csb-apps/deprecated/moon_mappers/images/tutorial/eraser.png' /> Erase a mistake</li><li><img src='/csb/csb-apps/deprecated/moon_mappers/images/tutorial/crater.png' /> Find a crater</li><li><img src='/csb/csb-apps/deprecated/moon_mappers/images/tutorial/light-image.png' /> Complete a light image</li><li><img src='/csb/csb-apps/deprecated/moon_mappers/images/tutorial/dark-image.png' /> Complete a dark image</li>",
                 "ok-button": {}, // Should have text like "Okay, let's start!",
                 "goal": "GOAL: Learn About Craters"
             },

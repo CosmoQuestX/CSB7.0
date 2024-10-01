@@ -38,14 +38,13 @@ $user = isLoggedIn($db);
 /* ----------------------------------------------------------------------
    Load the view
    ---------------------------------------------------------------------- */
-global $page_title, $header_title, $SITE_TITLE; 
+global $page_title, $header_title, $SITE_TITLE;
 
 // Make sure the page title is set
-if (!isset($page_title)) { $page_title = $SITE_TITLE; }; 
+if (!isset($page_title)) { $page_title = $SITE_TITLE . "Home"; };
 
 require_once($BASE_DIR . "/csb-content/template_functions.php");
 
 loadHeader($page_title);
 require_once($THEME_DIR . "/home-template.php");
 loadFooter();
-// Only one header please
